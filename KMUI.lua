@@ -1,4 +1,9 @@
 --------------------------------
+-- KMUI.lua
+-- Handles creation of the addon's user interface
+--------------------------------
+
+--------------------------------
 -- Namespace
 --------------------------------
 local _, core = ...
@@ -181,6 +186,9 @@ function MainInterface:CreateMainPanel()
     return MainPanel;
 end
 
+--------------------------------
+-- Buttton_OnClick actions (template)
+--------------------------------
 function KeyMaster:Button_OnClick(button)
     local operation = button:GetName():match("KeyMasterButton_(.+)")
 	if operation == "New" then
@@ -212,6 +220,7 @@ function KeyMaster:Button_OnClick(button)
 	end
 end
 
+-- Frame asset event handlers
 function KeyMaster:Button_OnEnter(frame)
 end
 function KeyMaster:Button_OnLeave(frame)
