@@ -1,4 +1,9 @@
 --------------------------------
+-- KMComs.lua
+-- Handles all in-game communcaitons
+-- between clients via addon channel.
+--------------------------------
+--------------------------------
 -- Namespace
 --------------------------------
 local _, core = ...
@@ -7,7 +12,10 @@ core.Coms = {}
 local Coms = core.Coms
 local Coms
 
--- Dependencies: AceAddon-3.0, AceComm-3.0, LibSerialize, LibDeflate
+-- Dependencies: LibSerialize
+-- todo: Verify what ACE libraries are actually needed.
+-- -this doesn't currently break but I don't think it has everything
+-- -it needs to function as designed. see /libs/
 MyAddon = LibStub("AceAddon-3.0"):NewAddon("KeyMaster", "AceComm-3.0")
 local LibSerialize = LibStub("LibSerialize")
 local LibDeflate = LibStub("LibDeflate")
@@ -20,6 +28,7 @@ function MyAddon:OnEnable()
 end
 
 -- Serialize communication data:
+-- Can communitcate over whatever default channels are avaialable via hidden Addons subchannel.
 function MyAddon:Transmit(data)
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
@@ -28,6 +37,7 @@ function MyAddon:Transmit(data)
 end
 
 -- Deserialize communication data:
+-- Returns nil if something went wrong.
 function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     local decoded = LibDeflate:DecodeForWoWAddonChannel(payload)
     if not decoded then return end
@@ -36,7 +46,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     local success, data = LibSerialize:Deserialize(decompressed)
     if not success then return end
 
-    -- Handle `data`
+    -- todo: Handle data communication events
     print("Recieved Data: "..data)
     print("Data: "..decoded)
 end

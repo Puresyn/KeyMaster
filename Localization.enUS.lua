@@ -1,4 +1,10 @@
 --------------------------------
+-- KMUILocalization.enUS.lua
+-- US English localization
+--------------------------------
+-- todo: this was a copy/paste from another addon. Nothing localized yet.
+
+--------------------------------
 -- Namespace
 --------------------------------
 local _, core = ...

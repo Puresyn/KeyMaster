@@ -1,4 +1,9 @@
--- https://www.youtube.com/watch?v=lYr7obl0KlU&list=PL3wt7cLYn4N-3D3PTTUZBM2t1exFmoA2G&index=9
+--------------------------------
+-- KMConfig.lua
+-- Handles all addon configuration
+-- Should proabably be intengrated into the main UI panel.
+--------------------------------
+
 --------------------------------
 -- Namespace
 --------------------------------
@@ -11,6 +16,8 @@ local UIConfig
 --------------------------------
 -- Defaults
 --------------------------------
+-- todo: pretty sure class color defualts is not needed any longer.
+-- -Transfered task to the blizzard API
 local defaults = {
     theme = { r = 1, 
 		g = 0.353,
@@ -172,11 +179,14 @@ local defaults = {
 --------------------------------
 -- Config Functions
 --------------------------------
+
+-- Shows configuration panel
 function Config:Toggle()
     local menu = UIConfig or Config:CreateMenu()
     menu:SetShown(not menu:IsShown())
 end
 
+-- Pulls the Key Master text color
 function Config:GetThemeColor()
 	local c = defaults.theme;
 	return c.r, c.g, c.b, c.hex
@@ -187,12 +197,15 @@ function Config:GetTextColorYellow()
 	return c.r, c.g, c.b, c.hex;
 end
 
+-- todo: Not sure that this is needed any longer
 function Config:GetClassColor(className)
     local n = "color_"..className
     local c = defaults.n
     return c
 end
 
+-- Create configuration UI
+-- todo: Move to KMUI.lua
 function Config:CreateButton(point, realativeFrame, relativePoint, yOffset, text)
     local btn = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate")
     btn:SetPoint(point, realativeFrame, relativePoint, 0, yOffset)
@@ -204,7 +217,7 @@ function Config:CreateButton(point, realativeFrame, relativePoint, yOffset, text
 end
 
 function Config:CreateMenu()
-    UIConfig = CreateFrame("Frame", "KeyMasterConfig", UIParent, "BasicFrameTemplate")
+    UIConfig = CreateFrame("Frame", "KeyMasterConfig", UIParent, "BasicFrameTemplateWIthInset")
     UIConfig:SetSize(1000, 800)
     UIConfig:SetPoint("CENTER")
 
