@@ -48,11 +48,62 @@ local function uiEventHandler(self, event, ...)
 --------------------------------
 -- Create Tabs
 --------------------------------
- function MainInterface:MainScreen()
+-- Setup main UI information regions
+function GetFrameRegions(myRegion)
+    local p, w, h, mh, mw
+    local r = myRegion
+    if (not r) then return end
+
+    mh = MainPanel:GetHeight()
+    mw = MainPanel:GetWidth()
+    -- p = points, w = width, h = height
+    if (r == "header") then
+        myRegionInfo = {
+        w = mw - 8,
+        h = mh - 668
+    }
+    end
+    return myRegionInfo
+end
+-- Setup header frame
+function MainInterface.Headerframe()
+    local fr = GetFrameRegions("header")
+    HeaderFrame = CreateFrame("Frame", "KeyMaster_HeaderRegion", MainPanel);
+    HeaderFrame:SetSize(fr.w, fr.h)
+    HeaderFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", 4, -4)
+    HeaderFrame.texture = HeaderFrame:CreateTexture()
+    HeaderFrame.texture:SetAllPoints(HeaderFrame)
+    HeaderFrame.texture:SetColorTexture(0.871, 0.871, 0.871, 1)
+    return HeaderFrame
+end
+
+-- Setup content frame
+function MainInterface.ContentFrame()
+    local fr = GetFrameRegions("header")
+    ContentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
+    ContentFrame:SetSize(fr.w, fr.h)
+    ContentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", 4, -4)
+    ContentFrame.texture = ContentFrame:CreateTexture()
+    ContentFrame.texture:SetAllPoints(ContentFrame)
+    ContentFrame.texture:SetColorTexture(0.871, 0.871, 0.871, 1)
+    return ContentFrame
+end
+
+-- Setup tab strip frame
+function MainInterface.TabStrip()
+end
+
+-- Tabs
+function MainInterface:MainScreen()
     local txtPlaceHolder
     MainScreen = CreateFrame("Frame", "KeyMaster_MainScreen", MainPanel);
-    MainScreen:SetSize(100, 100)
+    --MainScreen:SetSize(100, 100)
+    MainScreen:SetSize(MainPanel:GetWidth(), MainPanel:GetHeight())
     MainScreen:SetPoint("BOTTOMLEFT", MainPanel, "BOTTOMLEFT", 0, 0)
+    MainScreen.texture = MainScreen:CreateTexture()
+    MainScreen.texture:SetAllPoints(MainScreen)
+    --MainScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
+    MainScreen.texture:SetColorTexture(0.231, 0.231, 0.231, 1)
     txtPlaceHolder = MainScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
@@ -67,6 +118,13 @@ function MainInterface:ConfigScreen()
     ConfigScreen = CreateFrame("Frame", "KeyMaster_MainScreen", MainPanel);
     ConfigScreen:SetSize(ConfigScreen:GetParent():GetWidth(), 100)
     ConfigScreen:SetPoint("BOTTOMLEFT", MainPanel, "BOTTOMLEFT", 0, 0)
+   --[[  ConfigScreen:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
+        edgeFile="", 
+        tile = false, 
+        tileSize = 0, 
+        edgeSize = 0, 
+        insets = {left = 0, right = 0, top = 0, bottom = 0}})
+    ConfigScreen:SetBackdropColor(120,120,120,1); -- color for testing ]]
     txtPlaceHolder = ConfigScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
@@ -81,6 +139,13 @@ function MainInterface:AboutScreen()
     AboutScreen = CreateFrame("Frame", "KeyMaster_MainScreen", MainPanel);
     AboutScreen:SetSize(100, 100)
     AboutScreen:SetPoint("BOTTOMLEFT", MainPanel, "BOTTOMLEFT", 0, 0)
+    --[[ AboutScreen:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
+        edgeFile="", 
+        tile = false, 
+        tileSize = 0, 
+        edgeSize = 0, 
+        insets = {left = 0, right = 0, top = 0, bottom = 0}})
+    AboutScreen:SetBackdropColor(160,160,160,1); -- color for testing ]]
     txtPlaceHolder = AboutScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
@@ -180,8 +245,13 @@ function MainInterface:CreateMainPanel()
 
     -- load child windows
     MainScreen = MainInterface:MainScreen()
+    MainScreen:Show()
+    HeaderFrame = MainInterface.Headerframe()
+    HeaderFrame:Show()
     ConfigScreen = MainInterface:ConfigScreen()
+    ConfigScreen:Hide();
     AboutScreen = MainInterface:AboutScreen()
+    AboutScreen:Hide();
     MainPanel:Hide();
     return MainPanel;
 end

@@ -45,9 +45,9 @@ function Data:GetOwnedKey()
         -- Get Data
         -- name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(i)
         -- todo: search local table (Data:GetCurrentSeasonMaps()) instead of querying for new data
+        local n, l
         n, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(i)
         l = C_MythicPlus.GetOwnedKeystoneLevel(i)
-        local n, l
         return i, n, l
     else
         -- No key but has Vault Ready
