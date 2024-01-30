@@ -1,0 +1,19 @@
+## Interface: 100205
+## Version: v0.0.1-beta
+## Title: |cffff5a00KeyMaster|r
+## Notes: Mythic Dungeon KeystoneMaster
+## Author: Strylor-Proudmoore
+## LoadManagers: AddonLoader
+## X-LoadOn-Slash: /km, /keymaster
+## DefaultState: disabled
+## SavedVariables: KeyMaster_DB
+
+Localization.enUS.lua
+
+Lib/LibSerialize.lua
+KMConfig.lua
+KMComs.lua
+KMData.lua
+KMUI.lua
+KM_UI.xml
+KMInit.lua
