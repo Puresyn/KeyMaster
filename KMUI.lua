@@ -49,6 +49,7 @@ local function uiEventHandler(self, event, ...)
 -- Create Tabs
 --------------------------------
 -- Setup main UI information regions
+-- I've seperated this info to build up to a template system
 function GetFrameRegions(myRegion)
     local p, w, h, mh, mw
     local r = myRegion
@@ -59,10 +60,17 @@ function GetFrameRegions(myRegion)
     -- p = points, w = width, h = height
     if (r == "header") then
         myRegionInfo = {
-        w = mw - 8,
-        h = mh - 668
-    }
+            w = mw - 8,
+            h = mh - 668
+    } 
+    elseif (r == "content") then
+        myRegionInfo = {
+            w = mw - 8,
+            h = mh - 100
+        }
+    else return
     end
+
     return myRegionInfo
 end
 -- Setup header frame
@@ -79,13 +87,13 @@ end
 
 -- Setup content frame
 function MainInterface.ContentFrame()
-    local fr = GetFrameRegions("header")
+    local fr = GetFrameRegions("content")
     ContentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
     ContentFrame:SetSize(fr.w, fr.h)
-    ContentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", 4, -4)
+    ContentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", 4, -104)
     ContentFrame.texture = ContentFrame:CreateTexture()
     ContentFrame.texture:SetAllPoints(ContentFrame)
-    ContentFrame.texture:SetColorTexture(0.871, 0.871, 0.871, 1)
+    ContentFrame.texture:SetColorTexture(0.729, 0.729, 0.729, 1)
     return ContentFrame
 end
 
@@ -244,10 +252,12 @@ function MainInterface:CreateMainPanel()
     --tinsert(UISpecialFrames, MainPanel:GetName())
 
     -- load child windows
-    MainScreen = MainInterface:MainScreen()
-    MainScreen:Show()
+    --MainScreen = MainInterface:MainScreen()
+    --MainScreen:Show()
     HeaderFrame = MainInterface.Headerframe()
     HeaderFrame:Show()
+    ConentFrame = MainInterface.ContentFrame()
+    ContentFrame:Show()
     ConfigScreen = MainInterface:ConfigScreen()
     ConfigScreen:Hide();
     AboutScreen = MainInterface:AboutScreen()
