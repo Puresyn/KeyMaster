@@ -14,7 +14,7 @@
 			</OnLeave>
 		</Scripts>
 	</Button>
-    <Frame name="KeyMasterFrame" toplevel="true" hidden="true" movable="true" parent="UIParent" enableMouse="true" resizable="false" frameStrata="MEDIUM" inherits="BackdropTemplate" virtual="true">
+    <Frame name="KeyMasterFrame" toplevel="true" movable="true" enableMouse="true" resizable="false" frameStrata="MEDIUM" inherits="BackdropTemplate" virtual="true">
 		<Size x="768" y="768"/>
 		<Anchors>
 			<!-- <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">

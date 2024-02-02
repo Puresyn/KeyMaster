@@ -8,9 +8,10 @@
 ## DefaultState: disabled
 ## SavedVariables: KeyMaster_DB
 
-Localization.enUS.lua
 
-Lib/LibSerialize.lua
+Localization.enUS.lua
+embeds.xml
+
 KMConfig.lua
 KMComs.lua
 KMData.lua
