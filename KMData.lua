@@ -93,60 +93,33 @@ end
 
 -- Query what key the character has in bags, if any.
 function Data:GetOwnedKey()
-    local i, l, n
-    i = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+    local mapid = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+    local keystoneLevel, mapname
 
-    if (i) then
+    if (mapid) then
         -- key found in bags
         -- Get Data
         -- name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(i)
         -- todo: search local table (Data:GetCurrentSeasonMaps()) instead of querying for new data
-        local n, l
-        n, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(i)
-        l = C_MythicPlus.GetOwnedKeystoneLevel(i)
+        mapName, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(mapid)
+        keystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel(mapid)        
     else
         -- No key but has Vault Ready
         if (C_MythicPlus.IsWeeklyRewardAvailable()) then
-            i = 0
-            n = "In Vault"
-            l = 0
+            mapid = 0
+            mapName = "In Vault"
+            keystoneLevel = 0
             -- todo: Tell player to get their vault key or go ask key merchant for one
         else
-            i = 0
-            n = "Ask Key Merchant"
-            l = 0
+            mapid = 0
+            mapName = "Ask Key Merchant"
+            keystoneLevel = 0
             -- No Key Available, no vault available
             -- todo: Notify player (if max level) to go get a key from merchant
         end
-    end
+    end  
 
-    return i, n, l
-
-end
-
-function Data:GetBestMythicRuns(mapID)
-
-    --[[ affixScores, bestOverAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(199)
-    print("----")
-    for key, value in pairs(affixScores[2]) do
-    print(key, value)
-    end
-    print("----") ]]
-
-    -- retrieve all best run data on a map
-    local a, b
-    -- a = affixScores, b = bestOverAllScore
-    -- a[1] = Fortified, a[2] = Tyrannical
-    -- todo: evaluate data returns
-   
-    if not mapID then return end
-   
-    a, b = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
-    if (a and b) then
-       return a, b
-    else
-        return
-    end
+    return mapid, mapname, keystoneLevel
 end
 
 -- Not Used
@@ -154,29 +127,6 @@ end
 local function buildMapTable(...)
     -- todo: check, build, and store season map data
     -- https://wowpedia.fandom.com/wiki/Category:API_namespaces/C_ChallengeMode
-end
-
-
--- build a current season map table pulled from the API
-function Data:GetCurrentSeasonMaps()
-    local mapTable
-    local i=0
-    local mapTable = {}
-
-    m = C_ChallengeMode.GetMapTable();
-    local i
-    if (not m) then return end
-    local mapTable = {}
-    for i=1, #m, i+1 do
-        name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(m[i])
-        mapTable[id] = {
-            ["name"] = name,
-            ["timeLimit"] = timeLimit,
-            ["texture"] = texture,
-            ["backgroundTexture"] = backgroundTexture
-            }
-        end
-    return mapTable
 end
 
 -- Retrieve from API the current active player's M+ score.
@@ -208,20 +158,99 @@ function Data:GetAffixes()
     return out
 end
 
+-- build a current season map table pulled from the API
+function Data:GetCurrentSeasonMaps()
+    m = C_ChallengeMode.GetMapTable();
+    if (not m) then return end
+    
+    local mapTable = {}
+    for i,v in ipairs(m) do
+       name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       mapTable[id] = {
+          ["name"] = name,
+          ["timeLimit"] = timeLimit,
+          ["texture"] = texture,
+          ["backgroundTexture"] = backgroundTexture
+       }
+    end
+    
+    return mapTable  
+ end
+
+-- returns tablehash of score, level, ... for a certain dungeon and affix combo
+-- 
+function Data:GetMplusScoreForMap(mapid, weeklyaffix)
+    scoreInfo, _ = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+    
+    if(weeklyaffix == "Tyrannical") then
+       return scoreInfo[2]
+    end
+    
+    return scoreInfo[1]
+ end
+
+-- Returns name of map based on passed mapid
+-- Returns nil if not found
+function GetMapName(mapid)
+    m = C_ChallengeMode.GetMapTable();
+    if (not m) then return end
+    
+    local mapTable = {}
+    for i,v in ipairs(m) do
+       name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       if (id == mapid) then
+          return name   
+       end
+    end
+    
+    return nil
+ end
 
 ----------------------------------
 function Data:GetMyCharacterInfo()
     local myCharacterInfo = {}
-    local id, name, level = Data:GetOwnedKey()
+    local id, _, level = Data:GetOwnedKey()
     myCharacterInfo.GUID = UnitGUID("player")
-    myCharacterInfo.name = myPlayerName
+    myCharacterInfo.name = UnitName("player")
     myCharacterInfo.ownedKeyId = id
     myCharacterInfo.ownedKeyLevel = level
     myCharacterInfo.keyRuns = {}
-    --myCharacter.characterGUID = 
+    
+    local seasonMaps = Data:GetCurrentSeasonMaps();
+    for mapid, v in pairs(seasonMaps) do
+        local keyRun = {
+            [mapid] = {
+                ["Tyrannical"] = {},
+                ["Fortified"] = {}
+            }
+        }
 
+         -- Tyrannical Keys
+        scoreInfo = Data:GetMplusScoreForMap(mapid, "Tyrannical")   
+        local dungeonDetails = {
+            ["Score"] = scoreInfo.score,
+            ["Level"] = scoreInfo.level,
+            ["DurationSec"] = scoreInfo.duration,
+            ["IsOverTime"] = scoreInfo.overTime,
+            ["BestOverallScore"] = 0
+        }
+        tinsert(keyRun[mapid]["Tyrannical"], dungeonDetails)
+
+        scoreInfo = Data:GetMplusScoreForMap(mapid, "Fortified")   
+        local dungeonDetails = {
+            ["Score"] = scoreInfo.score,
+            ["Level"] = scoreInfo.level,
+            ["DurationSec"] = scoreInfo.duration,
+            ["IsOverTime"] = scoreInfo.overTime,
+            ["BestOverallScore"] = 0
+        }
+        tinsert(keyRun[mapid]["Fortified"], dungeonDetails)
+
+        tinsert(myCharacterInfo.keyRuns, keyRun)
+    end
+    
     return myCharacterInfo
-end
+ end
 
 core.Data.PlayerInfo[1] = Data:GetMyCharacterInfo()
 --core.Data.PartyInfo = {}
@@ -252,3 +281,18 @@ function Data:Init()
     return dataCheck
 end
 
+-- Function to dump tablehash data
+function tprint (tbl, indent)
+    if not indent then indent = 0 end
+    for k, v in pairs(tbl) do
+       formatting = string.rep("  ", indent) .. k .. ": "
+       if type(v) == "table" then
+          print(formatting)
+          tprint(v, indent+1)
+       elseif type(v) == 'boolean' then
+          print(formatting .. tostring(v))      
+       else
+          print(formatting .. v)
+       end
+    end
+ end
