@@ -8,12 +8,12 @@
 --------------------------------
 local _, core = ...
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
-KM_VERSION_MINOR = 0.2 -- float value minor version release number
+KM_VERSION_MINOR = 0.3 -- float value minor version release number
 KM_VERSION_STATUS = "beta" -- "beta" or "release - for display and update notification purposes"
 KM_VERSION = tostringall("v"..KM_VERSION_MAJOR.."."..KM_VERSION_MINOR.."-"..KM_VERSION_STATUS) -- for display purposes
 
 --------------------------------
--- ToDo:
+-- todo:
 --------------------------------
 -- Integrate Localization
 

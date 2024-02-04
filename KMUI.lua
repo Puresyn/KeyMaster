@@ -1,6 +1,7 @@
 --------------------------------
 -- KMUI.lua
 -- Handles creation of the addon's user interface
+-- Challenge Mode API: https://github.com/tomrus88/BlizzardInterfaceCode/blob/master/Interface/AddOns/Blizzard_APIDocumentationGenerated/ChallengeModeInfoDocumentation.lua
 --------------------------------
 
 --------------------------------
@@ -16,6 +17,15 @@ local MainInterface = core.MainInterface
 KeyMaster = core.KeyMaster
 
 --------------------------------
+-- In-Game fonts:
+-- FRIZQT__.ttf (the main UI font)
+-- ARIALN.ttf (the normal number font)
+-- skurri.ttf (the 'huge' number font)
+-- MORPHEUS.ttf (Mail, Quest Log font)
+-- RGB 0.0-1.0 color picker: https://rgbcolorpicker.com/0-1
+--------------------------------
+
+--------------------------------
 -- UI Functions
 --------------------------------
 function MainInterface:Toggle()
@@ -26,6 +36,7 @@ function MainInterface:Toggle()
 end
 
 -- sort tables by index because LUA doesn't!
+-- order is optional
 function spairs(t, order)
     -- collect the keys
     local keys = {}
@@ -51,8 +62,6 @@ end
 
 -- F:\Games\World of Warcraft\_retail_\BlizzardInterfaceCode\Interface\SharedXML\SharedUIPanelTemplates.xml
 -- Dynamic Buttons? https://www.wowinterface.com/forums/showthread.php?t=53126
-
--- XML Template
 
 function KeyMaster:Initialize()
 end
@@ -81,7 +90,7 @@ local function Tab_OnClick(self)
         end
     end
 	self.content:Show();
-    PlaySound(SOUNDKIT.IG_SPELLBOOK_OPEN);
+    PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
 end
 
 
@@ -119,6 +128,129 @@ local function SetTabs(frame, tabs)
 
     return unpack(contents)
 end
+
+--------------------------------
+-- Create Header Content
+--------------------------------
+
+-- build main page header info of this weeks affixes
+local function GetWeekInfo()
+    local str = ""
+    local i = 0
+    local temp_frame, temp_header,temp_headertxt
+    weekData = core.Data:GetAffixes()
+    for i=1, #weekData, i+1 do
+
+        str = weekData[i].name
+        temp_frame = CreateFrame("Frame", "KeyMaster_Affix"..tostringall(i), HeaderFrame)
+        temp_frame:SetSize(40, 40)
+        if (i == 1) then
+            temp_frame:SetPoint("TOPLEFT", HeaderFrame, "TOPLEFT", 350, -30)
+        else
+            local a = i - 1
+            temp_frame:SetPoint("TOPLEFT", "KeyMaster_Affix"..tostringall(a), "TOPRIGHT", 14, 0)
+        end
+        
+        temp_frame.texture = temp_frame:CreateTexture()
+        temp_frame.texture:SetAllPoints(temp_frame)
+        temp_frame.texture:SetTexture(weekData[i].filedataid)
+        myText = temp_frame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+        Path, _, Flags = myText:GetFont()
+        myText:SetFont(Path, 11, Flags)
+        myText:SetPoint("CENTER", 0, -30)
+        myText:SetTextColor(1,1,1)
+        myText:SetText(str)
+
+        -- create a title and set it to the first affix's frame
+        if (i == 1) then
+            temp_header = CreateFrame("Frame", "KeyMaster_Affix_Header", temp_frame)
+            temp_header:SetSize(168, 20)
+            temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -4, 0)
+            temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+            temp_headertxt:SetFont(Path, 14, Flags)
+            temp_headertxt:SetPoint("LEFT", 0, 0)
+            temp_headertxt:SetTextColor(1,1,1)
+            temp_headertxt:SetText("This Week\'s Affixes:")
+        end
+
+    end
+end
+
+-- Create player rating header frame
+local function CreateHeaderRating()
+    
+    HeaderFrame.ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", HeaderFrame)
+    HeaderFrame.ratingPanel:SetWidth(300)
+    HeaderFrame.ratingPanel:SetHeight(13)
+    HeaderFrame.ratingPanel:SetPoint("TOPRIGHT", -2, -30)
+    MythicRatingPreText = HeaderFrame.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = MythicRatingPreText:GetFont()
+    MythicRatingPreText:SetFont(Path, 12, Flags)
+    MythicRatingPreText:SetPoint("CENTER")
+    MythicRatingPreText:SetText("|cff"..core.Data:GetMyClassColor()..UnitName("player").."\'s|r Rating:")
+
+    local myCurrentRating = core.Data:GetCurrentRating()
+    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating)
+
+    MythicRatingText = HeaderFrame.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = MythicRatingText:GetFont()
+    MythicRatingText:SetFont(Path, 30, Flags)
+    MythicRatingText:SetPoint("CENTER", 0, -22)
+    MythicRatingText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
+    MythicRatingText:SetText(myCurrentRating)
+
+    
+    --[[ local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating)
+    HeaderFrame.ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", HeaderFrame.ratingPanel)
+    HeaderFrame.ratingPanel:SetWidth(300)
+    HeaderFrame.ratingPanel:SetHeight(32)
+    HeaderFrame.ratingPanel:SetPoint("TOPRIGHT", -2, -50)
+    MythicRatingText = HeaderFrame.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = MythicRatingText:GetFont()
+    MythicRatingText:SetFont(Path, 30, Flags)
+    MythicRatingText:SetPoint("CENTER")
+    MythicRatingText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
+    MythicRatingText:SetText(myCurrentRating) ]]
+end
+
+--------------------------------
+-- Create Party Key Frames
+--------------------------------
+local function Create_GroupFrame()
+    local a, wn, window, gfm, frameTitle, txtPlaceHolder
+    frameTitle = "Group Keys"
+    a = PartyScreen -- relative frame of the party keys container frame
+    wn = "KeyMaster_Party" -- this frame's name prefix
+    window = _G[wn.."_Group"]
+    gfm = 10 -- group frame margin
+
+    if window then return window end -- if it already exists, don't make another one
+
+    temp_frame =  CreateFrame("Frame", wn.."_Group", a)
+    temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
+    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -40)
+    window = temp_frame
+
+    txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 20, Flags)
+    txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText(frameTitle)
+
+    temp_frame.texture = temp_frame:CreateTexture()
+    temp_frame.texture:SetAllPoints(temp_frame)
+    temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- temporary bg color 
+
+    return window
+end
+
+local function Create_PartyMemberRows()
+end
+
+local function Refresh_PartyFrames(...)
+end
+
 --------------------------------
 -- Create Regions
 --------------------------------
@@ -135,8 +267,8 @@ local function GetFrameRegions(myRegion)
     -- desired region heights and margins in pixels.
     -- todo: Needs pulled from saved variables or some other file instead of hard-coded.
     hh = 100 -- header height
-    mtb = 4
-    mlr = 4
+    mtb = 4 -- top/bottom margin
+    mlr = 4 -- left/right margin
 
     if (r == "header") then
     -- p = points, w = width, h = height, mtb = margin top and bottom, mlr = margin left and right
@@ -154,7 +286,8 @@ local function GetFrameRegions(myRegion)
 
     return myRegionInfo, mlr, mtb
 end
--- Setup header frame
+
+-- Setup header region
 function MainInterface:Headerframe()
     local fr, mlr, mtb = GetFrameRegions("header")
     HeaderFrame = CreateFrame("Frame", "KeyMaster_HeaderRegion", MainPanel);
@@ -162,11 +295,11 @@ function MainInterface:Headerframe()
     HeaderFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", mlr, -(mtb))
     HeaderFrame.texture = HeaderFrame:CreateTexture()
     HeaderFrame.texture:SetAllPoints(HeaderFrame)
-    HeaderFrame.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color
+    HeaderFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
     return HeaderFrame
 end
 
--- Setup content frame
+-- Setup content region
 function MainInterface:ContentFrame()
     local fr, mlr, mtb = GetFrameRegions("content")
     ContentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
@@ -174,26 +307,65 @@ function MainInterface:ContentFrame()
     ContentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", mtb, -(HeaderFrame:GetHeight() + (mtb*2)))
     ContentFrame.texture = ContentFrame:CreateTexture()
     ContentFrame.texture:SetAllPoints(ContentFrame)
-    ContentFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    --ContentFrame.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
+    ContentFrame.texture:SetColorTexture(0, 0, 0, 1)
+
     return ContentFrame
 end
 
--- Setup tab strip frame
+--------------------------------
+-- Create Content Frames
+--------------------------------
+-- Header content
+function MainInterface:HeaderScreen()
+    local txtPlaceHolder
+    HeaderScreen = CreateFrame("Frame", "KeyMaster_HeaderScreen", HeaderFrame);
+    HeaderScreen:SetSize(HeaderFrame:GetWidth(), HeaderFrame:GetHeight())
+    HeaderScreen:SetPoint("TOPLEFT", HeaderFrame, "TOPLEFT", 0, 0)
+    --[[ HeaderScreen.texture = HeaderScreen:CreateTexture()
+    HeaderScreen.texture:SetAllPoints(HeaderScreen)
+    HeaderScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
+    HeaderScreen.texture:SetColorTexture(0.231, 0.231, 0.231, 1) ]]
+
+    txtPlaceHolder = HeaderScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 30, Flags)
+    txtPlaceHolder:SetPoint("BOTTOMLEFT", 10, 10)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText("Key Master")
+
+    VersionText = HeaderScreen:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+    VersionText:SetPoint("TOPRIGHT", HeaderFrame, "TOPRIGHT", -24, -2)
+    VersionText:SetText(KM_VERSION)
+
+    -- Create header content
+    CreateHeaderRating()
+    GetWeekInfo()
+
+    return HeaderScreen
+end
+
+-- Setup tab strip frame (Not used)
 function MainInterface:TabStrip()
 end
 
--- Tabs
 function MainInterface:MainScreen()
-    local txtPlaceHolder
-    MainScreen = CreateFrame("Frame", "KeyMaster_MainScreen", ContentFrame);
+    local txtPlaceHolder, headerText, Path, Flags
+    MainScreen = CreateFrame("Frame", "KeyMaster_MainScreen", ContentFrame)
     MainScreen:SetSize(ContentFrame:GetWidth(), ContentFrame:GetHeight())
     MainScreen:SetPoint("TOPLEFT", ContentFrame, "TOPLEFT", 0, 0)
     --[[ MainScreen.texture = MainScreen:CreateTexture()
     MainScreen.texture:SetAllPoints(MainScreen)
-    MainScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
+    MainScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8") 
     MainScreen.texture:SetColorTexture(0.231, 0.231, 0.231, 1) ]]
+
+    --[[ MainScreen.titleFrame = CreateFrame("Frame", "KeyMaster_MS_titelFrame", MainScreen)
+    MainScreen.titleFrame:SetSize(MainScreen:GetWidth(), 40)
+    MainScreen.titleFrame:SetPoint("TOPLEFT", MainScreen, "TOPLEFT", 12, 20) ]]
+
+
     txtPlaceHolder = MainScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-    local Path, _, Flags = txtPlaceHolder:GetFont()
+    Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
     txtPlaceHolder:SetTextColor(1, 1, 1)
@@ -243,6 +415,41 @@ function MainInterface:AboutScreen()
     return AboutScreen
 end
 
+function MainInterface:PartyScreen()
+    local txtPlaceHolder
+    PartyScreen = CreateFrame("Frame", "KeyMaster_PartyScreen", ContentFrame);
+    PartyScreen:SetSize(ContentFrame:GetWidth(), ContentFrame:GetHeight())
+    PartyScreen:SetPoint("TOPLEFT", ContentFrame, "TOPLEFT", 0, 0)
+    --[[ PartyScreen:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
+        edgeFile="", 
+        tile = false, 
+        tileSize = 0, 
+        edgeSize = 0, 
+        insets = {left = 0, right = 0, top = 0, bottom = 0}})
+    PartyScreen:SetBackdropColor(160,160,160,1); -- color for testing ]]
+    --[[ txtPlaceHolder = PartyScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 30, Flags)
+    txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText("Party Screen") ]]
+
+    --[[ PartyScreen.texture = PartyScreen:CreateTexture()
+    PartyScreen.texture:SetAllPoints(PartyScreen)
+    PartyScreen.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color ]]
+
+    txtPlaceHolder = PartyScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 30, Flags)
+    txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText("Group Screen")
+
+    Create_GroupFrame()
+
+    return PartyScreen
+end
+
 --------------------------------
 -- Create Main UI Frame and shared assets
 --------------------------------
@@ -277,68 +484,50 @@ function MainInterface:CreateMainPanel()
     MainPanel.closeBtn:SetHighlightFontObject("GameFontHighlightLarge")
     MainPanel.closeBtn:SetScript("OnClick", core.MainInterface.Toggle)
 
-    MainPanel.titlePanel = CreateFrame("Frame", "KeyMaster_TitleFrame", MainPanel)
-    MainPanel.titlePanel:SetWidth(200)
-    MainPanel.titlePanel:SetHeight(18)
-    MainPanel.titlePanel:SetPoint("TOPRIGHT", -27,0)
-    VersionText = MainPanel.titlePanel:CreateFontString(nil, "OVERLAY", "GameTooltipText")
-    VersionText:SetPoint("RIGHT")
-    VersionText:SetText(KM_VERSION)
-
-    MainPanel.ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", MainPanel)
-    MainPanel.ratingPanel:SetWidth(300)
-    MainPanel.ratingPanel:SetHeight(13)
-    MainPanel.ratingPanel:SetPoint("TOPRIGHT", -2, -38)
-    MythicRatingPreText = MainPanel.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-    local Path, _, Flags = MythicRatingPreText:GetFont()
-    MythicRatingPreText:SetFont(Path, 12, Flags)
-    MythicRatingPreText:SetPoint("CENTER")
-    MythicRatingPreText:SetText("|cff"..core.Data:GetMyClassColor()..UnitName("player").."\'s Rating:|r")
-
-    local myCurrentRating = core.Data:GetCurrentRating()
-    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating)
-    MainPanel.ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", MainPanel)
-    MainPanel.ratingPanel:SetWidth(300)
-    MainPanel.ratingPanel:SetHeight(32)
-    MainPanel.ratingPanel:SetPoint("TOPRIGHT", -2, -50)
-    MythicRatingText = MainPanel.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-    local Path, _, Flags = MythicRatingText:GetFont()
-    MythicRatingText:SetFont(Path, 30, Flags)
-    MythicRatingText:SetPoint("CENTER")
-    MythicRatingText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
-    MythicRatingText:SetText(myCurrentRating)
-
    --MainPanel:SetScript("OnEvent", uiEventHandler);
    --MainPanel:SetScript("OnDragStart", function(self) self:StartMoving() end);
    --MainPanel:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end);
 
+   -- Create main content regions and show them
     HeaderFrame = MainInterface.Headerframe()
     HeaderFrame:Show()
     ContentFrame = MainInterface.ContentFrame()
     ContentFrame:Show()
 
+    -- Create content screens and show/hide them
+    headerFrameContent = MainInterface:HeaderScreen()
+    headerFrameContent:Show();
     mainFrameContent = MainInterface:MainScreen()
     mainFrameContent:Hide()
+    partyFrameContent = MainInterface:PartyScreen()
+    partyFrameContent:Hide()
     configFrameContent = MainInterface:ConfigScreen()
     configFrameContent:Hide()
     aboutFrameContent = MainInterface:AboutScreen()
     aboutFrameContent:Hide()
  
+    -- Create tabs
+    -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
     local myTabs = {
         [0] = {
             ["name"] = "Main",
             ["window"] = "MainScreen"
         },
-        [1] = {
+        [2] = {
             ["name"] = "Config",
             ["window"] = "ConfigScreen"
         },
-        [2] = {
+        [3] = {
             ["name"] = "About",
             ["window"] = "AboutScreen"
+        },
+        [1] = {
+            ["name"] = "Group",
+            ["window"] = "PartyScreen"
         }
     }
 
+    -- Create the tabs (content region, Tab table)
     SetTabs(ContentFrame, myTabs)
 
    --[[ mainFrameContent = MainInterface:MainScreen()
@@ -366,8 +555,7 @@ function MainInterface:CreateMainPanel()
     return MainPanel
 end
 
--- Main Tab Button:
---content1.mainBtn = self:CreateButton("CENTER", content1, "TOP", -70, "Main")
+
 --------------------------------
 -- Buttton_OnClick actions (template)
 --------------------------------
