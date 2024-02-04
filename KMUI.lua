@@ -455,6 +455,7 @@ end
 --------------------------------
 function MainInterface:CreateMainPanel()
     MainPanel = CreateFrame("Frame", "KeyMaster_MainPanel", UIParent, "KeyMasterFrame");
+    MainPanel:ClearAllPoints(); -- Fixes SetPoint bug thus far.
     MainPanel:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
     MainPanel:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
         edgeFile="Interface\\Tooltips\\UI-Tooltip-Border", 
