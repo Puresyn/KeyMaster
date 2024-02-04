@@ -180,13 +180,41 @@ function Data:GetCurrentSeasonMaps()
 -- returns tablehash of score, level, ... for a certain dungeon and affix combo
 -- 
 function Data:GetMplusScoreForMap(mapid, weeklyaffix)
-    scoreInfo, _ = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+    local mapScore, _ = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     
-    if(weeklyaffix == "Tyrannical") then
-       return scoreInfo[2]
+    if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
+       print("Incorrect weeklyAffix value in GetMplusScoreForMap function")
+       return nil   
     end
     
-    return scoreInfo[1]
+    local emptyData = {
+       name = weeklyaffix, --WeeklyAffix Name (e.g.; Tyran/Fort)
+       score = 0, -- io gained
+       level = 0, -- keystone level
+       durationSec = 0, -- how long took to complete map
+       overTime = false -- was completion overtime
+    }
+    
+    -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
+    if (not mapScore) then
+       print("Map Score was empty in GetMPlusScoreForMap function.")
+       
+       return emptyData
+    else
+       if (not mapScore[2]) then
+          return emptyData
+       elseif (not mapScore[1]) then
+          return emptyData
+       end      
+    end
+    
+    if(weeklyaffix == "Tyrannical") then
+       return mapScore[2]
+    end
+    
+    if(weeklyaffix == "Fortified") then
+       return mapScore[1]
+    end
  end
 
 -- Returns name of map based on passed mapid
@@ -197,7 +225,7 @@ function GetMapName(mapid)
     
     local mapTable = {}
     for i,v in ipairs(m) do
-       name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       name, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(v)
        if (id == mapid) then
           return name   
        end
