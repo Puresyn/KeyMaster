@@ -179,7 +179,7 @@ function Data:GetCurrentSeasonMaps()
 
 -- returns tablehash of score, level, ... for a certain dungeon and affix combo
 -- 
-function Data:GetMplusScoreForMap(mapid, weeklyaffix)
+function Data:GetMplusScoreForMap(mapid, weeklyAffix)
     local mapScore, _ = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     
     if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
@@ -188,7 +188,7 @@ function Data:GetMplusScoreForMap(mapid, weeklyaffix)
     end
     
     local emptyData = {
-       name = weeklyaffix, --WeeklyAffix Name (e.g.; Tyran/Fort)
+       name = weeklyAffix, --WeeklyAffix Name (e.g.; Tyran/Fort)
        score = 0, -- io gained
        level = 0, -- keystone level
        durationSec = 0, -- how long took to complete map
@@ -208,7 +208,7 @@ function Data:GetMplusScoreForMap(mapid, weeklyaffix)
        end      
     end
     
-    if(weeklyaffix == "Tyrannical") then
+    if(weeklyAffix == "Tyrannical") then
        return mapScore[2]
     end
     
@@ -238,6 +238,7 @@ function GetMapName(mapid)
 function Data:GetMyCharacterInfo()
     local myCharacterInfo = {}
     local id, _, level = Data:GetOwnedKey()
+    local scoreInfo = {}
     myCharacterInfo.GUID = UnitGUID("player")
     myCharacterInfo.name = UnitName("player")
     myCharacterInfo.ownedKeyId = id
