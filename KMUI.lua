@@ -214,19 +214,20 @@ local function CreateHeaderRating()
 end
 
 --------------------------------
--- Create Party Key Frames
+-- Create Party Tab Frames
 --------------------------------
+
+-- create frame to contain the party member rows
 local function Create_GroupFrame()
-    local a, wn, window, gfm, frameTitle, txtPlaceHolder
-    frameTitle = "Group Keys"
+    local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
+    frameTitle = "Party member key and run information." -- set title
     a = PartyScreen -- relative frame of the party keys container frame
-    wn = "KeyMaster_Party" -- this frame's name prefix
-    window = _G[wn.."_Group"]
+    window = _G["KeyMaster_Frame_Party"]
     gfm = 10 -- group frame margin
 
     if window then return window end -- if it already exists, don't make another one
 
-    temp_frame =  CreateFrame("Frame", wn.."_Group", a)
+    temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
     temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
     temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -40)
     window = temp_frame
@@ -245,10 +246,119 @@ local function Create_GroupFrame()
     return window
 end
 
-local function Create_PartyMemberRows()
+-- create a new template frame for each party members if it doesn't exist
+local function createPartyMemberFrame(frameName, parentFrame)
+    local frameAnchor, frameHeight
+
+    if (not parentFrame) then
+        print("Can not find row reference \"Nil\" while trying to make "..frameName.."'s row.")
+    end
+
+    print("Creating "..frameName.." and setting its parent to "..parentFrame:GetName()..".") -- debug
+
+    if (frameName == "PlayerRow1") then partyNumber = 1
+    elseif (frameName == "PlayerRow2") then partyNumber = 2
+    elseif (frameName == "PlayerRow3") then partyNumber = 3
+    elseif (frameName == "PlayerRow4") then partyNumber = 4
+    end
+
+    if (frameName == "PlayerRow1") then 
+        frameAnchor = "TOPLEFT", parentFrame, "TOPLEFT", 0, 0
+
+         -- get the frame's group container and set this row frame height to 1/5th the group container height
+        frameHeight = parentFrame:GetHeight()/5
+
+    else
+        frameAnchor = "TOPLEFT", parentFrame, "BOTTOMLEFT", 0, 0
+
+        -- get the frame parent and set this row frame height the parent's height
+        frameHeight = parentFrame:GetHeight()
+
+    end
+
+    local temp_RowFrame = CreateFrame("Frame", frameName, parentFrame)
+    temp_RowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
+    temp_RowFrame:ClearAllPoints()
+    temp_RowFrame:SetPoint(frameAnchor)
+    temp_RowFrame.texture = temp_RowFrame:CreateTexture()
+    temp_RowFrame.texture:SetAllPoints(temp_RowFrame)
+    temp_RowFrame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- todo: temporary bg color 
+
+
+    local temp_frame = CreateFrame("Frame", "PortraitFrame"..partyNumber, _G["PlayerRow"..partyNumber])
+    temp_frame:SetSize(parentFrame:GetWidth()+(temp_RowFrame:GetHeight()/2), temp_RowFrame:GetHeight())
+    temp_frame:ClearAllPoints()
+    temp_frame:SetPoint("RIGHT", temp_frame:GetParent(), "RIGHT", 0, 0)
+
+    local img1 = temp_frame:CreateTexture(nil, "ARTWORK")
+    img1:SetHeight(temp_RowFrame:GetHeight())
+    img1:SetWidth(temp_RowFrame:GetHeight())
+    img1:ClearAllPoints()
+    img1:SetPoint("LEFT", 0, 0)
+
+    -- todo: take the line below out of here and put it in the party frame refresh function
+    --SetPortraitTexture(img1, "player")
+    img1:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default", false)
+
+    print(frameName.." created.") -- debug
+
+    return temp_RowFrame
 end
 
+-- creates a party member rows lookup table (will create the frames if they don't yet exist)
+local function GetPartyMembersFrameStack()
+    local p1, p2, p3, p4, p5
+    p1 = _G["PlayerRow1"] or createPartyMemberFrame("PlayerRow1", _G["KeyMaster_Frame_Party"])
+    p2 = _G["PlayerRow2"] or createPartyMemberFrame("PlayerRow2", p1)
+    p3 = _G["PlayerRow3"] or createPartyMemberFrame("PlayerRow3", p2)
+    p4 = _G["PlayerRow4"] or createPartyMemberFrame("PlayerRow4", p3)
+    p5 = _G["PlayerRow5"] or createPartyMemberFrame("PlayerRow5", p4)
+
+    local frameStack = {
+        p1Frame = p1,
+        p2Frame = p2,
+        p3Frame = p3,
+        p4Frame = p4,
+        p5Frame = p5
+    }
+
+return frameStack
+end
+
+local function Create_PartyMemberRow(partyNumber, ...)
+ --[[local parentFrame, groupSize, frameAnchor, temp_RowFrame, rowParent, rowOwner
+    parentFrame = _G[parentFrame]
+    groupSize = GetNumGroupMembers()
+
+    -- https://wowwiki-archive.fandom.com/wiki/Events/Party
+    -- GetNumPartyMembers() it will return 0, 1, 2, and 3. First event returing zero, 2nd event returning 1, etc etc.
+    -- todo: determine if 0 means player 0 - 4 or if 0 means not in group and when in group you get 1 - 5?
+
+    if (groupSize > 5) then print("Group too large - Create_PartyMemberRows") return end -- todo: close (if open) and disable party tab if in raid?
+    rowOwner = "party"..partyNumber -- set the owner of the row we are creating/updating
+
+    -- Get any existing party row frame or create a new one
+    --p1RowFrame = _G["PlayerRow1"] or createPartyMemberFrame(rowOwner, "PlayerRow"..partyNumber, parentFrame)
+
+    if (GetNumGroupMembers() == 0 ) then -- row owner not in group
+        rowOwner = "player"
+    else
+        rowOwner = "Party1" -- todo: sort out logic? 
+    end
+
+    if (not partyNumber and partyNumber < 1 and partyNumber > 5) then
+        print("Party number not set 1-5. FIX ME")
+        return 
+    end
+    if (not parentFrame) then
+        print("Parent target frame in invalid for Create_PartyMemberRows")
+        return 
+    end ]]
+end 
+
+ -- this happens when the party status/members change
 local function Refresh_PartyFrames(...)
+   
 end
 
 --------------------------------
@@ -446,6 +556,7 @@ function MainInterface:PartyScreen()
     txtPlaceHolder:SetText("Group Screen")
 
     Create_GroupFrame()
+    tblPartyRows = GetPartyMembersFrameStack()
 
     return PartyScreen
 end
@@ -523,7 +634,7 @@ function MainInterface:CreateMainPanel()
             ["window"] = "AboutScreen"
         },
         [1] = {
-            ["name"] = "Group",
+            ["name"] = "Party",
             ["window"] = "PartyScreen"
         }
     }
