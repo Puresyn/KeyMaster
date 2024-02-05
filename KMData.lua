@@ -161,7 +161,6 @@ end
 -- build a current season map table pulled from the API
 function Data:GetCurrentSeasonMaps()
     m = C_ChallengeMode.GetMapTable();
-    if (not m) then return end
     
     local mapTable = {}
     for i,v in ipairs(m) do
@@ -180,7 +179,7 @@ function Data:GetCurrentSeasonMaps()
 -- returns tablehash of score, level, ... for a certain dungeon and affix combo
 -- 
 function Data:GetMplusScoreForMap(mapid, weeklyAffix)
-    local mapScore, _ = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     
     if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
        print("Incorrect weeklyAffix value in GetMplusScoreForMap function")
@@ -196,36 +195,44 @@ function Data:GetMplusScoreForMap(mapid, weeklyAffix)
     }
     
     -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
-    if (not mapScore) then
-       print("Map Score was empty in GetMPlusScoreForMap function.")
-       
+    if (mapScore == nil) then
+       print("mapScore returned nil")
        return emptyData
-    else
-       if (not mapScore[2]) then
-          return emptyData
-       elseif (not mapScore[1]) then
-          return emptyData
-       end      
-    end
+    end   
     
     if(weeklyAffix == "Tyrannical") then
+       if (mapScore[2] == nil) then
+          --print ("No Tyrannical Key found.")
+          return emptyData
+       end
+       
        return mapScore[2]
     end
     
-    if(weeklyaffix == "Fortified") then
+    if(weeklyAffix == "Fortified") then
+       if (mapScore[1] == nil) then
+          -- print ("No Fortified Key found.")
+          return emptyData
+       end
+       
        return mapScore[1]
     end
+    
+    return nil
  end
 
 -- Returns name of map based on passed mapid
 -- Returns nil if not found
-function GetMapName(mapid)
+function Data:GetMapName(mapid)
     m = C_ChallengeMode.GetMapTable();
-    if (not m) then return end
+    if (not m) then 
+       print("Cannot find mapid " .. mapid .. "in Data;GetMapName function.")
+       return 
+    end
     
     local mapTable = {}
     for i,v in ipairs(m) do
-       name, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(v)
+       name,id,_,_,_ = C_ChallengeMode.GetMapUIInfo(v)
        if (id == mapid) then
           return name   
        end
@@ -238,48 +245,44 @@ function GetMapName(mapid)
 function Data:GetMyCharacterInfo()
     local myCharacterInfo = {}
     local id, _, level = Data:GetOwnedKey()
-    local scoreInfo = {}
     myCharacterInfo.GUID = UnitGUID("player")
     myCharacterInfo.name = UnitName("player")
     myCharacterInfo.ownedKeyId = id
     myCharacterInfo.ownedKeyLevel = level
     myCharacterInfo.keyRuns = {}
-    
-    local seasonMaps = Data:GetCurrentSeasonMaps();
+
+    local seasonMaps = Data:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
-        local keyRun = {
-            [mapid] = {
-                ["Tyrannical"] = {},
-                ["Fortified"] = {}
-            }
-        }
-
-         -- Tyrannical Keys
-        scoreInfo = Data:GetMplusScoreForMap(mapid, "Tyrannical")   
+        local keyRun = {}
+        keyRun["bestOverall"] = "BESTKEYHERE" -- TODO: get value from Data:GetMplusScoreForMap
+        --print()
+        --print("Processing: " .. Data:GetMapName(mapid))
+        --print ("MapID: " .. mapid)
+        --print()
+        
+        local scoreInfo = Data:GetMplusScoreForMap(mapid, "Tyrannical")   
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
             ["Level"] = scoreInfo.level,
             ["DurationSec"] = scoreInfo.duration,
-            ["IsOverTime"] = scoreInfo.overTime,
-            ["BestOverallScore"] = 0
+            ["IsOverTime"] = scoreInfo.overTime
         }
-        tinsert(keyRun[mapid]["Tyrannical"], dungeonDetails)
-
-        scoreInfo = Data:GetMplusScoreForMap(mapid, "Fortified")   
+        keyRun["Tyrannical"] = dungeonDetails
+        
+        local scoreInfo = Data:GetMplusScoreForMap(mapid, "Fortified")
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
             ["Level"] = scoreInfo.level,
             ["DurationSec"] = scoreInfo.duration,
-            ["IsOverTime"] = scoreInfo.overTime,
-            ["BestOverallScore"] = 0
+            ["IsOverTime"] = scoreInfo.overTime
         }
-        tinsert(keyRun[mapid]["Fortified"], dungeonDetails)
-
-        tinsert(myCharacterInfo.keyRuns, keyRun)
+        keyRun["Fortified"] = dungeonDetails
+        
+        myCharacterInfo.keyRuns[mapid] = keyRun
     end
-    
+
     return myCharacterInfo
- end
+end
 
 core.Data.PlayerInfo[1] = Data:GetMyCharacterInfo()
 --core.Data.PartyInfo = {}
