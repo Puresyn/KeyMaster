@@ -129,7 +129,7 @@ function core:init(event, name)
     -- Welcome message
     -- for ref: local _, myClass, _ = UnitClass("player")
     local myName = UnitName("player")
-    core:Print("Welcome back", "|cff"..core.Data:GetMyClassColor()..myName.."|r!")
+    core:Print("Welcome back", "|cff"..core.PlayerInfo:GetMyClassColor()..myName.."|r!")
 
 end
 

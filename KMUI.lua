@@ -138,7 +138,7 @@ local function GetWeekInfo()
     local str = ""
     local i = 0
     local temp_frame, temp_header,temp_headertxt
-    weekData = core.Data:GetAffixes()
+    weekData = core.PlayerInfo:GetAffixes()
     for i=1, #weekData, i+1 do
 
         str = weekData[i].name
@@ -187,9 +187,9 @@ local function CreateHeaderRating()
     local Path, _, Flags = MythicRatingPreText:GetFont()
     MythicRatingPreText:SetFont(Path, 12, Flags)
     MythicRatingPreText:SetPoint("CENTER")
-    MythicRatingPreText:SetText("|cff"..core.Data:GetMyClassColor()..UnitName("player").."\'s|r Rating:")
+    MythicRatingPreText:SetText("|cff"..core.PlayerInfo:GetMyClassColor()..UnitName("player").."\'s|r Rating:")
 
-    local myCurrentRating = core.Data:GetCurrentRating()
+    local myCurrentRating = core.PlayerInfo:GetCurrentRating()
     local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating)
 
     MythicRatingText = HeaderFrame.ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")

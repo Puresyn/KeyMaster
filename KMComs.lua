@@ -10,7 +10,6 @@ local _, core = ...
 core.Coms = {}
 
 local Coms = core.Coms
-local Coms
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.

@@ -14,7 +14,9 @@ embeds.xml
 
 KMConfig.lua
 KMComs.lua
-KMData.lua
+KMPlayerInfo.lua
 KMUI.lua
 KM_UI.xml
 KMInit.lua
+KMCommons.lua
+KMMisc.lua
