@@ -214,7 +214,7 @@ local function CreateHeaderRating()
 end
 
 --------------------------------
--- Create Party Tab Frames
+-- Create Party Tab Frames  
 --------------------------------
 
 -- create frame to contain the party member rows
@@ -230,7 +230,6 @@ local function Create_GroupFrame()
     temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
     temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
     temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -40)
-    window = temp_frame
 
     txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     Path, _, Flags = txtPlaceHolder:GetFont()
@@ -243,54 +242,60 @@ local function Create_GroupFrame()
     temp_frame.texture:SetAllPoints(temp_frame)
     temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- temporary bg color 
 
-    return window
+    return temp_frame
 end
 
 -- create a new template frame for each party members if it doesn't exist
 local function createPartyMemberFrame(frameName, parentFrame)
     local frameAnchor, frameHeight
+    local mtb = 2 -- top and bottom margin of each frame in pixels
 
     if (not parentFrame) then
         print("Can not find row reference \"Nil\" while trying to make "..frameName.."'s row.")
     end
 
-    print("Creating "..frameName.." and setting its parent to "..parentFrame:GetName()..".") -- debug
+    --print("Creating "..frameName.." and setting its parent to "..parentFrame:GetName()..".") -- debug
 
-    if (frameName == "PlayerRow1") then partyNumber = 1
-    elseif (frameName == "PlayerRow2") then partyNumber = 2
-    elseif (frameName == "PlayerRow3") then partyNumber = 3
-    elseif (frameName == "PlayerRow4") then partyNumber = 4
+    if (frameName == "KM_PlayerRow1") then partyNumber = 1
+    elseif (frameName == "KM_PlayerRow2") then partyNumber = 2
+    elseif (frameName == "KM_PlayerRow3") then partyNumber = 3
+    elseif (frameName == "KM_PlayerRow4") then partyNumber = 4
+    elseif (frameName == "KM_PlayerRow5") then partyNumber = 5
     end
 
-    if (frameName == "PlayerRow1") then 
-        frameAnchor = "TOPLEFT", parentFrame, "TOPLEFT", 0, 0
+
+    local temp_RowFrame = CreateFrame("Frame", frameName, parentFrame)
+    temp_RowFrame:ClearAllPoints()
+
+    --temp_RowFrame:SetPoint(frameAnchor)
+    if (frameName == "KM_PlayerRow1") then 
+        --frameAnchor = "TOPLEFT", parentFrame, "TOPLEFT", 0, -20
+        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -2)
 
          -- get the frame's group container and set this row frame height to 1/5th the group container height
-        frameHeight = parentFrame:GetHeight()/5
+        frameHeight = (parentFrame:GetHeight()/5) - (mtb*2)
 
     else
-        frameAnchor = "TOPLEFT", parentFrame, "BOTTOMLEFT", 0, 0
+        --frameAnchor = "TOPLEFT", parentFrame, "BOTTOMLEFT", 0, -2
+        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 0, -4)
 
         -- get the frame parent and set this row frame height the parent's height
         frameHeight = parentFrame:GetHeight()
 
     end
 
-    local temp_RowFrame = CreateFrame("Frame", frameName, parentFrame)
     temp_RowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
-    temp_RowFrame:ClearAllPoints()
-    temp_RowFrame:SetPoint(frameAnchor)
     temp_RowFrame.texture = temp_RowFrame:CreateTexture()
     temp_RowFrame.texture:SetAllPoints(temp_RowFrame)
     temp_RowFrame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- todo: temporary bg color 
 
 
-    local temp_frame = CreateFrame("Frame", "PortraitFrame"..partyNumber, _G["PlayerRow"..partyNumber])
+    local temp_frame = CreateFrame("Frame", "KM_PortraitFrame"..partyNumber, _G["KM_PlayerRow"..partyNumber])
     temp_frame:SetSize(parentFrame:GetWidth()+(temp_RowFrame:GetHeight()/2), temp_RowFrame:GetHeight())
     temp_frame:ClearAllPoints()
     temp_frame:SetPoint("RIGHT", temp_frame:GetParent(), "RIGHT", 0, 0)
 
-    local img1 = temp_frame:CreateTexture(nil, "ARTWORK")
+    local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "OVERLAY")
     img1:SetHeight(temp_RowFrame:GetHeight())
     img1:SetWidth(temp_RowFrame:GetHeight())
     img1:ClearAllPoints()
@@ -300,7 +305,7 @@ local function createPartyMemberFrame(frameName, parentFrame)
     --SetPortraitTexture(img1, "player")
     img1:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default", false)
 
-    print(frameName.." created.") -- debug
+    --print(frameName.." created.") -- debug
 
     return temp_RowFrame
 end
@@ -308,11 +313,11 @@ end
 -- creates a party member rows lookup table (will create the frames if they don't yet exist)
 local function GetPartyMembersFrameStack()
     local p1, p2, p3, p4, p5
-    p1 = _G["PlayerRow1"] or createPartyMemberFrame("PlayerRow1", _G["KeyMaster_Frame_Party"])
-    p2 = _G["PlayerRow2"] or createPartyMemberFrame("PlayerRow2", p1)
-    p3 = _G["PlayerRow3"] or createPartyMemberFrame("PlayerRow3", p2)
-    p4 = _G["PlayerRow4"] or createPartyMemberFrame("PlayerRow4", p3)
-    p5 = _G["PlayerRow5"] or createPartyMemberFrame("PlayerRow5", p4)
+    p1 = _G["KM_PlayerRow1"] or createPartyMemberFrame("KM_PlayerRow1", _G["KeyMaster_Frame_Party"])
+    p2 = _G["KM_PlayerRow2"] or createPartyMemberFrame("KM_PlayerRow2", p1)
+    p3 = _G["KM_PlayerRow3"] or createPartyMemberFrame("KM_PlayerRow3", p2)
+    p4 = _G["KM_PlayerRow4"] or createPartyMemberFrame("KM_PlayerRow4", p3)
+    p5 = _G["KM_PlayerRow5"] or createPartyMemberFrame("KM_PlayerRow5", p4)
 
     local frameStack = {
         p1Frame = p1,
@@ -321,6 +326,11 @@ local function GetPartyMembersFrameStack()
         p4Frame = p4,
         p5Frame = p5
     }
+
+    --[[ p2:SetPoint("TOPLEFT", "KM_PlayerRow1", "BOTTOMLEFT", 0, 0)
+    p3:SetPoint("TOPLEFT", "KM_PlayerRow2", "BOTTOMLEFT", 0, 0)
+    p4:SetPoint("TOPLEFT", "KM_PlayerRow3", "BOTTOMLEFT", 0, 0)
+    p5:SetPoint("TOPLEFT", "KM_PlayerRow4", "BOTTOMLEFT", 0, 0) ]]
 
 return frameStack
 end
@@ -358,7 +368,20 @@ end
 
  -- this happens when the party status/members change
 local function Refresh_PartyFrames(...)
-   
+    local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
+    local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
+
+    if ("party1") then 
+        --SetPortraitTexture(_G["KM_Portrait1"], "party1")
+    else 
+        _G["KM_Portrait1"]:SetTexture(xPortrait, false)
+        --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    end
+   --[[  SetPortraitTexture(_G["KM_Portrait2"], "party1")
+    SetPortraitTexture(_G["KM_Portrait2"], nil)
+    SetPortraitTexture(_G["KM_Portrait1"], "party2")
+    SetPortraitTexture(_G["KM_Portrait1"], "party3")
+    SetPortraitTexture(_G["KM_Portrait1"], "party4") ]]
 end
 
 --------------------------------
@@ -555,9 +578,6 @@ function MainInterface:PartyScreen()
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText("Group Screen")
 
-    Create_GroupFrame()
-    tblPartyRows = GetPartyMembersFrameStack()
-
     return PartyScreen
 end
 
@@ -617,6 +637,10 @@ function MainInterface:CreateMainPanel()
     configFrameContent:Hide()
     aboutFrameContent = MainInterface:AboutScreen()
     aboutFrameContent:Hide()
+
+    Create_GroupFrame()
+    tblPartyRows = GetPartyMembersFrameStack()
+    Refresh_PartyFrames()
  
     -- Create tabs
     -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
@@ -663,6 +687,7 @@ function MainInterface:CreateMainPanel()
     
     --AboutScreen = MainInterface.AboutScreen()
     --AboutScreen:Hide()]]
+
     MainPanel:Hide()
     return MainPanel
 end
