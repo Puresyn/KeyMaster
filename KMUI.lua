@@ -5,6 +5,15 @@
 --------------------------------
 
 --------------------------------
+-- TODO's
+--------------------------------
+-- It seems that over time I moved some things (mostly frames) away from the namespace which causes code navigation
+-- and debugging inconsistencies. This should be standardized to exclusively use this addon's namespace.
+-- (i.e using core.MainInterface:PartyScreen instead of using _G["KeyMaster_Frame_Party"])
+-- This, among other benefits, internalizes the references rather than searching the 
+-- games unmanaged globals for functions and/or assets.
+
+--------------------------------
 -- Namespace
 --------------------------------
 local _, core = ...
@@ -14,7 +23,7 @@ core.KeyMaster = {}
 local MainInterface = core.MainInterface
 --local UIWindow
 --local MainPanel, HeaderFrame, ContentFrame
-KeyMaster = core.KeyMaster
+KeyMaster = core.KeyMaster -- todo: KeyMaster is global, not sure it should be and could be open to vulnerabilities.
 
 --------------------------------
 -- In-Game fonts:
@@ -37,6 +46,7 @@ end
 
 -- sort tables by index because LUA doesn't!
 -- order is optional
+-- todo: this should probalby be moved to a different file
 function spairs(t, order)
     -- collect the keys
     local keys = {}
@@ -63,12 +73,20 @@ end
 -- F:\Games\World of Warcraft\_retail_\BlizzardInterfaceCode\Interface\SharedXML\SharedUIPanelTemplates.xml
 -- Dynamic Buttons? https://www.wowinterface.com/forums/showthread.php?t=53126
 
+-- Currently Unused
 function KeyMaster:Initialize()
 end
 
+-- UI Event handler
+-- use /eventtrace in game to see events as they happen (warning: it's a LOT!)
 local function uiEventHandler(self, event, ...)
     local arg1 = select(1, ...);
     -- Do something with event and arg1
+    if event == "GROUP_ROSTER_UPDATE" then
+        MainInterface:Refresh_PartyFrames()
+        print("-- Number of members: ", GetNumGroupMembers())
+    end
+
     core:Print("UI Event Handler Called.");
     for key, value in pairs(self) do
         core:Print(tostringall(key), tostringall(value))
@@ -124,6 +142,8 @@ local function SetTabs(frame, tabs)
         count = count + 1
     end
 
+    -- set first active tab
+    -- todo: change this so it can be customized?
     Tab_OnClick(_G[frameName.."Tab1"])
 
     return unpack(contents)
@@ -217,12 +237,16 @@ end
 -- Create Party Tab Frames  
 --------------------------------
 
--- create frame to contain the party member rows
+-- create a parent frame to contain the party member rows
 local function Create_GroupFrame()
     local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
     frameTitle = "Party member key and run information." -- set title
-    a = PartyScreen -- relative frame of the party keys container frame
+
+    -- relative parent frame of this frame
+    -- todo: the next 2 lines may be reduntant?
+    a = PartyScreen 
     window = _G["KeyMaster_Frame_Party"]
+
     gfm = 10 -- group frame margin
 
     if window then return window end -- if it already exists, don't make another one
@@ -250,6 +274,7 @@ local function createPartyMemberFrame(frameName, parentFrame)
     local frameAnchor, frameHeight
     local mtb = 2 -- top and bottom margin of each frame in pixels
 
+    -- DEBUG
     if (not parentFrame) then
         print("Can not find row reference \"Nil\" while trying to make "..frameName.."'s row.")
     end
@@ -272,7 +297,7 @@ local function createPartyMemberFrame(frameName, parentFrame)
         --frameAnchor = "TOPLEFT", parentFrame, "TOPLEFT", 0, -20
         temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -2)
 
-         -- get the frame's group container and set this row frame height to 1/5th the group container height
+         -- get the frame's group container and set this row frame height to 1/5th the group container height minus margins
         frameHeight = (parentFrame:GetHeight()/5) - (mtb*2)
 
     else
@@ -295,15 +320,28 @@ local function createPartyMemberFrame(frameName, parentFrame)
     temp_frame:ClearAllPoints()
     temp_frame:SetPoint("RIGHT", temp_frame:GetParent(), "RIGHT", 0, 0)
 
-    local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "OVERLAY")
+    --[[ local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "OVERLAY")
     img1:SetHeight(temp_RowFrame:GetHeight())
     img1:SetWidth(temp_RowFrame:GetHeight())
     img1:ClearAllPoints()
-    img1:SetPoint("LEFT", 0, 0)
+    img1:SetPoint("LEFT", 0, 0) ]]
 
-    -- todo: take the line below out of here and put it in the party frame refresh function
-    --SetPortraitTexture(img1, "player")
-    img1:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default", false)
+    local mdl1 = CreateFrame("PlayerModel", "KM_GroupModelFrame"..partyNumber, _G["KM_PortraitFrame"..partyNumber])
+    mdl1:SetHeight(temp_RowFrame:GetHeight())
+    mdl1:SetWidth(temp_RowFrame:GetHeight())
+    mdl1:ClearAllPoints()
+    mdl1:SetPoint("LEFT", 0, 0)
+    mdl1:SetPortraitZoom(1)
+   --[[  mdl1:SetCustomCamera(1) 
+    mdl1:SetCameraPosition(2.8, -1, 0.4)
+    mdl1:RefreshCamera()
+    mdl1:SetCustomCamera(1) -- Yes, it needs to be  here twice ]]
+
+    -- todo: take the line below out of here and put it in the party frame refresh function?
+    -- SetPortraitTexture(img1, "player")
+
+    -- Set a default faux portriat image
+    --img1:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default", false)
 
     --print(frameName.." created.") -- debug
 
@@ -335,6 +373,7 @@ local function GetPartyMembersFrameStack()
 return frameStack
 end
 
+-- Unused
 local function Create_PartyMemberRow(partyNumber, ...)
  --[[local parentFrame, groupSize, frameAnchor, temp_RowFrame, rowParent, rowOwner
     parentFrame = _G[parentFrame]
@@ -366,17 +405,73 @@ local function Create_PartyMemberRow(partyNumber, ...)
     end ]]
 end 
 
- -- this happens when the party status/members change
-local function Refresh_PartyFrames(...)
+ -- this needs to be called when the party status/members change
+ -- ... passed in for future development
+function MainInterface:Refresh_PartyFrames(...)
     local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
+    local numMembers = GetNumGroupMembers()
 
-    if ("party1") then 
-        --SetPortraitTexture(_G["KM_Portrait1"], "party1")
-    else 
-        _G["KM_Portrait1"]:SetTexture(xPortrait, false)
+    -- set the client's portrait
+    --SetPortraitTexture(_G["KM_Portrait1"], "player")
+    _G["KM_GroupModelFrame1"]:SetUnit("player")
+   --[[  _G["KM_GroupModelFrame1"]:RefreshCamera()
+    _G["KM_GroupModelFrame1"]:SetCustomCamera(1) -- Yes, it needs to be  here again ]]
+    _G["KM_PlayerRow1"]:Show()
+    -- update data here for player
+
+    -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
+    -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
+    if (numMembers == 2) then 
+        --SetPortraitTexture(_G["KM_Portrait2"], "party1")
+        --if (UnitIsVisible()) then
+            --_G["KM_Portrait2"]:SetUnit("party1")
+        --else
+           -- SetPortraitTexture(_G["KM_Portrait2"], "party1")
+        --end
+        _G["KM_PlayerRow2"]:Show()
+        -- update data here for party1
+
+       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
         --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    else
+        _G["KM_PlayerRow2"]:Hide()
     end
+
+    if (numMembers == 3) then 
+        --SetPortraitTexture(_G["KM_Portrait3"], "party2")
+        _G["KM_PlayerRow3"]:Show()
+        -- update data here for party2
+
+       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
+        --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    else
+        _G["KM_PlayerRow3"]:Hide()
+    end
+
+    if (numMembers == 4) then 
+        --SetPortraitTexture(_G["KM_Portrait4"], "party3")
+        _G["KM_PlayerRow4"]:Show()
+        -- update data here for party3
+
+       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
+        --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    else
+        _G["KM_PlayerRow4"]:Hide()
+    end
+
+    if (numMembers == 5) then 
+        --SetPortraitTexture(_G["KM_Portrait5"], "party4")
+        _G["KM_PlayerRow5"]:Show()
+        -- update data here for party4
+
+       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
+        --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    else
+        _G["KM_PlayerRow5"]:Hide()
+    end
+
+
    --[[  SetPortraitTexture(_G["KM_Portrait2"], "party1")
     SetPortraitTexture(_G["KM_Portrait2"], nil)
     SetPortraitTexture(_G["KM_Portrait1"], "party2")
@@ -578,7 +673,25 @@ function MainInterface:PartyScreen()
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText("Group Screen")
 
+    PartyScreen:RegisterEvent("GROUP_ROSTER_UPDATE")
+    PartyScreen:SetScript("OnEvent", uiEventHandler)
+
     return PartyScreen
+end
+
+function MainInterface:JournalScreen()
+    local txtPlaceHolder
+    JournalScreen = CreateFrame("Frame", "KeyMaster_JournalScreen", ContentFrame);
+    JournalScreen:SetSize(ContentFrame:GetWidth(), ContentFrame:GetHeight())
+    JournalScreen:SetPoint("TOPLEFT", ContentFrame, "TOPLEFT", 0, 0)
+    txtPlaceHolder = JournalScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 30, Flags)
+    txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText("Journal Screen")
+
+    return JournalScreen
 end
 
 --------------------------------
@@ -632,6 +745,8 @@ function MainInterface:CreateMainPanel()
     headerFrameContent:Show();
     mainFrameContent = MainInterface:MainScreen()
     mainFrameContent:Hide()
+    journalFrameContent = MainInterface:JournalScreen()
+    journalFrameContent:Hide()
     partyFrameContent = MainInterface:PartyScreen()
     partyFrameContent:Hide()
     configFrameContent = MainInterface:ConfigScreen()
@@ -642,7 +757,7 @@ function MainInterface:CreateMainPanel()
     -- Party tab content
     Create_GroupFrame()
     tblPartyRows = GetPartyMembersFrameStack()
-    Refresh_PartyFrames()
+    MainInterface:Refresh_PartyFrames()
  
     -- Create tabs
     -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
@@ -651,17 +766,21 @@ function MainInterface:CreateMainPanel()
             ["name"] = "Main",
             ["window"] = "MainScreen"
         },
-        [2] = {
-            ["name"] = "Config",
-            ["window"] = "ConfigScreen"
-        },
-        [3] = {
-            ["name"] = "About",
-            ["window"] = "AboutScreen"
-        },
         [1] = {
             ["name"] = "Party",
             ["window"] = "PartyScreen"
+        },
+        [2] = {
+            ["name"] = "Journal",
+            ["window"] = "JournalScreen"
+        },
+        [3] = {
+            ["name"] = "Config",
+            ["window"] = "ConfigScreen"
+        },
+        [4] = {
+            ["name"] = "About",
+            ["window"] = "AboutScreen"
         }
     }
 
