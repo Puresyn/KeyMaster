@@ -7,6 +7,10 @@
 -- Namespace
 --------------------------------
 local _, core = ...
+
+--------------------------------
+-- Globals
+--------------------------------
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
 KM_VERSION_MINOR = 0.3 -- float value minor version release number
 KM_VERSION_STATUS = "beta" -- "beta" or "release - for display and update notification purposes"
@@ -29,7 +33,10 @@ core.commands = {
         print("=====================")
         core:Print("List of slash commands:")
         core:Print("|cff"..themeTextColor.."/km|r |cff"..themeYellowTextColor.."show|r - shows the main window.")
+
+        -- todo: change this to open the config on the new tab system instead of a new window
         core:Print("|cff"..themeTextColor.."/km|r |cff"..themeYellowTextColor.."config|r - shows the configuration menu.")
+
         core:Print("|cff"..themeTextColor.."/km|r |cff"..themeYellowTextColor.."help|r - shows this menu.")
         print("=====================")
     end,
@@ -42,7 +49,7 @@ core.commands = {
 
 }
 
--- Bindings.xml functions
+-- Bindings.xml functions - for key bindings
 function KMWindowBindingToggle()
     core.MainInterface.Toggle()
 end
@@ -79,7 +86,7 @@ local function HandleSlashCommands(str)
 					path = path[arg] -- another sub-table found!
 				end
 			else
-				-- does not exist!
+				-- command does not exist!
 				core.commands.show()
 				return;
 			end
@@ -101,8 +108,9 @@ end
 -- runs scripts accordingly:
 --------------------------------
 function core:init(event, name)
-    if (name ~= "KeyMaster") then return end
+    if (name ~= "KeyMaster") then return end -- if it's not this addon calling it, ignore the event
 
+    -- Enables using arrow keys in edit boxes (not currently in use)
     for i = 1, NUM_CHAT_WINDOWS do
         _G["ChatFrame"..i.."EditBox"]:SetAltArrowKeyMode(false)
     end
