@@ -407,10 +407,13 @@ end
 
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
+ -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
+ --    this also applies for disconnects!
 function MainInterface:Refresh_PartyFrames(...)
     local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
     local numMembers = GetNumGroupMembers()
+    local mf1, mf2, mf3, mf4
 
     -- set the client's portrait
     --SetPortraitTexture(_G["KM_Portrait1"], "player")
@@ -422,13 +425,15 @@ function MainInterface:Refresh_PartyFrames(...)
 
     -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
     -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
-    if (numMembers == 2) then 
-        --SetPortraitTexture(_G["KM_Portrait2"], "party1")
-        --if (UnitIsVisible()) then
-            --_G["KM_Portrait2"]:SetUnit("party1")
-        --else
+    if (numMembers == 2) then
+        mf1 = _G["KM_GroupModelFrame2"]
+        if (UnitIsVisible("party1")) then
+            mf1:SetUnit("party1")
+            mf1:RefreshCamera() -- negates camera movement on party tab show()
+        else
            -- SetPortraitTexture(_G["KM_Portrait2"], "party1")
-        --end
+           mf1:SetDisplayInfo(22447)
+        end
         _G["KM_PlayerRow2"]:Show()
         -- update data here for party1
 
@@ -439,7 +444,16 @@ function MainInterface:Refresh_PartyFrames(...)
     end
 
     if (numMembers == 3) then 
+        mf2 = _G["KM_GroupModelFrame3"]
+        if (UnitIsVisible("party2")) then
+            mf2:SetUnit("party2")
+            mf2:RefreshCamera()
+        else
         --SetPortraitTexture(_G["KM_Portrait3"], "party2")
+            mf2:SetDisplayInfo(22447)
+        end
+
+        --_G["KM_GroupModelFrame3"]:SetUnit("party2")
         _G["KM_PlayerRow3"]:Show()
         -- update data here for party2
 
@@ -449,8 +463,17 @@ function MainInterface:Refresh_PartyFrames(...)
         _G["KM_PlayerRow3"]:Hide()
     end
 
-    if (numMembers == 4) then 
+    if (numMembers == 4) then
+        mf3 = _G["KM_GroupModelFrame4"]
+        if (UnitIsVisible("party3")) then
+            mf3:SetUnit("party3")
+            mf3:RefreshCamera()
+        else
         --SetPortraitTexture(_G["KM_Portrait4"], "party3")
+            mf3:SetDisplayInfo(22447)
+        end
+
+        --_G["KM_GroupModelFrame4"]:SetUnit("party3")
         _G["KM_PlayerRow4"]:Show()
         -- update data here for party3
 
@@ -461,7 +484,16 @@ function MainInterface:Refresh_PartyFrames(...)
     end
 
     if (numMembers == 5) then 
+        mf4 = _G["KM_GroupModelFrame5"]
+        if (UnitIsVisible("party4")) then
+            mf4:SetUnit("party4")
+            mf4:RefreshCamera()
+        else
         --SetPortraitTexture(_G["KM_Portrait5"], "party4")
+            mf4:SetDisplayInfo(22447)
+        end
+
+        --_G["KM_GroupModelFrame5"]:SetUnit("party4")
         _G["KM_PlayerRow5"]:Show()
         -- update data here for party4
 
