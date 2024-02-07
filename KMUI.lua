@@ -627,6 +627,7 @@ function MainInterface:CreateMainPanel()
     ContentFrame:Show()
 
     -- Create content screens and show/hide them
+    -- the way this works probaly needs changed so any tab could be the first tab displayed
     headerFrameContent = MainInterface:HeaderScreen()
     headerFrameContent:Show();
     mainFrameContent = MainInterface:MainScreen()
@@ -638,6 +639,7 @@ function MainInterface:CreateMainPanel()
     aboutFrameContent = MainInterface:AboutScreen()
     aboutFrameContent:Hide()
 
+    -- Party tab content
     Create_GroupFrame()
     tblPartyRows = GetPartyMembersFrameStack()
     Refresh_PartyFrames()

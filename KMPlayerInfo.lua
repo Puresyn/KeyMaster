@@ -76,13 +76,13 @@ end
 -- Query what key the character has in bags, if any.
 function PlayerInfo:GetOwnedKey()
     local mapid = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
-    local keystoneLevel, mapname
+    local keystoneLevel, mapName
 
     if (mapid) then
         -- key found in bags
         -- Get Data
         -- name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(i)
-        -- todo: search local table (Data:GetCurrentSeasonMaps()) instead of querying for new data
+        -- todo: search local table (KMPlayerInfo:GetCurrentSeasonMaps()) instead of querying for new data
         mapName, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(mapid)
         keystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel(mapid)        
     else
@@ -91,7 +91,7 @@ function PlayerInfo:GetOwnedKey()
             mapid = 0
             mapName = "In Vault"
             keystoneLevel = 0
-            -- todo: Tell player to get their vault key or go ask key merchant for one
+            -- todo: Tell player to get their vault key
         else
             mapid = 0
             mapName = "Ask Key Merchant"
@@ -101,7 +101,7 @@ function PlayerInfo:GetOwnedKey()
         end
     end  
 
-    return mapid, mapname, keystoneLevel
+    return mapid, mapName, keystoneLevel
 end
 
 -- Retrieve from API the current active player's M+ score.
