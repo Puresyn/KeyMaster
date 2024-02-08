@@ -425,7 +425,7 @@ function MainInterface:Refresh_PartyFrames(...)
 
     -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
     -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
-    if (numMembers == 2) then
+    if (numMembers >= 2) then
         mf1 = _G["KM_GroupModelFrame2"]
         if (UnitIsVisible("party1")) then
             mf1:SetUnit("party1")
@@ -443,7 +443,7 @@ function MainInterface:Refresh_PartyFrames(...)
         _G["KM_PlayerRow2"]:Hide()
     end
 
-    if (numMembers == 3) then 
+    if (numMembers >= 3) then 
         mf2 = _G["KM_GroupModelFrame3"]
         if (UnitIsVisible("party2")) then
             mf2:SetUnit("party2")
@@ -463,7 +463,7 @@ function MainInterface:Refresh_PartyFrames(...)
         _G["KM_PlayerRow3"]:Hide()
     end
 
-    if (numMembers == 4) then
+    if (numMembers >= 4) then
         mf3 = _G["KM_GroupModelFrame4"]
         if (UnitIsVisible("party3")) then
             mf3:SetUnit("party3")
