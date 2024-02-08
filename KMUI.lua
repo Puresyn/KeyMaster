@@ -81,18 +81,23 @@ end
 -- use /eventtrace in game to see events as they happen (warning: it's a LOT!)
 local function uiEventHandler(self, event, ...)
     local arg1 = select(1, ...);
+
+     -- GROUP_LEFT, GROUP_JOINED
     -- Do something with event and arg1
-    if event == "GROUP_ROSTER_UPDATE" then
+
+
+    if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         MainInterface:Refresh_PartyFrames()
-        print("-- Number of members: ", GetNumGroupMembers())
+
+        --print("-- Number of members: ", GetNumGroupMembers())
     end
 
-    core:Print("UI Event Handler Called.");
+    --core:Print("UI Event Handler Called.");
     for key, value in pairs(self) do
-        core:Print(tostringall(key), tostringall(value))
+        --core:Print(tostringall(key), tostringall(value))
     end
-    core:Print("Event:",event)
-    core:Print("Args:", tostringall(...))
+    --core:Print("Event:",event)
+    --core:Print("Args:", tostringall(...))
  end
 
  --------------------------------
@@ -240,7 +245,7 @@ end
 -- create a parent frame to contain the party member rows
 local function Create_GroupFrame()
     local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
-    frameTitle = "Party member key and run information." -- set title
+    frameTitle = "Party Information." -- set title
 
     -- relative parent frame of this frame
     -- todo: the next 2 lines may be reduntant?
@@ -320,18 +325,26 @@ local function createPartyMemberFrame(frameName, parentFrame)
     temp_frame:ClearAllPoints()
     temp_frame:SetPoint("RIGHT", temp_frame:GetParent(), "RIGHT", 0, 0)
 
-    --[[ local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "OVERLAY")
+    local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
     img1:SetHeight(temp_RowFrame:GetHeight())
     img1:SetWidth(temp_RowFrame:GetHeight())
     img1:ClearAllPoints()
-    img1:SetPoint("LEFT", 0, 0) ]]
+    img1:SetPoint("LEFT", 0, 0)
 
-    local mdl1 = CreateFrame("PlayerModel", "KM_GroupModelFrame"..partyNumber, _G["KM_PortraitFrame"..partyNumber])
+    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
+    img2:SetHeight(temp_RowFrame:GetHeight())
+    img2:SetWidth(temp_RowFrame:GetHeight())
+    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame",false)
+    img2:ClearAllPoints()
+    img2:SetPoint("LEFT", 0, 0)
+    
+
+    --[[ local mdl1 = CreateFrame("PlayerModel", "KM_GroupModelFrame"..partyNumber, _G["KM_PortraitFrame"..partyNumber])
     mdl1:SetHeight(temp_RowFrame:GetHeight())
     mdl1:SetWidth(temp_RowFrame:GetHeight())
     mdl1:ClearAllPoints()
     mdl1:SetPoint("LEFT", 0, 0)
-    mdl1:SetPortraitZoom(1)
+    mdl1:SetPortraitZoom(1) ]]
    --[[  mdl1:SetCustomCamera(1) 
     mdl1:SetCameraPosition(2.8, -1, 0.4)
     mdl1:RefreshCamera()
@@ -412,46 +425,39 @@ end
 function MainInterface:Refresh_PartyFrames(...)
     local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
+    local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
     local numMembers = GetNumGroupMembers()
     local mf1, mf2, mf3, mf4
 
     -- set the client's portrait
-    --SetPortraitTexture(_G["KM_Portrait1"], "player")
-    _G["KM_GroupModelFrame1"]:SetUnit("player")
-   --[[  _G["KM_GroupModelFrame1"]:RefreshCamera()
-    _G["KM_GroupModelFrame1"]:SetCustomCamera(1) -- Yes, it needs to be  here again ]]
-    _G["KM_PlayerRow1"]:Show()
-    -- update data here for player
+    SetPortraitTexture(_G["KM_Portrait1"], "player")
 
     -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
     -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
     if (numMembers >= 2) then
-        mf1 = _G["KM_GroupModelFrame2"]
-        if (UnitIsVisible("party1")) then
-            mf1:SetUnit("party1")
-            mf1:RefreshCamera() -- negates camera movement on party tab show()
-        else
-           -- SetPortraitTexture(_G["KM_Portrait2"], "party1")
-           mf1:SetDisplayInfo(22447)
-        end
+       -- if ("party1") then
+            SetPortraitTexture(_G["KM_Portrait2"], "party1")
+       -- else
         _G["KM_PlayerRow2"]:Show()
         -- update data here for party1
 
        -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
         --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
-        _G["KM_PlayerRow2"]:Hide()
+        _G["KM_Portrait2"]:SetTexture(xPortrait, false)
+        --_G["KM_PlayerRow2"]:Hide()
     end
 
     if (numMembers >= 3) then 
-        mf2 = _G["KM_GroupModelFrame3"]
-        if (UnitIsVisible("party2")) then
-            mf2:SetUnit("party2")
-            mf2:RefreshCamera()
-        else
+       -- mf2 = _G["KM_GroupModelFrame3"]
+        --if ("party2") then
+            SetPortraitTexture(_G["KM_Portrait3"], "party2")
+           -- mf2:SetUnit("party2")
+            --mf2:RefreshCamera()
+        --else
         --SetPortraitTexture(_G["KM_Portrait3"], "party2")
-            mf2:SetDisplayInfo(22447)
-        end
+           -- mf2:SetDisplayInfo(22447)
+        --end
 
         --_G["KM_GroupModelFrame3"]:SetUnit("party2")
         _G["KM_PlayerRow3"]:Show()
@@ -460,18 +466,20 @@ function MainInterface:Refresh_PartyFrames(...)
        -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
         --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
-        _G["KM_PlayerRow3"]:Hide()
+        _G["KM_Portrait3"]:SetTexture(xPortrait, false)
+        --_G["KM_PlayerRow3"]:Hide()
     end
 
     if (numMembers >= 4) then
-        mf3 = _G["KM_GroupModelFrame4"]
-        if (UnitIsVisible("party3")) then
-            mf3:SetUnit("party3")
-            mf3:RefreshCamera()
-        else
+       -- mf3 = _G["KM_GroupModelFrame4"]
+        --if ("party3") then
+            --mf3:SetUnit("party3")
+            --mf3:RefreshCamera()
+            SetPortraitTexture(_G["KM_Portrait4"], "party3")
+        --else
         --SetPortraitTexture(_G["KM_Portrait4"], "party3")
-            mf3:SetDisplayInfo(22447)
-        end
+            --mf3:SetDisplayInfo(22447)
+       -- end
 
         --_G["KM_GroupModelFrame4"]:SetUnit("party3")
         _G["KM_PlayerRow4"]:Show()
@@ -480,18 +488,16 @@ function MainInterface:Refresh_PartyFrames(...)
        -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
         --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
-        _G["KM_PlayerRow4"]:Hide()
+        _G["KM_Portrait4"]:SetTexture(xPortrait, false)
+        --_G["KM_PlayerRow4"]:Hide()
     end
 
     if (numMembers == 5) then 
-        mf4 = _G["KM_GroupModelFrame5"]
-        if (UnitIsVisible("party4")) then
-            mf4:SetUnit("party4")
-            mf4:RefreshCamera()
-        else
+        --if (UnitIsVisible("party4")) then
+            SetPortraitTexture(_G["KM_Portrait5"], "party4")
+       -- else
         --SetPortraitTexture(_G["KM_Portrait5"], "party4")
-            mf4:SetDisplayInfo(22447)
-        end
+       -- end
 
         --_G["KM_GroupModelFrame5"]:SetUnit("party4")
         _G["KM_PlayerRow5"]:Show()
@@ -500,7 +506,8 @@ function MainInterface:Refresh_PartyFrames(...)
        -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
         --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
-        _G["KM_PlayerRow5"]:Hide()
+        _G["KM_Portrait5"]:SetTexture(xPortrait, false)
+        --_G["KM_PlayerRow5"]:Hide()
     end
 
 
