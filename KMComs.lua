@@ -28,11 +28,11 @@ end
 
 -- Serialize communication data:
 -- Can communitcate over whatever default channels are avaialable via hidden Addons subchannel.
-function MyAddon:Transmit(data)
+function MyAddon:Transmit(data, target, playerName)
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
-    self:SendCommMessage(comPrefix, encoded, "WHISPER", UnitName("player"))
+    self:SendCommMessage(comPrefix, encoded, target, playerName)
 end
 
 -- Deserialize communication data:
@@ -47,5 +47,20 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
 
     -- todo: Handle data communication events
     -- print("Recieved Data: "..data)
-    print("KM2 Received Data: "..decoded)
+    -- print("PREFIX: " ..prefix)
+    -- print("DISTRO: " ..distribution)
+    -- print("SENDER: " ..sender)
+    --print("Data: "..decoded)'
+
+    local s = {name="a", level=2}
+    if (data == "PARTYCHANGED") then
+        print("SEND DATA")
+        MyAddon:Transmit(s, "PARTY", nil)
+    elseif (data == "PLAYERDATA") then
+        print("GOT PLAYER DATA")
+    else
+        print("WHAT ARE YOU!?")
+        tprint(data)
+    end
 end
+
