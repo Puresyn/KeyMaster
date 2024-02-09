@@ -46,6 +46,6 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     if not success then return end
 
     -- todo: Handle data communication events
-    print("Recieved Data: "..data)
-    print("Data: "..decoded)
+    -- print("Recieved Data: "..data)
+    print("KM2 Received Data: "..decoded)
 end
