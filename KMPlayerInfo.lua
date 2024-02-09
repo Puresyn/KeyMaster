@@ -23,9 +23,10 @@ function PlayerInfo:IsMaxLevel()
 end
 
 -- Retrieve the color for the class that blizzard has set.
-function PlayerInfo:GetMyClassColor()
-    local c
-    local _, myClass, _ = UnitClass("player")
+function PlayerInfo:GetMyClassColor(unit)
+    local c,p 
+    if (not unit) then unit = "player" end
+    local _, myClass, _ = UnitClass(unit)
     local c = string.sub(select(4, GetClassColor(myClass)), 3, -1)
     return c
 end
@@ -33,7 +34,7 @@ end
 ----------------------------------
 function PlayerInfo:GetMyCharacterInfo()
     local myCharacterInfo = {}
-    local id, _, level = Data:GetOwnedKey()
+    local id, _, level = PlayerInfo:GetOwnedKey()
     myCharacterInfo.GUID = UnitGUID("player")
     myCharacterInfo.name = UnitName("player")
     myCharacterInfo.ownedKeyId = id

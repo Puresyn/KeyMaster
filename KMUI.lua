@@ -19,8 +19,11 @@
 local _, core = ...
 core.MainInterface = {}
 core.KeyMaster = {}
+core.MainInterface.PartyPanel = {}
 
 local MainInterface = core.MainInterface
+local PartyPanel = core.MainInterface.PartyPanel
+local PlayerInfo = core.PlayerInfo
 --local UIWindow
 --local MainPanel, HeaderFrame, ContentFrame
 KeyMaster = core.KeyMaster -- todo: KeyMaster is global, not sure it should be and could be open to vulnerabilities.
@@ -275,6 +278,10 @@ local function Create_GroupFrame()
     return temp_frame
 end
 
+local function SetInstanceIcons(mapData)
+end
+
+
 -- create a new template frame for each party members if it doesn't exist
 local function createPartyMemberFrame(frameName, parentFrame)
     local frameAnchor, frameHeight
@@ -332,6 +339,7 @@ local function createPartyMemberFrame(frameName, parentFrame)
     img1:ClearAllPoints()
     img1:SetPoint("LEFT", 0, 0)
 
+    -- the ring around the portrait
     local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
     img2:SetHeight(temp_RowFrame:GetHeight())
     img2:SetWidth(temp_RowFrame:GetHeight())
@@ -419,6 +427,61 @@ local function Create_PartyMemberRow(partyNumber, ...)
     end ]]
 end 
 
+function PartyPanel:CreateDataFrames(playerNumber)
+    if (not playerNumber or playerNumber < 0 or playerNumber > 5) then
+        print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
+        return
+    end
+    if (not _G["KM_PlayerDataFrame"..playerNumber]) then
+
+        -- This needs to be the dymanic link using partyNumber refrence as this ties all the frames together to each member.
+        local thisPlayer = PlayerInfo:GetMyCharacterInfo() --<--<--<--<--
+
+        local temp_frameStack = GetPartyMembersFrameStack()
+        local parentFrame =  _G["KM_PlayerRow"..playerNumber]
+        local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+
+        local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
+        dataFrame:ClearAllPoints()
+        dataFrame:SetPoint("TOPRIGHT",  _G["KM_PlayerRow"..playerNumber], "TOPRIGHT", 0, 0)
+        dataFrame:SetSize((parentFrame:GetWidth() - ((_G["KM_Portrait"..playerNumber]:GetWidth())/2)), parentFrame:GetHeight())
+       --[[  dataFrame.texture = dataFrame:CreateTexture()
+        dataFrame.texture:SetAllPoints(dataFrame)
+        dataFrame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
+
+
+        --local temp_Frame = temp_frameStack[rowNumber]:GetValue()
+        local player_Frame = temp_frameStack["p"..playerNumber.."Frame"]
+
+        -- Player's Name
+        local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+        tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
+
+        -- TODO: get the unit's reference so we can set their class color... somehow...
+        tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
+
+        --- TODO: DELLETE ME!! GUID DEBUG REFERENCE
+        local tempText = dataFrame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+        tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
+        tempText:SetText("GUID: "..thisPlayer.GUID)
+        --- END TODO
+
+        -- Player's Owned Key
+        tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+        local _, fontSize, _ = tempText:GetFont()
+        tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
+        tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
+
+    else
+        return
+    end
+
+end
+
+-- todo: Find hook for when player portrait changes
+local function Refresh_PartyPortrait()
+end
+
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
@@ -432,91 +495,54 @@ function MainInterface:Refresh_PartyFrames(...)
 
     -- set the client's portrait
     SetPortraitTexture(_G["KM_Portrait1"], "player")
-
+    PartyPanel:CreateDataFrames(1)
     -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
     -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
-    if (numMembers >= 2) then
-       -- if ("party1") then
-            SetPortraitTexture(_G["KM_Portrait2"], "party1")
-       -- else
-        _G["KM_PlayerRow2"]:Show()
-        -- update data here for party1
 
-       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
-        --SetPortraitTexture(_G["KM_Portrait1"], nil)
+    -- 2nd party member
+    if (numMembers >= 2) then
+        SetPortraitTexture(_G["KM_Portrait2"], "party1")
+        -- Set 2nd party member data
+        _G["KM_PlayerRow2"]:Show()
     else
         _G["KM_Portrait2"]:SetTexture(xPortrait, false)
-        --_G["KM_PlayerRow2"]:Hide()
+        _G["KM_PlayerRow2"]:Hide()
+        -- Clear 2nd party member data
     end
 
-    if (numMembers >= 3) then 
-       -- mf2 = _G["KM_GroupModelFrame3"]
-        --if ("party2") then
-            SetPortraitTexture(_G["KM_Portrait3"], "party2")
-           -- mf2:SetUnit("party2")
-            --mf2:RefreshCamera()
-        --else
-        --SetPortraitTexture(_G["KM_Portrait3"], "party2")
-           -- mf2:SetDisplayInfo(22447)
-        --end
-
-        --_G["KM_GroupModelFrame3"]:SetUnit("party2")
+    -- 3rd party member
+    if (numMembers >= 3) then
+        -- Set 3rd party member data
+        SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
-        -- update data here for party2
-
-       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
-        --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
         _G["KM_Portrait3"]:SetTexture(xPortrait, false)
-        --_G["KM_PlayerRow3"]:Hide()
+        _G["KM_PlayerRow3"]:Hide()
+        -- Clear 3rd party member data
     end
 
+    -- 4th party member
     if (numMembers >= 4) then
-       -- mf3 = _G["KM_GroupModelFrame4"]
-        --if ("party3") then
-            --mf3:SetUnit("party3")
-            --mf3:RefreshCamera()
-            SetPortraitTexture(_G["KM_Portrait4"], "party3")
-        --else
-        --SetPortraitTexture(_G["KM_Portrait4"], "party3")
-            --mf3:SetDisplayInfo(22447)
-       -- end
-
-        --_G["KM_GroupModelFrame4"]:SetUnit("party3")
+        -- Set 4th party member data
+        SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
-        -- update data here for party3
-
-       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
-        --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
         _G["KM_Portrait4"]:SetTexture(xPortrait, false)
-        --_G["KM_PlayerRow4"]:Hide()
+        _G["KM_PlayerRow4"]:Hide()
+        -- Clear 4th party member data
     end
 
-    if (numMembers == 5) then 
-        --if (UnitIsVisible("party4")) then
-            SetPortraitTexture(_G["KM_Portrait5"], "party4")
-       -- else
-        --SetPortraitTexture(_G["KM_Portrait5"], "party4")
-       -- end
-
-        --_G["KM_GroupModelFrame5"]:SetUnit("party4")
+    -- 5th party member
+    if (numMembers == 5) then
+        -- Set 5th party member data
+        SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
-        -- update data here for party4
-
-       -- _G["KM_Portrait1"]:SetTexture(xPortrait, false)
-        --SetPortraitTexture(_G["KM_Portrait1"], nil)
     else
         _G["KM_Portrait5"]:SetTexture(xPortrait, false)
-        --_G["KM_PlayerRow5"]:Hide()
+        _G["KM_PlayerRow5"]:Hide()
+        -- Clear 5th party member data
     end
 
-
-   --[[  SetPortraitTexture(_G["KM_Portrait2"], "party1")
-    SetPortraitTexture(_G["KM_Portrait2"], nil)
-    SetPortraitTexture(_G["KM_Portrait1"], "party2")
-    SetPortraitTexture(_G["KM_Portrait1"], "party3")
-    SetPortraitTexture(_G["KM_Portrait1"], "party4") ]]
 end
 
 --------------------------------
