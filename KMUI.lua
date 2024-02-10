@@ -99,8 +99,7 @@ local function uiEventHandler(self, event, ...)
         if (GetNumGroupMembers() > 0) then
             MyAddon:Transmit(playerInfo, "PARTY", nil)
         end
-
-       -- MainInterface:Refresh_PartyFrames()
+            MainInterface:Refresh_PartyFrames()
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -609,11 +608,11 @@ local function updateMemberData(partyNumber, playerData)
 
     --UnitGUID("player")
     --UnitName("player")
-    print(UnitName(partyPlayer))
+    --print(UnitName(partyPlayer))
 
     _G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
 
-    _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..UnitName(partyPlayer).."|r")
+    _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
     _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
 
     for n, v in pairs(mapTable) do
@@ -626,7 +625,7 @@ local function updateMemberData(partyNumber, playerData)
 end
 
 function MainInterface:SetMemberData(playerData)
-    PartyPlayerData[playerData.GUID] = playerData   
+    PartyPlayerData[playerData.GUID] = playerData
     MainInterface:Refresh_PartyFrames() 
 end
 
@@ -659,8 +658,11 @@ function MainInterface:Refresh_PartyFrames(...)
         party1Data = PartyPlayerData[UnitGUID("party1")]
         if (party1Data) then
             updateMemberData(2, party1Data)
-        else
-            print("Party Member 2 has no information.")
+        else    
+            local partyNumber = 2
+            local _, myClass, _ = UnitClass("party1")
+            local _, _, _, classHex = GetClassColor(myClass)
+            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party1").."|r")
         end
 
         SetPortraitTexture(_G["KM_Portrait2"], "party1")        
@@ -679,7 +681,10 @@ function MainInterface:Refresh_PartyFrames(...)
         if (party2Data) then
             updateMemberData(3, party2Data)
         else
-            print("Party Member 3 has no information.")
+            local partyNumber = 3
+            local _, myClass, _ = UnitClass("party2")
+            local _, _, _, classHex = GetClassColor(myClass)
+            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party2").."|r")
         end
         SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
@@ -697,7 +702,10 @@ function MainInterface:Refresh_PartyFrames(...)
         if (party3Data) then
             updateMemberData(4, party1Data)
         else
-            print("Party Member 4 has no information.")
+            local partyNumber = 4
+            local _, myClass, _ = UnitClass("party3")
+            local _, _, _, classHex = GetClassColor(myClass)
+            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party3").."|r")
         end
         SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
@@ -715,7 +723,10 @@ function MainInterface:Refresh_PartyFrames(...)
         if (party4Data) then
             updateMemberData(5, party1Data)
         else
-            print("Party Member 5 has no information.")
+            local partyNumber = 5
+            local _, myClass, _ = UnitClass("party4")
+            local _, _, _, classHex = GetClassColor(myClass)
+            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party4").."|r")
         end
         SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
