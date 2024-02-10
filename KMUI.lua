@@ -506,10 +506,11 @@ function PartyPanel:CreateDataFrames(playerNumber)
             temp_Frame.texture:SetAllPoints(temp_Frame)
             temp_Frame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
 
+            local _, _, _, colorWeekHex = Config:GetWeekScoreColor()
             tempText = temp_Frame:CreateFontString("KM_MapData"..playerNumber..n.."F", "OVERLAY", "GameFontHighlightLarge")
             local _, fontSize, _ = tempText:GetFont()
             tempText:SetPoint("TOP", temp_Frame, "CENTER", 4, 4)
-            tempText:SetText("F: "..thisPlayer.keyRuns[n]["Fortified"].Score.."\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
+            tempText:SetText("|cff"..colorWeekHex..thisPlayer.keyRuns[n]["Fortified"].Score.."|r\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
             --tprint(thisPlayer.keyRuns[n]["Fortified"])
 
             b = false
