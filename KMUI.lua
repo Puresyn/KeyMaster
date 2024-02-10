@@ -93,6 +93,7 @@ local function uiEventHandler(self, event, ...)
     if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
         local keyInfo = {
+            name = playerInfo.name,
             ownedKeyId = playerInfo.ownedKeyId,
             ownedKeyLevel = playerInfo.ownedKeyLevel
         }
