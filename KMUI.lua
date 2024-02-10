@@ -89,17 +89,11 @@ local function uiEventHandler(self, event, ...)
      -- GROUP_LEFT, GROUP_JOINED
     -- Do something with event and arg1
 
-
     if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
-        local keyInfo = {
-            name = playerInfo.name,
-            ownedKeyId = playerInfo.ownedKeyId,
-            ownedKeyLevel = playerInfo.ownedKeyLevel
-        }
-
+        
         MainInterface:Refresh_PartyFrames()
-        MyAddon:Transmit(keyInfo, "PARTY", nil)
+        MyAddon:Transmit(playerInfo, "PARTY", nil)
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -450,6 +444,7 @@ function PartyPanel:CreateDataFrames(playerNumber)
 
         -- This needs to be the dymanic link using partyNumber refrence as this ties all the frames together to each member.
         local thisPlayer = PlayerInfo:GetMyCharacterInfo() --<--<--<--<--
+        --local thisPlayer = PlayerInfo.PartyPlayerData[UnitGUID("party1")] --<--<--<--<--
 
         local temp_frameStack = GetPartyMembersFrameStack()
         local parentFrame =  _G["KM_PlayerRow"..playerNumber]
@@ -554,7 +549,11 @@ function MainInterface:Refresh_PartyFrames(...)
 
     -- 2nd party member
     if (numMembers >= 2) then
+        -- Find player in this slot by cmd UnitGUID("party1")
+        -- partyCharInfo = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
+        -- pass partyCharInfo data to ui ??
         SetPortraitTexture(_G["KM_Portrait2"], "party1")
+        
         -- Set 2nd party member data
         _G["KM_PlayerRow2"]:Show()
     else

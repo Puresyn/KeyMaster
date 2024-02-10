@@ -10,6 +10,8 @@ local _, core = ...
 core.PlayerInfo = {}
 local PlayerInfo = core.PlayerInfo
 
+PlayerInfo.PartyPlayerData = {}
+
 --------------------------------
 -- Data Queries
 --------------------------------

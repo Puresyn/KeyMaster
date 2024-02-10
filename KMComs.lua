@@ -52,7 +52,21 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     -- print("DISTRO: " ..distribution)
     -- print("SENDER: " ..sender)
     --print("Data: "..decoded)'
-    
-    tprint(data)    
+
+    if (prefix == "KM2") then
+        if (data == nil) then
+            return
+        end
+
+        if (data.name == UnitName("player")) then
+            return
+        end        
+        tprint(data)
+        if (data.GUID == nil) then
+            return
+        end
+        --print(prefix..": Recieved data from " ..data.name)
+        --PlayerInfo.PartyPlayerData[data.GUID] = data
+    end    
 end
 
