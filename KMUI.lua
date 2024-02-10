@@ -471,7 +471,13 @@ function PartyPanel:CreateDataFrames(playerNumber)
         tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
         local _, fontSize, _ = tempText:GetFont()
         tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
-        tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
+        if (thisPlayer.ownedKeyLevel == 0) then
+            tempText:SetText("No Key Found")
+        else
+            tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
+        end
+
+        
 
         --print(#mapTable)
         local a
@@ -496,8 +502,8 @@ function PartyPanel:CreateDataFrames(playerNumber)
             tempText = temp_Frame:CreateFontString("KM_MapData"..playerNumber..n.."F", "OVERLAY", "GameFontHighlightLarge")
             local _, fontSize, _ = tempText:GetFont()
             tempText:SetPoint("TOP", temp_Frame, "CENTER", 4, 4)
-            tempText:SetText("F: "..thisPlayer.keyRuns[n]["Fortified"].Score.."\n"..thisPlayer.keyRuns[n]["Fortified"].Level)
-            print(thisPlayer.keyRuns[n]["Fortified"].Score)
+            tempText:SetText("F: "..thisPlayer.keyRuns[n]["Fortified"].Score.."\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
+            --tprint(thisPlayer.keyRuns[n]["Fortified"])
 
             b = false
             a = n

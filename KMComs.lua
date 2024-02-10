@@ -54,10 +54,8 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
 
     local s = {name="a", level=2}
     if (data == "PARTYCHANGED") then
-        print("SEND DATA")
-        MyAddon:Transmit(s, "PARTY", nil)
-    elseif (data == "PLAYERDATA") then
-        print("GOT PLAYER DATA")
+        local myCharInfo = PlayerInfo:GetMyCharacterInfo()
+        MyAddon:Transmit(myCharInfo, "PARTY", nil)
     else
         print("WHAT ARE YOU!?")
         tprint(data)

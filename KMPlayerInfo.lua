@@ -54,7 +54,7 @@ function PlayerInfo:GetMyCharacterInfo()
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
             ["Level"] = scoreInfo.level,
-            ["DurationSec"] = scoreInfo.duration,
+            ["DurationSec"] = scoreInfo.durationSec,
             ["IsOverTime"] = scoreInfo.overTime
         }
         keyRun["Tyrannical"] = dungeonDetails
@@ -63,7 +63,7 @@ function PlayerInfo:GetMyCharacterInfo()
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
             ["Level"] = scoreInfo.level,
-            ["DurationSec"] = scoreInfo.duration,
+            ["DurationSec"] = scoreInfo.durationSec,
             ["IsOverTime"] = scoreInfo.overTime
         }
         keyRun["Fortified"] = dungeonDetails
@@ -167,7 +167,7 @@ function PlayerInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     
     -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
     if (mapScore == nil) then
-       print("mapScore returned nil")
+       --print("mapScore returned nil")       
        return emptyData
     end   
     
