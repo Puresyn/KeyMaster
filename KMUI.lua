@@ -93,7 +93,11 @@ local function uiEventHandler(self, event, ...)
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
         
         MainInterface:Refresh_PartyFrames()
-        MyAddon:Transmit(playerInfo, "PARTY", nil)
+
+        -- only transmit if in a party
+        if (GetNumGroupMembers > 0) then
+            MyAddon:Transmit(playerInfo, "PARTY", nil)
+        end
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -375,6 +379,7 @@ local function createPartyMemberFrame(frameName, parentFrame)
 
     --print(frameName.." created.") -- debug
 
+    PartyPanel:CreateDataFrames(partyNumber)
     return temp_RowFrame
 end
 
@@ -435,6 +440,12 @@ local function Create_PartyMemberRow(partyNumber, ...)
     end ]]
 end 
 
+local function formatDurationSec(timeInSec)
+
+    local duration =  date("%M:%S", timeInSec)
+    return duration
+end
+
 function PartyPanel:CreateDataFrames(playerNumber)
     if (not playerNumber or playerNumber < 0 or playerNumber > 5) then
         print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
@@ -443,12 +454,13 @@ function PartyPanel:CreateDataFrames(playerNumber)
     if (not _G["KM_PlayerDataFrame"..playerNumber]) then
 
         -- This needs to be the dymanic link using partyNumber refrence as this ties all the frames together to each member.
-        local thisPlayer = PlayerInfo:GetMyCharacterInfo() --<--<--<--<--
+        --local thisPlayer = PlayerInfo:GetMyCharacterInfo() --<--<--<--<--
         --local thisPlayer = PlayerInfo.PartyPlayerData[UnitGUID("party1")] --<--<--<--<--
 
         local temp_frameStack = GetPartyMembersFrameStack()
         local parentFrame =  _G["KM_PlayerRow"..playerNumber]
         local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+        local tempText
 
         local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
         dataFrame:ClearAllPoints()
@@ -463,28 +475,28 @@ function PartyPanel:CreateDataFrames(playerNumber)
         local player_Frame = temp_frameStack["p"..playerNumber.."Frame"]
 
         -- Player's Name
-        local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+        tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
         tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
 
         -- TODO: get the unit's reference so we can set their class color... somehow...
         -- todo" make if/then for if 1 then party1 etc. for class color.
-        tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
+        --tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
 
         --- TODO: DELLETE ME!! GUID DEBUG REFERENCE
-        local tempText = dataFrame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+        tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."GUID", "OVERLAY", "GameTooltipText")
         tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
-        tempText:SetText("GUID: "..thisPlayer.GUID)
+        --tempText:SetText("GUID: "..thisPlayer.GUID)
         --- END TODO
 
         -- Player's Owned Key
         tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
         local _, fontSize, _ = tempText:GetFont()
         tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
-        if (thisPlayer.ownedKeyLevel == 0) then
+       --[[  if (thisPlayer.ownedKeyLevel == 0) then
             tempText:SetText("No Key Found")
         else
             tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
-        end
+        end ]]
 
         
 
@@ -502,23 +514,56 @@ function PartyPanel:CreateDataFrames(playerNumber)
                 temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..a], "TOPLEFT", 0, 0)
             end
 
-            temp_Frame:SetSize((parentFrame:GetWidth() / 11), parentFrame:GetHeight())
+            temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
 
             --[[ temp_Frame.texture = temp_Frame:CreateTexture()
             temp_Frame.texture:SetAllPoints(temp_Frame)
             temp_Frame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
 
-            local _, _, _, colorWeekHex = Config:GetWeekScoreColor()
-            tempText = temp_Frame:CreateFontString("KM_MapData"..playerNumber..n.."F", "OVERLAY", "GameFontHighlightLarge")
+            local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..n, "OVERLAY", "GameToolTipText")
             local _, fontSize, _ = tempText:GetFont()
-            tempText:SetPoint("TOP", temp_Frame, "CENTER", 4, 4)
-            tempText:SetText("|cff"..colorWeekHex..thisPlayer.keyRuns[n]["Fortified"].Score.."|r\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
+            tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
+
+            --local _, _, _, colorWeekHex = Config:GetWeekScoreColor()
+            local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..n, "OVERLAY", "GameFontHighlightLarge")
+            local _, fontSize, _ = tempText:GetFont()
+            tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
+            --tempText:SetText("|cff"..colorWeekHex..thisPlayer.keyRuns[n]["Fortified"].Score.."|r\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
             --tprint(thisPlayer.keyRuns[n]["Fortified"])
+
+            local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..n, "OVERLAY", "GameToolTipText")
+            local _, fontSize, _ = tempText:GetFont()
+            tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
 
             b = false
             a = n
         end
 
+        -- LEGEND FRAME
+        local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber..a, parentFrame)
+        temp_Frame:ClearAllPoints()
+        temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+        temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..a, "TOPLEFT", 0, 0)
+
+        --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
+        local _, _, _, xOfs, yOfs = _G["KM_MapLevelT"..playerNumber..a]:GetPoint()
+        local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText1:GetFont()
+        tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
+        tempText1:SetText("Level:")
+
+        _, _, _, xOfs, yOfs = _G["KM_MapScoreT"..playerNumber..a]:GetPoint()
+        local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText2:GetFont()
+        tempText2:SetPoint("TOPRIGHT", tempText1, "BOTTOMRIGHT", 0, (yOfs + 6)) -- todo: this yOfs is screwy.. FIX IT
+        tempText2:SetText("Weekly:")
+
+        _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..a]:GetPoint()
+        local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText2:GetFont()
+        tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 4)) -- todo: this yOfs is screwy.. FIX IT
+        tempText2:SetText("Time:")
+        
 
     else
         return
@@ -530,6 +575,9 @@ end
 local function Refresh_PartyPortrait()
 end
 
+local function updateMemberData(partyNumber, playerData)
+    
+end
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
@@ -539,11 +587,28 @@ function MainInterface:Refresh_PartyFrames(...)
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
     local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
     local numMembers = GetNumGroupMembers()
-    local mf1, mf2, mf3, mf4
+    local clientData, party1Data, party2Data, party3Data, party4Data, keyText
+    local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+    local r, g, b, colorWeekHex = Config:GetWeekScoreColor() 
 
-    -- set the client's portrait
+    -- update the client's localy displayed information
     SetPortraitTexture(_G["KM_Portrait1"], "player")
-    PartyPanel:CreateDataFrames(1)
+    --clientData = PlayerInfo.PartyPlayerData[UnitGUID("player")]
+    clientData = PlayerInfo:GetMyCharacterInfo()
+
+   
+    _G["KM_Player1GUID"]:SetText("GUID: "..clientData.GUID)  -- DEBUG: remove/disable here and createDataFrames
+
+    _G["KM_PlayerName1"]:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..clientData.name.."|r")
+    _G["KM_OwnedKeyInfo1"]:SetText("("..clientData.ownedKeyLevel..") "..mapTable[clientData.ownedKeyId].name)
+
+    for n, v in pairs(mapTable) do
+        -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
+        _G["KM_MapLevelT1"..n]:SetText("("..clientData.keyRuns[n]["Fortified"].Level..")")
+        _G["KM_MapScoreT1"..n]:SetText("|cff"..colorWeekHex..clientData.keyRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapTimeT1"..n]:SetText(formatDurationSec(clientData.keyRuns[n]["Fortified"].DurationSec))
+    end
+
     -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
     -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
 
@@ -552,11 +617,13 @@ function MainInterface:Refresh_PartyFrames(...)
         -- Find player in this slot by cmd UnitGUID("party1")
         -- partyCharInfo = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
         -- pass partyCharInfo data to ui ??
+        party1Data = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
         SetPortraitTexture(_G["KM_Portrait2"], "party1")
         
         -- Set 2nd party member data
         _G["KM_PlayerRow2"]:Show()
     else
+        party1Data = nil
         _G["KM_Portrait2"]:SetTexture(xPortrait, false)
         _G["KM_PlayerRow2"]:Hide()
         -- Clear 2nd party member data
@@ -565,9 +632,11 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 3rd party member
     if (numMembers >= 3) then
         -- Set 3rd party member data
+        party2Data = PlayerInfo.PartyPlayerData[UnitGUID("party2")]
         SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
     else
+        party2Data = nil
         _G["KM_Portrait3"]:SetTexture(xPortrait, false)
         _G["KM_PlayerRow3"]:Hide()
         -- Clear 3rd party member data
@@ -576,9 +645,11 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 4th party member
     if (numMembers >= 4) then
         -- Set 4th party member data
+        party3Data = PlayerInfo.PartyPlayerData[UnitGUID("party3")]
         SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
     else
+        party3Data = nil
         _G["KM_Portrait4"]:SetTexture(xPortrait, false)
         _G["KM_PlayerRow4"]:Hide()
         -- Clear 4th party member data
@@ -587,9 +658,11 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 5th party member
     if (numMembers == 5) then
         -- Set 5th party member data
+        party4Data = PlayerInfo.PartyPlayerData[UnitGUID("party4")]
         SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
     else
+        party4Data = nil
         _G["KM_Portrait5"]:SetTexture(xPortrait, false)
         _G["KM_PlayerRow5"]:Hide()
         -- Clear 5th party member data
