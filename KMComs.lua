@@ -10,6 +10,7 @@ local _, core = ...
 core.Coms = {}
 
 local Coms = core.Coms
+local PlayerInfo = core.PlayerInfo
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -54,8 +55,9 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
 
     local s = {name="a", level=2}
     if (data == "PARTYCHANGED") then
-        local myCharInfo = PlayerInfo:GetMyCharacterInfo()
-        MyAddon:Transmit(myCharInfo, "PARTY", nil)
+        --local myCharInfo = PlayerInfo:GetMyCharacterInfo()
+        --tprint(myCharInfo)
+        MyAddon:Transmit(s, "PARTY", nil)
     else
         print("WHAT ARE YOU!?")
         tprint(data)
