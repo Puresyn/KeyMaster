@@ -61,10 +61,11 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         if (data.name == UnitName("player")) then
             return
         end        
-        tprint(data)
         if (data.GUID == nil) then
             return
         end
+
+        --tprint(data)
         --print(prefix..": Recieved data from " ..data.name)
         --PlayerInfo.PartyPlayerData[data.GUID] = data
     end    
