@@ -204,6 +204,17 @@ function Config:GetClassColor(className)
     return c
 end
 
+function Config:GetWeekScoreColor()
+    local c = defaults.themeFontColorGreen1
+	return c.r, c.g, c.b, c.hex;
+end
+
+function Config:GetNonWeekScoreColor()
+    local c = defaults.color_POOR
+	return c.r, c.g, c.b, c.hex;
+
+end
+
 -- Create configuration UI
 -- todo: Move to KMUI.lua
 function Config:CreateButton(point, realativeFrame, relativePoint, yOffset, text)

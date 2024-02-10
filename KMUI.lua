@@ -24,6 +24,7 @@ core.MainInterface.PartyPanel = {}
 local MainInterface = core.MainInterface
 local PartyPanel = core.MainInterface.PartyPanel
 local PlayerInfo = core.PlayerInfo
+local Config = core.Config
 --local UIWindow
 --local MainPanel, HeaderFrame, ContentFrame
 KeyMaster = core.KeyMaster -- todo: KeyMaster is global, not sure it should be and could be open to vulnerabilities.
@@ -153,7 +154,13 @@ local function SetTabs(frame, tabs)
 
     -- set first active tab
     -- todo: change this so it can be customized?
-    Tab_OnClick(_G[frameName.."Tab1"])
+    if (GetNumGroupMembers() == 0 or GetNumGroupMembers() > 5) then
+        -- Open main tab
+        Tab_OnClick(_G[frameName.."Tab1"])
+    else
+        -- Open party tab
+        Tab_OnClick(_G[frameName.."Tab2"])
+    end
 
     return unpack(contents)
 end
