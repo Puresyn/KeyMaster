@@ -647,7 +647,7 @@ function MainInterface:Refresh_PartyFrames(...)
         -- pass partyCharInfo data to ui ??
         party1Data = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
         SetPortraitTexture(_G["KM_Portrait2"], "party1")
-        updateMemberData(2, party2Data)
+        updateMemberData(2, party1Data)
         
         -- Set 2nd party member data
         _G["KM_PlayerRow2"]:Show()
