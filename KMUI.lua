@@ -92,12 +92,12 @@ local function uiEventHandler(self, event, ...)
     if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
         
-        MainInterface:Refresh_PartyFrames()
-
         -- only transmit if in a party
-        if (GetNumGroupMembers > 0) then
+        if (GetNumGroupMembers() > 0) then
             MyAddon:Transmit(playerInfo, "PARTY", nil)
         end
+
+        MainInterface:Refresh_PartyFrames()
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -576,7 +576,39 @@ local function Refresh_PartyPortrait()
 end
 
 local function updateMemberData(partyNumber, playerData)
-    
+    --clientData = PlayerInfo:GetMyCharacterInfo()
+    if (not playerData) then print("Nil playerData") return end
+    print(playerData.ownedKeyId)
+    local SUCCESS = true
+    local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+    local r, g, b, colorWeekHex = Config:GetWeekScoreColor()
+
+    local partyPlayer
+    if (partyNumber == 1) then
+        partyPlayer = "player"
+    elseif (partyNumber == 2) then
+        partyPlayer = "party1"
+    elseif (partyNumber == 3) then
+        partyPlayer = "party2"
+    elseif (partyNumber == 4) then
+        partyPlayer = "party3"
+    elseif (partyNumber == 5) then
+        partyPlayer = "party4"
+    end
+
+
+    _G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
+
+    _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
+    _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
+
+    for n, v in pairs(mapTable) do
+        -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
+        _G["KM_MapLevelT"..partyNumber..n]:SetText("("..playerData.keyRuns[n]["Fortified"].Level..")")
+        _G["KM_MapScoreT"..partyNumber..n]:SetText("|cff"..colorWeekHex..playerData.keyRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapTimeT"..partyNumber..n]:SetText(formatDurationSec(playerData.keyRuns[n]["Fortified"].DurationSec))
+    end
+    return SUCCESS
 end
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
@@ -588,29 +620,16 @@ function MainInterface:Refresh_PartyFrames(...)
     local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
     local numMembers = GetNumGroupMembers()
     local clientData, party1Data, party2Data, party3Data, party4Data, keyText
-    local mapTable = PlayerInfo:GetCurrentSeasonMaps()
-    local r, g, b, colorWeekHex = Config:GetWeekScoreColor() 
+    --local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+    --local r, g, b, colorWeekHex = Config:GetWeekScoreColor() 
 
     -- update the client's localy displayed information
     SetPortraitTexture(_G["KM_Portrait1"], "player")
+    
     --clientData = PlayerInfo.PartyPlayerData[UnitGUID("player")]
     clientData = PlayerInfo:GetMyCharacterInfo()
 
-   
-    _G["KM_Player1GUID"]:SetText("GUID: "..clientData.GUID)  -- DEBUG: remove/disable here and createDataFrames
-
-    _G["KM_PlayerName1"]:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..clientData.name.."|r")
-    _G["KM_OwnedKeyInfo1"]:SetText("("..clientData.ownedKeyLevel..") "..mapTable[clientData.ownedKeyId].name)
-
-    for n, v in pairs(mapTable) do
-        -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
-        _G["KM_MapLevelT1"..n]:SetText("("..clientData.keyRuns[n]["Fortified"].Level..")")
-        _G["KM_MapScoreT1"..n]:SetText("|cff"..colorWeekHex..clientData.keyRuns[n]["Fortified"].Score.."|r")
-        _G["KM_MapTimeT1"..n]:SetText(formatDurationSec(clientData.keyRuns[n]["Fortified"].DurationSec))
-    end
-
-    -- todo: frame naming here is counter-intuitive. Should update frame names to be easier to associate.
-    -- KM_Portrait2 and KM_PlayerRow2 is party1 because there isn't a party0 (the client) or a party5.
+   updateMemberData(1, clientData)
 
     -- 2nd party member
     if (numMembers >= 2) then
@@ -619,6 +638,7 @@ function MainInterface:Refresh_PartyFrames(...)
         -- pass partyCharInfo data to ui ??
         party1Data = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
         SetPortraitTexture(_G["KM_Portrait2"], "party1")
+        updateMemberData(2, party2Data)
         
         -- Set 2nd party member data
         _G["KM_PlayerRow2"]:Show()
