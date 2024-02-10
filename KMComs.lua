@@ -11,6 +11,7 @@ core.Coms = {}
 
 local Coms = core.Coms
 local PlayerInfo = core.PlayerInfo
+local MainInterface = core.MainInterface
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -66,8 +67,9 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         end
 
         --tprint(data)
-        --print(prefix..": Recieved data from " ..data.name)
-        --PlayerInfo.PartyPlayerData[data.GUID] = data
+        print(prefix..": Recieved data from " ..data.name)
+        PlayerInfo.PartyPlayerData[data.GUID] = data
+        MainInterface:Refresh_PartyFrames()
     end    
 end
 

@@ -97,7 +97,7 @@ local function uiEventHandler(self, event, ...)
             MyAddon:Transmit(playerInfo, "PARTY", nil)
         end
 
-        MainInterface:Refresh_PartyFrames()
+       -- MainInterface:Refresh_PartyFrames()
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -577,7 +577,16 @@ end
 
 local function updateMemberData(partyNumber, playerData)
     --clientData = PlayerInfo:GetMyCharacterInfo()
-    if (not playerData) then print("Nil playerData") return end
+    if (not playerData) then 
+        
+        --[[ local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText1:GetFont()
+        tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
+        tempText1:SetText("Level:") ]]
+
+        print("Nil playerData") 
+        return 
+    end
     print(playerData.ownedKeyId)
     local SUCCESS = true
     local mapTable = PlayerInfo:GetCurrentSeasonMaps()
