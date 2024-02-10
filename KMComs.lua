@@ -8,9 +8,9 @@
 --------------------------------
 local _, core = ...
 core.Coms = {}
+local PartyPlayerData = {}
 
 local Coms = core.Coms
-local PlayerInfo = core.PlayerInfo
 local MainInterface = core.MainInterface
 
 -- Dependencies: LibSerialize
@@ -66,10 +66,20 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
             return
         end
 
-        --tprint(data)
+        print(data.GUID)
+        MainInterface:SetMemberData(data)
+        -- --tprint(data)
         print(prefix..": Recieved data from " ..data.name)
-        PlayerInfo.PartyPlayerData[data.GUID] = data
-        MainInterface:Refresh_PartyFrames()
+        -- --tinsert(PlayerInfo.PartyPlayerData, data)
+        -- PartyPlayerData[data.GUID] = data
+        -- --tprint(PartyPlayerData)
+        -- --pData[data.GUID] = data
+        -- --tprint(PlayerInfo.PartyPlayerData[data.GUID])
+        
+        -- MainInterface:Refresh_PartyFrames()
     end    
 end
 
+function Coms:GetPartyData()
+    return PartyPlayerData
+end

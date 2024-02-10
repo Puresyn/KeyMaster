@@ -24,10 +24,13 @@ core.MainInterface.PartyPanel = {}
 local MainInterface = core.MainInterface
 local PartyPanel = core.MainInterface.PartyPanel
 local PlayerInfo = core.PlayerInfo
+local Coms = core.Coms
 local Config = core.Config
 --local UIWindow
 --local MainPanel, HeaderFrame, ContentFrame
 KeyMaster = core.KeyMaster -- todo: KeyMaster is global, not sure it should be and could be open to vulnerabilities.
+
+local PartyPlayerData = {}
 
 --------------------------------
 -- In-Game fonts:
@@ -577,17 +580,16 @@ end
 
 local function updateMemberData(partyNumber, playerData)
     --clientData = PlayerInfo:GetMyCharacterInfo()
-    if (not playerData) then 
+    if (playerData == nil) then 
         
         --[[ local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText1:GetFont()
         tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
         tempText1:SetText("Level:") ]]
 
-        print("Nil playerData") 
+        print("Nil playerData for "..partyNumber) 
         return 
     end
-    print(playerData.ownedKeyId)
     local SUCCESS = true
     local mapTable = PlayerInfo:GetCurrentSeasonMaps()
     local r, g, b, colorWeekHex = Config:GetWeekScoreColor()
@@ -605,10 +607,13 @@ local function updateMemberData(partyNumber, playerData)
         partyPlayer = "party4"
     end
 
+    --UnitGUID("player")
+    --UnitName("player")
+    print(UnitName(partyPlayer))
 
     _G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
 
-    _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
+    _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..UnitName(partyPlayer).."|r")
     _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
 
     for n, v in pairs(mapTable) do
@@ -619,6 +624,12 @@ local function updateMemberData(partyNumber, playerData)
     end
     return SUCCESS
 end
+
+function MainInterface:SetMemberData(playerData)
+    PartyPlayerData[playerData.GUID] = playerData   
+    MainInterface:Refresh_PartyFrames() 
+end
+
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
@@ -637,19 +648,22 @@ function MainInterface:Refresh_PartyFrames(...)
     
     --clientData = PlayerInfo.PartyPlayerData[UnitGUID("player")]
     clientData = PlayerInfo:GetMyCharacterInfo()
-
-   updateMemberData(1, clientData)
+    
+    updateMemberData(1, clientData)  
 
     -- 2nd party member
     if (numMembers >= 2) then
         -- Find player in this slot by cmd UnitGUID("party1")
         -- partyCharInfo = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
         -- pass partyCharInfo data to ui ??
-        party1Data = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
-        SetPortraitTexture(_G["KM_Portrait2"], "party1")
-        updateMemberData(2, party1Data)
-        
-        -- Set 2nd party member data
+        party1Data = PartyPlayerData[UnitGUID("party1")]
+        if (party1Data) then
+            updateMemberData(2, party1Data)
+        else
+            print("Party Member 2 has no information.")
+        end
+
+        SetPortraitTexture(_G["KM_Portrait2"], "party1")        
         _G["KM_PlayerRow2"]:Show()
     else
         party1Data = nil
@@ -661,7 +675,12 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 3rd party member
     if (numMembers >= 3) then
         -- Set 3rd party member data
-        party2Data = PlayerInfo.PartyPlayerData[UnitGUID("party2")]
+        party2Data = PartyPlayerData[UnitGUID("party2")]
+        if (party2Data) then
+            updateMemberData(3, party2Data)
+        else
+            print("Party Member 3 has no information.")
+        end
         SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
     else
@@ -674,7 +693,12 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 4th party member
     if (numMembers >= 4) then
         -- Set 4th party member data
-        party3Data = PlayerInfo.PartyPlayerData[UnitGUID("party3")]
+        party3Data = PartyPlayerData[UnitGUID("party3")]
+        if (party3Data) then
+            updateMemberData(4, party1Data)
+        else
+            print("Party Member 4 has no information.")
+        end
         SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
     else
@@ -687,7 +711,12 @@ function MainInterface:Refresh_PartyFrames(...)
     -- 5th party member
     if (numMembers == 5) then
         -- Set 5th party member data
-        party4Data = PlayerInfo.PartyPlayerData[UnitGUID("party4")]
+        party4Data = PartyPlayerData[UnitGUID("party4")]
+        if (party4Data) then
+            updateMemberData(5, party1Data)
+        else
+            print("Party Member 5 has no information.")
+        end
         SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
     else

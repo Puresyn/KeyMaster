@@ -13,9 +13,9 @@ Localization.enUS.lua
 embeds.xml
 
 KMConfig.lua
-KMComs.lua
 KMPlayerInfo.lua
 KMUI.lua
+KMComs.lua
 KM_UI.xml
 KMInit.lua
 KMCommons.lua
