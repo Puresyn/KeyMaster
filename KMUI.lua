@@ -458,6 +458,7 @@ function PartyPanel:CreateDataFrames(playerNumber)
         tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
 
         -- TODO: get the unit's reference so we can set their class color... somehow...
+        -- todo" make if/then for if 1 then party1 etc. for class color.
         tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
 
         --- TODO: DELLETE ME!! GUID DEBUG REFERENCE
@@ -471,6 +472,37 @@ function PartyPanel:CreateDataFrames(playerNumber)
         local _, fontSize, _ = tempText:GetFont()
         tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
         tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
+
+        --print(#mapTable)
+        local a
+        local b = true
+        for n, v in pairs(mapTable) do
+            
+            local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..n, parentFrame)
+            temp_Frame:ClearAllPoints()
+
+            if (b) then
+                temp_Frame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
+            else
+                temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..a], "TOPLEFT", 0, 0)
+            end
+
+            temp_Frame:SetSize((parentFrame:GetWidth() / 11), parentFrame:GetHeight())
+
+            --[[ temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
+
+            tempText = temp_Frame:CreateFontString("KM_MapData"..playerNumber..n.."F", "OVERLAY", "GameFontHighlightLarge")
+            local _, fontSize, _ = tempText:GetFont()
+            tempText:SetPoint("TOP", temp_Frame, "CENTER", 4, 4)
+            tempText:SetText("F: "..thisPlayer.keyRuns[n]["Fortified"].Score.."\n"..thisPlayer.keyRuns[n]["Fortified"].Level)
+            print(thisPlayer.keyRuns[n]["Fortified"].Score)
+
+            b = false
+            a = n
+        end
+
 
     else
         return
