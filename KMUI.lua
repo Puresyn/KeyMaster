@@ -91,8 +91,14 @@ local function uiEventHandler(self, event, ...)
 
 
     if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
+        local playerInfo = PlayerInfo:GetMyCharacterInfo()
+        local keyInfo = {
+            ownedKeyId = playerInfo.ownedKeyId,
+            ownedKeyLevel = playerInfo.ownedKeyLevel
+        }
+
         MainInterface:Refresh_PartyFrames()
-        MyAddon:Transmit("PARTYCHANGED", "PARTY", nil)
+        MyAddon:Transmit(keyInfo, "PARTY", nil)
 
         --print("-- Number of members: ", GetNumGroupMembers())
     end
