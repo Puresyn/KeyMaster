@@ -52,15 +52,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     -- print("DISTRO: " ..distribution)
     -- print("SENDER: " ..sender)
     --print("Data: "..decoded)'
-
-    local s = {name="a", level=2}
-    if (data == "PARTYCHANGED") then
-        --local myCharInfo = PlayerInfo:GetMyCharacterInfo()
-        --tprint(myCharInfo)
-        MyAddon:Transmit(s, "PARTY", nil)
-    else
-        print("WHAT ARE YOU!?")
-        tprint(data)
-    end
+    
+    tprint(data)    
 end
 
