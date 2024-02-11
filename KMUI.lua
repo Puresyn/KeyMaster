@@ -644,6 +644,43 @@ function MainInterface:SetMemberData(playerData)
     --MainInterface:Refresh_PartyFrames() 
 end
 
+-- REPLACES BLOCK OF CODE IN 'Refresh_PartyFrames'  after each 'if (numMembers >= #) then'
+-- NOT IN USE YET
+function MainInterface:SetupPartyMember(partyPosition)
+        -- partyPosition = player, party1, party2, party3, party4
+        local partyPlayer
+        if (partyPosition == "player") then
+            partyPlayer = 1
+        elseif (partyPosition == "party1") then
+            partyPlayer = 2
+        elseif (partyPosition == "party2") then
+            partyPlayer = 3
+        elseif (partyPosition == "party3") then
+            partyPlayer = 4
+        elseif (partyPosition == "party4") then
+            partyPlayer = 5
+        end
+        
+        playerData = PartyPlayerData[UnitGUID(partyPosition)]
+        if (playerData) then
+            updateMemberData(partyPlayer, playerData)
+        else
+            local _, myClass, _ = UnitClass("partyPosition")
+            local _, _, _, classHex = GetClassColor(myClass)
+            _G["KM_PlayerName"..partyPlayer]:SetText("|c"..classHex..UnitName(partyPosition).."|r")
+            local specID = GetInspectSpecialization(partyPosition)
+            local specName = select(2,GetSpecializationInfoByID(specID))
+            if (not specName) then specName = "" else specName = specName.." " end
+            _G["KM_Player"..partyPlayer.."GUID"]:SetText(specName..UnitClass(partyPosition))
+            _G["KM_MapDataLegend"..partyPlayer]:Hide()
+            _G["KM_NoAddon"..partyPlayer]:Show()
+        end
+
+        SetPortraitTexture(_G["KM_Portrait"..partyPlayer], partyPosition)        
+        _G["KM_PlayerRow"..partyPlayer]:Show()
+end
+
+
  -- this needs to be called when the party status/members change
  -- ... passed in for future development
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
