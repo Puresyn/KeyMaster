@@ -693,13 +693,17 @@ function MainInterface:Refresh_PartyFrames(...)
     local numMembers = GetNumGroupMembers()
     local clientData, party1Data, party2Data, party3Data, party4Data, keyText
 
+    
+
     -- update the client's localy displayed information
     SetPortraitTexture(_G["KM_Portrait1"], "player")
     
     --clientData = PlayerInfo.PartyPlayerData[UnitGUID("player")]
     clientData = PlayerInfo:GetMyCharacterInfo()
     
-    updateMemberData(1, clientData)  
+    updateMemberData(1, clientData)
+
+    if (IsInRaid()) then return end -- if in raid, don't process anyone else.
 
     -- 2nd party member
     if (numMembers >= 2) then
