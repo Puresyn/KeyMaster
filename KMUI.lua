@@ -686,7 +686,6 @@ end
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
  --    this also applies for disconnects!
 function MainInterface:Refresh_PartyFrames(...)
-    print("called...")
     local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
     local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
@@ -1013,8 +1012,7 @@ function MainInterface:PartyScreen()
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText("Group Screen")
 
-    -- PartyScreen:RegisterEvent("GROUP_ROSTER_UPDATE")
-    -- PartyScreen:SetScript("OnEvent", uiEventHandler)
+
 
     return PartyScreen
 end
@@ -1049,18 +1047,6 @@ function MainInterface:CreateMainPanel()
         insets = {left = 4, right = 4, top = 4, bottom = 4}})
 
     MainPanel:SetBackdropColor(0,0,0,1);
-    
-
-    --[[ -- Was playing with in-game models. Maybe later, this doesn't work how I want
-    MainPanel.model = CreateFrame("PlayerModel", "myModelFrame", "KeyMaster_MainPanel")
-    MainPanel.model:SetSize(600, 800)
-    MainPanel.model:SetPoint("CENTER", "KeyMaster_MainPanel", "CENTER")
-    MainPanel.model:SetUnit("player")
-    MainPanel.model:SetPosition(0, 0, -0.75)
-    MainPanel.model:SetCustomCamera(1) -- Yes, it needs to be  here twice
-    MainPanel.model:SetCameraPosition(2.8, -1, 0.4)
-    MainPanel.model:RefreshCamera()
-    MainPanel.model:SetCustomCamera(1) -- Yes, it needs to be  here twice ]]
 
     MainPanel.closeBtn = CreateFrame("Button", "CloseButton", MainPanel, "UIPanelCloseButton")
     MainPanel.closeBtn:SetPoint("TOPRIGHT")
