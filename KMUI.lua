@@ -734,7 +734,7 @@ function MainInterface:SetupPartyMember(partyPosition)
             local specID = GetInspectSpecialization(partyPosition)
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyPlayer.."GUID"]:SetText(specName..UnitClass(partyPosition))
+            _G["KM_Player"..partyPlayer.."Class"]:SetText(specName..UnitClass(partyPosition))
             _G["KM_MapDataLegend"..partyPlayer]:Hide()
             _G["KM_NoAddon"..partyPlayer]:Show()
         end
@@ -783,7 +783,7 @@ function MainInterface:Refresh_PartyFrames(...)
             local specID = GetInspectSpecialization("party1")
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..myClass)
+            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..myClass)
             _G["KM_MapDataLegend"..partyNumber]:Hide()
             _G["KM_NoAddon"..partyNumber]:Show()
         end
@@ -812,7 +812,7 @@ function MainInterface:Refresh_PartyFrames(...)
             local specID = GetInspectSpecialization("party2")
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party2"))
+            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party2"))
             _G["KM_MapDataLegend"..partyNumber]:Hide()
             _G["KM_NoAddon"..partyNumber]:Show()
         end
@@ -839,7 +839,7 @@ function MainInterface:Refresh_PartyFrames(...)
             local specID = GetInspectSpecialization("party3")
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party3"))
+            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party3"))
             _G["KM_MapDataLegend"..partyNumber]:Hide()
             _G["KM_NoAddon"..partyNumber]:Show()
         end
@@ -866,7 +866,7 @@ function MainInterface:Refresh_PartyFrames(...)
             local specID = GetInspectSpecialization("party4")
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party4"))
+            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party4"))
             _G["KM_MapDataLegend"..partyNumber]:Hide()
             _G["KM_NoAddon"..partyNumber]:Show()
         end
