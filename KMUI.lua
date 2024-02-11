@@ -93,13 +93,14 @@ local function uiEventHandler(self, event, ...)
      -- GROUP_LEFT, GROUP_JOINED
     -- Do something with event and arg1
 
-    if event == "GROUP_LEFT" or "GROUP_JOINED" or "ADDON_LOADED" then -- this event needs refined. Fires on things of no signifigance to this addon.
+    if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
         
         -- only transmit if in a party
         if (GetNumGroupMembers() > 0) then
             MyAddon:Transmit(playerInfo, "PARTY", nil)
         end
+        MainInterface:Refresh_PartyFrames()
         
         --print("-- Number of members: ", GetNumGroupMembers())
     end
@@ -490,6 +491,15 @@ function PartyPanel:CreateDataFrames(playerNumber)
         --tempText:SetText("GUID: "..thisPlayer.GUID)
         --- END TODO
 
+        -- Player does not have the addon
+        tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+        local font, fontSize, flags = tempText:GetFont()
+        tempText:SetFont(font, 25, flags)
+        tempText:SetTextColor(0.4, 0.4, 0.4, 1)
+        tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
+        tempText:SetText("This player does not have "..KM_ADDON_NAME.." installed. :(")
+        tempText:Hide()
+
         -- Player's Owned Key
         tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
         local _, fontSize, _ = tempText:GetFont()
@@ -542,7 +552,7 @@ function PartyPanel:CreateDataFrames(playerNumber)
         end
 
         -- LEGEND FRAME
-        local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber..a, parentFrame)
+        local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
         temp_Frame:ClearAllPoints()
         temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
         temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..a, "TOPLEFT", 0, 0)
@@ -563,10 +573,10 @@ function PartyPanel:CreateDataFrames(playerNumber)
         _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..a]:GetPoint()
         local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText2:GetFont()
-        tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 4)) -- todo: this yOfs is screwy.. FIX IT
+        tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 5)) -- todo: this yOfs is screwy.. FIX IT
         tempText2:SetText("Time:")
         
-
+        _G["KM_MapDataLegend"..playerNumber]:Show()
     else
         return
     end
@@ -670,6 +680,8 @@ function MainInterface:Refresh_PartyFrames(...)
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
             _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party1"))
+            _G["KM_MapDataLegend"..partyNumber]:Hide()
+            _G["KM_NoAddon"..partyNumber]:Show()
         end
 
         SetPortraitTexture(_G["KM_Portrait2"], "party1")        
@@ -697,6 +709,8 @@ function MainInterface:Refresh_PartyFrames(...)
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
             _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party2"))
+            _G["KM_MapDataLegend"..partyNumber]:Hide()
+            _G["KM_NoAddon"..partyNumber]:Show()
         end
         SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
@@ -722,6 +736,8 @@ function MainInterface:Refresh_PartyFrames(...)
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
             _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party3"))
+            _G["KM_MapDataLegend"..partyNumber]:Hide()
+            _G["KM_NoAddon"..partyNumber]:Show()
         end
         SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
@@ -747,6 +763,8 @@ function MainInterface:Refresh_PartyFrames(...)
             local specName = select(2,GetSpecializationInfoByID(specID))
             if (not specName) then specName = "" else specName = specName.." " end
             _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party4"))
+            _G["KM_MapDataLegend"..partyNumber]:Hide()
+            _G["KM_NoAddon"..partyNumber]:Show()
         end
         SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
