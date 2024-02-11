@@ -31,6 +31,13 @@ function PlayerInfo:GetMyClassColor(unit)
     return c
 end
 
+function PlayerInfo:GetDungeonOverallScore(mapid)
+    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+    if (not bestOverallScore) then bestOverallScore = 0 end
+
+    return bestOverallScore
+end
+
 ----------------------------------
 function PlayerInfo:GetMyCharacterInfo()
     local myCharacterInfo = {}
@@ -45,12 +52,17 @@ function PlayerInfo:GetMyCharacterInfo()
     local seasonMaps = PlayerInfo:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
-        keyRun["bestOverall"] = "BESTKEYHERE" -- TODO: get value from Data:GetMplusScoreForMap
-        --print()
-        --print("Processing: " .. Data:GetMapName(mapid))
-        --print ("MapID: " .. mapid)
-        --print()
         
+        -- DEBUG OUTPUT
+        -- print()
+        -- print("Processing: " .. PlayerInfo:GetMapName(mapid))
+        -- print ("MapID: " .. mapid)
+        -- print()
+        
+        -- Overall Dungeon Score
+        keyRun["bestOverall"] = PlayerInfo:GetDungeonOverallScore(mapid)
+
+        -- Tyrannical Key Score
         local scoreInfo = PlayerInfo:GetMplusScoreForMap(mapid, "Tyrannical")   
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
@@ -60,6 +72,7 @@ function PlayerInfo:GetMyCharacterInfo()
         }
         keyRun["Tyrannical"] = dungeonDetails
         
+        -- Fortified Key Score
         local scoreInfo = PlayerInfo:GetMplusScoreForMap(mapid, "Fortified")
         local dungeonDetails = {
             ["Score"] = scoreInfo.score,
