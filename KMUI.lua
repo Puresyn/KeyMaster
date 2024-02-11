@@ -26,6 +26,7 @@ local PartyPanel = core.MainInterface.PartyPanel
 local PlayerInfo = core.PlayerInfo
 local Coms = core.Coms
 local Config = core.Config
+local InstanceTools = core.InstanceTools
 --local UIWindow
 --local MainPanel, HeaderFrame, ContentFrame
 KeyMaster = core.KeyMaster -- todo: KeyMaster is global, not sure it should be and could be open to vulnerabilities.
@@ -264,7 +265,7 @@ end
 -- create a parent frame to contain the party member rows
 local function Create_GroupFrame()
     local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
-    frameTitle = "Party Information." -- set title
+    frameTitle = "Party Information:" -- set title
 
     -- relative parent frame of this frame
     -- todo: the next 2 lines may be reduntant?
@@ -277,7 +278,7 @@ local function Create_GroupFrame()
 
     temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
     temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -40)
+    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
 
     txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     Path, _, Flags = txtPlaceHolder:GetFont()
@@ -290,12 +291,67 @@ local function Create_GroupFrame()
     temp_frame.texture:SetAllPoints(temp_frame)
     temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- temporary bg color 
 
+
     return temp_frame
 end
 
 local function SetInstanceIcons(mapData)
 end
 
+-- Create dungeon identifier headers for party frame
+local function createPartyDungeonHeader(anchorFrame, mapId)
+    --[[ name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       mapTable[id] = {
+          ["name"] = name,
+          ["timeLimit"] = timeLimit,
+          ["texture"] = texture,
+          ["backgroundTexture"] = backgroundTexture
+       } ]]
+
+    --DEBUG
+    if not anchorFrame and mapId then 
+        print("No valid refrences passed to createPartyDungeonHeader()")
+    end
+    if (not anchorFrame) then
+        print("Invalid anchorFrame for createPartyDungeonHeader() mapId:"..mapId)
+    end
+    if (not mapId) then
+        print("Invalid mapId for createPartyDungeonHeader() anchorFrame:"..anchorFrame:GetName())
+    end
+    -- END DEBUG
+
+    local window = _G["Dungeon_"..mapId.."_Header"]
+    if (window) then return window end -- if already Created, don't make another one
+
+    local mapsTable = PlayerInfo:GetCurrentSeasonMaps()
+    local iconSizex = anchorFrame:GetWidth() - 10
+    local iconSizey = anchorFrame:GetWidth() - 10
+    local mapAbbr = InstanceTools:GetAbbr(mapId)
+
+    local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
+
+    --temp_frame:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight()) --- ((_G["KM_Portrait1"]:GetWidth())/2))
+    temp_frame:SetSize(iconSizex, iconSizey) -- second width refrence is just making this a square
+    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 4)
+
+    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+    Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 12, Flags)
+    txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText(mapAbbr)
+
+    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
+    --temp_frame.texture:SetAllPoints(temp_frame)
+    temp_frame.texture:SetPoint("BOTTOM", temp_frame, 0, 0)
+    temp_frame.texture:SetSize(temp_frame:GetWidth(), 16)
+    temp_frame.texture:SetColorTexture(0, 0, 0, 0.7) -- make names more ledegible 
+
+    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
+    temp_frame.texture:SetAllPoints(temp_frame)
+    --temp_frame.texture:SetColorTexture(0.931, 0.931, 0.931, 0.3) -- temporary bg color 
+    temp_frame.texture:SetTexture(mapsTable[mapId].texture)
+end
 
 -- create a new template frame for each party members if it doesn't exist
 local function createPartyMemberFrame(frameName, parentFrame)
@@ -316,6 +372,8 @@ local function createPartyMemberFrame(frameName, parentFrame)
     elseif (frameName == "KM_PlayerRow5") then partyNumber = 5
     end
 
+    local window = _G[frameName]
+    if (window) then return window end -- frame exists, don't create another
 
     local temp_RowFrame = CreateFrame("Frame", frameName, parentFrame)
     temp_RowFrame:ClearAllPoints()
@@ -485,11 +543,9 @@ function PartyPanel:CreateDataFrames(playerNumber)
         -- todo" make if/then for if 1 then party1 etc. for class color.
         --tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
 
-        --- TODO: DELLETE ME!! GUID DEBUG REFERENCE
-        tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."GUID", "OVERLAY", "GameTooltipText")
+        --- Player Class
+        tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "GameTooltipText")
         tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
-        --tempText:SetText("GUID: "..thisPlayer.GUID)
-        --- END TODO
 
         -- Player does not have the addon
         tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
@@ -546,6 +602,13 @@ function PartyPanel:CreateDataFrames(playerNumber)
             local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..n, "OVERLAY", "GameToolTipText")
             local _, fontSize, _ = tempText:GetFont()
             tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
+
+            -- create dungeon identity header if this is the clinets row (the first row)
+            if (playerNumber == 1) then
+                local anchorFrame = temp_Frame
+                local mapId = n
+                createPartyDungeonHeader(anchorFrame, mapId)
+            end
 
             b = false
             a = n
@@ -620,15 +683,15 @@ local function updateMemberData(partyNumber, playerData)
     --UnitName("player")
     --print(UnitName(partyPlayer))
 
-    --_G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
     local specID = GetInspectSpecialization(partyPlayer)
     local specName = select(2,GetSpecializationInfoByID(specID))
     if (not specName) then specName = "" else specName = specName.." " end
-    _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass(partyPlayer))
+    _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass(partyPlayer))
 
 
     _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
-    _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
+    --_G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
+    _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..InstanceTools:GetAbbr(playerData.ownedKeyId))
 
     for n, v in pairs(mapTable) do
         -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
