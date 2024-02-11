@@ -28,5 +28,6 @@ local mapAbbrTable = {
 -- conversion from mapid to abbreviation
 function InstanceTools:GetAbbr(mapId --[[int]])
     local mapAbbr = mapAbbrTable[mapId]
+    if (not mapAbbr) then mapAbbr = "---" end
     return mapAbbr
 end
