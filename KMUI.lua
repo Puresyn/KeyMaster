@@ -686,6 +686,7 @@ end
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
  --    this also applies for disconnects!
 function MainInterface:Refresh_PartyFrames(...)
+    print("called...")
     local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
     local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
@@ -1008,8 +1009,8 @@ function MainInterface:PartyScreen()
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText("Group Screen")
 
-    PartyScreen:RegisterEvent("GROUP_ROSTER_UPDATE")
-    PartyScreen:SetScript("OnEvent", uiEventHandler)
+    -- PartyScreen:RegisterEvent("GROUP_ROSTER_UPDATE")
+    -- PartyScreen:SetScript("OnEvent", uiEventHandler)
 
     return PartyScreen
 end

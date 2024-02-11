@@ -7,6 +7,9 @@
 -- Namespace
 --------------------------------
 local _, core = ...
+local MainInterface = core.MainInterface
+local PlayerInfo = core.PlayerInfo
+local Coms = core.Coms
 
 --------------------------------
 -- Globals
@@ -108,7 +111,7 @@ end
 -- this addon has loaded then
 -- runs scripts accordingly:
 --------------------------------
-function core:init(event, name)
+function core:init(event, name, ...)
     if (name ~= "KeyMaster") then return end -- if it's not this addon calling it, ignore the event
 
     -- Enables using arrow keys in edit boxes (not currently in use)
@@ -139,7 +142,29 @@ function core:init(event, name)
     -- for ref: local _, myClass, _ = UnitClass("player")
     local myName = UnitName("player")
     core:Print("Welcome back", "|cff"..core.PlayerInfo:GetMyClassColor()..myName.."|r!")
+end
 
+function onEvent_Group(self, event, ...)
+    --print(event, ...)
+    
+    if (event == "GROUP_JOINED") then
+        local partySize, partyId = ...
+        -- Create MainInterface:PartyPlayerData variable (stores all party information)
+        local playerInfo = PlayerInfo:GetMyCharacterInfo()
+        
+        -- only transmit if in a party
+        if (GetNumGroupMembers() > 0) then
+            MyAddon:Transmit(playerInfo, "PARTY", nil)
+        end
+    elseif (event == "GROUP_LEFT") then
+        local partySize, partyId = ...
+        -- Destroy MainInterface:PartyPlayerData variable (stores all party information)
+    elseif (event == "GROUP_ROSTER_UPDATE") then
+        -- triggers when in party and roster changes (NOT LEAVING OR JOINING)
+        -- Refresh Party Frames
+    end
+
+    MainInterface:Refresh_PartyFrames()
 end
 
 -- Event Registration
@@ -148,3 +173,9 @@ events:RegisterEvent("ADDON_LOADED")
 events:RegisterEvent("CHAT_MSG_ADDON")
 events:RegisterEvent("PLAYER_ENTERING_WORLD")
 events:SetScript("OnEvent", core.init)
+
+local events2 = CreateFrame("Frame")
+events2:RegisterEvent("GROUP_JOINED")
+events2:RegisterEvent("GROUP_LEFT")
+events2:RegisterEvent("GROUP_ROSTER_UPDATE")
+events2:SetScript("OnEvent", onEvent_Group)
