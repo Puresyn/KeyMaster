@@ -8,7 +8,6 @@
 --------------------------------
 local _, core = ...
 core.Coms = {}
-local PartyPlayerData = {}
 
 local Coms = core.Coms
 local MainInterface = core.MainInterface
@@ -66,20 +65,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
             return
         end
 
-        print(data.GUID)
-        MainInterface:SetMemberData(data)
-        -- --tprint(data)
         print(prefix..": Recieved data from " ..data.name)
-        -- --tinsert(PlayerInfo.PartyPlayerData, data)
-        -- PartyPlayerData[data.GUID] = data
-        -- --tprint(PartyPlayerData)
-        -- --pData[data.GUID] = data
-        -- --tprint(PlayerInfo.PartyPlayerData[data.GUID])
-        
-        -- MainInterface:Refresh_PartyFrames()
+        MainInterface:SetMemberData(data)
     end    
-end
-
-function Coms:GetPartyData()
-    return PartyPlayerData
 end

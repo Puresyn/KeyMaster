@@ -40,6 +40,7 @@ function PlayerInfo:GetMyCharacterInfo()
     myCharacterInfo.ownedKeyId = id
     myCharacterInfo.ownedKeyLevel = level
     myCharacterInfo.keyRuns = {}
+    myCharacterInfo.mythicPlusRating = PlayerInfo:GetCurrentRating()
 
     local seasonMaps = PlayerInfo:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
