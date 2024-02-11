@@ -47,6 +47,7 @@ local PartyPlayerData = {}
 function MainInterface:Toggle()
     -- Shows/Hides the main interface - will only create the window once, otherwise it holds the window pointer
     local mainUI = MainPanel or MainInterface.CreateMainPanel()
+    MainInterface:Refresh_PartyFrames()
     mainUI:SetShown(not mainUI:IsShown())
     --mainUI = nil -- possible bug fix from not releaseing variable?
 end
@@ -92,15 +93,14 @@ local function uiEventHandler(self, event, ...)
      -- GROUP_LEFT, GROUP_JOINED
     -- Do something with event and arg1
 
-    if event == "GROUP_LEFT" or "GROUP_JOINED" then -- this event needs refined. Fires on things of no signifigance to this addon.
+    if event == "GROUP_LEFT" or "GROUP_JOINED" or "ADDON_LOADED" then -- this event needs refined. Fires on things of no signifigance to this addon.
         local playerInfo = PlayerInfo:GetMyCharacterInfo()
         
         -- only transmit if in a party
         if (GetNumGroupMembers() > 0) then
             MyAddon:Transmit(playerInfo, "PARTY", nil)
         end
-            MainInterface:Refresh_PartyFrames()
-
+        
         --print("-- Number of members: ", GetNumGroupMembers())
     end
 
@@ -610,7 +610,12 @@ local function updateMemberData(partyNumber, playerData)
     --UnitName("player")
     --print(UnitName(partyPlayer))
 
-    _G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
+    --_G["KM_Player"..partyNumber.."GUID"]:SetText("GUID: "..playerData.GUID)  -- DEBUG: remove/disable here and createDataFrames
+    local specID = GetInspectSpecialization(partyPlayer)
+    local specName = select(2,GetSpecializationInfoByID(specID))
+    if (not specName) then specName = "" else specName = specName.." " end
+    _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass(partyPlayer))
+
 
     _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
     _G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
@@ -626,7 +631,7 @@ end
 
 function MainInterface:SetMemberData(playerData)
     PartyPlayerData[playerData.GUID] = playerData
-    MainInterface:Refresh_PartyFrames() 
+    --MainInterface:Refresh_PartyFrames() 
 end
 
  -- this needs to be called when the party status/members change
@@ -639,8 +644,6 @@ function MainInterface:Refresh_PartyFrames(...)
     local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
     local numMembers = GetNumGroupMembers()
     local clientData, party1Data, party2Data, party3Data, party4Data, keyText
-    --local mapTable = PlayerInfo:GetCurrentSeasonMaps()
-    --local r, g, b, colorWeekHex = Config:GetWeekScoreColor() 
 
     -- update the client's localy displayed information
     SetPortraitTexture(_G["KM_Portrait1"], "player")
@@ -663,10 +666,15 @@ function MainInterface:Refresh_PartyFrames(...)
             local _, myClass, _ = UnitClass("party1")
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party1").."|r")
+            local specID = GetInspectSpecialization("party1")
+            local specName = select(2,GetSpecializationInfoByID(specID))
+            if (not specName) then specName = "" else specName = specName.." " end
+            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party1"))
         end
 
         SetPortraitTexture(_G["KM_Portrait2"], "party1")        
         _G["KM_PlayerRow2"]:Show()
+        
     else
         party1Data = nil
         _G["KM_Portrait2"]:SetTexture(xPortrait, false)
@@ -685,6 +693,10 @@ function MainInterface:Refresh_PartyFrames(...)
             local _, myClass, _ = UnitClass("party2")
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party2").."|r")
+            local specID = GetInspectSpecialization("party2")
+            local specName = select(2,GetSpecializationInfoByID(specID))
+            if (not specName) then specName = "" else specName = specName.." " end
+            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party2"))
         end
         SetPortraitTexture(_G["KM_Portrait3"], "party2")
         _G["KM_PlayerRow3"]:Show()
@@ -706,6 +718,10 @@ function MainInterface:Refresh_PartyFrames(...)
             local _, myClass, _ = UnitClass("party3")
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party3").."|r")
+            local specID = GetInspectSpecialization("party3")
+            local specName = select(2,GetSpecializationInfoByID(specID))
+            if (not specName) then specName = "" else specName = specName.." " end
+            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party3"))
         end
         SetPortraitTexture(_G["KM_Portrait4"], "party3")
         _G["KM_PlayerRow4"]:Show()
@@ -727,6 +743,10 @@ function MainInterface:Refresh_PartyFrames(...)
             local _, myClass, _ = UnitClass("party4")
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party4").."|r")
+            local specID = GetInspectSpecialization("party4")
+            local specName = select(2,GetSpecializationInfoByID(specID))
+            if (not specName) then specName = "" else specName = specName.." " end
+            _G["KM_Player"..partyNumber.."GUID"]:SetText(specName..UnitClass("party4"))
         end
         SetPortraitTexture(_G["KM_Portrait5"], "party4")
         _G["KM_PlayerRow5"]:Show()
@@ -1017,7 +1037,6 @@ function MainInterface:CreateMainPanel()
     -- Party tab content
     Create_GroupFrame()
     tblPartyRows = GetPartyMembersFrameStack()
-    MainInterface:Refresh_PartyFrames()
  
     -- Create tabs
     -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
