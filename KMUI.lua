@@ -355,7 +355,7 @@ end
 
 -- create a new template frame for each party members if it doesn't exist
 local function createPartyMemberFrame(frameName, parentFrame)
-    local frameAnchor, frameHeight
+    local frameAnchor, frameHeight, partyNumber
     local mtb = 2 -- top and bottom margin of each frame in pixels
 
     -- DEBUG
