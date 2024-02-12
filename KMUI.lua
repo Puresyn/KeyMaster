@@ -731,7 +731,6 @@ end
 
 function MainInterface:SetMemberData(playerData)
     PartyPlayerData[playerData.GUID] = playerData
-    --MainInterface:Refresh_PartyFrames() 
 end
 
 -- REPLACES BLOCK OF CODE IN 'Refresh_PartyFrames'  after each 'if (numMembers >= #) then'
@@ -772,7 +771,9 @@ function MainInterface:SetupPartyMember(partyPosition)
                 _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.keyRuns[n]["Fortified"].Score.."|r")
                 _G["KM_MapTimeT"..partyPlayer..n]:SetText(formatDurationSec(playerData.keyRuns[n]["Fortified"].DurationSec))
             end
+            _G["KM_NoAddon"..partyPlayer]:Hide()
         else
+            print("No data")
             local myClass, _, _ = UnitClass(partyPosition)
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyPlayer]:SetText("|c"..classHex..UnitName(partyPosition).."|r")
