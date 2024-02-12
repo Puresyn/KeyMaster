@@ -48,7 +48,6 @@ local PartyPlayerData = {}
 function MainInterface:Toggle()
     -- Shows/Hides the main interface - will only create the window once, otherwise it holds the window pointer
     local mainUI = MainPanel or MainInterface.CreateMainPanel()
-    MainInterface:Refresh_PartyFrames()
     mainUI:SetShown(not mainUI:IsShown())
     --mainUI = nil -- possible bug fix from not releaseing variable?
 end
@@ -756,33 +755,30 @@ end
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
  --    this also applies for disconnects!
 function MainInterface:Refresh_PartyFrames(...)
-    -- NOT USED? local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
-    local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
-    -- NOT USED? local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
+    local defaultPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"    
     local numMembers = GetNumGroupMembers()
 
     -- update logged on players's (client) data
     local clientData = PlayerInfo:GetMyCharacterInfo()
     MainInterface:SetMemberData(clientData)
-    
-    -- TODO: Decide if we care if we're in a raid?
-    --if (IsInRaid()) then return end
 
-    -- Hide party members 2-4 frames
+    -- Hide party members 2-5 frames
     for index = 2, 5, 1 do
-        _G["KM_Portrait"..index]:SetTexture(xPortrait, false)
+        _G["KM_Portrait"..index]:SetTexture(defaultPortrait, false)
         _G["KM_PlayerRow"..index]:Hide()
     end
 
-    -- create frames for party members 2-4 depending on party size
+    -- create frame for player logged in
+    MainInterface:SetupPartyMember("player")
+
+    -- TODO: Decide if we care if we're in a raid?
+    --if (IsInRaid()) then return end
+
+    -- create frames for party members 2-5 depending on party size
     -- print("Number of Party Members: "..numMembers) -- DEBUG CODE
-    for index = 1, numMembers, 1 do
+    for index = 2, numMembers, 1 do
         -- print("Index value: "..index) -- DEBUG CODE
-        if (index == 1) then -- Logged in Player
-            MainInterface:SetupPartyMember("player")
-        else -- party members
-            MainInterface:SetupPartyMember("party"..(index-1))    
-        end        
+        MainInterface:SetupPartyMember("party"..(index-1))    
     end
 end
 
@@ -1051,6 +1047,7 @@ function MainInterface:CreateMainPanel()
     -- Party tab content
     Create_GroupFrame()
     tblPartyRows = GetPartyMembersFrameStack()
+    MainInterface:Refresh_PartyFrames()
  
     -- Create tabs
     -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
