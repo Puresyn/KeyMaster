@@ -500,6 +500,29 @@ local function Create_PartyMemberRow(partyNumber, ...)
     end ]]
 end 
 
+local function GetPlayerSpecAndClass(partyMember --[[txt "player or "partyN"]])
+-- Spec visual information. Should be moved to it's own function
+    local specId, specName, specIcon, specRole, specClass
+    specClass, _ = UnitClass(partyMember)
+
+    if (partyMember == "player") then
+        specId = GetSpecialization()
+        if (specId) then
+            _, specName, _, specIcon, specRole, _ = GetSpecializationInfo(specId)
+        end
+    else
+        specId = GetInspectSpecialization(partyMember)
+        if (specId) then
+            _, specName, _, specIcon, specRole, _ = GetSpecializationInfoByID(specId)
+        end
+    end
+    if (specName) then
+        specClass = specName.." "..specClass
+    end
+
+    return specClass
+end
+
 local function formatDurationSec(timeInSec)
 
     local duration =  date("%M:%S", timeInSec)
@@ -553,6 +576,15 @@ function PartyPanel:CreateDataFrames(playerNumber)
         tempText:SetTextColor(0.4, 0.4, 0.4, 1)
         tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
         tempText:SetText("This player does not have "..KM_ADDON_NAME.." installed. :(")
+        tempText:Hide()
+
+        -- Player is offline
+        tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "GameFontHighlightLarge")
+        local font, fontSize, flags = tempText:GetFont()
+        tempText:SetFont(font, 25, flags)
+        tempText:SetTextColor(0.4, 0.4, 0.4, 1)
+        tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
+        tempText:SetText("This player is offline.")
         tempText:Hide()
 
         -- Player's Owned Key
@@ -677,15 +709,11 @@ local function updateMemberData(partyNumber, playerData)
     elseif (partyNumber == 5) then
         partyPlayer = "party4"
     end
+    
+    local specClass = GetPlayerSpecAndClass(partyPlayer)
 
-    --UnitGUID("player")
-    --UnitName("player")
-    --print(UnitName(partyPlayer))
-
-    local specID = GetInspectSpecialization(partyPlayer)
-    local specName = select(2,GetSpecializationInfoByID(specID))
-    if (not specName) then specName = "" else specName = specName.." " end
-    _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass(partyPlayer))
+    -- populate UI frames
+    _G["KM_Player"..partyNumber.."Class"]:SetText(specClass)
 
 
     _G["KM_PlayerName"..partyNumber]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPlayer)..playerData.name.."|r")
@@ -723,23 +751,33 @@ function MainInterface:SetupPartyMember(partyPosition)
             partyPlayer = 5
         end
         
-        playerData = PartyPlayerData[UnitGUID(partyPosition)]
+        local playerData = PartyPlayerData[UnitGUID(partyPosition)]
         if (playerData) then
-            updateMemberData(partyPlayer, playerData)
+            local mapTable = PlayerInfo:GetCurrentSeasonMaps()
+            local r, g, b, colorWeekHex = Config:GetWeekScoreColor()
+        
+            local specClass = GetPlayerSpecAndClass(partyPosition)
+        
+            -- populate UI frames
+            _G["KM_Player"..partyPlayer.."Class"]:SetText(specClass)
+        
+        
+            _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPosition)..playerData.name.."|r")
+            --_G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
+            _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..InstanceTools:GetAbbr(playerData.ownedKeyId))
+        
+            for n, v in pairs(mapTable) do
+                -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
+                _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.keyRuns[n]["Fortified"].Level..")")
+                _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.keyRuns[n]["Fortified"].Score.."|r")
+                _G["KM_MapTimeT"..partyPlayer..n]:SetText(formatDurationSec(playerData.keyRuns[n]["Fortified"].DurationSec))
+            end
         else
-            local _, myClass, _ = UnitClass(partyPosition)
-            local classText, specName
+            local myClass, _, _ = UnitClass(partyPosition)
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyPlayer]:SetText("|c"..classHex..UnitName(partyPosition).."|r")
-            local specID = GetInspectSpecialization(partyPosition)
-            if (specID) then
-                specName = select(2,GetSpecializationInfoByID(specID))
-            end
-            if (not specName) then 
-                classText = myClass
-            else 
-                classText = specName..myClass
-            end
+
+            local classText = GetPlayerSpecAndClass(partyPosition)
             _G["KM_Player"..partyPlayer.."Class"]:SetText(classText)
             _G["KM_MapDataLegend"..partyPlayer]:Hide()
             _G["KM_NoAddon"..partyPlayer]:Show()
