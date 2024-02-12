@@ -728,13 +728,20 @@ function MainInterface:SetupPartyMember(partyPosition)
         if (playerData) then
             updateMemberData(partyPlayer, playerData)
         else
-            local _, myClass, _ = UnitClass("partyPosition")
+            local _, myClass, _ = UnitClass(partyPosition)
+            local classText, specName
             local _, _, _, classHex = GetClassColor(myClass)
             _G["KM_PlayerName"..partyPlayer]:SetText("|c"..classHex..UnitName(partyPosition).."|r")
             local specID = GetInspectSpecialization(partyPosition)
-            local specName = select(2,GetSpecializationInfoByID(specID))
-            if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyPlayer.."Class"]:SetText(specName..UnitClass(partyPosition))
+            if (specID) then
+                specName = select(2,GetSpecializationInfoByID(specID))
+            end
+            if (not specName) then 
+                classText = myClass
+            else 
+                classText = specName..myClass
+            end
+            _G["KM_Player"..partyPlayer.."Class"]:SetText(classText)
             _G["KM_MapDataLegend"..partyPlayer]:Hide()
             _G["KM_NoAddon"..partyPlayer]:Show()
         end
