@@ -749,136 +749,34 @@ end
  -- todo: need to check if a party member's model is in memory.. if so, display it, otherwise, show their staic portrait?
  --    this also applies for disconnects!
 function MainInterface:Refresh_PartyFrames(...)
-    local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
+    -- NOT USED? local defPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_default"
     local xPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_x"
-    local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
+    -- NOT USED? local fPortrait = "Interface\\AddOns\\KeyMaster\\Imgs\\portrait_frame"
     local numMembers = GetNumGroupMembers()
-    local clientData, party1Data, party2Data, party3Data, party4Data, keyText
 
+    -- update logged on players's (client) data
+    local clientData = PlayerInfo:GetMyCharacterInfo()
+    MainInterface:SetMemberData(clientData)
     
+    -- TODO: Decide if we care if we're in a raid?
+    --if (IsInRaid()) then return end
 
-    -- update the client's localy displayed information
-    SetPortraitTexture(_G["KM_Portrait1"], "player")
-    
-    --clientData = PlayerInfo.PartyPlayerData[UnitGUID("player")]
-    clientData = PlayerInfo:GetMyCharacterInfo()
-    
-    updateMemberData(1, clientData)
-
-    if (IsInRaid()) then return end -- if in raid, don't process anyone else.
-
-    -- 2nd party member
-    if (numMembers >= 2) then
-        -- Find player in this slot by cmd UnitGUID("party1")
-        -- partyCharInfo = PlayerInfo.PartyPlayerData[UnitGUID("party1")]
-        -- pass partyCharInfo data to ui ??
-        party1Data = PartyPlayerData[UnitGUID("party1")]
-        if (party1Data) then
-            updateMemberData(2, party1Data)
-        else    
-            local partyNumber = 2
-            local _, myClass, _ = UnitClass("party1")
-            local _, _, _, classHex = GetClassColor(myClass)
-            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party1").."|r")
-            local specID = GetInspectSpecialization("party1")
-            local specName = select(2,GetSpecializationInfoByID(specID))
-            if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..myClass)
-            _G["KM_MapDataLegend"..partyNumber]:Hide()
-            _G["KM_NoAddon"..partyNumber]:Show()
-        end
-
-        SetPortraitTexture(_G["KM_Portrait2"], "party1")        
-        _G["KM_PlayerRow2"]:Show()
-        
-    else
-        party1Data = nil
-        _G["KM_Portrait2"]:SetTexture(xPortrait, false)
-        _G["KM_PlayerRow2"]:Hide()
-        -- Clear 2nd party member data
+    -- Hide party members 2-4 frames
+    for index = 2, 5, 1 do
+        _G["KM_Portrait"..index]:SetTexture(xPortrait, false)
+        _G["KM_PlayerRow"..index]:Hide()
     end
 
-    -- 3rd party member
-    if (numMembers >= 3) then
-        -- Set 3rd party member data
-        party2Data = PartyPlayerData[UnitGUID("party2")]
-        if (party2Data) then
-            updateMemberData(3, party2Data)
-        else
-            local partyNumber = 3
-            local _, myClass, _ = UnitClass("party2")
-            local _, _, _, classHex = GetClassColor(myClass)
-            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party2").."|r")
-            local specID = GetInspectSpecialization("party2")
-            local specName = select(2,GetSpecializationInfoByID(specID))
-            if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party2"))
-            _G["KM_MapDataLegend"..partyNumber]:Hide()
-            _G["KM_NoAddon"..partyNumber]:Show()
-        end
-        SetPortraitTexture(_G["KM_Portrait3"], "party2")
-        _G["KM_PlayerRow3"]:Show()
-    else
-        party2Data = nil
-        _G["KM_Portrait3"]:SetTexture(xPortrait, false)
-        _G["KM_PlayerRow3"]:Hide()
-        -- Clear 3rd party member data
+    -- create frames for party members 2-4 depending on party size
+    -- print("Number of Party Members: "..numMembers) -- DEBUG CODE
+    for index = 1, numMembers, 1 do
+        -- print("Index value: "..index) -- DEBUG CODE
+        if (index == 1) then -- Logged in Player
+            MainInterface:SetupPartyMember("player")
+        else -- party members
+            MainInterface:SetupPartyMember("party"..(index-1))    
+        end        
     end
-
-    -- 4th party member
-    if (numMembers >= 4) then
-        -- Set 4th party member data
-        party3Data = PartyPlayerData[UnitGUID("party3")]
-        if (party3Data) then
-            updateMemberData(4, party1Data)
-        else
-            local partyNumber = 4
-            local _, myClass, _ = UnitClass("party3")
-            local _, _, _, classHex = GetClassColor(myClass)
-            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party3").."|r")
-            local specID = GetInspectSpecialization("party3")
-            local specName = select(2,GetSpecializationInfoByID(specID))
-            if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party3"))
-            _G["KM_MapDataLegend"..partyNumber]:Hide()
-            _G["KM_NoAddon"..partyNumber]:Show()
-        end
-        SetPortraitTexture(_G["KM_Portrait4"], "party3")
-        _G["KM_PlayerRow4"]:Show()
-    else
-        party3Data = nil
-        _G["KM_Portrait4"]:SetTexture(xPortrait, false)
-        _G["KM_PlayerRow4"]:Hide()
-        -- Clear 4th party member data
-    end
-
-    -- 5th party member
-    if (numMembers == 5) then
-        -- Set 5th party member data
-        party4Data = PartyPlayerData[UnitGUID("party4")]
-        if (party4Data) then
-            updateMemberData(5, party1Data)
-        else
-            local partyNumber = 5
-            local _, myClass, _ = UnitClass("party4")
-            local _, _, _, classHex = GetClassColor(myClass)
-            _G["KM_PlayerName"..partyNumber]:SetText("|c"..classHex..UnitName("party4").."|r")
-            local specID = GetInspectSpecialization("party4")
-            local specName = select(2,GetSpecializationInfoByID(specID))
-            if (not specName) then specName = "" else specName = specName.." " end
-            _G["KM_Player"..partyNumber.."Class"]:SetText(specName..UnitClass("party4"))
-            _G["KM_MapDataLegend"..partyNumber]:Hide()
-            _G["KM_NoAddon"..partyNumber]:Show()
-        end
-        SetPortraitTexture(_G["KM_Portrait5"], "party4")
-        _G["KM_PlayerRow5"]:Show()
-    else
-        party4Data = nil
-        _G["KM_Portrait5"]:SetTexture(xPortrait, false)
-        _G["KM_PlayerRow5"]:Hide()
-        -- Clear 5th party member data
-    end
-
 end
 
 --------------------------------
