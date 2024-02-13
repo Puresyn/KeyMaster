@@ -14,16 +14,3 @@ function MainInterface:Toggle()
     local mainUI = _G["KeyMaster_MainFrame"] or Initialize()
     mainUI:SetShown(not mainUI:IsShown())
 end
-
--- Create the Inteface frames ONCE.
-local function UI_init()
-    local mainPanel = MainInterface.mainPanel -- get the existing UI
-    if (not ui) then
-
-        -- build out the UI framework
-        local mainPanel  = MainInterface.CreateMainInterface()
-    end
-    return mainPanel
-end
-
-MainInterface.mainPanel = UI_init()
