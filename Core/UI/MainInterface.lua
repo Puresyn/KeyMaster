@@ -32,7 +32,7 @@ function MainInterface:CreateMainInterface()
     mainPanel.closeBtn:SetScript("OnClick", KeyMaster.MainInterface.Toggle)
     mainPanel:Hide()
 
-    return mainPanel
+    --return mainPanel
 end
 
 --------------------------------
@@ -87,9 +87,6 @@ local function SetTabs(frame, tabs)
     if (GetNumGroupMembers() == 0 or GetNumGroupMembers() > 5) then
         -- Open main tab
         Tab_OnClick(_G[frameName.."Tab1"])
-    else
-        -- Open party tab
-        Tab_OnClick(_G[frameName.."Tab2"])
     end
 
     return unpack(contents)
@@ -107,9 +104,7 @@ function MainInterface:CreateTabs()
 
     -- Create the tabs (content region, Tab table)
     SetTabs(ContentFrame, myTabs)
-
-    mainPanel:Hide()
-    return mainPanel
+    return true
 end
 
 -- Content Regions

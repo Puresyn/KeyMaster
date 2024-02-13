@@ -9,7 +9,7 @@ local DungeonTools = KeyMaster.DungeonTools
 --------------------------------
 
 -- Setup header region
-function MainInterface:Headerframe()
+function MainInterface:CreateHeaderRegion()
     local fr, mlr, mtb = GetFrameRegions("header")
     headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", MainInterface.mainPanel);
     headerRegion:SetSize(fr.w, fr.h)
@@ -21,7 +21,7 @@ function MainInterface:Headerframe()
 end
 
 -- Header content
-function MainInterface:HeaderScreen()
+function MainInterface:CreateHeaderContent()
     local txtPlaceHolder, VersionText
     headerContent = CreateFrame("Frame", "KeyMaster_HeaderScreen", HeaderFrame);
     headerContent:SetSize(HeaderFrame:GetWidth(), HeaderFrame:GetHeight())
