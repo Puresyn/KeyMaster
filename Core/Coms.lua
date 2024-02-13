@@ -6,11 +6,10 @@
 --------------------------------
 -- Namespace
 --------------------------------
-local _, core = ...
-core.Coms = {}
+local _, KeyMaster = ...
+KeyMaster.Coms = {}
 
-local Coms = core.Coms
-local MainInterface = core.MainInterface
+local Coms = KeyMaster.Coms
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -24,7 +23,7 @@ local comPrefix = "KM2"
 -- Notify Successful Registration (DEBUG)
 function MyAddon:OnEnable()
     self:RegisterComm(comPrefix)
-    core:Print(comPrefix, "communications initialized.")
+    KeyMaster:Print(comPrefix, "communications initialized.")
 end
 
 -- Serialize communication data:
@@ -45,27 +44,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     if not decompressed then return end
     local success, data = LibSerialize:Deserialize(decompressed)
     if not success then return end
-
-    -- todo: Handle data communication events
-    -- print("Recieved Data: "..data)
-    -- print("PREFIX: " ..prefix)
-    -- print("DISTRO: " ..distribution)
-    -- print("SENDER: " ..sender)
-    --print("Data: "..decoded)'
-
-    if (prefix == "KM2") then
-        if (data == nil) then
-            return
-        end
-
-        if (data.name == UnitName("player")) then
-            return
-        end        
-        if (data.GUID == nil) then
-            return
-        end
-
-        print(prefix..": Recieved data from " ..data.name)
-        MainInterface:SetMemberData(data)
-    end    
+    
+    --do something with data
+    print("Recieved Data: "..data)
 end
