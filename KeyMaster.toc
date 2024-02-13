@@ -13,4 +13,5 @@ Core\CharacterInfo.lua
 Core\UI\MainInterface.xml
 Core\UI\MainInterface.lua
 Core\Coms.lua
+Core\UI\UIinit.lua
 KeyMaster.lua

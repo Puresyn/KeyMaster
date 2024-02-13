@@ -1,18 +1,10 @@
 local _, KeyMaster = ...
 KeyMaster.MainInterface = {}
 local MainInterface = KeyMaster.MainInterface
-local mainPanel = KeyMaster.MainInterface.mainpanel
 
-
-
-function MainInterface:Toggle()
-    -- Shows/Hides the main interface - will only create the window once, otherwise it holds the window pointer
-    local mainUI = mainPanel or MainInterface.CreateMainInterface()
-    mainUI:SetShown(not mainUI:IsShown())
-end
 
 function MainInterface:CreateMainInterface()
-    mainPanel = CreateFrame("Frame", "KeyMaster_mainPanel", UIParent, "KeyMasterFrame");
+    local mainPanel = CreateFrame("Frame", "KeyMaster_mainPanel", UIParent, "KeyMasterFrame");
     mainPanel:ClearAllPoints(); -- Fixes SetPoint bug thus far.
     mainPanel:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
     mainPanel:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
@@ -32,7 +24,7 @@ function MainInterface:CreateMainInterface()
     mainPanel.closeBtn:SetScript("OnClick", KeyMaster.MainInterface.Toggle)
     mainPanel:Hide()
 
-    --return mainPanel
+    return mainPanel
 end
 
 --------------------------------
@@ -139,19 +131,17 @@ local function GetFrameRegions(myRegion)
     return myRegionInfo, mlr, mtb
 end
 
-
-
 -- Setup content region
 function MainInterface:ContentFrame()
     local fr, mlr, mtb = GetFrameRegions("content")
-    ContentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
-    ContentFrame:SetSize(fr.w, fr.h)
-    ContentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", mtb, -(HeaderFrame:GetHeight() + (mtb*2)))
-    ContentFrame.texture = ContentFrame:CreateTexture()
-    ContentFrame.texture:SetAllPoints(ContentFrame)
+    local contentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
+    contentFrame:SetSize(fr.w, fr.h)
+    contentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", mtb, -(HeaderFrame:GetHeight() + (mtb*2)))
+    contentFrame.texture = ContentFrame:CreateTexture()
+    contentFrame.texture:SetAllPoints(contentFrame)
     --ContentFrame.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
-    ContentFrame.texture:SetColorTexture(0, 0, 0, 1)
+    contentFrame.texture:SetColorTexture(0, 0, 0, 1)
 
-    return ContentFrame
+    return contentFrame
 end
 
