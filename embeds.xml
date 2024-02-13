@@ -40,4 +40,5 @@
 	<!-- <Include file='Libs\External\oUF_Plugins\oUF_Plugins.xml'/> -->
 
 	<Script file='Libs\Internal\Theme.lua'/>
+	<Script file='Libs\Internal\DungeonTools.lua'/>
 </Ui>

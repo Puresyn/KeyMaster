@@ -8,7 +8,7 @@
 --------------------------------
 local _, KeyMaster = ...
 local CharacterInfo = KeyMaster.CharacterInfo
---local MainInterface = KeyMaster.MainInterface
+local MainInterface = KeyMaster.MainInterface
 
 -- Global Variables
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
@@ -92,6 +92,22 @@ function KeyMaster:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
+function KeyMaster:TPrint(myTable, indent)
+    if not indent then indent = 0 end
+    if (type(myTable) == "table") then
+        for i, v in pairs(myTable) do
+            local formatting = string.rep("   ", indent)..i..": "
+            if (type(v) == "table") then
+                TPrint(v, indent+1)
+            else
+                print(formatting..tostring(v))
+            end                
+        end
+    else
+        print(myTable)
+    end
+end
+
 local function OnInitilize(self, event, name, ...)
     if (name ~= "KeyMaster") then return end
     --------------------------------
@@ -116,25 +132,9 @@ local function OnInitilize(self, event, name, ...)
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
-    
-    local myCharacterInfo = CharacterInfo:GetMyCharacterInfo()
-    TPrint(myCharacterInfo)
-end
 
-function TPrint(myTable, indent)
-    if not indent then indent = 0 end
-    if (type(myTable) == "table") then
-        for i, v in pairs(myTable) do
-            local formatting = string.rep("   ", indent)..i..": "
-            if (type(v) == "table") then
-                TPrint(v, indent+1)
-            else
-                print(formatting..tostring(v))
-            end                
-        end
-    else
-        print(myTable)
-    end
+    -- Initialize UI
+    MainInterface:Initialize()
 end
 
 -- Event Registration

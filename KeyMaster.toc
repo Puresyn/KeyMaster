@@ -10,8 +10,10 @@
 
 Embeds.xml
 Core\CharacterInfo.lua
-Core\UI\MainInterface.xml
-Core\UI\MainInterface.lua
 Core\Coms.lua
+Core\UI\MainInterface.lua
+Core\UI\MainFrameTemplate.xml
+Core\UI\MainFrame.lua
+Core\UI\HeaderFrame.lua
 Core\UI\UIinit.lua
 KeyMaster.lua

@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 KeyMaster.CharacterInfo = {}
 local CharacterInfo = KeyMaster.CharacterInfo
+local DungeonTools = KeyMaster.DungeonTools
 
 function CharacterInfo:GetMyClassColor(unit)
     local c,p 
@@ -60,24 +61,6 @@ function CharacterInfo:GetCurrentRating()
     return r
 end
 
-function CharacterInfo:GetAffixes()
-    local i = 0
-    local a, id, name, desc, filedataid
-    local affixData = {}
-    local affixes = C_MythicPlus.GetCurrentAffixes()
-    for i=1, #affixes, i+1 do
-        id = affixes[i].id
-        name, desc, filedataid = C_ChallengeMode.GetAffixInfo(id)
-        affixData[i] = {
-            ["id"] = id,
-            ["name"] = name,
-            ["desc"] = description,
-            ["filedataid"] = filedataid
-        }
-    end
-    return affixData
-end
-
 function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     
@@ -131,7 +114,7 @@ function CharacterInfo:GetMyCharacterInfo()
     myCharacterInfo.DungeonRuns = {}
     myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
 
-    local seasonMaps = CharacterInfo:GetCurrentSeasonMaps()
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
         

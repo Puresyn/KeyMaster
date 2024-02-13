@@ -2,31 +2,6 @@ local _, KeyMaster = ...
 KeyMaster.MainInterface = {}
 local MainInterface = KeyMaster.MainInterface
 
-
-function MainInterface:CreateMainInterface()
-    local mainPanel = CreateFrame("Frame", "KeyMaster_mainPanel", UIParent, "KeyMasterFrame");
-    mainPanel:ClearAllPoints(); -- Fixes SetPoint bug thus far.
-    mainPanel:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
-    mainPanel:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
-        edgeFile="Interface\\Tooltips\\UI-Tooltip-Border", 
-        tile = false, 
-        tileSize = 0, 
-        edgeSize = 16, 
-        insets = {left = 4, right = 4, top = 4, bottom = 4}})
-
-    mainPanel:SetBackdropColor(0,0,0,1);
-
-    mainPanel.closeBtn = CreateFrame("Button", "CloseButton", mainPanel, "UIPanelCloseButton")
-    mainPanel.closeBtn:SetPoint("TOPRIGHT")
-    mainPanel.closeBtn:SetSize(20, 20)
-    mainPanel.closeBtn:SetNormalFontObject("GameFontNormalLarge")
-    mainPanel.closeBtn:SetHighlightFontObject("GameFontHighlightLarge")
-    mainPanel.closeBtn:SetScript("OnClick", KeyMaster.MainInterface.Toggle)
-    mainPanel:Hide()
-
-    return mainPanel
-end
-
 --------------------------------
 -- Tab Functions
 --------------------------------
@@ -42,7 +17,6 @@ local function Tab_OnClick(self)
 	self.content:Show();
     PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
 end
-
 
 local function SetTabs(frame, tabs)
     local tabCount = 0
@@ -100,27 +74,26 @@ function MainInterface:CreateTabs()
 end
 
 -- Content Regions
-local function GetFrameRegions(myRegion)
-    local p, w, h, mh, mw, hh, mtb, mlr, myRegionInfo
-    local r = myRegion
-    if (not r) then return end
+function MainInterface:GetFrameRegions(myRegion, parentFrame)
+    local w, h, myRegionInfo
+    if (not myRegion) then return end
 
-    mh = mainPanel:GetHeight()
-    mw = mainPanel:GetWidth()
+    local mh = parentFrame:GetHeight()
+    local mw = parentFrame:GetWidth()
 
     -- desired region heights and margins in pixels.
     -- todo: Needs pulled from saved variables or some other file instead of hard-coded.
-    hh = 100 -- header height
-    mtb = 4 -- top/bottom margin
-    mlr = 4 -- left/right margin
+    local hh = 100 -- header height
+    local mtb = 4 -- top/bottom margin
+    local mlr = 4 -- left/right margin
 
-    if (r == "header") then
-    -- p = points, w = width, h = height, mtb = margin top and bottom, mlr = margin left and right
+    if (myRegion == "header") then
+    -- w = width, h = height
         myRegionInfo = {
             w = mw - (mlr*2),
             h = hh
     } 
-    elseif (r == "content") then
+    elseif (myRegion == "content") then
         myRegionInfo = {
             w = mw - (mlr*2),
             h = mh - hh - (mtb*3)
@@ -130,18 +103,3 @@ local function GetFrameRegions(myRegion)
 
     return myRegionInfo, mlr, mtb
 end
-
--- Setup content region
-function MainInterface:ContentFrame()
-    local fr, mlr, mtb = GetFrameRegions("content")
-    local contentFrame = CreateFrame("Frame", "KeyMaster_ContentRegion", MainPanel);
-    contentFrame:SetSize(fr.w, fr.h)
-    contentFrame:SetPoint("TOPLEFT", MainPanel, "TOPLEFT", mtb, -(HeaderFrame:GetHeight() + (mtb*2)))
-    contentFrame.texture = ContentFrame:CreateTexture()
-    contentFrame.texture:SetAllPoints(contentFrame)
-    --ContentFrame.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
-    contentFrame.texture:SetColorTexture(0, 0, 0, 1)
-
-    return contentFrame
-end
-
