@@ -118,20 +118,22 @@ local function OnInitilize(self, event, name, ...)
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
     
     local myCharacterInfo = CharacterInfo:GetMyCharacterInfo()
-    table_print(myCharacterInfo)
+    TPrint(myCharacterInfo)
 end
 
-local function table_print(myTable)
+function TPrint(myTable, indent)
+    if not indent then indent = 0 end
     if (type(myTable) == "table") then
         for i, v in pairs(myTable) do
+            local formatting = string.rep("   ", indent)..i..": "
             if (type(v) == "table") then
-                tprint(v)
+                TPrint(v, indent+1)
             else
-                print(v)
+                print(formatting..tostring(v))
             end                
         end
     else
-        print(tbl)
+        print(myTable)
     end
 end
 

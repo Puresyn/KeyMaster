@@ -43,3 +43,32 @@ function DungeonTools:GetWeekInfo()
     end
     return temp_frame
 end
+
+function DungeonTools:GetMapName(mapid)
+    local name,_,_,_,_ = C_ChallengeMode.GetMapUIInfo(mapid)
+
+    if (name == nil) then
+        print("Unable to find mapname for id " .. mapid)   
+        return nil   
+    end
+
+    return name
+end
+
+function DungeonTools:GetCurrentSeasonMaps()
+    local maps = C_ChallengeMode.GetMapTable();
+    
+    local mapTable = {}
+    for i,v in ipairs(maps) do
+       local name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       mapTable[id] = {
+          ["name"] = name,
+          ["timeLimit"] = timeLimit,
+          ["texture"] = texture,
+          ["backgroundTexture"] = backgroundTexture
+       }
+    end
+    
+    return mapTable  
+end
+
