@@ -10,7 +10,7 @@ end
 -- Create the Inteface frames ONCE.
 local function UI_init()
     local mainPanel = MainInterface.mainPanel -- get the existing UI
-    if (not ui) then
+    if (not mainPanel) then
 
         -- build out the UI framework
         local mainPanel  = MainInterface.CreateMainInterface()
