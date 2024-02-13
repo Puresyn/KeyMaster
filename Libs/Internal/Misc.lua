@@ -3,9 +3,8 @@
 -- Misc. tools
 --------------------------------
 local _, KeyMaster = ...
-local Misc = KeyMaster.Misc
 
-function Misc:spairs(t, order)
+function KeyMaster:spairs(t, order)
     -- collect the keys
     local keys = {}
     for k in pairs(t) do keys[#keys+1] = k end
@@ -24,6 +23,26 @@ function Misc:spairs(t, order)
         i = i + 1
         if keys[i] then
             return keys[i], t[keys[i]]
+        end
+    end
+end
+
+-- Function to dump tablehash data
+function KeyMaster:TPrint(myTable, indent)    
+    if not indent then indent = 0 end
+    if type(myTable) ~= "table" then
+        print(tostring(myTable))
+        return
+    end
+    for k, v in pairs(myTable) do
+        formatting = string.rep("  ", indent) .. k .. ": "
+        if type(v) == "table" then
+            print(formatting)
+            KeyMaster:TPrint(v, indent+1)
+        elseif type(v) == 'boolean' then
+            print(formatting .. tostring(v))      
+        else
+            print(formatting .. v)
         end
     end
 end

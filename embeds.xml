@@ -41,4 +41,5 @@
 
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>
+	<Script file='Libs\Internal\Misc.lua'/>
 </Ui>
