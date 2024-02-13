@@ -5,10 +5,12 @@
 ## Authors: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Slash: /km, /keymaster
-## DefaultState: disabled
+## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB
 
 Embeds.xml
 Core\CharacterInfo.lua
+Core\UI\MainInterface.xml
+Core\UI\MainInterface.lua
 Core\Coms.lua
 KeyMaster.lua
