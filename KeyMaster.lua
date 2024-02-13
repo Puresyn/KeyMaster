@@ -116,6 +116,23 @@ local function OnInitilize(self, event, name, ...)
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
+    
+    local myCharacterInfo = CharacterInfo:GetMyCharacterInfo()
+    table_print(myCharacterInfo)
+end
+
+local function table_print(myTable)
+    if (type(myTable) == "table") then
+        for i, v in pairs(myTable) do
+            if (type(v) == "table") then
+                tprint(v)
+            else
+                print(v)
+            end                
+        end
+    else
+        print(tbl)
+    end
 end
 
 -- Event Registration
