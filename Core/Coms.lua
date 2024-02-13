@@ -23,7 +23,6 @@ local comPrefix = "KM2"
 -- Notify Successful Registration (DEBUG)
 function MyAddon:OnEnable()
     self:RegisterComm(comPrefix)
-    KeyMaster:Print(comPrefix, "communications initialized.")
 end
 
 -- Serialize communication data:

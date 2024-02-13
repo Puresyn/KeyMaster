@@ -92,9 +92,8 @@ function KeyMaster:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
-function OnInitilize(self, event, ...)
-    if (event ~= "PLAYER_ENTERING_WORLD") then return end
-    
+local function OnInitilize(self, event, name, ...)
+    if (name ~= "KeyMaster") then return end
     --------------------------------
     -- Register Slash Commands:
     --------------------------------
@@ -122,6 +121,4 @@ end
 -- Event Registration
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
-events:RegisterEvent("CHAT_MSG_ADDON")
-events:RegisterEvent("PLAYER_ENTERING_WORLD")
 events:SetScript("OnEvent", OnInitilize)
