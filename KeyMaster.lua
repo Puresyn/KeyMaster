@@ -8,6 +8,7 @@
 --------------------------------
 local _, KeyMaster = ...
 local CharacterInfo = KeyMaster.CharacterInfo
+--local MainInterface = KeyMaster.MainInterface
 
 -- Global Variables
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
@@ -19,8 +20,7 @@ KM_VERSION = tostringall("v"..KM_VERSION_MAJOR.."."..KM_VERSION_MINOR.."-"..KM_V
 -- Slash Commands and command menu
 --------------------------------
 KeyMaster.Commands = {
-    ["show"] = function()
-    end,
+    ["show"] = KeyMaster.MainInterface.Toggle,
     ["help"] = function() 
         local defaultColor = select(4, KeyMaster:GetThemeColor("default")):upper()
         local color = select(4, KeyMaster:GetThemeColor("themeFontColorYellow")):upper()
