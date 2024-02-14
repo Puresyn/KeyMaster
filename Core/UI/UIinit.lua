@@ -10,6 +10,7 @@ function MainInterface:Initialize()
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("KM_PlayerRow1", partyRowsFrame)
+    local playerPartyData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
     
     -- Create tabs
     local tabContents = partyContent

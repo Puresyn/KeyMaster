@@ -12,6 +12,7 @@ local MainInterface = KeyMaster.MainInterface
 local Theme = KeyMaster.Theme
 
 -- Global Variables
+KM_ADDON_NAME = "Key Master"
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
 KM_VERSION_MINOR = 0.3 -- float value minor version release number
 KM_VERSION_STATUS = "alpha" -- "beta" or "release - for display and update notification purposes"

@@ -3,6 +3,211 @@ local MainInterface = KeyMaster.MainInterface
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
+local function createPartyDungeonHeader(anchorFrame, mapId)
+    --[[ name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
+       mapTable[id] = {
+          ["name"] = name,
+          ["timeLimit"] = timeLimit,
+          ["texture"] = texture,
+          ["backgroundTexture"] = backgroundTexture
+       } ]]
+
+    --DEBUG
+    if not anchorFrame and mapId then 
+        print("No valid refrences passed to createPartyDungeonHeader()")
+    end
+    if (not anchorFrame) then
+        print("Invalid anchorFrame for createPartyDungeonHeader() mapId:"..mapId)
+    end
+    if (not mapId) then
+        print("Invalid mapId for createPartyDungeonHeader() anchorFrame:"..anchorFrame:GetName())
+    end
+    -- END DEBUG
+
+    local window = _G["Dungeon_"..mapId.."_Header"]
+    if (window) then return window end -- if already Created, don't make another one
+
+    local mapsTable = DungeonTools:GetCurrentSeasonMaps()
+    local iconSizex = anchorFrame:GetWidth() - 10
+    local iconSizey = anchorFrame:GetWidth() - 10
+    local mapAbbr = DungeonTools:GetAbbr(mapId)
+
+    local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
+
+    --temp_frame:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight()) --- ((_G["KM_Portrait1"]:GetWidth())/2))
+    temp_frame:SetSize(iconSizex, iconSizey) -- second width refrence is just making this a square
+    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 4)
+
+    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+    Path, _, Flags = txtPlaceHolder:GetFont()
+    txtPlaceHolder:SetFont(Path, 12, Flags)
+    txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
+    txtPlaceHolder:SetTextColor(1, 1, 1)
+    txtPlaceHolder:SetText(mapAbbr)
+
+    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
+    --temp_frame.texture:SetAllPoints(temp_frame)
+    temp_frame.texture:SetPoint("BOTTOM", temp_frame, 0, 0)
+    temp_frame.texture:SetSize(temp_frame:GetWidth(), 16)
+    temp_frame.texture:SetColorTexture(0, 0, 0, 0.7) -- make names more ledegible 
+
+    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
+    temp_frame.texture:SetAllPoints(temp_frame)
+    --temp_frame.texture:SetColorTexture(0.931, 0.931, 0.931, 0.3) -- temporary bg color 
+    temp_frame.texture:SetTexture(mapsTable[mapId].texture)
+end
+
+function MainInterface:CreatePartyDataFrame(parentFrame)
+
+    local playerNumber
+
+    if (parentFrame:GetName() == "KM_PlayerRow1") then playerNumber = 1
+        elseif (parentFrame:GetName() == "KM_PlayerRow2") then playerNumber = 2
+        elseif (parentFrame:GetName() == "KM_PlayerRow3") then playerNumber = 3
+        elseif (parentFrame:GetName() == "KM_PlayerRow4") then playerNumber = 4
+        elseif (parentFrame:GetName() == "KM_PlayerRow5") then playerNumber = 5
+    end
+
+    if (not playerNumber or playerNumber < 0 or playerNumber > 5) then
+        print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
+    end
+
+    --local temp_frameStack = GetPartyMembersFrameStack()
+    local parentFrame =  _G["KM_PlayerRow"..playerNumber]
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local tempText
+
+    local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
+    dataFrame:ClearAllPoints()
+    dataFrame:SetPoint("TOPRIGHT",  _G["KM_PlayerRow"..playerNumber], "TOPRIGHT", 0, 0)
+    dataFrame:SetSize((parentFrame:GetWidth() - ((_G["KM_Portrait"..playerNumber]:GetWidth())/2)), parentFrame:GetHeight())
+    --[[  dataFrame.texture = dataFrame:CreateTexture()
+    dataFrame.texture:SetAllPoints(dataFrame)
+    dataFrame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
+
+
+    --local temp_Frame = temp_frameStack[rowNumber]:GetValue()
+    --local player_Frame = temp_frameStack["p"..playerNumber.."Frame"]
+    local player_Frame = _G["p"..playerNumber.."Frame"]
+
+    -- Player's Name
+    tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
+
+    -- TODO: get the unit's reference so we can set their class color... somehow...
+    -- todo" make if/then for if 1 then party1 etc. for class color.
+    --tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
+
+    --- Player Class
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "GameTooltipText")
+    tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
+
+    -- Player does not have the addon
+    tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    local font, fontSize, flags = tempText:GetFont()
+    tempText:SetFont(font, 25, flags)
+    tempText:SetTextColor(0.4, 0.4, 0.4, 1)
+    tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
+    tempText:SetText("This player does not have "..KM_ADDON_NAME.." installed. :(")
+    tempText:Hide()
+
+    -- Player is offline
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "GameFontHighlightLarge")
+    local font, fontSize, flags = tempText:GetFont()
+    tempText:SetFont(font, 25, flags)
+    tempText:SetTextColor(0.4, 0.4, 0.4, 1)
+    tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
+    tempText:SetText("This player is offline.")
+    tempText:Hide()
+
+    -- Player's Owned Key
+    tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    local _, fontSize, _ = tempText:GetFont()
+    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
+    --[[  if (thisPlayer.ownedKeyLevel == 0) then
+        tempText:SetText("No Key Found")
+    else
+        tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
+    end ]]
+
+    
+
+    --print(#mapTable)
+    local a
+    local b = true
+    for n, v in pairs(mapTable) do
+        
+        local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..n, parentFrame)
+        temp_Frame:ClearAllPoints()
+
+        if (b) then
+            temp_Frame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
+        else
+            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..a], "TOPLEFT", 0, 0)
+        end
+
+        temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+
+        --[[ temp_Frame.texture = temp_Frame:CreateTexture()
+        temp_Frame.texture:SetAllPoints(temp_Frame)
+        temp_Frame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
+
+        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..n, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText:GetFont()
+        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
+
+        --local _, _, _, colorWeekHex = Config:GetWeekScoreColor()
+        local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..n, "OVERLAY", "GameFontHighlightLarge")
+        local _, fontSize, _ = tempText:GetFont()
+        tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
+        --tempText:SetText("|cff"..colorWeekHex..thisPlayer.keyRuns[n]["Fortified"].Score.."|r\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
+        --tprint(thisPlayer.keyRuns[n]["Fortified"])
+
+        local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..n, "OVERLAY", "GameToolTipText")
+        local _, fontSize, _ = tempText:GetFont()
+        tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
+
+        -- create dungeon identity header if this is the clinets row (the first row)
+        if (playerNumber == 1) then
+            local anchorFrame = temp_Frame
+            local mapId = n
+            createPartyDungeonHeader(anchorFrame, mapId)
+        end
+
+        b = false
+        a = n
+    end
+
+    -- LEGEND FRAME
+    local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
+    temp_Frame:ClearAllPoints()
+    temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..a, "TOPLEFT", 0, 0)
+
+    --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
+    local _, _, _, xOfs, yOfs = _G["KM_MapLevelT"..playerNumber..a]:GetPoint()
+    local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local _, fontSize, _ = tempText1:GetFont()
+    tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
+    tempText1:SetText("Level:")
+
+    _, _, _, xOfs, yOfs = _G["KM_MapScoreT"..playerNumber..a]:GetPoint()
+    local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local _, fontSize, _ = tempText2:GetFont()
+    tempText2:SetPoint("TOPRIGHT", tempText1, "BOTTOMRIGHT", 0, (yOfs + 6)) -- todo: this yOfs is screwy.. FIX IT
+    tempText2:SetText("Weekly:")
+
+    _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..a]:GetPoint()
+    local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local _, fontSize, _ = tempText2:GetFont()
+    tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 5)) -- todo: this yOfs is screwy.. FIX IT
+    tempText2:SetText("Time:")
+    
+    _G["KM_MapDataLegend"..playerNumber]:Show()
+
+
+end
+
 function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
     local frameAnchor, frameHeight, partyNumber
     local mtb = 2 -- top and bottom margin of each frame in pixels
