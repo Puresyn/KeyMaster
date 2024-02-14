@@ -5,72 +5,45 @@ local MainInterface = KeyMaster.MainInterface
 --------------------------------
 -- Tab Functions
 --------------------------------
-local contentTableNames = {}
+local tabContentFrames = {} -- used to show/hide content frames from tabs in Tab_OnClick
 local function Tab_OnClick(self)
     PanelTemplates_SetTab(self:GetParent(), self:GetID())
 	
-    if(contentTableNames) then
-        for key, value in pairs(contentTableNames) do
-            _G[value]:Hide()
-        end
+    for i=1,#tabContentFrames,1 do
+        local contentFrame = _G[tabContentFrames[i]]
+        contentFrame:Hide()
     end
-	self.content:Show();
+
+    self.content:Show()
     PlaySound(SOUNDKIT.IG_QUEST_LIST_SELECT)
 end
 
-local function SetTabs(frame, tabs)
-    local tabCount = 0
-    for _ in pairs(tabs) do tabCount = tabCount + 1 end
-    --print("tabcount: ", tabCount)
-    frame.numTabs = tabCount
-
-    local contents = {}
-    local frameName = frame:GetName()
-
-    local count = 1
-    for key, value in spairs(tabs) do
-        local tab = CreateFrame("Button", frameName.."Tab"..count, frame, "TabSystemButtonTemplate") -- TabSystemButtonArtTemplate, MinimalTabTemplate
-        tab:SetID(count)
-        tab:SetText(tabs[key].name)
-        tab:SetScript("OnClick", Tab_OnClick)
-        table.insert(contentTableNames, "KeyMaster_"..tabs[key].window)
-        tab.content = _G["KeyMaster_"..tabs[key].window]
-        tab.content:Hide()
-        
-        table.insert(contents, tab.content)
-        if (count == 1) then
-            tab:SetPoint("TOPLEFT", MainPanel, "BOTTOMLEFT", 5, 3)
-        else
-            
-            tab:SetPoint("TOPLEFT", frameName.."Tab"..(count - 1), "TOPRIGHT", 0, 0)
-        end
-        tab:SetWidth(100)
-        count = count + 1
+function MainInterface:CreateTab(parentFrame, id, tabText, contentFrame, isActive)
+    if (id == nil) then id = 1 end
+    parentFrame.numTabs = id
+    local frameName = parentFrame:GetName()
+    local tabFrame = CreateFrame("Button", frameName.."Tab"..id, parentFrame, "TabSystemButtonTemplate") -- TabSystemButtonArtTemplate, MinimalTabTemplate
+    tabFrame:SetID(id)
+    tabFrame:SetText(tabText)
+    tabFrame:SetScript("OnClick", Tab_OnClick)
+    tabFrame.content = contentFrame
+    tabFrame.content:Hide()
+    
+    -- Creates an table of contentFrame names so we can hide/show them in OnClick
+    tinsert(tabContentFrames, contentFrame:GetName())
+    
+    if (id == 1) then
+        tabFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 5, 3)
+    else        
+        tabFrame:SetPoint("TOPLEFT", _G[frameName.."Tab"..(id-1)], "TOPRIGHT", 0, 0) -- appends to previous tab
     end
+    tabFrame:SetWidth(100)
 
-    -- set first active tab
-    -- todo: change this so it can be customized?
-    if (GetNumGroupMembers() == 0 or GetNumGroupMembers() > 5) then
-        -- Open main tab
-        Tab_OnClick(_G[frameName.."Tab1"])
+    if (isActive) then
+        Tab_OnClick(_G[tabFrame:GetName()])
     end
-
-    return unpack(contents)
-end
-
-function MainInterface:CreateTabs()
--- Create tabs
-    -- name = tab text, window = the frame's name suffix (i.e. KeyMaster_BigScreen  would be "BigScreen")
-    local myTabs = {
-        [0] = {
-            ["name"] = "Party",
-            ["window"] = "partyScreen"
-        }
-    }
-
-    -- Create the tabs (content region, Tab table)
-    SetTabs(ContentFrame, myTabs)
-    return true
+    
+    return tabFrame
 end
 
 -- Content Regions
