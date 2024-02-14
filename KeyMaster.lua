@@ -119,7 +119,7 @@ local function OnInitilize(self, event, name, ...)
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
 
     -- Initialize UI
-    MainInterface:Initialize()
+    --MainInterface:Initialize()
 end
 
 -- Event Registration
