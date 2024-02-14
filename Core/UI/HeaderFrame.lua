@@ -8,8 +8,8 @@ function MainInterface:CreateHeaderRegion(parentFrame)
     local headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", parentFrame);
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
-    headerRegion.texture = parentFrame:CreateTexture()
-    headerRegion.texture:SetAllPoints(parentFrame)
+    headerRegion.texture = headerRegion:CreateTexture()
+    headerRegion.texture:SetAllPoints(headerRegion)
     headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
     return headerRegion
 end

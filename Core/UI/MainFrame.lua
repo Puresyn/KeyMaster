@@ -19,15 +19,6 @@ function MainInterface:CreateMainFrame()
     mainFrame:SetBackdropColor(0,0,0,1);
     mainFrame:SetScript("OnLoad", mainFrame_OnLoad)
 
-    local fr, mlr, mtb = MainInterface:GetFrameRegions("content", mainFrame)
-    local contentFrame = CreateFrame("Frame", "KeyMaster_ContentFrame", mainFrame);
-    contentFrame:SetSize(fr.w, fr.h)
-    contentFrame:SetPoint("TOPLEFT", mainFrame, "TOPLEFT", mtb, -(100 + (mtb*2)))
-    local tex = contentFrame:CreateTexture()
-    tex:SetAllPoints(contentFrame)
-    --tex:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
-    tex:SetColorTexture(0, 0, 0, 1)
-
     mainFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
     mainFrame.closeBtn:SetPoint("TOPRIGHT")
     mainFrame.closeBtn:SetSize(20, 20)
