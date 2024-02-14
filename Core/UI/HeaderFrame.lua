@@ -94,6 +94,25 @@ local function createHeaderRating(parentFrame)
 end
 
 --------------------------------
+-- Key Master Icon
+--------------------------------
+function MainInterface:createAddonIcon(parentFrame)
+    
+    local addonIconFrame = CreateFrame("Frame", "KeyMaster_Icon", parentFrame)
+    addonIconFrame:SetSize(100, 100)
+    addonIconFrame:SetPoint("CENTER", parentFrame, "TOPLEFT", 0, 0)
+
+    local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
+    addonIcon:SetHeight(addonIconFrame:GetHeight())
+    addonIcon:SetWidth(addonIconFrame:GetHeight())
+    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
+    addonIcon:ClearAllPoints()
+    addonIcon:SetPoint("LEFT", 15, -15)
+
+    return addonIcon
+end
+
+--------------------------------
 -- Create Content Frames
 --------------------------------
 function MainInterface:CreateHeaderContent(parentFrame)
@@ -128,7 +147,7 @@ function MainInterface:CreateHeaderContent(parentFrame)
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "GameTooltipText")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
-    VersionText:SetText(KeyMaster.KM_VERSION)
+    VersionText:SetText(KM_VERSION)
 
     createAffixFrames(headerContent)
     createHeaderRating(headerContent)
