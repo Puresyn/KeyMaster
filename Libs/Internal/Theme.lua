@@ -162,3 +162,35 @@ function KeyMaster:GetThemeColor(themeName)
 	local c = Colors[themeName];
 	return c.r, c.g, c.b, c.hex
 end
+
+function KeyMaster:GetFrameRegions(myRegion, mainPanel)
+    local p, w, h, mh, mw, hh, mtb, mlr
+    local r = myRegion
+    local myRegionInfo = {}
+    if (not r) then return end
+
+    mh = mainPanel:GetHeight()
+    mw = mainPanel:GetWidth()
+
+    -- desired region heights and margins in pixels.
+    -- todo: Needs pulled from saved variables or some other file instead of hard-coded.
+    hh = 100 -- header height
+    mtb = 4 -- top/bottom margin
+    mlr = 4 -- left/right margin
+
+    if (r == "header") then
+    -- p = points, w = width, h = height, mtb = margin top and bottom, mlr = margin left and right
+        myRegionInfo = {
+            w = mw - (mlr*2),
+            h = hh
+    } 
+    elseif (r == "content") then
+        myRegionInfo = {
+            w = mw - (mlr*2),
+            h = mh - hh - (mtb*3)
+        }
+    else return
+    end
+
+    return myRegionInfo, mlr, mtb
+end

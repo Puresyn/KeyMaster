@@ -4,10 +4,13 @@ local MainInterface = KeyMaster.MainInterface
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
     local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()
-    local mainHeader = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderFrame(mainFrame)
+    local headerRegion = _G["KeyMaster_HeaderRegion"] or MainInterface:CreateHeaderRegion(mainFrame)
+    local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
+    local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:createContentRegion(mainFrame, headerRegion);
+    local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     
     -- Create tabs
-    local tabContents = MainInterface:CreatePartyFrame(mainFrame)
+    local tabContents = partyContent
     local tab = MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
 
     -- testing multiple tabs

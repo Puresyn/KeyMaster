@@ -16,5 +16,6 @@ Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua
 Core\UI\HeaderFrame.lua
 Core\UI\PartyFrame.lua
+Core\UI\ContentFrame.lua
 Core\UI\UIinit.lua
 KeyMaster.lua

@@ -2,6 +2,22 @@ local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local DungeonTools = KeyMaster.DungeonTools
 
+-- Setup header region
+function MainInterface:CreateHeaderRegion(parentFrame)
+    local fr, mlr, mtb = KeyMaster:GetFrameRegions("header", parentFrame)
+    local headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", parentFrame);
+    headerRegion:SetSize(fr.w, fr.h)
+    headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
+    headerRegion.texture = parentFrame:CreateTexture()
+    headerRegion.texture:SetAllPoints(parentFrame)
+    headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    return headerRegion
+end
+
+
+--------------------------------
+-- Weekly Affix
+--------------------------------
 local function createAffixFrames(parentFrame)
     if (parentFrame == nil) then 
         KeyMaster:Print("Parameter Null: No parent frame passed to CreateAffixFrames function.")
@@ -80,8 +96,8 @@ end
 --------------------------------
 -- Create Content Frames
 --------------------------------
-function MainInterface:CreateHeaderFrame(parentFrame)
-    if (parentFrame == nil) then 
+function MainInterface:CreateHeaderContent(parentFrame)
+--[[     if (parentFrame == nil) then 
         KeyMaster:Print("Parameter Null: No parent frame passed to CreateHeaderFrame function.")
         return
     end
@@ -91,12 +107,12 @@ function MainInterface:CreateHeaderFrame(parentFrame)
     headerFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
     headerFrame.texture = headerFrame:CreateTexture()
     headerFrame.texture:SetAllPoints(headerFrame)
-    headerFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    headerFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color ]]
 
     -- Contents
-    local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", headerFrame);
-    headerContent:SetSize(headerFrame:GetWidth(), headerFrame:GetHeight())
-    headerContent:SetPoint("TOPLEFT", headerFrame, "TOPLEFT", 0, 0)
+    local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
+    headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
+    headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
     
     --[[ HeaderScreen.texture = HeaderScreen:CreateTexture()
     HeaderScreen.texture:SetAllPoints(HeaderScreen)
@@ -111,11 +127,11 @@ function MainInterface:CreateHeaderFrame(parentFrame)
     txtPlaceHolder:SetText("Key Master")
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "GameTooltipText")
-    VersionText:SetPoint("TOPRIGHT", headerFrame, "TOPRIGHT", -24, -2)
+    VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
     VersionText:SetText(KeyMaster.KM_VERSION)
 
     createAffixFrames(headerContent)
-    createHeaderRating(headerFrame)
+    createHeaderRating(headerContent)
     
-    return headerFrame
+    return headerContent
 end
