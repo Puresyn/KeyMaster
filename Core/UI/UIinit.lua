@@ -2,6 +2,9 @@ local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local CharacterInfo = KeyMaster.CharacterInfo
 
+-- globals
+KeyMaster_UpdateInterval = 2.0; -- How often the KeyMaster_OnUpdate code will run (in seconds)
+
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
     local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()
@@ -29,6 +32,7 @@ function MainInterface:Initialize()
     Tab_OnClick(tab)
 
     -- Set Party Data TEST
+    -- This only happens on first run. See KeyMaster_OnUpdate() for refresh timer.
     local playerData = CharacterInfo:GetMyCharacterInfo()
     MainInterface:UpdateUnitFrameData("player", playerData)
     
@@ -39,4 +43,27 @@ function MainInterface:Toggle()
     -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
     local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
     mainUI:SetShown(not mainUI:IsShown())
+end
+
+--------------------------------
+-- Global data refresh timer,       
+-- This only runs when the frame
+-- it is attached to is visible.
+-- Currently attached to the main
+-- interface panel in
+-- MainFrameTemplate.xml onLoad
+--------------------------------
+local playerData = CharacterInfo:GetMyCharacterInfo()
+function KeyMaster_OnUpdate(self, elapsed)
+  self.TimeSinceLastUpdate = self.TimeSinceLastUpdate + elapsed; 	
+
+  if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
+
+    MainInterface:UpdateUnitFrameData("player", playerData)
+    playerData.name = "Bubbles" .. math.random()
+    
+    --collectgarbage("collect")
+
+    self.TimeSinceLastUpdate = 0;
+  end
 end

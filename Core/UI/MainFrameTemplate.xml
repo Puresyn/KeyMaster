@@ -63,7 +63,9 @@
         <Scripts>
             <OnLoad>
                 tinsert(UISpecialFrames, self:GetName());
+				self.TimeSinceLastUpdate = 0 
             </OnLoad>
+			<OnUpdate function="KeyMaster_OnUpdate" /> 
 			<OnShow>
                 PlaySound(SOUNDKIT.IG_SPELLBOOK_OPEN);
 				<!-- KeyMaster:Initialize(self); -->

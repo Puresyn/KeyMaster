@@ -118,7 +118,7 @@ local function OnInitilize(self, event, name, ...)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
 
-    -- Initialize UI
+    -- Initialize UI - doing this here seems to break things,
     --MainInterface:Initialize()
 end
 

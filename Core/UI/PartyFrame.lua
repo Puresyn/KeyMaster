@@ -279,6 +279,7 @@ function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
 end
 
 -- Party member data assign
+local mapTable = DungeonTools:GetCurrentSeasonMaps() -- call outside of UpdateUnitFrameData function because of memory leaks
 function MainInterface:UpdateUnitFrameData(unitId, playerData)
     if(playerData == nil) then 
         print("ERROR: parameter playerData in function createPartyRows cannot be empty.")
@@ -298,10 +299,14 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
         partyPlayer = 5
     end
     
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    --local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
 
     --local specClass = GetPlayerSpecAndClass(unitId)
+    --[[ local map = C_Map.GetBestMapForUnit("player")
+    local position = C_Map.GetPlayerMapPosition(map, "player")
+    local specClass = position:GetXY() ]]
+
     local specClass = "FIX ME"
 
     -- Set Player Portrait
