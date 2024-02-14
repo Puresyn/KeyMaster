@@ -9,6 +9,7 @@
 local _, KeyMaster = ...
 local CharacterInfo = KeyMaster.CharacterInfo
 local MainInterface = KeyMaster.MainInterface
+local Theme = KeyMaster.Theme
 
 -- Global Variables
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
@@ -22,8 +23,8 @@ KM_VERSION = tostringall("v"..KM_VERSION_MAJOR.."."..KM_VERSION_MINOR.."-"..KM_V
 KeyMaster.Commands = {
     ["show"] = KeyMaster.MainInterface.Toggle,
     ["help"] = function() 
-        local defaultColor = select(4, KeyMaster:GetThemeColor("default")):upper()
-        local color = select(4, KeyMaster:GetThemeColor("themeFontColorYellow")):upper()
+        local defaultColor = select(4, ColorTheme:GetThemeColor("default")):upper()
+        local color = select(4, ColorTheme:GetThemeColor("themeFontColorYellow")):upper()
         print("=====================")
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."show|r - shows the main window.")
@@ -86,7 +87,7 @@ end
 
 -- formats strings for end-user display in the chat box
 function KeyMaster:Print(...)
-    local hex = select(4, KeyMaster:GetThemeColor("default"))
+    local hex = select(4, Theme:GetThemeColor("default"))
     local prefix = string.format("|cff%s%s|r", hex:upper(), "KeyMaster:");	
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end

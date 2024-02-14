@@ -4,7 +4,7 @@ local DungeonTools = KeyMaster.DungeonTools
 
 -- Setup header region
 function MainInterface:CreateHeaderRegion(parentFrame)
-    local fr, mlr, mtb = KeyMaster:GetFrameRegions("header", parentFrame)
+    local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
     local headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", parentFrame);
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))

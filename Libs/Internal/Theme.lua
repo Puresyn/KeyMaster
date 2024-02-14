@@ -1,7 +1,10 @@
 local _, KeyMaster = ...
+KeyMaster.Theme = {}
+local Theme = KeyMaster.Theme
 
 local Colors = {
-    default = { r = 1, 
+    default = { 
+        r = 1, 
 		g = 0.353,
 		b = 0,
 		hex = "ff5a00"
@@ -158,12 +161,12 @@ local Colors = {
     }
 }
 
-function KeyMaster:GetThemeColor(themeName)
+function Theme:GetThemeColor(themeName)
 	local c = Colors[themeName];
 	return c.r, c.g, c.b, c.hex
 end
 
-function KeyMaster:GetFrameRegions(myRegion, mainPanel)
+function Theme:GetFrameRegions(myRegion, mainPanel)
     local p, w, h, mh, mw, hh, mtb, mlr
     local r = myRegion
     local myRegionInfo = {}
@@ -193,4 +196,9 @@ function KeyMaster:GetFrameRegions(myRegion, mainPanel)
     end
 
     return myRegionInfo, mlr, mtb
+end
+
+function Theme:GetWeekScoreColor()
+    local c = Colors.themeFontColorGreen1
+	return c.r, c.g, c.b, c.hex;
 end

@@ -6,8 +6,10 @@ function MainInterface:Initialize()
     local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()
     local headerRegion = _G["KeyMaster_HeaderRegion"] or MainInterface:CreateHeaderRegion(mainFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
-    local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:createContentRegion(mainFrame, headerRegion);
+    local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
+    local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
+    local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("KM_PlayerRow1", partyRowsFrame)
     
     -- Create tabs
     local tabContents = partyContent

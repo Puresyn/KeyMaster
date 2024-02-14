@@ -2,8 +2,8 @@ local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 
 -- Setup content region
-function MainInterface:createContentRegion(parentFrame, headerRegion)
-    local fr, mlr, mtb = KeyMaster:GetFrameRegions("content", parentFrame)
+function MainInterface:CreateContentRegion(parentFrame, headerRegion)
+    local fr, mlr, mtb = MainInterface:GetFrameRegions("content", parentFrame)
     local contentRegion = CreateFrame("Frame", "KeyMaster_ContentRegion", parentFrame);
     contentRegion:SetSize(fr.w, fr.h)
     contentRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mtb, -(headerRegion:GetHeight() + (mtb*2)))
