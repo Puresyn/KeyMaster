@@ -128,7 +128,7 @@ function MainInterface:CreateHeaderContent(parentFrame)
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "GameTooltipText")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
-    VersionText:SetText(KeyMaster.KM_VERSION)
+    VersionText:SetText(KM_VERSION)
 
     createAffixFrames(headerContent)
     createHeaderRating(headerContent)
