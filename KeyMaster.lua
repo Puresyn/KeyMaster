@@ -118,14 +118,11 @@ local function OnInitilize(self, event, name, ...)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
 
-    if (event == "PLAYER_ENTERING_WORLD") then
-        -- Initialize UI
-        MainInterface:Initialize()
-    end
+    -- Initialize UI
+    MainInterface:Initialize()
 end
 
 -- Event Registration
 local events = CreateFrame("Frame")
-events:RegisterEvent("PLAYER_ENTERING_WORLD")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnInitilize)

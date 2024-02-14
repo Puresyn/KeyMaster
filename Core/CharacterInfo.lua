@@ -113,19 +113,20 @@ function CharacterInfo:GetMyCharacterInfo()
     myCharacterInfo.ownedKeyLevel = keyLevel
     myCharacterInfo.DungeonRuns = {}
     myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
+    myCharacterInfo.hasAddon = true
 
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
         
-        -- DEBUG OUTPUT
+        --DEBUG OUTPUT
         -- print()
-        -- print("Processing: " .. PlayerInfo:GetMapName(mapid))
+        -- print("Processing: " .. DungeonTools:GetMapName(mapid))
         -- print ("MapID: " .. mapid)
         -- print()
         
         -- Overall Dungeon Score
-        myCharacterInfo.DungeonRuns["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)
+        keyRun["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)
 
         -- Tyrannical Key Score
         local scoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Tyrannical")   
@@ -135,7 +136,7 @@ function CharacterInfo:GetMyCharacterInfo()
             ["DurationSec"] = scoreInfo.durationSec,
             ["IsOverTime"] = scoreInfo.overTime
         }
-        myCharacterInfo.DungeonRuns["Tyrannical"] = dungeonDetails
+        keyRun["Tyrannical"] = dungeonDetails
         
         -- Fortified Key Score
         local scoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Fortified")
@@ -145,7 +146,7 @@ function CharacterInfo:GetMyCharacterInfo()
             ["DurationSec"] = scoreInfo.durationSec,
             ["IsOverTime"] = scoreInfo.overTime
         }
-        myCharacterInfo.DungeonRuns["Fortified"] = dungeonDetails
+        keyRun["Fortified"] = dungeonDetails
         
         myCharacterInfo.DungeonRuns[mapid] = keyRun
     end

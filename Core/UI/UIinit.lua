@@ -1,5 +1,6 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
+local CharacterInfo = KeyMaster.CharacterInfo
 
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
@@ -25,6 +26,10 @@ function MainInterface:Initialize()
     local tab2 = MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
     
     Tab_OnClick(tab)
+
+    -- Set Party Data TEST
+    local playerData = CharacterInfo:GetMyCharacterInfo()
+    MainInterface:UpdateUnitFrameData("player", playerData)
     
     return mainFrame
 end

@@ -46,3 +46,7 @@ function KeyMaster:TPrint(myTable, indent)
         end
     end
 end
+
+function KeyMaster:FormatDurationSec(timeInSec)
+    return date("%M:%S", timeInSec)
+end

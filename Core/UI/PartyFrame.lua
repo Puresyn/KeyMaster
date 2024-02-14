@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local DungeonTools = KeyMaster.DungeonTools
+local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
 
 local function createPartyDungeonHeader(anchorFrame, mapId)
@@ -278,57 +279,56 @@ function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
 end
 
 -- Party member data assign
-function MainInterface:createPartyRows(parentFrame, partyPosition)
-    -- partyPosition = player, party1, party2, party3, party4
+function MainInterface:UpdateUnitFrameData(unitId, playerData)
+    if(playerData == nil) then 
+        print("ERROR: parameter playerData in function createPartyRows cannot be empty.")
+        return
+    end
+    
     local partyPlayer
-    if (partyPosition == "player") then
+    if (unitId == "player") then
         partyPlayer = 1
-    elseif (partyPosition == "party1") then
+    elseif (unitId == "party1") then
         partyPlayer = 2
-    elseif (partyPosition == "party2") then
+    elseif (unitId == "party2") then
         partyPlayer = 3
-    elseif (partyPosition == "party3") then
+    elseif (unitId == "party3") then
         partyPlayer = 4
-    elseif (partyPosition == "party4") then
+    elseif (unitId == "party4") then
         partyPlayer = 5
     end
     
-    local playerData = PartyPlayerData[UnitGUID(partyPosition)]
-    if (playerData) then
-        local mapTable = DungeonTools:GetCurrentSeasonMaps()
-        local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
-    
-        local specClass = GetPlayerSpecAndClass(partyPosition)
-    
-        -- populate UI frames
-        _G["KM_Player"..partyPlayer.."Class"]:SetText(specClass)
-    
-    
-        _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..PlayerInfo:GetMyClassColor(partyPosition)..playerData.name.."|r")
-        --_G["KM_OwnedKeyInfo"..partyNumber]:SetText("("..playerData.ownedKeyLevel..") "..mapTable[playerData.ownedKeyId].name)
-        _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..InstanceTools:GetAbbr(playerData.ownedKeyId))
-    
-        for n, v in pairs(mapTable) do
-            -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
-            _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.keyRuns[n]["Fortified"].Level..")")
-            _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.keyRuns[n]["Fortified"].Score.."|r")
-            _G["KM_MapTimeT"..partyPlayer..n]:SetText(formatDurationSec(playerData.keyRuns[n]["Fortified"].DurationSec))
-        end
-        _G["KM_NoAddon"..partyPlayer]:Hide()
-    else
-        print("No data")
-        local myClass, _, _ = UnitClass(partyPosition)
-        local _, _, _, classHex = GetClassColor(myClass)
-        _G["KM_PlayerName"..partyPlayer]:SetText("|c"..classHex..UnitName(partyPosition).."|r")
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
 
-        local classText = GetPlayerSpecAndClass(partyPosition)
-        _G["KM_Player"..partyPlayer.."Class"]:SetText(classText)
+    --local specClass = GetPlayerSpecAndClass(unitId)
+    local specClass = "FIX ME"
+
+    -- Set Player Portrait
+    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
+    
+    -- Spec & Class
+    _G["KM_Player"..partyPlayer.."Class"]:SetText(specClass)
+    
+    -- Player Name
+    _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
+    
+    -- Dungeon Key Information
+    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetAbbr(playerData.ownedKeyId))
+
+    -- Dungeon Scores
+    for n, v in pairs(mapTable) do
+        -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
+        _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Fortified"].Level..")")
+        _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapTimeT"..partyPlayer..n]:SetText(KeyMaster:FormatDurationSec(playerData.DungeonRuns[n]["Fortified"].DurationSec))
+    end
+    
+    if (not playerData.hasAddon) then
         _G["KM_MapDataLegend"..partyPlayer]:Hide()
         _G["KM_NoAddon"..partyPlayer]:Show()
+        _G["KM_PlayerRow"..partyPlayer]:Show()
     end
-
-    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], partyPosition)        
-    _G["KM_PlayerRow"..partyPlayer]:Show()
 end
 
 function MainInterface:CreatePartyRowsFrame(parentFrame)

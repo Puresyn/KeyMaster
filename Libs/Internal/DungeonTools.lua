@@ -4,7 +4,7 @@ local DungeonTools = KeyMaster.DungeonTools
 
 function DungeonTools:GetAffixes()
     local affixData = {}
-    local affixes = C_MythicPlus.GetCurrentAffixes()
+    local affixes = C_MythicPlus.GetCurrentAffixes() -- Bug when this returned nils?
     for i=1, #affixes, 1 do
         local id = affixes[i].id
         local name, desc, filedataid = C_ChallengeMode.GetAffixInfo(id)
