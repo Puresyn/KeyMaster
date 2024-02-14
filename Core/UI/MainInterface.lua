@@ -6,9 +6,9 @@ local MainInterface = KeyMaster.MainInterface
 -- Tab Functions
 --------------------------------
 local tabContentFrames = {} -- used to show/hide content frames from tabs in Tab_OnClick
-local function Tab_OnClick(self)
+function Tab_OnClick(self)
     PanelTemplates_SetTab(self:GetParent(), self:GetID())
-	
+
     for i=1,#tabContentFrames,1 do
         local contentFrame = _G[tabContentFrames[i]]
         contentFrame:Hide()
@@ -39,9 +39,9 @@ function MainInterface:CreateTab(parentFrame, id, tabText, contentFrame, isActiv
     end
     tabFrame:SetWidth(100)
 
-    if (isActive) then
+--[[     if (isActive) then
         Tab_OnClick(_G[tabFrame:GetName()])
-    end
+    end ]]
     
     return tabFrame
 end

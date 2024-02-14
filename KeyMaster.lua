@@ -27,7 +27,6 @@ KeyMaster.Commands = {
         print("=====================")
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."show|r - shows the main window.")
-        KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."config|r - shows the configuration menu.")
         KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."help|r - shows this menu.")
         print("=====================")
     end,
@@ -82,7 +81,7 @@ end
 
 -- Bindings.xml functions
 function KMWindowBindingToggle()
-    
+    KeyMaster.MainInterface.Toggle()
 end
 
 -- formats strings for end-user display in the chat box
@@ -117,11 +116,14 @@ local function OnInitilize(self, event, name, ...)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
 
-    -- Initialize UI
-    MainInterface:Initialize()
+    if (event == "PLAYER_ENTERING_WORLD") then
+        -- Initialize UI
+        MainInterface:Initialize()
+    end
 end
 
 -- Event Registration
 local events = CreateFrame("Frame")
+events:RegisterEvent("PLAYER_ENTERING_WORLD")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnInitilize)

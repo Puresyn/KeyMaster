@@ -18,6 +18,8 @@ function MainInterface:Initialize()
 
     local tab2 = MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
     
+    Tab_OnClick(tab)
+    
     return mainFrame
 end
 

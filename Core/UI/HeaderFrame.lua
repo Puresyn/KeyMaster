@@ -50,6 +50,34 @@ local function createAffixFrames(parentFrame)
 end
 
 --------------------------------
+-- Mythic Rating
+--------------------------------
+local function createHeaderRating(parentFrame)
+    
+    local ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", parentFrame)
+    ratingPanel:SetWidth(300)
+    ratingPanel:SetHeight(13)
+    ratingPanel:SetPoint("TOPRIGHT", -2, -30)
+    local mythicRatingPreText = ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = mythicRatingPreText:GetFont()
+    mythicRatingPreText:SetFont(Path, 12, Flags)
+    mythicRatingPreText:SetPoint("CENTER")
+    mythicRatingPreText:SetText("|cff"..KeyMaster.CharacterInfo:GetMyClassColor()..UnitName("player").."\'s|r Rating:")
+
+    local myCurrentRating = KeyMaster.CharacterInfo:GetCurrentRating()
+    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating)
+
+    mythicRatingPreText = ratingPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local Path, _, Flags = mythicRatingPreText:GetFont()
+    mythicRatingPreText:SetFont(Path, 30, Flags)
+    mythicRatingPreText:SetPoint("CENTER", 0, -22)
+    mythicRatingPreText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
+    mythicRatingPreText:SetText(myCurrentRating)
+
+    return ratingPanel
+end
+
+--------------------------------
 -- Create Content Frames
 --------------------------------
 function MainInterface:CreateHeaderFrame(parentFrame)
@@ -87,6 +115,7 @@ function MainInterface:CreateHeaderFrame(parentFrame)
     VersionText:SetText(KeyMaster.KM_VERSION)
 
     createAffixFrames(headerContent)
+    createHeaderRating(headerFrame)
     
     return headerFrame
 end
