@@ -64,7 +64,7 @@ function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     f:SetPoint("CENTER", parentFrame, realativeAnchor, xOfs, yOfs)
     f.t = f:CreateTexture()
     f.t:SetAllPoints(f)
-    f.t:SetColorTexture(1, 1, 1, 0.3)
+    f.t:SetColorTexture(1, 1, 1, 0.5)
     return f
 end
 
