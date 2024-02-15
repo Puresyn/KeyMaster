@@ -65,7 +65,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     temp_frame:SetSize(iconSizex, iconSizey) -- second width refrence is just making this a square
     temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 4)
 
-    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 12, Flags)
     txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
@@ -139,15 +139,15 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     --local player_Frame = _G["p"..playerNumber.."Frame"]
 
     -- Player's Name
-    tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
 
     -- Player class
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "GameTooltipText")
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
     tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
 
     -- Player does not have the addon
-    tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 25, flags)
     tempText:SetTextColor(0.4, 0.4, 0.4, 1)
@@ -156,7 +156,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     tempText:Hide()
 
     -- Player is offline
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "GameFontHighlightLarge")
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "KeyMasterFontBig")
     font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 25, flags)
     tempText:SetTextColor(0.4, 0.4, 0.4, 1)
@@ -165,11 +165,11 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     tempText:Hide()
 
     -- Player's Owned Key
-    tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
+    tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
 
     -- Player Rating
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "GameFontHighlightLarge")
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
     tempText:SetPoint("BOTTOMLEFT", _G["KM_OwnedKeyInfo"..playerNumber], "TOPLEFT", 0, 0)
     font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 20, flags)
@@ -216,7 +216,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
         prevAnchor = tempText1
 
-        --[[ local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        --[[ local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
         tempText2::SetTextColor(DungeonTools:GetWeekColor("Tyrannical")))
         prevAnchor = tempText2 ]]
@@ -228,13 +228,13 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         tempText4:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
         prevAnchor = tempText4
 
-        --[[ local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        --[[ local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText5:SetPoint("CENTER", tempText4, "BOTTOM", 0, -8)
         tempText5:SetAlpha(KeyMaster:GetWeekAlpha("Fortified")) 
         prevAnchor = tempText5]]
 
         -- Map Total Score
-        local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
         local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         tempText6:SetTextColor(r, g, b, 1)
@@ -272,7 +272,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     
 
     --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
-    --[[ local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    --[[ local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText2:SetPoint("RIGHT", _G["KM_MapScoreT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText2:SetText("Tyrannical:")
     tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical")) ]]
@@ -284,13 +284,13 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     tempText3:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
 
     --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
-    --[[ local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    --[[ local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText4:SetPoint("RIGHT", _G["KM_MapScoreF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText4:SetText("Fortified:")
     tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified")) ]]
 
     --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
-    local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText5:SetText("Overall Score:")
     
@@ -446,7 +446,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
     temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
     temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
 
-    txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 20, Flags)
     txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
@@ -473,7 +473,7 @@ function MainInterface:CreatePartyFrame(parentFrame)
         edgeSize = 0, 
         insets = {left = 0, right = 0, top = 0, bottom = 0}})
     PartyScreen:SetBackdropColor(160,160,160,1); -- color for testing ]]
-    --[[ txtPlaceHolder = PartyScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    --[[ txtPlaceHolder = PartyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
@@ -484,7 +484,7 @@ function MainInterface:CreatePartyFrame(parentFrame)
     PartyScreen.texture:SetAllPoints(PartyScreen)
     PartyScreen.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color ]]
 
-    local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+    local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)

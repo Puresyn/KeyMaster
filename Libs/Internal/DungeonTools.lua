@@ -135,8 +135,8 @@ end
 -- Set the font face of the week and off-week key data
 function DungeonTools:GetWeekFont(currentAffix)
     local weeklyAffix, weekFont, offWeekFont, myFont, cw, ow
-    weekFont = "GameFontHighlightLarge"
-    offWeekFont = "GameToolTipText"
+    weekFont = "KeyMasterFontBig"
+    offWeekFont = "KeyMasterFontSmall"
     weeklyAffix = DungeonTools:GetAffixes()
     if(weeklyAffix[1].name == currentAffix) then
         myFont = weekFont
