@@ -50,3 +50,14 @@ end
 function UnitData:GetUnitDataByGUID(playerGUID)
     return unitInformation[playerGUID]
 end
+
+function UnitData:DeleteUnitDataByUnitId(unitId)
+    local data = UnitData:GetUnitDataByUnitId(unitId)
+    if (data ~= nil) then
+        UnitData:DeleteUnitDataByGUID(data.GUID)
+    end
+end
+
+function UnitData:DeleteUnitDataByGUID(playerGUID)
+    unitInformation[playerGUID] = nil
+end
