@@ -133,18 +133,17 @@ function onEvent_PartyChanges(self, event, ...)
     
     if (event == "GROUP_JOINED") then
         local partySize, partyId = ...
-        local playerInfo = PlayerInfo:GetMyCharacterInfo()
+        local playerData = UnitData:GetUnitDataByUnitId("player")
         
-        MyAddon:Transmit(playerInfo, "PARTY", nil)        
+        MyAddon:Transmit(playerData, "PARTY", nil)        
     elseif (event == "GROUP_LEFT") then
         local partySize, partyId = ...
         UnitData:DeleteAllPartyData()
     elseif (event == "GROUP_ROSTER_UPDATE") then
         -- triggers when in party and roster changes (NOT LEAVING OR JOINING)
         -- Refresh Party Frames
+        --MyAddon:Transmit(playerInfo, "PARTY", nil)
     end
-
-    MainInterface:Refresh_PartyFrames()
 end
 
 local partyEvents = CreateFrame("Frame")
