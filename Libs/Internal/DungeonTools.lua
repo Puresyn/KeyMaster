@@ -77,8 +77,35 @@ function DungeonTools:GetCurrentSeasonMaps()
 end
 
 -- conversion from mapid to abbreviation
-function DungeonTools:GetAbbr(mapId --[[int]])
+function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
     local a = instanceAbbTable[mapId]
     if (not a) then a = "---" end
     return a
+end
+
+local portalSpellIds = {
+    [463] = 424197,     -- Dawn of the Infinite: Galakrond's Fall
+    [248] = 424167,     -- Waycrest Manor
+    [244] = 424187,     -- Atal'Dazar
+    [198] = 424163,     -- Darkheart Thicket
+    [199] = 424153,     -- Black Rook Hold
+    [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
+    [456] = 424142,     -- Throne of Tides
+    [168] = 159901      -- The Everbloom
+
+}
+
+function DungeonTools:GetPortalSpell(dungeonID)
+    local portalSpellId = portalSpellIds[dungeonID]
+    if (not portalSpellId) then return nil end -- mapID missing from portalSpellIds table
+
+    local portalSpellName
+
+    local isKnown = IsSpellKnown(portalSpellId)
+    if (not isKnown) then
+        return nil
+    else
+        portalSpellName, _ = GetSpellInfo(portalSpellId) -- name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon
+        return portalSpellId, portalSpellName
+    end
 end

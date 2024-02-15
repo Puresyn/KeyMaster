@@ -4,6 +4,30 @@ local DungeonTools = KeyMaster.DungeonTools
 local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
 
+local function portalButton_buttonevent(self, event)
+   MainInterface:Toggle();
+end
+
+local function portalButton_tooltipon(self, event)
+end
+
+local function portalButton_tooltipoff(self, event)
+end
+
+local function portalButton_mouseover(self, event)
+    local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
+    local start, _, _ = GetSpellCooldown(spellNameToCheckCooldown);
+    if (start == 0) then
+        ActionButton_ShowOverlayGlow(self:GetParent())
+    end
+
+    --start, duration, enabled = GetSpellCooldown(spellName or spellID or slotID, "bookType");
+end
+
+local function portalButton_mouseoout(self, event, ...)
+    ActionButton_HideOverlayGlow(self:GetParent())
+end
+
 local function createPartyDungeonHeader(anchorFrame, mapId)
     --[[ name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
        mapTable[id] = {
@@ -31,7 +55,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     local mapsTable = DungeonTools:GetCurrentSeasonMaps()
     local iconSizex = anchorFrame:GetWidth() - 10
     local iconSizey = anchorFrame:GetWidth() - 10
-    local mapAbbr = DungeonTools:GetAbbr(mapId)
+    local mapAbbr = DungeonTools:GetDungeonNameAbbr(mapId)
 
     local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
 
@@ -54,8 +78,29 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
     temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
     temp_frame.texture:SetAllPoints(temp_frame)
-    --temp_frame.texture:SetColorTexture(0.931, 0.931, 0.931, 0.3) -- temporary bg color 
     temp_frame.texture:SetTexture(mapsTable[mapId].texture)
+    temp_frame:SetAttribute("dungeonMapId", mapId)
+
+    -- Add clickable portal spell casting to dungeon texture frames
+    local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+    
+    if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it.
+    local pButton
+        pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate") -- ActionButtonTemplate, 
+        --pButton.cooldown = CreateFrame("Cooldown","portal_button2"..mapId.."Cooldown",pButton,"CooldownFrameTemplate")
+        pButton:SetAttribute("type", "spell")
+        pButton:SetAttribute("spell", portalSpellName)
+        pButton:RegisterForClicks("AnyDown")
+        pButton:SetWidth(pButton:GetParent():GetWidth())
+        pButton:SetHeight(pButton:GetParent():GetWidth())
+        pButton:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
+        pButton:SetScript("OnMouseDown", portalButton_buttonevent)
+        pButton:SetScript("OnEnter", portalButton_mouseover)
+        pButton:SetScript("OnLeave", portalButton_mouseoout)
+
+        temp_frame:SetAttribute("portalSpellName", portalSpellName)
+
+    end
 end
 
 function MainInterface:CreatePartyDataFrame(parentFrame)
@@ -137,7 +182,12 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     local prevMapId
     local firstItem = true
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local bolColHighlight = false
+    local partyColColor = {}
+    partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
+
     for mapid, mapData in pairs(mapTable) do
+        bolColHighlight = not bolColHighlight -- alternate row highlighting
         
         local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..mapid, parentFrame)
         temp_Frame:ClearAllPoints()
@@ -150,9 +200,11 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
         temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
 
-        --[[ temp_Frame.texture = temp_Frame:CreateTexture()
-        temp_Frame.texture:SetAllPoints(temp_Frame)
-        temp_Frame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
+        if (not bolColHighlight) then
+            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
+        end
 
         local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText:GetFont()
@@ -315,7 +367,7 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
     _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
     
     -- Dungeon Key Information
-    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetAbbr(playerData.ownedKeyId))
+    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
 
     -- Dungeon Scores
     for n, v in pairs(mapTable) do
