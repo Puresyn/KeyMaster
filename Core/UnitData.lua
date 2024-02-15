@@ -33,6 +33,8 @@ function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     unitData.unitId = unitId -- set unitId for this client
     unitInformation[unitData.GUID] = unitData
+
+    KeyMaster:Print("Stored data for "..unitData.name)
 end
 
 function UnitData:GetUnitDataByUnitId(unitId)
@@ -60,4 +62,12 @@ end
 
 function UnitData:DeleteUnitDataByGUID(playerGUID)
     unitInformation[playerGUID] = nil
+end
+
+function UnitData:DeleteUnitDataByUnitId(unitId)
+    
+end
+
+function UnitData:DeleteAllPartyData()
+
 end

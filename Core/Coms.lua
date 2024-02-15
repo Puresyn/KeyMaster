@@ -10,6 +10,7 @@ local _, KeyMaster = ...
 KeyMaster.Coms = {}
 
 local Coms = KeyMaster.Coms
+local UnitData = KeyMaster.UnitData
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -46,4 +47,11 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     
     --do something with data
     print("Recieved Data: "..data)
+
+    if (prefix ~= "KM2") then return end    
+    if (data == nil) then return end
+    if (data.GUID == UnitGUID("player")) then return end
+
+    KeyMaster:Print("Received data from "..data.name)
+    UnitData:SetUnitData(data)
 end

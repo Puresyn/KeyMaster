@@ -10,6 +10,7 @@ local _, KeyMaster = ...
 local CharacterInfo = KeyMaster.CharacterInfo
 local MainInterface = KeyMaster.MainInterface
 local Theme = KeyMaster.Theme
+local UnitData = KeyMaster.UnitData
 
 -- Global Variables
 KM_ADDON_NAME = "Key Master"
@@ -126,3 +127,28 @@ end
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnInitilize)
+
+function onEvent_Group(self, event, ...)
+    --print(event, ...)
+    
+    if (event == "GROUP_JOINED") then
+        local partySize, partyId = ...
+        local playerInfo = PlayerInfo:GetMyCharacterInfo()
+        
+        MyAddon:Transmit(playerInfo, "PARTY", nil)        
+    elseif (event == "GROUP_LEFT") then
+        local partySize, partyId = ...
+        UnitData:DeleteAllPartyData()
+    elseif (event == "GROUP_ROSTER_UPDATE") then
+        -- triggers when in party and roster changes (NOT LEAVING OR JOINING)
+        -- Refresh Party Frames
+    end
+
+    MainInterface:Refresh_PartyFrames()
+end
+
+local partyEvents = CreateFrame("Frame")
+partyEvents:RegisterEvent("GROUP_JOINED")
+partyEvents:RegisterEvent("GROUP_LEFT")
+partyEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
+partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
