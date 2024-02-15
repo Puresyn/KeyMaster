@@ -128,7 +128,7 @@ local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnInitilize)
 
-function onEvent_Group(self, event, ...)
+function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
     if (event == "GROUP_JOINED") then
