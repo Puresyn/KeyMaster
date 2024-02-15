@@ -122,8 +122,9 @@ local function OnInitilize(self, event, name, ...)
     -- Initialize UI - doing this here seems to break things,
     --MainInterface:Initialize()
 
-    -- local playerData = CharacterInfo:GetMyCharacterInfo()
-    -- MyAddon:Transmit(playerData, "GUILD", nil)
+    -- Get player information and store it
+    local playerData = CharacterInfo:GetMyCharacterInfo()
+    UnitData:SetUnitData(playerData)
 end
 
 -- Event Registration
@@ -136,8 +137,8 @@ function onEvent_PartyChanges(self, event, ...)
     
     if (event == "GROUP_JOINED") then
         local partySize, partyId = ...
-        --local playerData = UnitData:GetUnitDataByUnitId("player")
-        local playerData = CharacterInfo:GetMyCharacterInfo()
+        local playerData = UnitData:GetUnitDataByUnitId("player")
+        --local playerData = CharacterInfo:GetMyCharacterInfo()
         
         MyAddon:Transmit(playerData, "PARTY", nil)        
     elseif (event == "GROUP_LEFT") then

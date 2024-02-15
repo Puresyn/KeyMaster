@@ -32,7 +32,7 @@ function MyAddon:Transmit(data)
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
-    self:SendCommMessage(comPrefix, encoded, "WHISPER", UnitName("player"))
+    self:SendCommMessage(comPrefix, encoded, "PARTY", nil)
 end
 
 -- Deserialize communication data:

@@ -34,10 +34,6 @@ function MainInterface:Initialize()
 
     -- Set Party Data TEST
     -- This only happens on first run. See KeyMaster_OnUpdate() for refresh timer.
-    
-    -- Get player information and store it
-    local playerData = CharacterInfo:GetMyCharacterInfo()
-    UnitData:SetUnitData(playerData)
 
     MainInterface:UpdateUnitFrameData("player", playerData)
     
