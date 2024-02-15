@@ -18,14 +18,16 @@ local function portalButton_mouseover(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
     local start, _, _ = GetSpellCooldown(spellNameToCheckCooldown);
     if (start == 0) then
-        ActionButton_ShowOverlayGlow(self:GetParent())
+        self:GetParent().textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portal-texture1", false)
+        --ActionButton_ShowOverlayGlow(self:GetParent())
     end
 
     --start, duration, enabled = GetSpellCooldown(spellName or spellID or slotID, "bookType");
 end
 
 local function portalButton_mouseoout(self, event, ...)
-    ActionButton_HideOverlayGlow(self:GetParent())
+    self:GetParent().textureportal:SetTexture()
+    --ActionButton_HideOverlayGlow(self:GetParent())
 end
 
 local function createPartyDungeonHeader(anchorFrame, mapId)
@@ -70,16 +72,21 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText(mapAbbr)
 
-    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
+    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 3)
     --temp_frame.texture:SetAllPoints(temp_frame)
     temp_frame.texture:SetPoint("BOTTOM", temp_frame, 0, 0)
     temp_frame.texture:SetSize(temp_frame:GetWidth(), 16)
     temp_frame.texture:SetColorTexture(0, 0, 0, 0.7) -- make names more ledegible 
 
-    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
-    temp_frame.texture:SetAllPoints(temp_frame)
-    temp_frame.texture:SetTexture(mapsTable[mapId].texture)
+    temp_frame.texturemap = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
+    temp_frame.texturemap:SetAllPoints(temp_frame)
+    temp_frame.texturemap:SetTexture(mapsTable[mapId].texture)
     temp_frame:SetAttribute("dungeonMapId", mapId)
+    temp_frame:SetAttribute("texture", mapsTable[mapId].texture)
+
+    temp_frame.textureportal = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
+    temp_frame.textureportal:SetAllPoints(temp_frame)
+    --temp_frame.textureportal:SetTexture(mapsTable[mapId].texture)
 
     -- Add clickable portal spell casting to dungeon texture frames
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
