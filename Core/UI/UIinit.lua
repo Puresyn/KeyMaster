@@ -4,6 +4,7 @@ local CharacterInfo = KeyMaster.CharacterInfo
 
 -- globals
 KeyMaster_UpdateInterval = 2.0; -- How often the KeyMaster_OnUpdate code will run (in seconds)
+local playerData
 
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
@@ -33,7 +34,8 @@ function MainInterface:Initialize()
 
     -- Set Party Data TEST
     -- This only happens on first run. See KeyMaster_OnUpdate() for refresh timer.
-    local playerData = CharacterInfo:GetMyCharacterInfo()
+    
+    playerData = CharacterInfo:GetMyCharacterInfo()
     MainInterface:UpdateUnitFrameData("player", playerData)
     
     return mainFrame
@@ -53,14 +55,14 @@ end
 -- interface panel in
 -- MainFrameTemplate.xml onLoad
 --------------------------------
-local playerData = CharacterInfo:GetMyCharacterInfo()
+
 function KeyMaster_OnUpdate(self, elapsed)
   self.TimeSinceLastUpdate = self.TimeSinceLastUpdate + elapsed; 	
 
   if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
 
     MainInterface:UpdateUnitFrameData("player", playerData)
-    playerData.name = "Bubbles" .. math.random()
+    --playerData.name = "Bubbles" .. math.random()
     
     --collectgarbage("collect")
 

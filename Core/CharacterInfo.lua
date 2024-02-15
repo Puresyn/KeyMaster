@@ -79,10 +79,11 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     
     -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
     if (mapScore == nil) then
-       --print("mapScore returned nil")       
+       --print("-- "..tostring(mapid)..": Dungeon score NOT found!")
        return emptyData
     end   
     
+    --print("-- "..weeklyAffix..":"..tostring(mapid)..": Dungeon score found!")
     if(weeklyAffix == "Tyrannical") then
        if (mapScore[2] == nil) then
           --print ("No Tyrannical Key found.")
@@ -94,7 +95,7 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     
     if(weeklyAffix == "Fortified") then
        if (mapScore[1] == nil) then
-          -- print ("No Fortified Key found.")
+          --print ("No Fortified Key found.")
           return emptyData
        end
        
@@ -102,6 +103,23 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     end
     
     return nil
+end
+
+function CharacterInfo:GetPlayerSpecialization(unitId)
+    if (unitId == "player") then
+        local specId = GetSpecialization()
+        if (specId) then
+            local _, specName, _, specIcon, specRole, _ = GetSpecializationInfo(specId)
+            return specName
+        end
+    else
+        local specId = GetInspectSpecialization(unitId)
+        if (specId) then
+            local _, specName, _, specIcon, specRole, _ = GetSpecializationInfoByID(specId)
+            return specName
+        end
+    end
+    return ""
 end
 
 function CharacterInfo:GetMyCharacterInfo()
@@ -120,31 +138,31 @@ function CharacterInfo:GetMyCharacterInfo()
         local keyRun = {}
         
         --DEBUG OUTPUT
-        -- print()
+        -- print("---------")
         -- print("Processing: " .. DungeonTools:GetMapName(mapid))
         -- print ("MapID: " .. mapid)
-        -- print()
+        -- print("---------")
         
         -- Overall Dungeon Score
         keyRun["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)
 
         -- Tyrannical Key Score
-        local scoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Tyrannical")   
+        local tyrannicalScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Tyrannical")
         local dungeonDetails = {
-            ["Score"] = scoreInfo.score,
-            ["Level"] = scoreInfo.level,
-            ["DurationSec"] = scoreInfo.durationSec,
-            ["IsOverTime"] = scoreInfo.overTime
+            ["Score"] = tyrannicalScoreInfo.score,
+            ["Level"] = tyrannicalScoreInfo.level,
+            ["DurationSec"] = tyrannicalScoreInfo.durationSec,
+            ["IsOverTime"] = tyrannicalScoreInfo.overTime
         }
         keyRun["Tyrannical"] = dungeonDetails
         
         -- Fortified Key Score
-        local scoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Fortified")
+        local fortifiedScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Fortified")
         local dungeonDetails = {
-            ["Score"] = scoreInfo.score,
-            ["Level"] = scoreInfo.level,
-            ["DurationSec"] = scoreInfo.durationSec,
-            ["IsOverTime"] = scoreInfo.overTime
+            ["Score"] = fortifiedScoreInfo.score,
+            ["Level"] = fortifiedScoreInfo.level,
+            ["DurationSec"] = fortifiedScoreInfo.durationSec,
+            ["IsOverTime"] = fortifiedScoreInfo.overTime
         }
         keyRun["Fortified"] = dungeonDetails
         
