@@ -40,130 +40,130 @@ local Colors = {
         hex = "00ffda"
     },
     color_DEATH_KNIGHT = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.77,
+        g = 0.12,
+        b = 0.23,
         hex = "c41f3b"
     },
     color_DRUID = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 1,
+        g = 0.49,
+        b = 0.04,
         hex = "ff7d0a"
     },
     color_HUNTER = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.67,
+        g = 0.83,
+        b = 0.45,
         hex = "abd473"
     },
     color_MAGE = {
-        r = 0,
-        g = 0,
-        b = 0,
-        hex = "69ccff0"
+        r = 0.41,
+        g = 0.8,
+        b = 1,
+        hex = "69ccff"
     },
     color_MONK = {
         r = 0,
-        g = 0,
-        b = 0,
+        g = 1,
+        b = 0.59,
         hex = "00ff96"
     },
     color_PALADIN = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.96,
+        g = 0.55,
+        b = 0.73,
         hex = "f58cba"
     },
     color_PRIEST = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 1,
+        g = 1,
+        b = 1,
         hex = "ffffff"
     },
     color_ROGUE = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 1,
+        g = 0.96,
+        b = 0.41,
         hex = "fff569"
     },
     color_SHAMAN = {
         r = 0,
-        g = 0,
-        b = 0,
+        g = 0.44,
+        b = 0.87,
         hex = "0070de"
     },
     color_WARLOCK = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.58,
+        g = 0.51,
+        b = 0.77,
         hex = "9482c9"
     },
     color_WARRIOR = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.78,
+        g = 0.61,
+        b = 0.43,
         hex = "c79c6e"
     },
     color_EVOKER = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.2,
+        g = 0.58,
+        b = 0.5,
         hex = "33937f"
     },
     color_DEMON_HUNTER = { 
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.64,
+        g = 0.19,
+        b = 0.79,
         hex = "a330c9"
     },
     color_POOR = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.53,
+        g = 0.62,
+        b = 0.62,
         hex = "889d9d"
     },
     color_COMMON = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 1,
+        g = 1,
+        b = 1,
         hex = "ffffff"
     },
     color_UNCOMMON = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.12,
+        g = 1,
+        b = 0.05,
         hex = "1eff0c"
     },
     color_RARE = {
         r = 0,
-        g = 0,
-        b = 0,
+        g = 0.43,
+        b = 1,
         hex = "0070ff"
     },
     color_EPIC = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.64,
+        g = 0.21,
+        b = 0.93,
         hex = "a335ee"
     },
     color_LEGENDARY = {
-        r = 0,
-        g = 0,
+        r = 1,
+        g = 0.50,
         b = 0,
         hex = "ff8000"
     },
     color_HEIRLOOM = {
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.9,
+        g = 0.8,
+        b = 0.5,
         hex = "e6cc80"
     },
     party_colHighlight = {
         r = 0.8,
         g = 0.8,
         b = 0.8,
-        hex = ""
+        hex = "cccccc"
     }
 }
 

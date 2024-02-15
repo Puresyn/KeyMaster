@@ -50,3 +50,18 @@ end
 function KeyMaster:FormatDurationSec(timeInSec)
     return date("%M:%S", timeInSec)
 end
+
+-- CreateHLine(width [INT], parentFrame [FRAME], xOfs [INT (optional)], yOfs [INT (optional)])
+function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
+    if (not width and parentFrame and realativeAnchor) then KeyMaster:print("ERROR: Invalid params provided: CreateHLine") return end
+    if (not xOfs) then xOfs = 0 end
+    if (not yOfs) then yOfs = 0 end
+    local f = CreateFrame("Frame", nil, parentFrame)
+    f:ClearAllPoints()
+    f:SetSize(width, 1)
+    f:SetPoint("CENTER", parentFrame, realativeAnchor, xOfs, yOfs)
+    f.t = f:CreateTexture()
+    f.t:SetAllPoints(f)
+    f.t:SetColorTexture(1, 1, 1, 0.3)
+    return f
+end

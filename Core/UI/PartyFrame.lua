@@ -112,8 +112,9 @@ end
 
 function MainInterface:CreatePartyDataFrame(parentFrame)
 
-    local playerNumber
+    local playerNumber, font, fontSize, flags
 
+    -- Dynamicly name child frames
     if (parentFrame:GetName() == "KM_PlayerRow1") then playerNumber = 1
         elseif (parentFrame:GetName() == "KM_PlayerRow2") then playerNumber = 2
         elseif (parentFrame:GetName() == "KM_PlayerRow3") then playerNumber = 3
@@ -125,39 +126,29 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
     end
 
-    --local temp_frameStack = GetPartyMembersFrameStack()
-    local parentFrame =  _G["KM_PlayerRow"..playerNumber]
+    --local parentFrame =  _G["KM_PlayerRow"..playerNumber]
     
     local tempText
 
+    -- Data frame
     local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
     dataFrame:ClearAllPoints()
     dataFrame:SetPoint("TOPRIGHT",  _G["KM_PlayerRow"..playerNumber], "TOPRIGHT", 0, 0)
     dataFrame:SetSize((parentFrame:GetWidth() - ((_G["KM_Portrait"..playerNumber]:GetWidth())/2)), parentFrame:GetHeight())
-    --[[  dataFrame.texture = dataFrame:CreateTexture()
-    dataFrame.texture:SetAllPoints(dataFrame)
-    dataFrame.texture:SetColorTexture(0.831, 0.831, 0.831, 0.5) -- todo: temporary bg color  ]]
 
-
-    --local temp_Frame = temp_frameStack[rowNumber]:GetValue()
-    --local player_Frame = temp_frameStack["p"..playerNumber.."Frame"]
-    local player_Frame = _G["p"..playerNumber.."Frame"]
+    --local player_Frame = _G["p"..playerNumber.."Frame"]
 
     -- Player's Name
     tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
     tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
 
-    -- TODO: get the unit's reference so we can set their class color... somehow...
-    -- todo" make if/then for if 1 then party1 etc. for class color.
-    --tempText:SetText("|cff"..PlayerInfo:GetMyClassColor("player")..thisPlayer.name.."|r")
-
-    --- Player Class
+    -- Player class
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "GameTooltipText")
     tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
 
     -- Player does not have the addon
     tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
-    local font, fontSize, flags = tempText:GetFont()
+    font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 25, flags)
     tempText:SetTextColor(0.4, 0.4, 0.4, 1)
     tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
@@ -166,7 +157,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player is offline
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "GameFontHighlightLarge")
-    local font, fontSize, flags = tempText:GetFont()
+    font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 25, flags)
     tempText:SetTextColor(0.4, 0.4, 0.4, 1)
     tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
@@ -175,17 +166,18 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Owned Key
     tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "GameFontHighlightLarge")
-    local _, fontSize, _ = tempText:GetFont()
     tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
-    --[[  if (thisPlayer.ownedKeyLevel == 0) then
-        tempText:SetText("No Key Found")
-    else
-        tempText:SetText("("..thisPlayer.ownedKeyLevel..") "..mapTable[thisPlayer.ownedKeyId].name)
-    end ]]
 
+    -- Player Rating
+    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "GameFontHighlightLarge")
+    tempText:SetPoint("BOTTOMLEFT", _G["KM_OwnedKeyInfo"..playerNumber], "TOPLEFT", 0, 0)
+    font, fontSize, flags = tempText:GetFont()
+    tempText:SetFont(font, 20, flags)
+    local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+    tempText:SetTextColor(r, g, b, 1)
     
 
-    --print(#mapTable)
+    -- Create frames for map scores
     local prevMapId
     local firstItem = true
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
@@ -199,6 +191,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..mapid, parentFrame)
         temp_Frame:ClearAllPoints()
 
+        -- Dynamicly set map data frame anchors
         if (firstItem) then
             temp_Frame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
         else
@@ -213,17 +206,29 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
         end
 
+        -- Tyrannical Scores
         local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
-        local _, fontSize, _ = tempText:GetFont()
-        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
+        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -8)
 
         local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
-        local _, fontSize, _ = tempText:GetFont()
         tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
 
-        local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
+        --[[ local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText:GetFont()
-        tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
+        tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10) ]]
+
+        -- Fortified Scores
+        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
+        tempText4:SetPoint("CENTER", tempText2, "BOTTOM", 0, -8)
+
+        local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        tempText5:SetPoint("CENTER", tempText4, "BOTTOM", 0, -8)
+
+        -- Map Total Score
+        local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 8)
+
+        KeyMaster:CreateHLine(temp_Frame:GetWidth(), temp_Frame, "BOTTOM", 0, 18)
 
         -- create dungeon identity header if this is the clinets row (the first row)
         if (playerNumber == 1) then
@@ -237,29 +242,41 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     end
 
     -- LEGEND FRAME
+
+    -- Get dynamic legend offset
+    local legendRightMargin = 4
+    local xOffset = (-(_G["KM_MapLevelT"..playerNumber..prevMapId]:GetParent():GetWidth())/2)-legendRightMargin
+
     local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
     temp_Frame:ClearAllPoints()
     temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
-    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", 0, 0)
+    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", -4, 0)
 
     --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
-    local _, _, _, xOfs, yOfs = _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint()
+    --local yOfs = select(5, _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint())
     local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
-    local _, fontSize, _ = tempText1:GetFont()
-    tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
+    tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText1:SetText("Level:")
 
-    _, _, _, xOfs, yOfs = _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint()
+    --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
     local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
-    local _, fontSize, _ = tempText2:GetFont()
-    tempText2:SetPoint("TOPRIGHT", tempText1, "BOTTOMRIGHT", 0, (yOfs + 6)) -- todo: this yOfs is screwy.. FIX IT
-    tempText2:SetText("Weekly:")
+    tempText2:SetPoint("RIGHT", _G["KM_MapScoreT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    tempText2:SetText("Tyrannical:")
 
-    _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..prevMapId]:GetPoint()
-    local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
-    local _, fontSize, _ = tempText2:GetFont()
-    tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 5)) -- todo: this yOfs is screwy.. FIX IT
-    tempText2:SetText("Time:")
+    --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
+    local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    tempText3:SetText("Level:")
+
+    --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
+    local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    tempText4:SetPoint("RIGHT", _G["KM_MapScoreF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    tempText4:SetText("Fortified:")
+
+    --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
+    local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    tempText5:SetText("Overall Score:")
     
     _G["KM_MapDataLegend"..playerNumber]:Show()
 
@@ -372,6 +389,9 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
     
     -- Player Name
     _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
+
+    -- Player Rating
+    _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
     
     -- Dungeon Key Information
     _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
@@ -379,9 +399,12 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
     -- Dungeon Scores
     for n, v in pairs(mapTable) do
         -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
-        _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Fortified"].Level..")")
-        _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
-        _G["KM_MapTimeT"..partyPlayer..n]:SetText(KeyMaster:FormatDurationSec(playerData.DungeonRuns[n]["Fortified"].DurationSec))
+        _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Tyrannical"].Level..")")
+        _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Tyrannical"].Score.."|r")
+        --_G["KM_MapTimeT"..partyPlayer..n]:SetText(KeyMaster:FormatDurationSec(playerData.DungeonRuns[n]["Fortified"].DurationSec))
+        _G["KM_MapLevelF"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Fortified"].Level..")")
+        _G["KM_MapScoreF"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
     end
     
     if (not playerData.hasAddon) then
