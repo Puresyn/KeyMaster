@@ -212,7 +212,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
         -- Tyrannical Scores
         local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
-        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -8)
+        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
         tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
         prevAnchor = tempText1
 
@@ -235,7 +235,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
         -- Map Total Score
         local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
-        tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 8)
+        tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
         local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         tempText6:SetTextColor(r, g, b, 1)
 
