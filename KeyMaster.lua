@@ -121,6 +121,9 @@ local function OnInitilize(self, event, name, ...)
 
     -- Initialize UI - doing this here seems to break things,
     --MainInterface:Initialize()
+
+    local playerData = CharacterInfo:GetMyCharacterInfo()
+    MyAddon:Transmit(playerData, "GUILD", nil)
 end
 
 -- Event Registration

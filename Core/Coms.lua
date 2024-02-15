@@ -28,11 +28,11 @@ end
 
 -- Serialize communication data:
 -- Can communitcate over whatever default channels are avaialable via hidden Addons subchannel.
-function MyAddon:Transmit(data, target, playerName)
+function MyAddon:Transmit(data)
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
-    self:SendCommMessage(comPrefix, encoded, target, playerName)
+    self:SendCommMessage(comPrefix, encoded, "WHISPER", UnitName("player"))
 end
 
 -- Deserialize communication data:
@@ -46,12 +46,13 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     if not success then return end
     
     --do something with data
-    print("Recieved Data: "..data)
-
     if (prefix ~= "KM2") then return end    
     if (data == nil) then return end
-    if (data.GUID == UnitGUID("player")) then return end
+    --if (data.GUID == UnitGUID("player")) then return end
 
-    KeyMaster:Print("Received data from "..data.name)
-    UnitData:SetUnitData(data)
+    --print("Recieved Data: "..data) -- CREATES BLANK LUA ERROR
+    
+    KeyMaster:Print("Received data from "..sender)
+    print("GUID: "..data.GUID)
+    --UnitData:SetUnitData(data)
 end
