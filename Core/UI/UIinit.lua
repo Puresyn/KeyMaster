@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local CharacterInfo = KeyMaster.CharacterInfo
+local UnitData = KeyMaster.UnitData
 
 -- globals
 KeyMaster_UpdateInterval = 2.0; -- How often the KeyMaster_OnUpdate code will run (in seconds)
@@ -33,7 +34,11 @@ function MainInterface:Initialize()
 
     -- Set Party Data TEST
     -- This only happens on first run. See KeyMaster_OnUpdate() for refresh timer.
+    
+    -- Get player information and store it
     local playerData = CharacterInfo:GetMyCharacterInfo()
+    UnitData:SetUnitData(playerData)
+
     MainInterface:UpdateUnitFrameData("player", playerData)
     
     return mainFrame
@@ -53,17 +58,15 @@ end
 -- interface panel in
 -- MainFrameTemplate.xml onLoad
 --------------------------------
-local playerData = CharacterInfo:GetMyCharacterInfo()
+
 function KeyMaster_OnUpdate(self, elapsed)
   self.TimeSinceLastUpdate = self.TimeSinceLastUpdate + elapsed; 	
 
   if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
 
+    local playerData = UnitData:GetUnitDataByUnitId("player")
     MainInterface:UpdateUnitFrameData("player", playerData)
-    playerData.name = "Bubbles" .. math.random()
     
-    --collectgarbage("collect")
-
     self.TimeSinceLastUpdate = 0;
   end
 end

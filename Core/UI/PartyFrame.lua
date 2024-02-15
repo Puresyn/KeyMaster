@@ -127,7 +127,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     --local temp_frameStack = GetPartyMembersFrameStack()
     local parentFrame =  _G["KM_PlayerRow"..playerNumber]
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    
     local tempText
 
     local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
@@ -186,22 +186,23 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     
 
     --print(#mapTable)
-    local a
-    local b = true
+    local prevMapId
+    local firstItem = true
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local bolColHighlight = false
     local partyColColor = {}
     partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
 
-    for n, v in pairs(mapTable) do
+    for mapid, mapData in pairs(mapTable) do
         bolColHighlight = not bolColHighlight -- alternate row highlighting
         
-        local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..n, parentFrame)
+        local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..mapid, parentFrame)
         temp_Frame:ClearAllPoints()
 
-        if (b) then
+        if (firstItem) then
             temp_Frame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
         else
-            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..a], "TOPLEFT", 0, 0)
+            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..prevMapId], "TOPLEFT", 0, 0)
         end
 
         temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
@@ -212,52 +213,49 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
         end
 
-        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..n, "OVERLAY", "GameToolTipText")
+        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText:GetFont()
         tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
 
-        --local _, _, _, colorWeekHex = Config:GetWeekScoreColor()
-        local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..n, "OVERLAY", "GameFontHighlightLarge")
+        local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         local _, fontSize, _ = tempText:GetFont()
         tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
-        --tempText:SetText("|cff"..colorWeekHex..thisPlayer.keyRuns[n]["Fortified"].Score.."|r\n"..thisPlayer.keyRuns[n]["Fortified"].DurationSec)
-        --tprint(thisPlayer.keyRuns[n]["Fortified"])
 
-        local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..n, "OVERLAY", "GameToolTipText")
+        local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText:GetFont()
         tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
 
         -- create dungeon identity header if this is the clinets row (the first row)
         if (playerNumber == 1) then
             local anchorFrame = temp_Frame
-            local mapId = n
-            createPartyDungeonHeader(anchorFrame, mapId)
+            local id = mapid
+            createPartyDungeonHeader(anchorFrame, id)
         end
 
-        b = false
-        a = n
+        firstItem = false
+        prevMapId = mapid
     end
 
     -- LEGEND FRAME
     local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
     temp_Frame:ClearAllPoints()
     temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
-    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..a, "TOPLEFT", 0, 0)
+    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", 0, 0)
 
     --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
-    local _, _, _, xOfs, yOfs = _G["KM_MapLevelT"..playerNumber..a]:GetPoint()
+    local _, _, _, xOfs, yOfs = _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint()
     local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     local _, fontSize, _ = tempText1:GetFont()
     tempText1:SetPoint("RIGHT", temp_Frame, "TOPRIGHT", 0, yOfs)
     tempText1:SetText("Level:")
 
-    _, _, _, xOfs, yOfs = _G["KM_MapScoreT"..playerNumber..a]:GetPoint()
+    _, _, _, xOfs, yOfs = _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint()
     local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     local _, fontSize, _ = tempText2:GetFont()
     tempText2:SetPoint("TOPRIGHT", tempText1, "BOTTOMRIGHT", 0, (yOfs + 6)) -- todo: this yOfs is screwy.. FIX IT
     tempText2:SetText("Weekly:")
 
-    _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..a]:GetPoint()
+    _, _, _, xOfs, yOfs = _G["KM_MapTimeT"..playerNumber..prevMapId]:GetPoint()
     local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     local _, fontSize, _ = tempText2:GetFont()
     tempText2:SetPoint("BOTTOMRIGHT", temp_Frame, "BOTTOMRIGHT", 0, (yOfs - 5)) -- todo: this yOfs is screwy.. FIX IT
@@ -338,7 +336,6 @@ function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
 end
 
 -- Party member data assign
-local mapTable = DungeonTools:GetCurrentSeasonMaps() -- call outside of UpdateUnitFrameData function because of memory leaks
 function MainInterface:UpdateUnitFrameData(unitId, playerData)
     if(playerData == nil) then 
         print("ERROR: parameter playerData in function createPartyRows cannot be empty.")
@@ -358,21 +355,20 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
         partyPlayer = 5
     end
     
-    --local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
 
-    --local specClass = GetPlayerSpecAndClass(unitId)
+    local unitSpecialization = CharacterInfo:GetPlayerSpecialization(unitId)
+    local unitClass, _ = UnitClass(unitId)
     --[[ local map = C_Map.GetBestMapForUnit("player")
     local position = C_Map.GetPlayerMapPosition(map, "player")
     local specClass = position:GetXY() ]]
-
-    local specClass = "FIX ME"
 
     -- Set Player Portrait
     SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
     
     -- Spec & Class
-    _G["KM_Player"..partyPlayer.."Class"]:SetText(specClass)
+    _G["KM_Player"..partyPlayer.."Class"]:SetText(unitSpecialization.." "..unitClass)
     
     -- Player Name
     _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
