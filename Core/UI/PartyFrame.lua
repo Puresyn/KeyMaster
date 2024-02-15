@@ -206,12 +206,15 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
         end
 
+
         -- Tyrannical Scores
         local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -8)
+        tempText1:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
 
         local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
+        tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
 
         --[[ local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         local _, fontSize, _ = tempText:GetFont()
@@ -220,13 +223,17 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         -- Fortified Scores
         local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
         tempText4:SetPoint("CENTER", tempText2, "BOTTOM", 0, -8)
+        tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
 
         local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         tempText5:SetPoint("CENTER", tempText4, "BOTTOM", 0, -8)
+        tempText5:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
 
         -- Map Total Score
         local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 8)
+        local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+        tempText6:SetTextColor(r, g, b, 1)
 
         KeyMaster:CreateHLine(temp_Frame:GetWidth(), temp_Frame, "BOTTOM", 0, 18)
 
@@ -257,21 +264,26 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText1:SetText("Level:")
+    tempText1:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
+    
 
     --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
     local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText2:SetPoint("RIGHT", _G["KM_MapScoreT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText2:SetText("Tyrannical:")
+    tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
 
     --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
     local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText3:SetText("Level:")
+    tempText3:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
 
     --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
     local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText4:SetPoint("RIGHT", _G["KM_MapScoreF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText4:SetText("Fortified:")
+    tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
 
     --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
