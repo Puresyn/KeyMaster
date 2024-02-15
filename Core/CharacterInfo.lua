@@ -131,6 +131,7 @@ function CharacterInfo:GetMyCharacterInfo()
     myCharacterInfo.ownedKeyLevel = keyLevel
     myCharacterInfo.DungeonRuns = {}
     myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
+    myCharacterInfo.unitId = "player"
     myCharacterInfo.hasAddon = true
 
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
