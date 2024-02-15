@@ -67,3 +67,12 @@ function KeyMaster_OnUpdate(self, elapsed)
     self.TimeSinceLastUpdate = 0;
   end
 end
+
+-- Close addon window any time we cast a spell -- DOES NOT WORK BECAUSE THIS FUNCTION IS NOT SECURE
+--[[ function MainInterface:hideOnSpellCast()
+    local mainUI = _G["KeyMaster_MainFrame"]
+    if (mainUI) then 
+        mainUI:Hide()
+    end
+end
+hooksecurefunc("CastSpellByName", MainInterface:hideOnSpellCast()) ]]

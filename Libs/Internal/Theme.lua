@@ -158,11 +158,17 @@ local Colors = {
         g = 0,
         b = 0,
         hex = "e6cc80"
+    },
+    party_colHighlight = {
+        r = 0.8,
+        g = 0.8,
+        b = 0.8,
+        hex = ""
     }
 }
 
-function Theme:GetThemeColor(themeName)
-	local c = Colors[themeName];
+function Theme:GetThemeColor(colorName)
+	local c = Colors[colorName];
 	return c.r, c.g, c.b, c.hex
 end
 
