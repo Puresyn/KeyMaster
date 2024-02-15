@@ -178,12 +178,16 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     
 
     -- Create frames for map scores
-    local prevMapId
+    local prevMapId, prevAnchor
     local firstItem = true
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local bolColHighlight = false
     local partyColColor = {}
     partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
+    local tyrannicalRGB = {}
+    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor("Tyrannical")
+    local fortifiedRGB = {}
+    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor("Fortified")
 
     for mapid, mapData in pairs(mapTable) do
         bolColHighlight = not bolColHighlight -- alternate row highlighting
@@ -206,28 +210,28 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
         end
 
-
         -- Tyrannical Scores
-        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
+        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
         tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -8)
-        tempText1:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
+        tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
+        prevAnchor = tempText1
 
-        local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        --[[ local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         tempText2:SetPoint("CENTER", tempText1, "BOTTOM", 0, -8)
-        tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
+        tempText2::SetTextColor(DungeonTools:GetWeekColor("Tyrannical")))
+        prevAnchor = tempText2 ]]
 
-        --[[ local tempText3 = temp_Frame:CreateFontString("KM_MapTimeT"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
-        local _, fontSize, _ = tempText:GetFont()
-        tempText3:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10) ]]
 
         -- Fortified Scores
-        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "GameToolTipText")
-        tempText4:SetPoint("CENTER", tempText2, "BOTTOM", 0, -8)
-        tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
+        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", DungeonTools:GetWeekFont("Fortified"))
+        tempText4:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -8)
+        tempText4:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
+        prevAnchor = tempText4
 
-        local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
+        --[[ local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
         tempText5:SetPoint("CENTER", tempText4, "BOTTOM", 0, -8)
-        tempText5:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
+        tempText5:SetAlpha(KeyMaster:GetWeekAlpha("Fortified")) 
+        prevAnchor = tempText5]]
 
         -- Map Total Score
         local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "GameFontHighlightLarge")
@@ -235,7 +239,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         tempText6:SetTextColor(r, g, b, 1)
 
-        KeyMaster:CreateHLine(temp_Frame:GetWidth(), temp_Frame, "BOTTOM", 0, 18)
+        --KeyMaster:CreateHLine(temp_Frame:GetWidth(), temp_Frame, "BOTTOM", 0, 18)
 
         -- create dungeon identity header if this is the clinets row (the first row)
         if (playerNumber == 1) then
@@ -261,29 +265,29 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
     --local yOfs = select(5, _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint())
-    local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
     tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText1:SetText("Level:")
-    tempText1:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
+    tempText1:SetText("Tyrannical:")
+    tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
     
 
     --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
-    local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    --[[ local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText2:SetPoint("RIGHT", _G["KM_MapScoreT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText2:SetText("Tyrannical:")
-    tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical"))
+    tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical")) ]]
 
     --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
-    local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Fortified"))
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText3:SetText("Level:")
-    tempText3:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
+    tempText3:SetText("Fortified:")
+    tempText3:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
 
     --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
-    local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
+    --[[ local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
     tempText4:SetPoint("RIGHT", _G["KM_MapScoreF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText4:SetText("Fortified:")
-    tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified"))
+    tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified")) ]]
 
     --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "GameToolTipText")
@@ -411,11 +415,10 @@ function MainInterface:UpdateUnitFrameData(unitId, playerData)
     -- Dungeon Scores
     for n, v in pairs(mapTable) do
         -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
-        _G["KM_MapLevelT"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Tyrannical"].Level..")")
-        _G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Tyrannical"].Score.."|r")
-        --_G["KM_MapTimeT"..partyPlayer..n]:SetText(KeyMaster:FormatDurationSec(playerData.DungeonRuns[n]["Fortified"].DurationSec))
-        _G["KM_MapLevelF"..partyPlayer..n]:SetText("("..playerData.DungeonRuns[n]["Fortified"].Level..")")
-        _G["KM_MapScoreF"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapLevelT"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Tyrannical"].Level)
+        --_G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Tyrannical"].Score.."|r")
+        _G["KM_MapLevelF"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Fortified"].Level)
+        --_G["KM_MapScoreF"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
         _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
     end
     

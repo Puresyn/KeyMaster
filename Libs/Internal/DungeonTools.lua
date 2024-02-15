@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 KeyMaster.DungeonTools = {}
 local DungeonTools = KeyMaster.DungeonTools
+local Theme = KeyMaster.Theme
 
 -- required for some C_MythicPlus functions to return correct results.
 -- see : https://warcraft.wiki.gg/wiki/API_C_MythicPlus.RequestMapInfo
@@ -108,4 +109,39 @@ function DungeonTools:GetPortalSpell(dungeonID)
         portalSpellName, _ = GetSpellInfo(portalSpellId) -- name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon
         return portalSpellId, portalSpellName
     end
+end
+
+ -- Set color of week and off-week key data
+ function DungeonTools:GetWeekColor(currentAffix)
+    local weeklyAffix, weekColor, offWeekColor, myColor
+    local wc = {}
+    local cw = {}
+    local ow = {}
+    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
+    ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
+    weeklyAffix = DungeonTools:GetAffixes()
+    if(weeklyAffix[1].name == currentAffix) then
+        wc.r = cw.r
+        wc.g = cw.g
+        wc.b = cw.b
+    else
+        wc.r = ow.r
+        wc.g = ow.g
+        wc.b = ow.b
+    end
+    return wc.r, wc.g, wc.b
+end
+
+-- Set the font face of the week and off-week key data
+function DungeonTools:GetWeekFont(currentAffix)
+    local weeklyAffix, weekFont, offWeekFont, myFont, cw, ow
+    weekFont = "GameFontHighlightLarge"
+    offWeekFont = "GameToolTipText"
+    weeklyAffix = DungeonTools:GetAffixes()
+    if(weeklyAffix[1].name == currentAffix) then
+        myFont = weekFont
+    else
+        myFont = offWeekFont
+    end
+    return myFont
 end

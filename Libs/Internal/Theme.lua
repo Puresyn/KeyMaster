@@ -39,6 +39,19 @@ local Colors = {
         b = 0.855,
         hex = "00ffda"
     },
+    party_CurrentWeek = {
+        r = 0.647,
+        g = 1,
+        b = 0,
+        hex = "a5ff00"
+    },
+    party_OffWeek = {
+        r = 0.53,
+        g = 0.62,
+        b = 0.62,
+        hex = "889d9d"
+
+    },
     color_DEATH_KNIGHT = {
         r = 0.77,
         g = 0.12,

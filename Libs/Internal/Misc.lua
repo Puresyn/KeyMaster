@@ -67,19 +67,3 @@ function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     f.t:SetColorTexture(1, 1, 1, 0.5)
     return f
 end
-
- -- Set alpha (fade out) of off-week affix data
- -- KeyMaster:GetWeekAlpha(weeklyAffix [str] "TYRANNICAL" "FORTIFIED")
- -- returns [FLOAT]
- function KeyMaster:GetWeekAlpha(dataAffix)
-    local weeklyAffix, weekAlpha, offWeekAlpha, myAlpha
-    weekAlpha = 1
-    offWeekAlpha = 0.5
-    weeklyAffix = DungeonTools:GetAffixes()
-    if(weeklyAffix[1].name == dataAffix) then
-        myAlpha = weekAlpha
-    else
-        myAlpha = offWeekAlpha
-    end
-    return myAlpha
-end
