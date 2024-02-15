@@ -39,9 +39,7 @@ end
 
 function UnitData:GetUnitDataByUnitId(unitId)
     for guid, tableData in pairs(unitInformation) do
-        print("GUID: "..tostring(guid))
-        print("UnitID: "..tableData.unitId)
-        if (tableData.unitId == unitId) then
+         if (tableData.unitId == unitId) then
             return unitInformation[guid]
         end
     end
@@ -65,7 +63,7 @@ function UnitData:DeleteUnitDataByGUID(playerGUID)
 end
 
 function UnitData:DeleteUnitDataByUnitId(unitId)
-    
+
 end
 
 function UnitData:DeleteAllPartyData()
