@@ -12,8 +12,8 @@ C_MythicPlus.RequestMapInfo()
 -- Must be manually maintained.
 --------------------------------
 local instanceAbbrTable = {
-    [463] = "FALL",    -- Dawn of the Infinite: Galakrond's Fall
-    [464] = "RISE",    -- Dawn of the Infinite: Murozond's Rise
+    [463] = "FALL",     -- Dawn of the Infinite: Galakrond's Fall
+    [464] = "RISE",     -- Dawn of the Infinite: Murozond's Rise
     [244] = "AD",       -- Atal'Dazar
     [248] = "WCM",      -- Waycrest Manor
     [199] = "BRH",      -- Black Rook Hold
@@ -22,6 +22,23 @@ local instanceAbbrTable = {
     [456] = "ToT"       -- Throne of Tides
 }
 
+--------------------------------
+-- Dungeon Portal spell IDs
+-- Must be manually maintained.
+--------------------------------
+local portalSpellIds = {
+    [463] = 424197,     -- Dawn of the Infinite: Galakrond's Fall
+    [248] = 424167,     -- Waycrest Manor
+    [244] = 424187,     -- Atal'Dazar
+    [198] = 424163,     -- Darkheart Thicket
+    [199] = 424153,     -- Black Rook Hold
+    [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
+    [456] = 424142,     -- Throne of Tides
+    [168] = 159901      -- The Everbloom
+
+}
+
+-- Gets a list of the current weeks affixes.
 local weeklyAffixs
 function DungeonTools:GetAffixes()
     if (weeklyAffixs) then return weeklyAffixs end
@@ -44,6 +61,7 @@ function DungeonTools:GetAffixes()
     return affixData
  end
 
+ -- Retrieves a dungeon's name by map id.
 function DungeonTools:GetMapName(mapid)
     local name,_,_,_,_ = C_ChallengeMode.GetMapUIInfo(mapid)
 
@@ -55,6 +73,7 @@ function DungeonTools:GetMapName(mapid)
     return name
 end
 
+-- Gets a list of the live seasons challenge maps
 local currentSeasonMaps
 function DungeonTools:GetCurrentSeasonMaps()
     if(currentSeasonMaps) then return currentSeasonMaps end
@@ -84,18 +103,7 @@ function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
     return a
 end
 
-local portalSpellIds = {
-    [463] = 424197,     -- Dawn of the Infinite: Galakrond's Fall
-    [248] = 424167,     -- Waycrest Manor
-    [244] = 424187,     -- Atal'Dazar
-    [198] = 424163,     -- Darkheart Thicket
-    [199] = 424153,     -- Black Rook Hold
-    [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
-    [456] = 424142,     -- Throne of Tides
-    [168] = 159901      -- The Everbloom
-
-}
-
+-- Finds portal spells, checks if the client has it and retruns it's information
 function DungeonTools:GetPortalSpell(dungeonID)
     local portalSpellId = portalSpellIds[dungeonID]
     if (not portalSpellId) then return nil end -- mapID missing from portalSpellIds table
