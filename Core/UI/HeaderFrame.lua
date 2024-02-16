@@ -84,8 +84,6 @@ local function createHeaderRating(parentFrame)
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 30, Flags)
     mythicRatingPreText:SetPoint("CENTER", 0, -22)
-    --mythicRatingPreText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
-    --mythicRatingPreText:SetText(myCurrentRating) -- todo: Gets updated currently in partyFrame updates.
 
     return ratingPanel
 end
@@ -113,27 +111,11 @@ end
 -- Create Content Frames
 --------------------------------
 function MainInterface:CreateHeaderContent(parentFrame)
---[[     if (parentFrame == nil) then 
-        KeyMaster:Print("Parameter Null: No parent frame passed to CreateHeaderFrame function.")
-        return
-    end
-    local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
-    local headerFrame = CreateFrame("Frame", "KeyMaster_HeaderFrame", parentFrame);
-    headerFrame:SetSize(fr.w, fr.h)
-    headerFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
-    headerFrame.texture = headerFrame:CreateTexture()
-    headerFrame.texture:SetAllPoints(headerFrame)
-    headerFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color ]]
 
     -- Contents
     local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
-    
-    --[[ HeaderScreen.texture = HeaderScreen:CreateTexture()
-    HeaderScreen.texture:SetAllPoints(HeaderScreen)
-    HeaderScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
-    HeaderScreen.texture:SetColorTexture(0.231, 0.231, 0.231, 1) ]]
 
     local txtPlaceHolder = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
