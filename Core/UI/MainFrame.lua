@@ -24,7 +24,6 @@ function MainInterface:CreateMainFrame()
     mainFrame.closeBtn:SetSize(20, 20)
     mainFrame.closeBtn:SetNormalFontObject("GameFontNormalLarge")
     mainFrame.closeBtn:SetHighlightFontObject("GameFontHighlightLarge")
-    mainFrame.closeBtn:SetScript("OnClick", KeyMaster.MainInterface.Toggle)
     mainFrame:Hide()
 
     return mainFrame

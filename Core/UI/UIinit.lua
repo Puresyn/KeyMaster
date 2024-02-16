@@ -48,7 +48,7 @@ function MainInterface:Toggle()
     local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
 
     -- Maps Frame UI Elements to Data
-    MainInterface:UpdateUnitFrameData("player", playerData)
+    MainInterface:UpdateUnitFrameData("player")
 
     mainUI:SetShown(not mainUI:IsShown())
 end
@@ -67,7 +67,7 @@ function KeyMaster_OnUpdate(self, elapsed)
 
   if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
 
-    MainInterface:UpdateUnitFrameData("player", playerData)
+    MainInterface:UpdateUnitFrameData("player")
     
     self.TimeSinceLastUpdate = 0;
   end

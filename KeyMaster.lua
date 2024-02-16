@@ -156,9 +156,20 @@ partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
 local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if (event ~= "PLAYER_ENTERING_WORLD") then return end
     
-    -- Get player information and store it
-    local playerData = CharacterInfo:GetMyCharacterInfo()
-    UnitData:SetUnitData(playerData)
+    if (isLogin) then
+        -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
+        -- see our github issue #6
+        C_MythicPlus.RequestCurrentAffixes()
+        C_MythicPlus.RequestMapInfo()
+        C_MythicPlus.RequestRewards()
+        KeyMaster:Print("C_MythicPlus requests sent.")
+    end
+
+    C_Timer.After(1, function()
+        -- Get player information and store it
+        local playerData = CharacterInfo:GetMyCharacterInfo()
+        UnitData:SetUnitData(playerData)
+    end)  
 end
 
 local playerEnterEvents = CreateFrame("Frame")

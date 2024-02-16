@@ -170,5 +170,6 @@ function CharacterInfo:GetMyCharacterInfo()
         myCharacterInfo.DungeonRuns[mapid] = keyRun
     end
 
+    KeyMaster:Print("Character data fetched.")
     return myCharacterInfo
 end
