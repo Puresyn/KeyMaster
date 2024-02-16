@@ -80,7 +80,6 @@ local function createHeaderRating(parentFrame)
     mythicRatingPreText:SetPoint("CENTER")
     mythicRatingPreText:SetText("Your Rating:")
 
-    local myCurrentRating = KeyMaster.CharacterInfo:GetCurrentRating()
     local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating) -- todo: this should probably be put with the raiting update.
 
     mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
