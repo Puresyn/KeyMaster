@@ -3,7 +3,7 @@ KeyMaster.DungeonTools = {}
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
--- required for some C_MythicPlus functions to return correct results.
+-- required for some C_MythicPlus functions to return correct results...
 -- see : https://warcraft.wiki.gg/wiki/API_C_MythicPlus.RequestMapInfo
 C_MythicPlus.RequestMapInfo()
 

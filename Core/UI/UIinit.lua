@@ -47,6 +47,11 @@ function MainInterface:Toggle()
     -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
     local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
 
+
+    -- Get player information and store it
+    local playerData = CharacterInfo:GetMyCharacterInfo()
+    UnitData:SetUnitData(playerData)
+
     -- Maps Frame UI Elements to Data
     MainInterface:UpdateUnitFrameData("player", playerData)
 
