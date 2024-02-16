@@ -135,7 +135,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Name
     local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
+    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 6, -3)
 
     -- Player class
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
