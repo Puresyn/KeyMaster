@@ -80,13 +80,11 @@ local function createHeaderRating(parentFrame)
     mythicRatingPreText:SetPoint("CENTER")
     mythicRatingPreText:SetText("Your Rating:")
 
-    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating) -- todo: this should probably be put with the raiting update.
-
     mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 30, Flags)
     mythicRatingPreText:SetPoint("CENTER", 0, -22)
-    mythicRatingPreText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
+    --mythicRatingPreText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
     --mythicRatingPreText:SetText(myCurrentRating) -- todo: Gets updated currently in partyFrame updates.
 
     return ratingPanel
