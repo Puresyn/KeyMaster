@@ -11,7 +11,7 @@ C_MythicPlus.RequestMapInfo()
 -- Challenge Dungeon Instance Abbreviations.
 -- Must be manually maintained.
 --------------------------------
-local instanceAbbTable = {
+local instanceAbbrTable = {
     [463] = "FALL",    -- Dawn of the Infinite: Galakrond's Fall
     [464] = "RISE",    -- Dawn of the Infinite: Murozond's Rise
     [244] = "AD",       -- Atal'Dazar
@@ -35,7 +35,7 @@ function DungeonTools:GetAffixes()
        local data = {
           ["id"] = id,
           ["name"] = name,
-          ["desc"] = description,
+          ["desc"] = desc,
           ["filedataid"] = filedataid
        }
        tinsert(affixData, data)
@@ -79,8 +79,8 @@ end
 
 -- conversion from mapid to abbreviation
 function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
-    local a = instanceAbbTable[mapId]
-    if (not a) then a = "---" end
+    local a = instanceAbbrTable[mapId]
+    if (not a) then a = "No Key" end
     return a
 end
 
