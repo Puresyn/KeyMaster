@@ -45,6 +45,7 @@ function DungeonTools:GetAffixes()
     
     local affixData = {}
     local affixes = C_MythicPlus.GetCurrentAffixes() -- Bug when this returned nils?
+    if (affixes == nil) then return nil end
     for i=1, #affixes, 1 do
        local id = affixes[i].id
        local name, desc, filedataid = C_ChallengeMode.GetAffixInfo(id)
@@ -128,6 +129,9 @@ end
     cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
     ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
     weeklyAffix = DungeonTools:GetAffixes()
+    if (weeklyAffix == nil) then
+        return 1,1,1
+    end
     if(weeklyAffix[1].name == currentAffix) then
         wc.r = cw.r
         wc.g = cw.g
@@ -146,6 +150,9 @@ function DungeonTools:GetWeekFont(currentAffix)
     weekFont = "KeyMasterFontBig"
     offWeekFont = "KeyMasterFontSmall"
     weeklyAffix = DungeonTools:GetAffixes()
+    if (weeklyAffix == nil) then
+        return offWeekFont
+    end
     if(weeklyAffix[1].name == currentAffix) then
         myFont = weekFont
     else

@@ -25,6 +25,10 @@ local function createAffixFrames(parentFrame)
     end
     
     local weekData = DungeonTools:GetAffixes()
+    if (weekData == nil) then 
+        KeyMaster:Print("Error: No mythic plus season affixes found!")
+        return 
+    end
     for i=1, #weekData, 1 do
 
         local affixName = weekData[i].name
