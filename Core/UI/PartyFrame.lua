@@ -165,7 +165,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player Rating
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("BOTTOMLEFT", _G["KM_OwnedKeyInfo"..playerNumber], "TOPLEFT", 0, 0)
+    tempText:SetPoint("TOPLEFT", "KM_Player"..playerNumber.."Class", "BOTTOMLEFT", 0, -1)
     font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 20, flags)
     local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
@@ -393,10 +393,18 @@ function MainInterface:UpdateUnitFrameData(unitId)
     -- Player Rating
     _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
 
+    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(playerData.mythicPlusRating) -- todo: cache this? but it is relevant to the client rating.
+    _G["KeyMaster_RatingScore"]:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
     _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.
     
     -- Dungeon Key Information
-    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
+    local ownedKeyLevel
+    if (playerData.ownedKeyLevel == 0) then
+        ownedKeyLevel = ""
+    else 
+        ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
+    end
+    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
 
     -- Dungeon Scores
     for n, v in pairs(mapTable) do
@@ -416,11 +424,21 @@ function MainInterface:UpdateUnitFrameData(unitId)
 end
 
 function MainInterface:CreatePartyRowsFrame(parentFrame)
-    local gfm = 10 -- group frame margin    
+    local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
+    frameTitle = "Party Information:" -- set title
 
-    local temp_frame = CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
-    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -55)
+    -- relative parent frame of this frame
+    -- todo: the next 2 lines may be reduntant?
+    a = parentFrame
+    window = _G["KeyMaster_Frame_Party"]
+
+    gfm = 10 -- group frame margin
+
+    if window then return window end -- if it already exists, don't make another one
+
+    temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
+    temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
+    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
 
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
@@ -459,12 +477,12 @@ function MainInterface:CreatePartyFrame(parentFrame)
     PartyScreen.texture:SetAllPoints(PartyScreen)
     PartyScreen.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color ]]
 
-    local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    --[[ local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Party Screen")
+    txtPlaceHolder:SetText("Party Screen") ]]
 
     return partyScreen
 end

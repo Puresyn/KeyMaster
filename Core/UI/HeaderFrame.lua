@@ -43,7 +43,7 @@ local function createAffixFrames(parentFrame)
         tex:SetTexture(weekData[i].filedataid)
         
         -- Affix Name
-        local myText = temp_frame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+        local myText = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
         local path, _, flags = myText:GetFont()
         myText:SetFont(path, 11, flags)
         myText:SetPoint("CENTER", 0, -30)
@@ -55,7 +55,7 @@ local function createAffixFrames(parentFrame)
             local temp_header = CreateFrame("Frame", "KeyMaster_AffixFrameTitle", temp_frame)
             temp_header:SetSize(168, 20)
             temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -4, 0)
-            local temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+            local temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
             temp_headertxt:SetFont(path, 14, flags)
             temp_headertxt:SetPoint("LEFT", 0, 0)
             temp_headertxt:SetTextColor(1,1,1)
@@ -80,15 +80,10 @@ local function createHeaderRating(parentFrame)
     mythicRatingPreText:SetPoint("CENTER")
     mythicRatingPreText:SetText("Your Rating:")
 
-    local myCurrentRating = KeyMaster.CharacterInfo:GetCurrentRating()
-    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating) -- todo: this should probably be put with the raiting update.
-
     mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 30, Flags)
     mythicRatingPreText:SetPoint("CENTER", 0, -22)
-    mythicRatingPreText:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
-    --mythicRatingPreText:SetText(myCurrentRating) -- todo: Gets updated currently in partyFrame updates.
 
     return ratingPanel
 end
@@ -116,27 +111,11 @@ end
 -- Create Content Frames
 --------------------------------
 function MainInterface:CreateHeaderContent(parentFrame)
---[[     if (parentFrame == nil) then 
-        KeyMaster:Print("Parameter Null: No parent frame passed to CreateHeaderFrame function.")
-        return
-    end
-    local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
-    local headerFrame = CreateFrame("Frame", "KeyMaster_HeaderFrame", parentFrame);
-    headerFrame:SetSize(fr.w, fr.h)
-    headerFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
-    headerFrame.texture = headerFrame:CreateTexture()
-    headerFrame.texture:SetAllPoints(headerFrame)
-    headerFrame.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color ]]
 
     -- Contents
     local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
-    
-    --[[ HeaderScreen.texture = HeaderScreen:CreateTexture()
-    HeaderScreen.texture:SetAllPoints(HeaderScreen)
-    HeaderScreen.texture:SetTexture("Interface\\AddOns\\KeyMaster\\Imgs\\WHITE8X8")
-    HeaderScreen.texture:SetColorTexture(0.231, 0.231, 0.231, 1) ]]
 
     local txtPlaceHolder = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()

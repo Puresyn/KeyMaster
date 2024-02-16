@@ -15,7 +15,7 @@
 		</Scripts>
 	</Button>
     <Frame name="MainFrameTemplate" toplevel="true" movable="true" enableMouse="true" resizable="false" frameStrata="MEDIUM" inherits="BackdropTemplate" virtual="true">
-		<Size x="768" y="768"/>
+		<Size x="768" y="700"/>
 		<Anchors>
 			<!-- <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset x="0" y="0"/>
@@ -37,7 +37,7 @@
         </Layers>
         <Frames>
             <Button name="$parentDragHeader">
-				<Size x="0" y="60"/>
+				<Size x="0" y="100"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset x="0" y="0"/>
