@@ -121,10 +121,6 @@ local function OnInitilize(self, event, name, ...)
 
     -- Initialize UI - doing this here seems to break things,
     --MainInterface:Initialize()
-
-    -- Get player information and store it
-    local playerData = CharacterInfo:GetMyCharacterInfo()
-    UnitData:SetUnitData(playerData)
 end
 
 -- Event Registration
@@ -156,3 +152,15 @@ partyEvents:RegisterEvent("GROUP_JOINED")
 partyEvents:RegisterEvent("GROUP_LEFT")
 partyEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
 partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
+
+local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
+    if (event ~= "PLAYER_ENTERING_WORLD") then return end
+    
+    -- Get player information and store it
+    local playerData = CharacterInfo:GetMyCharacterInfo()
+    UnitData:SetUnitData(playerData)
+end
+
+local playerEnterEvents = CreateFrame("Frame")
+playerEnterEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerEnterEvents:SetScript("OnEvent", onEvent_PlayerEnterWorld)

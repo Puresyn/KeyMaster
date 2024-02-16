@@ -32,17 +32,16 @@ function MainInterface:Initialize()
     
     Tab_OnClick(tab)
 
-    -- Set Party Data TEST
-    -- This only happens on first run. See KeyMaster_OnUpdate() for refresh timer.
-
-    MainInterface:UpdateUnitFrameData("player", playerData)
-    
     return mainFrame
 end
 
 function MainInterface:Toggle()
     -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
     local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
+
+    -- Maps Frame UI Elements to Data
+    MainInterface:UpdateUnitFrameData("player", playerData)
+
     mainUI:SetShown(not mainUI:IsShown())
 end
 
@@ -60,7 +59,6 @@ function KeyMaster_OnUpdate(self, elapsed)
 
   if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
 
-    local playerData = UnitData:GetUnitDataByUnitId("player")
     MainInterface:UpdateUnitFrameData("player", playerData)
     
     self.TimeSinceLastUpdate = 0;

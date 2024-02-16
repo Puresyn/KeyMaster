@@ -3,6 +3,7 @@ local MainInterface = KeyMaster.MainInterface
 local DungeonTools = KeyMaster.DungeonTools
 local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
+local UnitData = KeyMaster.UnitData
 
 local function portalButton_buttonevent(self, event)
    MainInterface:Toggle();
@@ -369,12 +370,18 @@ function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
 end
 
 -- Party member data assign
-function MainInterface:UpdateUnitFrameData(unitId, playerData)
-    if(playerData == nil) then 
-        print("ERROR: parameter playerData in function createPartyRows cannot be empty.")
+function MainInterface:UpdateUnitFrameData(unitId)
+    if(unitId == nil) then 
+        print("ERROR: parameter unitId in function UpdateUnitFrameData cannot be empty.")
         return
     end
-    
+
+    local playerData = UnitData:GetUnitDataByUnitId(unitId)
+    if(playerData == nil) then 
+        print("ERROR: 'playerData' in function UpdateUnitFrameData cannot be empty.")
+        return
+    end
+
     local partyPlayer
     if (unitId == "player") then
         partyPlayer = 1
