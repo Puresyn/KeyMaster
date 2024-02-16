@@ -416,7 +416,7 @@ function MainInterface:UpdateUnitFrameData(unitId)
     -- Player Rating
     _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
 
-    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(myCurrentRating) -- todo: cache this? but it is relevant to the client rating.
+    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(playerData.mythicPlusRating) -- todo: cache this? but it is relevant to the client rating.
     _G["KeyMaster_RatingScore"]:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
     _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.
     
