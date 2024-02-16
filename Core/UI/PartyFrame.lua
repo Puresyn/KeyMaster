@@ -421,7 +421,13 @@ function MainInterface:UpdateUnitFrameData(unitId)
     _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.
     
     -- Dungeon Key Information
-    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
+    local ownedKeyLevel
+    if (playerData.ownedKeyLevel == 0) then
+        ownedKeyLevel = ""
+    else 
+        ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
+    end
+    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
 
     -- Dungeon Scores
     for n, v in pairs(mapTable) do
