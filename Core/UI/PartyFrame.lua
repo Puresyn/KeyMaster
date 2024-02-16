@@ -415,6 +415,8 @@ function MainInterface:UpdateUnitFrameData(unitId)
 
     -- Player Rating
     _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
+
+    _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.
     
     -- Dungeon Key Information
     _G["KM_OwnedKeyInfo"..partyPlayer]:SetText("("..playerData.ownedKeyLevel..") "..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
