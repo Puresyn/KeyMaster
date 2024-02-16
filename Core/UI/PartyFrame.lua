@@ -141,7 +141,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Name
     tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
+    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 6, -3)
 
     -- Player class
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
@@ -171,7 +171,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player Rating
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("BOTTOMLEFT", _G["KM_OwnedKeyInfo"..playerNumber], "TOPLEFT", 0, 0)
+    tempText:SetPoint("TOPLEFT", "KM_Player"..playerNumber.."Class", "BOTTOMLEFT", 0, -1)
     font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 20, flags)
     local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
@@ -449,6 +449,7 @@ end
 function MainInterface:CreatePartyRowsFrame(parentFrame)
     local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
     frameTitle = "Party Information:" -- set title
+    local partyFrameFooterHeight = 125
 
     -- relative parent frame of this frame
     -- todo: the next 2 lines may be reduntant?
@@ -460,7 +461,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
     if window then return window end -- if it already exists, don't make another one
 
     temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
-    temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
+    temp_frame:SetSize(a:GetWidth()-(gfm*2), _G["KeyMaster_ContentRegion"]:GetHeight()-partyFrameFooterHeight-(gfm*4))
     temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
 
     txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
@@ -501,12 +502,12 @@ function MainInterface:CreatePartyFrame(parentFrame)
     PartyScreen.texture:SetAllPoints(PartyScreen)
     PartyScreen.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color ]]
 
-    local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    --[[ local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Party Screen")
+    txtPlaceHolder:SetText("Party Screen") ]]
 
     return partyScreen
 end
