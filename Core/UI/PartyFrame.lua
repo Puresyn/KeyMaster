@@ -161,7 +161,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Owned Key
     tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
+    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
 
     -- Player Rating
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
