@@ -112,24 +112,20 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 end
 
 function MainInterface:CreatePartyDataFrame(parentFrame)
-
-    local playerNumber, font, fontSize, flags
-
-    -- Dynamicly name child frames
+    local playerNumber
     if (parentFrame:GetName() == "KM_PlayerRow1") then playerNumber = 1
-        elseif (parentFrame:GetName() == "KM_PlayerRow2") then playerNumber = 2
-        elseif (parentFrame:GetName() == "KM_PlayerRow3") then playerNumber = 3
-        elseif (parentFrame:GetName() == "KM_PlayerRow4") then playerNumber = 4
-        elseif (parentFrame:GetName() == "KM_PlayerRow5") then playerNumber = 5
+    elseif (parentFrame:GetName() == "KM_PlayerRow2") then playerNumber = 2
+    elseif (parentFrame:GetName() == "KM_PlayerRow3") then playerNumber = 3
+    elseif (parentFrame:GetName() == "KM_PlayerRow4") then playerNumber = 4
+    elseif (parentFrame:GetName() == "KM_PlayerRow5") then playerNumber = 5
+    else
+        KeyMaster:Print("Error: Only support for 5 party rows is allowed...invalid parentFrame")
+        return
     end
 
-    if (not playerNumber or playerNumber < 0 or playerNumber > 5) then
+    if (not playerNumber) then
         print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
     end
-
-    --local parentFrame =  _G["KM_PlayerRow"..playerNumber]
-    
-    local tempText
 
     -- Data frame
     local dataFrame = CreateFrame("Frame", "KM_PlayerDataFrame"..playerNumber, parentFrame)
@@ -137,10 +133,8 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     dataFrame:SetPoint("TOPRIGHT",  _G["KM_PlayerRow"..playerNumber], "TOPRIGHT", 0, 0)
     dataFrame:SetSize((parentFrame:GetWidth() - ((_G["KM_Portrait"..playerNumber]:GetWidth())/2)), parentFrame:GetHeight())
 
-    --local player_Frame = _G["p"..playerNumber.."Frame"]
-
     -- Player's Name
-    tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
+    local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
 
     -- Player class
@@ -149,7 +143,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player does not have the addon
     tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    font, fontSize, flags = tempText:GetFont()
+    local font, fontSize, flags = tempText:GetFont()
     tempText:SetFont(font, 25, flags)
     tempText:SetTextColor(0.4, 0.4, 0.4, 1)
     tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
@@ -177,7 +171,6 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
     tempText:SetTextColor(r, g, b, 1)
     
-
     -- Create frames for map scores
     local prevMapId, prevAnchor
     local firstItem = true
@@ -300,52 +293,36 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
 end
 
-function MainInterface:CreatePartyMemberFrame(frameName, parentFrame)
-    local frameAnchor, frameHeight, partyNumber
+function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
+    local partyNumber
+    if (unitId == "player") then partyNumber = 1
+    elseif (unitId == "party1") then partyNumber = 2
+    elseif (unitId == "party2") then partyNumber = 3
+    elseif (unitId == "party3") then partyNumber = 4
+    elseif (unitId == "party4") then partyNumber = 5
+    else
+        KeyMaster:Print("Invalid paramater value for unitId, expected 'player' or 'party1-4'")
+        return
+    end
+
+    local frameHeight = 0
     local mtb = 2 -- top and bottom margin of each frame in pixels
 
-    -- DEBUG
-    if (not parentFrame) then
-        print("Can not find row reference \"Nil\" while trying to make "..frameName.."'s row.")
-    end
-
-    --print("Creating "..frameName.." and setting its parent to "..parentFrame:GetName()..".") -- debug
-
-    if (frameName == "KM_PlayerRow1") then partyNumber = 1
-    elseif (frameName == "KM_PlayerRow2") then partyNumber = 2
-    elseif (frameName == "KM_PlayerRow3") then partyNumber = 3
-    elseif (frameName == "KM_PlayerRow4") then partyNumber = 4
-    elseif (frameName == "KM_PlayerRow5") then partyNumber = 5
-    end
-
-   --[[  local window = _G[frameName]
-    if (window) then return window end -- frame exists, don't create another ]]
-
-    local temp_RowFrame = CreateFrame("Frame", frameName, parentFrame)
+    local temp_RowFrame = CreateFrame("Frame", "KM_PlayerRow"..partyNumber, parentFrame)
     temp_RowFrame:ClearAllPoints()
 
-    --temp_RowFrame:SetPoint(frameAnchor)
-    if (frameName == "KM_PlayerRow1") then 
-        --frameAnchor = "TOPLEFT", parentFrame, "TOPLEFT", 0, -20
+    if (unitId == "player") then -- first spot
         temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -2)
-
-         -- get the frame's group container and set this row frame height to 1/5th the group container height minus margins
         frameHeight = (parentFrame:GetHeight()/5) - (mtb*2)
-
     else
-        --frameAnchor = "TOPLEFT", parentFrame, "BOTTOMLEFT", 0, -2
-        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 0, -4)
-
-        -- get the frame parent and set this row frame height the parent's height
+        temp_RowFrame:SetPoint("TOPLEFT", _G["KM_PlayerRow"..partyNumber - 1], "BOTTOMLEFT", 0, -4)
         frameHeight = parentFrame:GetHeight()
-
     end
 
     temp_RowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
     temp_RowFrame.texture = temp_RowFrame:CreateTexture()
     temp_RowFrame.texture:SetAllPoints(temp_RowFrame)
     temp_RowFrame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- todo: temporary bg color 
-
 
     local temp_frame = CreateFrame("Frame", "KM_PortraitFrame"..partyNumber, _G["KM_PlayerRow"..partyNumber])
     temp_frame:SetSize(parentFrame:GetWidth()+(temp_RowFrame:GetHeight()/2), temp_RowFrame:GetHeight())
@@ -439,33 +416,22 @@ function MainInterface:UpdateUnitFrameData(unitId)
 end
 
 function MainInterface:CreatePartyRowsFrame(parentFrame)
-    local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
-    frameTitle = "Party Information:" -- set title
+    local gfm = 10 -- group frame margin    
 
-    -- relative parent frame of this frame
-    -- todo: the next 2 lines may be reduntant?
-    a = parentFrame
-    window = _G["KeyMaster_Frame_Party"]
+    local temp_frame = CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
+    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -55)
 
-    gfm = 10 -- group frame margin
-
-    if window then return window end -- if it already exists, don't make another one
-
-    temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
-    temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
-
-    txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    Path, _, Flags = txtPlaceHolder:GetFont()
+    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 20, Flags)
     txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText(frameTitle)
+    txtPlaceHolder:SetText("Party Information:")
 
     temp_frame.texture = temp_frame:CreateTexture()
     temp_frame.texture:SetAllPoints(temp_frame)
     temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- temporary bg color 
-
 
     return temp_frame
 end

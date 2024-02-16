@@ -15,9 +15,17 @@ function MainInterface:Initialize()
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
-    local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("KM_PlayerRow1", partyRowsFrame)
-    local playerPartyData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
-    
+
+    local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
+    local playerRowData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
+
+    local maxPartySize = 4
+    for i=1,maxPartySize,1 do
+      local partyRow = MainInterface:CreatePartyMemberFrame("party"..i, _G["KM_PlayerRow"..i])
+      local partyRowDataFrames = MainInterface:CreatePartyDataFrame(partyRow)
+      partyRow:Hide()
+    end
+
     -- Create tabs
     local tabContents = partyContent
     local tab = MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
@@ -29,7 +37,7 @@ function MainInterface:Initialize()
     tempFrame:Hide()
 
     local tab2 = MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
-    
+
     Tab_OnClick(tab)
 
     return mainFrame
