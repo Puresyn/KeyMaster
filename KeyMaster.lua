@@ -14,9 +14,7 @@ local UnitData = KeyMaster.UnitData
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '0.0.5' -- DO NOT Edit this line in any way, this is automated!
-KM_VERSION_MAJOR = 0 -- Single digit major version release number
-KM_VERSION_MINOR = 0.5 -- float value minor version release number
+KM_AUTOVERSION = '0.0.5' -- DO NOT EDIT!
 KM_VERSION_STATUS = KeyMasterLocals.BUILDALPHA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes"
 KM_VERSION = tostringall("v"..KM_AUTOVERSION.."-"..KM_VERSION_STATUS) -- for display purposes
 
