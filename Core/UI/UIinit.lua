@@ -15,8 +15,7 @@ function MainInterface:Initialize()
     -- create player row frames
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
     local playerRowData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
-    local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
-
+    
     -- create party row frames
     local maxPartySize = 4
     for i=1,maxPartySize,1 do
@@ -24,6 +23,9 @@ function MainInterface:Initialize()
       local partyRowDataFrames = MainInterface:CreatePartyDataFrame(partyRow)
       partyRow:Hide()
     end
+
+    -- create io score tally frames
+    local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 
     -- Create tabs
     local tabContents = partyContent
