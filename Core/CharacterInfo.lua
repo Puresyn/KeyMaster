@@ -41,12 +41,12 @@ function CharacterInfo:GetOwnedKey()
         -- No key but has Vault Ready
         if (C_MythicPlus.IsWeeklyRewardAvailable()) then
             mapid = 0
-            mapName = "In Vault"
+            mapName = KeyMasterLocals.CHARACTERINFO["KeyInVault"].text
             keystoneLevel = 0
             -- todo: Tell player to get their vault key
         else
             mapid = 0
-            mapName = "Ask Key Merchant"
+            mapName = KeyMasterLocals.CHARACTERINFO["AskMerchant"].text
             keystoneLevel = 0
             -- No Key Available, no vault available
             -- todo: Notify player (if max level) to go get a key from merchant

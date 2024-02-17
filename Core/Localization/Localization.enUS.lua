@@ -36,3 +36,7 @@ L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+
+L.CHARACTERINFO = {}
+L.CHARACTERINFO["KeyInVault"] = { name = "Key in Vault", text = "In Vault"}
+L.CHARACTERINFO["AskMerchant"] = { name = "Ask Key Merchant", text = "Ask Key Merchant"}
