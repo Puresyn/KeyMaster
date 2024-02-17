@@ -13,24 +13,25 @@ local Theme = KeyMaster.Theme
 local UnitData = KeyMaster.UnitData
 
 -- Global Variables
-KM_ADDON_NAME = "Key Master"
+KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
+KM_AUTOVERSION = '0.0.5' -- DO NOT Edit this line in any way, this is automated!
 KM_VERSION_MAJOR = 0 -- Single digit major version release number
-KM_VERSION_MINOR = 0.3 -- float value minor version release number
-KM_VERSION_STATUS = "alpha" -- "beta" or "release - for display and update notification purposes"
-KM_VERSION = tostringall("v"..KM_VERSION_MAJOR.."."..KM_VERSION_MINOR.."-"..KM_VERSION_STATUS) -- for display purposes
+KM_VERSION_MINOR = 0.5 -- float value minor version release number
+KM_VERSION_STATUS = KeyMasterLocals.BUILDALPHA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes"
+KM_VERSION = tostringall("v"..KM_AUTOVERSION.."-"..KM_VERSION_STATUS) -- for display purposes
 
 --------------------------------
 -- Slash Commands and command menu
 --------------------------------
 KeyMaster.Commands = {
-    ["show"] = KeyMaster.MainInterface.Toggle,
-    ["help"] = function() 
-        local defaultColor = select(4, ColorTheme:GetThemeColor("default")):upper()
-        local color = select(4, ColorTheme:GetThemeColor("themeFontColorYellow")):upper()
+    [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
+    [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
+        local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
+        local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         print("=====================")
         KeyMaster:Print("List of slash commands:")
-        KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."show|r - shows the main window.")
-        KeyMaster:Print("|cff"..defaultColor.."/km|r |cff"..color.."help|r - shows this menu.")
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
         print("=====================")
     end,
     -- Sample nested command line functions
@@ -90,7 +91,7 @@ end
 -- formats strings for end-user display in the chat box
 function KeyMaster:Print(...)
     local hex = select(4, Theme:GetThemeColor("default"))
-    local prefix = string.format("|cff%s%s|r", hex:upper(), "KeyMaster:");	
+    local prefix = string.format("|cff%s%s|r", hex:upper(), KeyMasterLocals.ADDONNAME..":");	
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
@@ -112,13 +113,13 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
 	end
 
     -- commands to be included in release
-    SLASH_KeyMaster1 = "/km"
-    SLASH_KeyMaster2 = "/keymaster"
+    --SLASH_KeyMaster1 = "/km"  -- Localized
+    --SLASH_KeyMaster2 = "/keymaster" -- Localized
     SlashCmdList.KeyMaster = HandleSlashCommands
     
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
-    KeyMaster:Print("Welcome back", "|cff"..hexColor..UnitName("player").."|r!")
+    KeyMaster:Print(KeyMasterLocals.WELCOMEMESSAGE, "|cff"..hexColor..UnitName("player").."|r"..KeyMasterLocals.EXCLIMATIONPOINT)
 
     -- Initialize UI - doing this here seems to break things,
     --MainInterface:Initialize()
