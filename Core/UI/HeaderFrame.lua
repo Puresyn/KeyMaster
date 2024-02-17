@@ -141,7 +141,7 @@ function MainInterface:CreateHeaderContent(parentFrame)
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 10, 10)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Key Master")
+    txtPlaceHolder:SetText(KM_ADDON_NAME)
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)

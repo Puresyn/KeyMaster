@@ -68,6 +68,17 @@ function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     return f
 end
 
+-- Find the last visible party member row
+function KeyMaster:FindLastVisiblePlayerRow()
+    for i=5, 1, -1 do
+        local lastrow = _G["KM_PlayerRow"..i]
+        if (lastrow and lastrow:IsShown()) then
+            return lastrow
+        end
+    end
+    return
+end
+
 function KeyMaster:GetTableLength(table)
     if table == nil then
         return 0

@@ -372,34 +372,146 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
     return temp_RowFrame
 end
 
-local updateInterval = 2.0; -- How often the keyMaster_Frame_Party_OnUpdate code will run (in seconds)
-local timeSinceLastUpdate
-local function keyMaster_Frame_Party_OnUpdate(self, elapsed)
-    timeSinceLastUpdate = timeSinceLastUpdate + elapsed; 	
+-- Party Frame Score Tally Footer
+function MainInterface:CreatePartyScoreTallyFooter()
+    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
+    if (not parentFrame) then
+        KeyMaster:Print("Error: Tally footer could not find a valid parent.")
+        KeyMaster:Print("--Action: [Skipped Creation]")
+        return
+    end
 
-    if (timeSinceLastUpdate > updateInterval) then
-        local unitData = UnitData:GetUnitDataByUnitId("player")
-        ViewModel:UpdateUnitFrameData("player", unitData)
+    local partyTallyFrame = CreateFrame("Frame", "PartyTallyFooter", parentFrame)
+    partyTallyFrame:SetWidth(parentFrame:GetWidth())
+    partyTallyFrame:SetHeight(25)
+    partyTallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
+    --[[ partyTallyFrame.texture = partyTallyFrame:CreateTexture()
+    partyTallyFrame.texture:SetAllPoints(partyTallyFrame)
+    partyTallyFrame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3) -- temporary bg color ]]
 
-        -- TODO: make this a for loop
-        if (UnitName("party1") ~= nil) then
-            local unitData = UnitData:GetUnitDataByUnitId("party1")
-            ViewModel:UpdateUnitFrameData("party1", unitData)      
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local prevMapId, prevAnchor
+    local firstItem = true
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local bolColHighlight = false
+    local partyColColor = {}
+    partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
+
+    for mapid, mapData in pairs(mapTable) do
+        bolColHighlight = not bolColHighlight -- alternate row highlighting
+        
+        local temp_Frame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
+        temp_Frame:ClearAllPoints()
+
+        -- Dynamicly set map data frame anchors
+        if (firstItem) then
+            temp_Frame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)
+        else
+            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
         end
-        if (UnitName("party2") ~= nil) then
-            local unitData = UnitData:GetUnitDataByUnitId("party2")
-            ViewModel:UpdateUnitFrameData("party2", unitData)
+
+        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12), partyTallyFrame:GetHeight())
+
+        if (not bolColHighlight) then
+            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
+        else
+            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3)
         end
-        if (UnitName("party3") ~= nil) then
-            local unitData = UnitData:GetUnitDataByUnitId("party3")
-            ViewModel:UpdateUnitFrameData("party3", unitData)
-        end
-        if (UnitName("party4") ~= nil) then
-            local unitData = UnitData:GetUnitDataByUnitId("party4")
-            ViewModel:UpdateUnitFrameData("party4", unitData)
-        end
-            
-        timeSinceLastUpdate = 0;
+
+        -- Map Total Tally
+        local tempText6 = temp_Frame:CreateFontString("KM_MapTallyScore"..mapid, "OVERLAY", "KeyMasterFontBig")
+        --tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM")
+        tempText6:SetAllPoints(temp_Frame)
+        local r, g, b, _ = Theme:GetThemeColor("color_TOPE")
+        tempText6:SetTextColor(r, g, b, 1)
+        tempText6:SetJustifyV("CENTER")
+        tempText6:SetText(2344)
+
+        firstItem = false
+        prevMapId = mapid
+    end
+    KeyMaster:CreateHLine(partyTallyFrame:GetWidth(), partyTallyFrame, "TOP", 4, 0)
+    print(mapTable)
+end
+
+-- Party member data assign
+function MainInterface:UpdateUnitFrameData(unitId)
+    if(unitId == nil) then 
+        print("ERROR: parameter unitId in function UpdateUnitFrameData cannot be empty.")
+        return
+    end
+
+    local playerData = UnitData:GetUnitDataByUnitId(unitId)
+    if(playerData == nil) then 
+        print("ERROR: 'playerData' in function UpdateUnitFrameData cannot be empty.")
+        return
+    end
+
+    local partyPlayer
+    if (unitId == "player") then
+        partyPlayer = 1
+    elseif (unitId == "party1") then
+        partyPlayer = 2
+    elseif (unitId == "party2") then
+        partyPlayer = 3
+    elseif (unitId == "party3") then
+        partyPlayer = 4
+    elseif (unitId == "party4") then
+        partyPlayer = 5
+    end
+    
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
+
+    local unitSpecialization = CharacterInfo:GetPlayerSpecialization(unitId)
+    local unitClass, _ = UnitClass(unitId)
+    --[[ local map = C_Map.GetBestMapForUnit("player")
+    local position = C_Map.GetPlayerMapPosition(map, "player")
+    local specClass = position:GetXY() ]]
+
+    -- Set Player Portrait
+    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
+    
+    -- Spec & Class
+    _G["KM_Player"..partyPlayer.."Class"]:SetText(unitSpecialization.." "..unitClass)
+    
+    -- Player Name
+    _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
+
+    -- Player Rating
+    _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
+
+    local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(playerData.mythicPlusRating) -- todo: cache this? but it is relevant to the client rating.
+    _G["KeyMaster_RatingScore"]:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
+    _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.
+    
+    -- Dungeon Key Information
+    local ownedKeyLevel
+    if (playerData.ownedKeyLevel == 0) then
+        ownedKeyLevel = ""
+    else 
+        ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
+    end
+    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
+
+    -- Dungeon Scores
+    for n, v in pairs(mapTable) do
+        -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
+        _G["KM_MapLevelT"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Tyrannical"].Level)
+        --_G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Tyrannical"].Score.."|r")
+        _G["KM_MapLevelF"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Fortified"].Level)
+        --_G["KM_MapScoreF"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
+        _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
+    end
+    
+    if (not playerData.hasAddon) then
+        _G["KM_MapDataLegend"..partyPlayer]:Hide()
+        _G["KM_NoAddon"..partyPlayer]:Show()
+        _G["KM_PlayerRow"..partyPlayer]:Show()
     end
 end
 
