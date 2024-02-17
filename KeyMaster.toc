@@ -9,10 +9,11 @@
 ## SavedVariables: KeyMaster_DB
 
 Embeds.xml
-Core\UnitData.lua
 Core\CharacterInfo.lua
-Core\Coms.lua
+Core\UI\ViewModel.lua
 Core\UI\MainInterface.lua
+Core\UnitData.lua
+Core\Coms.lua
 Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua
 Core\UI\HeaderFrame.lua

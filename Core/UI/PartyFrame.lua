@@ -4,6 +4,7 @@ local DungeonTools = KeyMaster.DungeonTools
 local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
 local UnitData = KeyMaster.UnitData
+local ViewModel = KeyMaster.ViewModel
 
 local function portalButton_buttonevent(self, event)
    -- MainInterface:Toggle(); -- commented out because it needs a unit is spell casting check
@@ -514,23 +515,20 @@ function MainInterface:UpdateUnitFrameData(unitId)
     end
 end
 
-function MainInterface:CreatePartyRowsFrame(parentFrame)
-    local a, window, gfm, frameTitle, txtPlaceHolder, temp_frame
-    frameTitle = "Party Information:" -- set title
+function MainInterface:CreatePartyRowsFrame(parentFrame)    
+    -- if it already exists, don't make another one
+    if _G["KeyMaster_Frame_Party"] then
+        return 
+    end
 
-    -- relative parent frame of this frame
-    -- todo: the next 2 lines may be reduntant?
-    a = parentFrame
-    window = _G["KeyMaster_Frame_Party"]
+    local gfm = 10 -- group frame margin
 
-    gfm = 10 -- group frame margin
-
-    if window then return window end -- if it already exists, don't make another one
-
-    temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", a)
-    temp_frame:SetSize(a:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", a, "TOPLEFT", gfm, -55)
-
+    local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
+    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -55)
+    --temp_frame:SetScript("OnUpdate", keyMaster_Frame_Party_OnUpdate)
+    timeSinceLastUpdate = 0
+    
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 20, Flags)
