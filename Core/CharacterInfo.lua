@@ -122,6 +122,17 @@ function CharacterInfo:GetPlayerSpecialization(unitId)
     return ""
 end
 
+-- Function gets only the available data from a unit e.g.; player or party1-4 that is available from Blizzards API
+function CharacterInfo:GetUnitInfo(unitId)
+    local unitData = {}
+    unitData.GUID = UnitGUID(unitId)
+    unitData.name = UnitName(unitId)
+    unitData.unidId = unitId
+    unitData.hasAddon = false
+
+    return unitData
+end
+
 function CharacterInfo:GetMyCharacterInfo()
     local myCharacterInfo = {}
     local keyId, _, keyLevel = CharacterInfo:GetOwnedKey()

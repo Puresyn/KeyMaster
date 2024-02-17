@@ -92,3 +92,16 @@ function UnitData:DeleteAllUnitData()
         end
     end
 end
+
+-- Maps all PlayerRows to an "default" set of data available by ONLY blizzard API
+function UnitData:MapPartyUnitData()
+    for i=1,4,1 do
+        local currentUnitId = "party"..i
+        if (UnitName(currentUnitId) ~= nil) then
+            local unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)
+            UnitData:SetUnitData(unitData)  
+        else
+            _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
+        end
+    end
+end

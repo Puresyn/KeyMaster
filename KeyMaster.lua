@@ -155,18 +155,7 @@ local function onEvent_PartyChanges(self, event, ...)
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerUnit, "PARTY", nil)
             -- process party1-4 with min. data
-            for i=1,4,1 do
-                local currentUnitId = "party"..i
-                if (UnitName(currentUnitId) ~= nil) then
-                    local emptyUnitData = {}
-                    emptyUnitData.GUID = UnitGUID(currentUnitId)
-                    emptyUnitData.name = UnitName(currentUnitId)
-                    emptyUnitData.hasAddon = false
-                    UnitData:SetUnitData(emptyUnitData)  
-                else
-                    _G["KM_PlayerRow"..(i+1)]:Hide()
-                end
-            end
+            UnitData:MapPartyUnitData()
         end
     end
 end
