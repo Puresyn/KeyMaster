@@ -55,7 +55,7 @@ local function createAffixFrames(parentFrame)
         myText:SetFont(path, 9, flags)
         myText:SetPoint("LEFT", -12, -9)
         myText:SetTextColor(1,1,1)
-        myText:SetJustifyH("LEFT");
+        myText:SetJustifyH("LEFT")
         myText:SetText(affixName)
         myText:SetRotation(math.pi/2)
 

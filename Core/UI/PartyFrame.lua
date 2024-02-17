@@ -64,7 +64,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
     -- Dungeon abbr text
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    Path, _, Flags = txtPlaceHolder:GetFont()
+    local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 12, Flags)
     txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
     txtPlaceHolder:SetTextColor(1, 1, 1)
@@ -121,6 +121,19 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
         temp_frame:SetAttribute("portalSpellName", portalSpellName)
     end
+
+    -- Group Key Level Frame
+    local groupKey = CreateFrame("Frame", "Dungeon_"..mapId.."_HeaderKeyLevel", temp_frame)
+    groupKey:SetSize(40, 15)
+    groupKey:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
+    local keyText = groupKey:CreateFontString("Dungeon_"..mapId.."_HeaderKeyLevelText", "OVERLAY", "KeyMasterFontNormal")
+    Path, _, Flags = txtPlaceHolder:GetFont()
+    keyText:SetFont(Path, 12, Flags)
+    keyText:SetPoint("TOPLEFT", 3, 0)
+    keyText:SetJustifyH("LEFT")
+    keyText:SetTextColor(1, 1, 1)
+    --keyText:SetText(26) -- demonstration
+
 end
 
 function MainInterface:CreatePartyDataFrame(parentFrame)
