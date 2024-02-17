@@ -94,7 +94,8 @@ function KeyMaster:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
-local function OnInitilize(self, event, name, ...)
+-- Addon Loading Event
+local function OnEvent_AddonLoaded(self, event, name, ...)
     if (name ~= "KeyMaster") then return end
     --------------------------------
     -- Register Slash Commands:
@@ -123,27 +124,77 @@ local function OnInitilize(self, event, name, ...)
     --MainInterface:Initialize()
 end
 
--- Event Registration
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
-events:SetScript("OnEvent", OnInitilize)
+events:SetScript("OnEvent", OnEvent_AddonLoaded)
 
-function onEvent_PartyChanges(self, event, ...)
+-- Party Changes Events
+local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
     if (event == "GROUP_JOINED") then
         local partySize, partyId = ...
         local playerData = UnitData:GetUnitDataByUnitId("player")
-        --local playerData = CharacterInfo:GetMyCharacterInfo()
-        
-        MyAddon:Transmit(playerData, "PARTY", nil)        
+                
+        -- Send data to party members
+        MyAddon:Transmit(playerData, "PARTY", nil)
     elseif (event == "GROUP_LEFT") then
         local partySize, partyId = ...
-        UnitData:DeleteAllPartyData()
+        UnitData:DeleteAllUnitData()
+
+        -- hide all party frames
+        -- if _G["KeyMaster_MainFrame"] ~= nil then
+        --     KeyMaster.ViewModel:HideAllPartyFrame()
+        -- end
+        
     elseif (event == "GROUP_ROSTER_UPDATE") then
-        -- triggers when in party and roster changes (NOT LEAVING OR JOINING)
-        -- Refresh Party Frames
-        --MyAddon:Transmit(playerInfo, "PARTY", nil)
+        local inGroup = UnitInRaid("player") or IsInGroup()
+        if inGroup and GetNumGroupMembers() >= 2 then
+            -- destroy all party data
+            UnitData:DeleteAllUnitData()
+            -- update self data
+            local playerUnit = UnitData:GetUnitDataByUnitId("player")
+            -- Transmit
+            MyAddon:Transmit(playerUnit, "PARTY", nil)
+
+            -- update party units
+            if (UnitName("party1") ~= nil) then
+                local emptyUnitData = {}
+                emptyUnitData.GUID = UnitGUID("party1")
+                emptyUnitData.name = UnitName("party1")
+                emptyUnitData.hasAddon = false
+                UnitData:SetUnitData(emptyUnitData)               
+            else
+                _G["KM_PlayerRow2"]:Hide()
+            end
+            if (UnitName("party2") ~= nil) then
+                local emptyUnitData = {}
+                emptyUnitData.GUID = UnitGUID("party2")
+                emptyUnitData.name = UnitName("party2")
+                emptyUnitData.hasAddon = false
+                UnitData:SetUnitData(emptyUnitData)               
+            else
+                _G["KM_PlayerRow3"]:Hide()
+            end
+            if (UnitName("party3") ~= nil) then
+                local emptyUnitData = {}
+                emptyUnitData.GUID = UnitGUID("party3")
+                emptyUnitData.name = UnitName("party3")
+                emptyUnitData.hasAddon = false
+                UnitData:SetUnitData(emptyUnitData)               
+            else
+                _G["KM_PlayerRow4"]:Hide()
+            end
+            if (UnitName("party4") ~= nil) then
+                local emptyUnitData = {}
+                emptyUnitData.GUID = UnitGUID("party4")
+                emptyUnitData.name = UnitName("party4")
+                emptyUnitData.hasAddon = false
+                UnitData:SetUnitData(emptyUnitData)               
+            else
+                _G["KM_PlayerRow5"]:Hide()
+            end
+        end
     end
 end
 
@@ -153,6 +204,7 @@ partyEvents:RegisterEvent("GROUP_LEFT")
 partyEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
 partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
 
+-- Player Entering World Event
 local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if (event ~= "PLAYER_ENTERING_WORLD") then return end
     
@@ -165,11 +217,18 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         KeyMaster:Print("C_MythicPlus requests sent.")
     end
 
+    -- Create UI frames
+    MainInterface:Initialize()
+
     C_Timer.After(1, function()
-        -- Get player information and store it
+        -- Get player data
         local playerData = CharacterInfo:GetMyCharacterInfo()
+
+        -- Stores Data AND shows associated ui frame
         UnitData:SetUnitData(playerData)
     end)  
+
+    
 end
 
 local playerEnterEvents = CreateFrame("Frame")

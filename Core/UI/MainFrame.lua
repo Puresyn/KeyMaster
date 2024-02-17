@@ -1,10 +1,6 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 
-local function mainFrame_OnLoad(self)
-    print("mainFrame Loaded...")
-end
-
 function MainInterface:CreateMainFrame()
     local mainFrame = CreateFrame("Frame", "KeyMaster_MainFrame", UIParent, "MainFrameTemplate");
     mainFrame:ClearAllPoints(); -- Fixes SetPoint bug thus far.
@@ -17,7 +13,6 @@ function MainInterface:CreateMainFrame()
         insets = {left = 4, right = 4, top = 4, bottom = 4}})
 
     mainFrame:SetBackdropColor(0,0,0,1);
-    mainFrame:SetScript("OnLoad", mainFrame_OnLoad)
 
     mainFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
     mainFrame.closeBtn:SetPoint("TOPRIGHT")

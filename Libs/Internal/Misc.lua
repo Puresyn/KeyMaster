@@ -67,3 +67,15 @@ function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     f.t:SetColorTexture(1, 1, 1, 0.5)
     return f
 end
+
+function KeyMaster:GetTableLength(table)
+    if table == nil then
+        return 0
+    end
+    local count = 0
+    for i,v in pairs(table) do
+        count = count + 1
+    end
+
+    return count
+end

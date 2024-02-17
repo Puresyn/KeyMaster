@@ -1,10 +1,6 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
-local CharacterInfo = KeyMaster.CharacterInfo
-local UnitData = KeyMaster.UnitData
-
--- globals
-KeyMaster_UpdateInterval = 2.0; -- How often the KeyMaster_OnUpdate code will run (in seconds)
+local ViewModel = KeyMaster.ViewModel
 
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
@@ -16,9 +12,11 @@ function MainInterface:Initialize()
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
 
+    -- create player row frames
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
     local playerRowData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
 
+    -- create party row frames
     local maxPartySize = 4
     for i=1,maxPartySize,1 do
       local partyRow = MainInterface:CreatePartyMemberFrame("party"..i, _G["KM_PlayerRow"..i])
@@ -48,36 +46,8 @@ function MainInterface:Toggle()
     local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
 
     -- Maps Frame UI Elements to Data
-    MainInterface:UpdateUnitFrameData("player")
+    local unitData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+    ViewModel:UpdateUnitFrameData("player", unitData)
 
     mainUI:SetShown(not mainUI:IsShown())
 end
-
---------------------------------
--- Global data refresh timer,       
--- This only runs when the frame
--- it is attached to is visible.
--- Currently attached to the main
--- interface panel in
--- MainFrameTemplate.xml onLoad
---------------------------------
-
-function KeyMaster_OnUpdate(self, elapsed)
-  self.TimeSinceLastUpdate = self.TimeSinceLastUpdate + elapsed; 	
-
-  if (self.TimeSinceLastUpdate > KeyMaster_UpdateInterval) then
-
-    MainInterface:UpdateUnitFrameData("player")
-    
-    self.TimeSinceLastUpdate = 0;
-  end
-end
-
--- Close addon window any time we cast a spell -- DOES NOT WORK BECAUSE THIS FUNCTION IS NOT SECURE
---[[ function MainInterface:hideOnSpellCast()
-    local mainUI = _G["KeyMaster_MainFrame"]
-    if (mainUI) then 
-        mainUI:Hide()
-    end
-end
-hooksecurefunc("CastSpellByName", MainInterface:hideOnSpellCast()) ]]

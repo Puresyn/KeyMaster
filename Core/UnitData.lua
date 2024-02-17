@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
+local ViewModel = KeyMaster.ViewModel
 
 local unitInformation = {}
 
@@ -35,6 +36,19 @@ function UnitData:SetUnitData(unitData)
     unitInformation[unitData.GUID] = unitData
 
     KeyMaster:Print("Stored data for "..unitData.name)
+    ViewModel:UpdateUnitFrameData(unitId, unitData)
+    ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
+end
+
+function UnitData:SetUnitDataUnitPosition(name, newUnitId)
+    local unitData = UnitData:GetUnitDataByName(name)
+    if unitData == nil then
+        KeyMaster:Print("Cannot update "..name.." position, because a unit cannot be found by that name.")
+        return
+    end
+
+    unitInformation[unitData.GUID].unitId = newUnitId
+    return unitInformation[unitData.GUID]
 end
 
 function UnitData:GetUnitDataByUnitId(unitId)
@@ -51,10 +65,19 @@ function UnitData:GetUnitDataByGUID(playerGUID)
     return unitInformation[playerGUID]
 end
 
+function UnitData:GetUnitDataByName(name)
+    for guid, tableData in pairs(unitInformation) do
+        if (tableData.name == name) then
+           return unitInformation[guid]
+       end
+   end
+end
+
 function UnitData:DeleteUnitDataByUnitId(unitId)
     local data = UnitData:GetUnitDataByUnitId(unitId)
     if (data ~= nil) then
         UnitData:DeleteUnitDataByGUID(data.GUID)
+        ViewModel:HidePartyRow(unitId)
     end
 end
 
@@ -62,10 +85,10 @@ function UnitData:DeleteUnitDataByGUID(playerGUID)
     unitInformation[playerGUID] = nil
 end
 
-function UnitData:DeleteUnitDataByUnitId(unitId)
-
-end
-
-function UnitData:DeleteAllPartyData()
-
+function UnitData:DeleteAllUnitData()
+    for guid, unitData in pairs(unitInformation) do
+        if unitData.unitId ~= "player" then
+            unitInformation[guid] = nil
+        end
+    end
 end
