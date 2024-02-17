@@ -26,17 +26,17 @@ function MainInterface:Initialize()
 
     -- Create tabs
     local tabContents = partyContent
-    local tab = MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
+    local partyTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
 
     -- testing multiple tabs
-    local tempFrame = CreateFrame("Frame", "KeyMaster_TempFrame", mainFrame);
+    local tempFrame = _G["KeyMaster_TempFrame"] or CreateFrame("Frame", "KeyMaster_TempFrame", mainFrame);
     tempFrame:SetSize(mainFrame:GetWidth(), mainFrame:GetHeight())
     tempFrame:SetAllPoints(true)
     tempFrame:Hide()
 
-    local tab2 = MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
+    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
 
-    Tab_OnClick(tab)
+    Tab_OnClick(partyTab)
 
     return mainFrame
 end
