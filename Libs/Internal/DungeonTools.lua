@@ -15,7 +15,7 @@ local instanceAbbrTable = {
     [199] = "BRH",      -- Black Rook Hold
     [198] = "DHT",      -- Darkheart Thicket
     [168] = "EB",       -- The Everbloom
-    [456] = "ToT"       -- Throne of Tides
+    [456] = "ToTT"       -- Throne of the Tides
 }
 
 --------------------------------
