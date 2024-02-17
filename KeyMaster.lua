@@ -145,51 +145,27 @@ local function onEvent_PartyChanges(self, event, ...)
         KeyMaster.ViewModel:HideAllPartyFrame()        
         
     elseif (event == "GROUP_ROSTER_UPDATE") then
+        -- The following resets the party data then repopulates it.
         local inGroup = UnitInRaid("player") or IsInGroup()
         if inGroup and GetNumGroupMembers() >= 2 then
             -- destroy all party data
             UnitData:DeleteAllUnitData()
-            -- update self data
+            -- fetch self data
             local playerUnit = UnitData:GetUnitDataByUnitId("player")
-            -- Transmit
+            -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerUnit, "PARTY", nil)
-
-            -- update party units
-            if (UnitName("party1") ~= nil) then
-                local emptyUnitData = {}
-                emptyUnitData.GUID = UnitGUID("party1")
-                emptyUnitData.name = UnitName("party1")
-                emptyUnitData.hasAddon = false
-                UnitData:SetUnitData(emptyUnitData)               
-            else
-                _G["KM_PlayerRow2"]:Hide()
-            end
-            if (UnitName("party2") ~= nil) then
-                local emptyUnitData = {}
-                emptyUnitData.GUID = UnitGUID("party2")
-                emptyUnitData.name = UnitName("party2")
-                emptyUnitData.hasAddon = false
-                UnitData:SetUnitData(emptyUnitData)               
-            else
-                _G["KM_PlayerRow3"]:Hide()
-            end
-            if (UnitName("party3") ~= nil) then
-                local emptyUnitData = {}
-                emptyUnitData.GUID = UnitGUID("party3")
-                emptyUnitData.name = UnitName("party3")
-                emptyUnitData.hasAddon = false
-                UnitData:SetUnitData(emptyUnitData)               
-            else
-                _G["KM_PlayerRow4"]:Hide()
-            end
-            if (UnitName("party4") ~= nil) then
-                local emptyUnitData = {}
-                emptyUnitData.GUID = UnitGUID("party4")
-                emptyUnitData.name = UnitName("party4")
-                emptyUnitData.hasAddon = false
-                UnitData:SetUnitData(emptyUnitData)               
-            else
-                _G["KM_PlayerRow5"]:Hide()
+            -- process party1-4 with min. data
+            for i=1,4,1 do
+                local currentUnitId = "party"..i
+                if (UnitName(currentUnitId) ~= nil) then
+                    local emptyUnitData = {}
+                    emptyUnitData.GUID = UnitGUID(currentUnitId)
+                    emptyUnitData.name = UnitName(currentUnitId)
+                    emptyUnitData.hasAddon = false
+                    UnitData:SetUnitData(emptyUnitData)  
+                else
+                    _G["KM_PlayerRow"..(i+1)]:Hide()
+                end
             end
         end
     end
@@ -225,7 +201,19 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         UnitData:SetUnitData(playerData)
     end)  
 
-    
+    -- process party
+    for i=1,4,1 do
+        local currentUnitId = "party"..i
+        if (UnitName(currentUnitId) ~= nil) then
+            local emptyUnitData = {}
+            emptyUnitData.GUID = UnitGUID(currentUnitId)
+            emptyUnitData.name = UnitName(currentUnitId)
+            emptyUnitData.hasAddon = false
+            UnitData:SetUnitData(emptyUnitData)  
+        else
+            _G["KM_PlayerRow"..(i+1)]:Hide()
+        end
+    end
 end
 
 local playerEnterEvents = CreateFrame("Frame")
