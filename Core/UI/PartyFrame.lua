@@ -7,7 +7,7 @@ local UnitData = KeyMaster.UnitData
 local ViewModel = KeyMaster.ViewModel
 
 local function portalButton_buttonevent(self, event)
-   MainInterface:Toggle();
+   -- MainInterface:Toggle(); -- commented out because it needs a unit is spell casting check
 end
 
 local function portalButton_tooltipon(self, event)
@@ -18,30 +18,27 @@ end
 
 local function portalButton_mouseover(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
-    local start, _, _ = GetSpellCooldown(spellNameToCheckCooldown);
+    local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
     if (start == 0) then
-        self:GetParent().textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portal-texture1", false)
-        --ActionButton_ShowOverlayGlow(self:GetParent())
+        local animFrame = self:GetParent():GetAttribute("portalFrame")
+        animFrame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portal-texture1", false)
+        animFrame.animg:Play()
+    else
+        local cdFrame = self:GetParent():GetAttribute("portalCooldownFrame")
+        cdFrame:SetCooldown(start ,dur)
     end
 
-    --start, duration, enabled = GetSpellCooldown(spellName or spellID or slotID, "bookType");
 end
 
 local function portalButton_mouseoout(self, event, ...)
-    self:GetParent().textureportal:SetTexture()
-    --ActionButton_HideOverlayGlow(self:GetParent())
+    local animFrame = self:GetParent():GetAttribute("portalFrame")
+    animFrame.textureportal:SetTexture()
+    animFrame.animg:Stop()
+    local cdFrame = self:GetParent():GetAttribute("portalCooldownFrame")
+    cdFrame:SetCooldown(0 ,0)
 end
 
 local function createPartyDungeonHeader(anchorFrame, mapId)
-    --[[ name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v)
-       mapTable[id] = {
-          ["name"] = name,
-          ["timeLimit"] = timeLimit,
-          ["texture"] = texture,
-          ["backgroundTexture"] = backgroundTexture
-       } ]]
-
-    --DEBUG
     if not anchorFrame and mapId then 
         print("No valid refrences passed to createPartyDungeonHeader()")
     end
@@ -61,42 +58,58 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     local iconSizey = anchorFrame:GetWidth() - 10
     local mapAbbr = DungeonTools:GetDungeonNameAbbr(mapId)
 
+    -- Dungeon Header Icon Frame
     local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
-
-    --temp_frame:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight()) --- ((_G["KM_Portrait1"]:GetWidth())/2))
-    temp_frame:SetSize(iconSizex, iconSizey) -- second width refrence is just making this a square
+    temp_frame:SetSize(iconSizex, iconSizey)
     temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 4)
 
+    -- Dungeon abbr text
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    Path, _, Flags = txtPlaceHolder:GetFont()
+    local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 12, Flags)
     txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText(mapAbbr)
 
+    -- Dungeon Abbr background
     temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 3)
-    --temp_frame.texture:SetAllPoints(temp_frame)
     temp_frame.texture:SetPoint("BOTTOM", temp_frame, 0, 0)
     temp_frame.texture:SetSize(temp_frame:GetWidth(), 16)
-    temp_frame.texture:SetColorTexture(0, 0, 0, 0.7) -- make names more ledegible 
+    temp_frame.texture:SetColorTexture(0, 0, 0, 0.7)
 
+    -- Dungeon image thumbnail
     temp_frame.texturemap = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
     temp_frame.texturemap:SetAllPoints(temp_frame)
     temp_frame.texturemap:SetTexture(mapsTable[mapId].texture)
     temp_frame:SetAttribute("dungeonMapId", mapId)
     temp_frame:SetAttribute("texture", mapsTable[mapId].texture)
 
-    temp_frame.textureportal = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
-    temp_frame.textureportal:SetAllPoints(temp_frame)
-    --temp_frame.textureportal:SetTexture(mapsTable[mapId].texture)
+    -- Portal Animation
+    local anim_frame = CreateFrame("Frame", "portalTexture"..mapAbbr, temp_frame)
+    anim_frame:SetSize(35, 35)
+    anim_frame:SetPoint("CENTER", temp_frame, "CENTER", 0, 8)
+    anim_frame.textureportal = anim_frame:CreateTexture(nil, "BACKGROUND",nil, 2)
+    anim_frame.textureportal:SetAllPoints(anim_frame)
+    anim_frame.textureportal:SetAlpha(0.8)
+    anim_frame.animg = anim_frame:CreateAnimationGroup()
+    local a1 = anim_frame.animg:CreateAnimation("Rotation")
+    a1:SetDegrees(-360)
+    a1:SetDuration(2)
+    anim_frame.animg:SetLooping("REPEAT")
+    temp_frame:SetAttribute("portalFrame", anim_frame)
 
-    -- Add clickable portal spell casting to dungeon texture frames
+    -- Portal Cooldown
+    local portalCooldownFrame = CreateFrame("Cooldown", "portalCooldown", temp_frame, "CooldownFrameTemplate")
+    anim_frame:SetAllPoints(temp_frame)
+    temp_frame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
+
+
+    -- Add clickable portal spell casting to dungeon texture frames if they have the spell
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
     
-    if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it.
+    if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
     local pButton
-        pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate") -- ActionButtonTemplate, 
-        --pButton.cooldown = CreateFrame("Cooldown","portal_button2"..mapId.."Cooldown",pButton,"CooldownFrameTemplate")
+        pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
         pButton:SetAttribute("type", "spell")
         pButton:SetAttribute("spell", portalSpellName)
         pButton:RegisterForClicks("AnyDown")
@@ -108,8 +121,20 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
         pButton:SetScript("OnLeave", portalButton_mouseoout)
 
         temp_frame:SetAttribute("portalSpellName", portalSpellName)
-
     end
+
+    -- Group Key Level Frame
+    local groupKey = CreateFrame("Frame", "Dungeon_"..mapId.."_HeaderKeyLevel", temp_frame)
+    groupKey:SetSize(40, 15)
+    groupKey:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
+    local keyText = groupKey:CreateFontString("Dungeon_"..mapId.."_HeaderKeyLevelText", "OVERLAY", "KeyMasterFontNormal")
+    Path, _, Flags = txtPlaceHolder:GetFont()
+    keyText:SetFont(Path, 12, Flags)
+    keyText:SetPoint("TOPLEFT", 3, 0)
+    keyText:SetJustifyH("LEFT")
+    keyText:SetTextColor(1, 1, 1)
+    --keyText:SetText(26) -- demonstration
+
 end
 
 function MainInterface:CreatePartyDataFrame(parentFrame)
@@ -162,7 +187,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Owned Key
     tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 4, 4)
+    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
 
     -- Player Rating
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
