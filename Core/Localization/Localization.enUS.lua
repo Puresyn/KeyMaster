@@ -10,6 +10,8 @@ L.BUILDBETA = "beta"
 L.BUILDALPHA = "alpha"
 L.WELCOMEMESSAGE = "Welcome back"
 L.EXCLIMATIONPOINT = "!"
+L.THISWEEKSAFFIXES = "This Week\'s Affixes"
+L.YOURRATING = "Your Rating"
 
 L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}

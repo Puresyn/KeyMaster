@@ -78,7 +78,7 @@ local function createAffixFrames(parentFrame)
             temp_headertxt:SetFont(path, 14, flags)
             temp_headertxt:SetPoint("LEFT", 0, 0)
             temp_headertxt:SetTextColor(1,1,1)
-            temp_headertxt:SetText("This Week\'s Affixes:")
+            temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES..":")
         end
 
     end
@@ -97,7 +97,7 @@ local function createHeaderRating(parentFrame)
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 12, Flags)
     mythicRatingPreText:SetPoint("CENTER")
-    mythicRatingPreText:SetText("Your Rating:")
+    mythicRatingPreText:SetText(KeyMasterLocals.YOURRATING..":")
 
     mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
