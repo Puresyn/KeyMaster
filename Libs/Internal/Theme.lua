@@ -186,6 +186,70 @@ local Colors = {
     }
 }
 
+local theme_Key_Master = {
+    BRAND = {
+        r = 1,
+        g = 0.353,
+        b = 0,
+        hex = "ff5a00"
+    },
+    ENGINEERINGORANGE = {
+        r = 0,
+        g = 0,
+        b = 0,
+        hex = "d000000"
+    },
+    SELECTIVEYELLOW = {
+        r = 0,
+        g = 0,
+        b = 0,
+        hex = "ffba08"
+    },
+    STEELBLUE = {
+        r = 0,
+        g = 0,
+        b = 0,
+        hex = "3f88c5"
+    },
+    PRUSSIANBLUE = {
+        r = 0,
+        g = 0,
+        b = 0,
+        hex = "032b43"
+    },
+    PINEGREEN = {
+        r = 0,
+        g = 0,
+        b = 0,
+        hex = "136f63"
+    },
+    COLUMNHIGHLIGHT = {
+        r = 0.8,
+        g = 0.8,
+        b = 0.8,
+        hex = "cccccc"
+    },
+    ROWHIGHLIGHT = {
+        r = 0.8,
+        g = 0.8,
+        b = 0.8,
+        hex = "cccccc"
+    },
+    CURRENTWEEK = {
+        r = 0.647,
+        g = 1,
+        b = 0,
+        hex = "a5ff00"
+    },
+    OFFWEEK = {
+        r = 0.53,
+        g = 0.62,
+        b = 0.62,
+        hex = "889d9d"
+
+    }
+}
+
 function Theme:GetThemeColor(colorName)
 	local c = Colors[colorName];
 	return c.r, c.g, c.b, c.hex
