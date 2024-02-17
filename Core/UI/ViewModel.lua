@@ -22,8 +22,8 @@ function ViewModel:HidePartyRow(unitId)
 end
 
 function ViewModel:HideAllPartyFrame()
-    for unitId, frameName in pairs(partyFrameLookup) do
-        ViewModel:HidePartyRow(unitId)
+    for i=1,4,1 do
+        _G[partyFrameLookup["party"..i]]:Hide()
     end
 end
 

@@ -139,13 +139,10 @@ local function onEvent_PartyChanges(self, event, ...)
         -- Send data to party members
         MyAddon:Transmit(playerData, "PARTY", nil)
     elseif (event == "GROUP_LEFT") then
-        local partySize, partyId = ...
+        --local partySize, partyId = ...
+        
         UnitData:DeleteAllUnitData()
-
-        -- hide all party frames
-        -- if _G["KeyMaster_MainFrame"] ~= nil then
-        --     KeyMaster.ViewModel:HideAllPartyFrame()
-        -- end
+        KeyMaster.ViewModel:HideAllPartyFrame()        
         
     elseif (event == "GROUP_ROSTER_UPDATE") then
         local inGroup = UnitInRaid("player") or IsInGroup()
