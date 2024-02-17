@@ -20,7 +20,7 @@ end
 --------------------------------
 local function createAffixFrames(parentFrame)
     if (parentFrame == nil) then 
-        KeyMaster:Print("Parameter Null: No parent frame passed to CreateAffixFrames function.")
+        KeyMaster:Print("Error: Parameter Null - No parent frame passed to CreateAffixFrames function.")
         return
     end
     
@@ -33,12 +33,12 @@ local function createAffixFrames(parentFrame)
 
         local affixName = weekData[i].name
         local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostringall(i), parentFrame)
-        temp_frame:SetSize(40, 40)
+        temp_frame:SetSize(50, 50)
         if (i == 1) then
-            temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 350, -30)
+            temp_frame:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT", 270, 4)
         else
             local a = i - 1
-            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostringall(a), "TOPRIGHT", 14, 0)
+            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostringall(a), "TOPRIGHT", 20, 0)
         end
         
         -- Affix Icon
@@ -47,18 +47,33 @@ local function createAffixFrames(parentFrame)
         tex:SetTexture(weekData[i].filedataid)
         
         -- Affix Name
-        local myText = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+        local affixNameFrame = CreateFrame("Frame", nil, temp_frame)
+        affixNameFrame:SetSize(60, 15)
+        affixNameFrame:SetPoint("BOTTOMLEFT", temp_frame, "BOTTOMLEFT")
+        local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
         local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 11, flags)
-        myText:SetPoint("CENTER", 0, -30)
+        myText:SetFont(path, 9, flags)
+        myText:SetPoint("LEFT", -12, -9)
         myText:SetTextColor(1,1,1)
+        myText:SetJustifyH("LEFT");
         myText:SetText(affixName)
+        myText:SetRotation(math.pi/2)
+
+        -- Affix name background
+        local affixBGFrame = CreateFrame("Frame", nil, temp_frame)
+        affixBGFrame:SetFrameLevel(affixBGFrame:GetParent():GetFrameLevel()-1)
+        affixBGFrame:SetSize(26, temp_frame:GetHeight())
+        affixBGFrame:SetPoint("BOTTOMRIGHT", temp_frame, "BOTTOMLEFT", 10, 0)
+        affixBGFrame.texture = affixBGFrame:CreateTexture(nil, "BACKGROUND",nil)
+        affixBGFrame.texture:SetAllPoints(affixBGFrame)
+        affixBGFrame.texture:SetColorTexture(0, 0, 0, 0.7)
+        --affixBGFrame.texture:SetPoint("LEFT", -20, -10)
 
         -- create a title and set it to the first affix's frame
         if (i == 1) then
             local temp_header = CreateFrame("Frame", "KeyMaster_AffixFrameTitle", temp_frame)
             temp_header:SetSize(168, 20)
-            temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -4, 0)
+            temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -16, 0)
             local temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
             temp_headertxt:SetFont(path, 14, flags)
             temp_headertxt:SetPoint("LEFT", 0, 0)
@@ -75,9 +90,9 @@ end
 local function createHeaderRating(parentFrame)
     
     local ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", parentFrame)
-    ratingPanel:SetWidth(300)
+    ratingPanel:SetWidth(150)
     ratingPanel:SetHeight(13)
-    ratingPanel:SetPoint("TOPRIGHT", -2, -30)
+    ratingPanel:SetPoint("TOPRIGHT", -4, -50)
     local mythicRatingPreText = ratingPanel:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 12, Flags)
