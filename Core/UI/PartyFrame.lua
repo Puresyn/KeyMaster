@@ -371,6 +371,72 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
     return temp_RowFrame
 end
 
+-- Party Frame Score Tally Footer
+function MainInterface:CreatePartyScoreTallyFooter()
+    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
+    if (not parentFrame) then
+        KeyMaster:Print("Error: Tally footer could not find a valid parent.")
+        KeyMaster:Print("--Action: [Skipped Creation]")
+        return
+    end
+
+    local partyTallyFrame = CreateFrame("Frame", "PartyTallyFooter", parentFrame)
+    partyTallyFrame:SetWidth(parentFrame:GetWidth())
+    partyTallyFrame:SetHeight(25)
+    partyTallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
+    --[[ partyTallyFrame.texture = partyTallyFrame:CreateTexture()
+    partyTallyFrame.texture:SetAllPoints(partyTallyFrame)
+    partyTallyFrame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3) -- temporary bg color ]]
+
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local prevMapId, prevAnchor
+    local firstItem = true
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local bolColHighlight = false
+    local partyColColor = {}
+    partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
+
+    for mapid, mapData in pairs(mapTable) do
+        bolColHighlight = not bolColHighlight -- alternate row highlighting
+        
+        local temp_Frame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
+        temp_Frame:ClearAllPoints()
+
+        -- Dynamicly set map data frame anchors
+        if (firstItem) then
+            temp_Frame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)
+        else
+            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
+        end
+
+        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12), partyTallyFrame:GetHeight())
+
+        if (not bolColHighlight) then
+            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
+        else
+            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture:SetAllPoints(temp_Frame)
+            temp_Frame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3)
+        end
+
+        -- Map Total Tally
+        local tempText6 = temp_Frame:CreateFontString("KM_MapTallyScore"..mapid, "OVERLAY", "KeyMasterFontBig")
+        --tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM")
+        tempText6:SetAllPoints(temp_Frame)
+        local r, g, b, _ = Theme:GetThemeColor("color_TOPE")
+        tempText6:SetTextColor(r, g, b, 1)
+        tempText6:SetJustifyV("CENTER")
+        tempText6:SetText(2344)
+
+        firstItem = false
+        prevMapId = mapid
+    end
+    KeyMaster:CreateHLine(partyTallyFrame:GetWidth(), partyTallyFrame, "TOP", 4, 0)
+    print(mapTable)
+end
+
 -- Party member data assign
 function MainInterface:UpdateUnitFrameData(unitId)
     if(unitId == nil) then 

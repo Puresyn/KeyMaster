@@ -18,6 +18,7 @@ function MainInterface:Initialize()
 
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
     local playerRowData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
+    local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 
     local maxPartySize = 4
     for i=1,maxPartySize,1 do
@@ -49,7 +50,6 @@ function MainInterface:Toggle()
 
     -- Maps Frame UI Elements to Data
     MainInterface:UpdateUnitFrameData("player")
-
     mainUI:SetShown(not mainUI:IsShown())
 end
 

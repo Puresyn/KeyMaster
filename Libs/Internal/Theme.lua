@@ -177,6 +177,12 @@ local Colors = {
         g = 0.8,
         b = 0.8,
         hex = "cccccc"
+    },
+    color_TOPE = {
+        r = 0.9,
+        g = 0.69,
+        b = 0.5,
+        hex = "e6b080"
     }
 }
 
