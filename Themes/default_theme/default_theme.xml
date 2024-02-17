@@ -1,17 +1,23 @@
-<Frame name="default_theme">
+<Ui xmlns='http://www.blizzard.com/wow/ui/'>
     <Script file="default_theme.lua"/>
     <Author>
         Key Master
     </Author>
-    <FontFamily>
-        <Font name="ThemeFontH1" virtual="true">
-            <Color r="" g="" b="" a="" name=""/>
-        </Font>
-        <Font name="ThemeFontH2" virtual="true">
-            <Color r="" g="" b="" a="" name=""/>
-        </Font>
-        <Font name="ThemeFontH3" virtual="true">
-            <Color r="" g="" b="" a="" name=""/>
-        </Font>
+    <FontFamily name="KeyMaster_FontColors" virtual="true">
+        <Member>
+            <Font name="ThemeFontH1" >
+                <Color r="" g="" b="" a="" name=""/>
+            </Font>
+        </Member>
+        <Member>
+            <Font name="ThemeFontH2">
+                <Color r="" g="" b="" a="" name=""/>
+            </Font>
+        </Member>
+        <Member>
+            <Font name="ThemeFontH3">
+                <Color r="" g="" b="" a="" name=""/>
+            </Font>
+        </Member>
     </FontFamily>
-</Frame>
+</Ui>
