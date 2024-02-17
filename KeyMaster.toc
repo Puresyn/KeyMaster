@@ -9,6 +9,7 @@
 ## SavedVariables: KeyMaster_DB
 
 Embeds.xml
+Core\Localization\Localization.enUS.lua
 Core\CharacterInfo.lua
 Core\UI\ViewModel.lua
 Core\UI\MainInterface.lua
