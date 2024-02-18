@@ -141,7 +141,8 @@ local function onEvent_PartyChanges(self, event, ...)
         --local partySize, partyId = ...
         
         UnitData:DeleteAllUnitData()
-        KeyMaster.ViewModel:HideAllPartyFrame()        
+        -- reprocess all party members
+        UnitData:MapPartyUnitData()       
         
     elseif (event == "GROUP_ROSTER_UPDATE") then
         -- The following resets the party data then repopulates it.
@@ -190,18 +191,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     end)  
 
     -- process party
-    for i=1,4,1 do
-        local currentUnitId = "party"..i
-        if (UnitName(currentUnitId) ~= nil) then
-            local emptyUnitData = {}
-            emptyUnitData.GUID = UnitGUID(currentUnitId)
-            emptyUnitData.name = UnitName(currentUnitId)
-            emptyUnitData.hasAddon = false
-            UnitData:SetUnitData(emptyUnitData)  
-        else
-            _G["KM_PlayerRow"..(i+1)]:Hide()
-        end
-    end
+    UnitData:MapPartyUnitData()
 end
 
 local playerEnterEvents = CreateFrame("Frame")
