@@ -127,24 +127,29 @@ local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnEvent_AddonLoaded)
 
--- Party Changes Events
+local lastPartyEvent = ""
 local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
     if (event == "GROUP_JOINED") then
-        local partySize, partyId = ...
-        local playerData = UnitData:GetUnitDataByUnitId("player")
-                
-        -- Send data to party members
-        MyAddon:Transmit(playerData, "PARTY", nil)
-    elseif (event == "GROUP_LEFT") then
+        lastPartyEvent = "GROUP_JOINED"
+    end
+    if (event == "GROUP_LEFT") then
         --local partySize, partyId = ...
-        
+        -- purge all party data EXCEPT player        
         UnitData:DeleteAllUnitData()
-        -- reprocess all party members
-        UnitData:MapPartyUnitData()       
-        
-    elseif (event == "GROUP_ROSTER_UPDATE") then
+        -- process party1-4 state
+        UnitData:MapPartyUnitData()
+        -- sets this as the last party event occured
+        lastPartyEvent = "GROUP_LEFT"       
+    end
+    if (event == "GROUP_ROSTER_UPDATE") then
+        -- This is checked because when a player joins a party it fires two events e.g., GROUP_LEFT and GROUP_ROSTER_UPDATE.  We only want to process this once.
+        -- skip this event since it was all processed in the last one OR not needed
+        if lastPartyEvent == "GROUP_LEFT" then
+            lastPartyEvent = "GROUP_ROSTER_UPDATE"
+            return
+        end
         -- The following resets the party data then repopulates it.
         local inGroup = UnitInRaid("player") or IsInGroup()
         if inGroup and GetNumGroupMembers() >= 2 then
@@ -153,10 +158,11 @@ local function onEvent_PartyChanges(self, event, ...)
             -- fetch self data
             local playerUnit = UnitData:GetUnitDataByUnitId("player")
             -- Transmit unit data to party members with addon
-            MyAddon:Transmit(playerUnit, "PARTY", nil)
+            MyAddon:Transmit(playerUnit, "PARTY", nil) -- STORES DATA #2 IN RETRIEVE COMS
             -- process party1-4 with min. data
-            UnitData:MapPartyUnitData()
+            UnitData:MapPartyUnitData()-- STORES DATA #3 IN RETRIEVE COMS
         end
+        lastPartyEvent = "GROUP_ROSTER_UPDATE"
     end
 end
 
