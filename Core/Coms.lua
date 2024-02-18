@@ -48,7 +48,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     --do something with data
     if (prefix ~= "KM2") then return end    
     if (data == nil) then return end
-    --if (data.GUID == UnitGUID("player")) then return end
+    if (data.GUID == UnitGUID("player")) then return end
 
     --print("Recieved Data: "..data) -- CREATES BLANK LUA ERROR
     

@@ -76,3 +76,9 @@ function MainInterface:GetFrameRegions(myRegion, parentFrame)
 
     return myRegionInfo, mlr, mtb
 end
+
+function MainInterface:ResetTallyFramePositioning()
+    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
+    local tallyFrame = _G["PartyTallyFooter"]
+    tallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
+  end
