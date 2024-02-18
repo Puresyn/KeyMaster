@@ -54,7 +54,7 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end
     
     -- Set Player Portrait
-    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
+    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId) -- what happens if player is offline?
     
     -- Spec & Class
     local unitClassSpec

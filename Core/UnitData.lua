@@ -99,6 +99,7 @@ function UnitData:MapPartyUnitData()
         local currentUnitId = "party"..i
         if (UnitName(currentUnitId) ~= nil) then
             local unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)
+            KeyMaster.Print("Getting API Data on "..currentUnitId)
             UnitData:SetUnitData(unitData)  
         else
             _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame

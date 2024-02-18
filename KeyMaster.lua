@@ -119,8 +119,12 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print(KeyMasterLocals.WELCOMEMESSAGE, "|cff"..hexColor..UnitName("player").."|r"..KeyMasterLocals.EXCLIMATIONPOINT)
 
-    -- Initialize UI - doing this here seems to break things,
-    --MainInterface:Initialize()
+    -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
+    -- see our github issue #6
+    C_MythicPlus.RequestCurrentAffixes()
+    C_MythicPlus.RequestMapInfo()
+    C_MythicPlus.RequestRewards()
+    KeyMaster:Print("C_MythicPlus requests sent.")
 end
 
 local events = CreateFrame("Frame")
@@ -177,28 +181,25 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if (event ~= "PLAYER_ENTERING_WORLD") then return end
     
     if (isLogin) then
-        -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
-        -- see our github issue #6
-        C_MythicPlus.RequestCurrentAffixes()
-        C_MythicPlus.RequestMapInfo()
-        C_MythicPlus.RequestRewards()
-        KeyMaster:Print("C_MythicPlus requests sent.")
+        
     end
+    if isLogin or isReload then
+        -- Create UI frames
+        MainInterface:Initialize()
 
-    -- Create UI frames
-    MainInterface:Initialize()
+        C_Timer.After(1, function()
+            -- Get player data
+            local playerData = CharacterInfo:GetMyCharacterInfo()
 
-    C_Timer.After(1, function()
-        -- Get player data
-        local playerData = CharacterInfo:GetMyCharacterInfo()
+            -- Stores Data AND shows associated ui frame
+            UnitData:SetUnitData(playerData)
+            MainInterface:SetPartyWeeklyDataTheme() -- SetPartyWeeklyDataTheme
+        end) 
 
-        -- Stores Data AND shows associated ui frame
-        UnitData:SetUnitData(playerData)
-        MainInterface:SetPartyWeeklyDataTheme() -- SetPartyWeeklyDataTheme
-    end)  
-
-    -- process party
-    UnitData:MapPartyUnitData()
+        -- process party
+        print("in player entering world...")
+        UnitData:MapPartyUnitData()
+    end    
 end
 
 local playerEnterEvents = CreateFrame("Frame")
