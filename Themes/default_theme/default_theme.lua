@@ -109,9 +109,9 @@ T.ColorPallet = {
     -- End pallet 3
     -- Start pallet 4
     SILVER = {                  --Silver
-        r = 0,
-        g = 0,
-        b = 0,
+        r = 0.8,
+        g = 0.8,
+        b = 0.8,
         hex = "cccccc"
 
     },

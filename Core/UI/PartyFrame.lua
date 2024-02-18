@@ -363,11 +363,15 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
 
     -- the ring around the portrait
     local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
-    img2:SetHeight(temp_RowFrame:GetHeight())
-    img2:SetWidth(temp_RowFrame:GetHeight())
-    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_frame",false)
+    img2:SetHeight(temp_RowFrame:GetHeight()+12)
+    img2:SetWidth(temp_RowFrame:GetHeight()+12)
+    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_frame2",false)
+    local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+    img2:SetVertexColor(0.7, 0.7, 0.7, 1)
     img2:ClearAllPoints()
-    img2:SetPoint("LEFT", 0, 0)
+    img2:SetPoint("LEFT", -6, 0)
+
+    KeyMaster:CreateHLine(temp_RowFrame:GetWidth()+8, temp_RowFrame, "TOP", 0, 0)
 
     return temp_RowFrame
 end
