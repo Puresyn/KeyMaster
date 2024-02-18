@@ -270,6 +270,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
         firstItem = false
         prevMapId = mapid
+
     end
 
     -- LEGEND FRAME

@@ -222,8 +222,3 @@ function Theme:GetFrameRegions(myRegion, mainPanel)
 
     return myRegionInfo, mlr, mtb
 end
-
-function Theme:GetWeekScoreColor()
-    local c = Colors.themeFontColorGreen1
-	return c.r, c.g, c.b, c.hex;
-end
