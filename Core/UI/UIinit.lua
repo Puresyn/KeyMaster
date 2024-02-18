@@ -23,7 +23,7 @@ function MainInterface:Initialize()
       local partyRowDataFrames = MainInterface:CreatePartyDataFrame(partyRow)
       partyRow:Hide()
     end
-
+    
     -- create io score tally frames
     local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 

@@ -187,6 +187,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
 
         -- Stores Data AND shows associated ui frame
         UnitData:SetUnitData(playerData)
+        MainInterface:SetPartyWeeklyDataTheme() -- SetPartyWeeklyDataTheme
     end)  
 
     -- process party

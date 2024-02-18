@@ -137,6 +137,50 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
 end
 
+-- Set the font and color of the party frames map data.
+function MainInterface:SetPartyWeeklyDataTheme()
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    if (not mapTable) then return end
+
+    local tyranFont = CreateFont("tempFont1")
+    local fortFont = CreateFont("tempFont2")
+    tyranFont:SetFontObject(DungeonTools:GetWeekFont("Tyrannical"))
+    fortFont:SetFontObject(DungeonTools:GetWeekFont("Fortified"))
+    local tfPath, tfSize, tfFlags = tyranFont:GetFont()
+    local ffPath, ffSize, ffFlags = fortFont:GetFont()
+
+    local tyrannicalRGB = {}
+    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor("Tyrannical")
+    local fortifiedRGB = {}
+    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor("Fortified")
+
+    for i=1, 5, 1 do
+        local tyranTitleFontString = _G["KM_TyranTitle"..i]
+        tyranTitleFontString:SetFont(tfPath, tfSize, tfFlags)
+        local fortTitleFontString = _G["KM_FortTitle"..i]
+        fortTitleFontString:SetFont(ffPath, ffSize, ffFlags)
+
+        for mapid, _ in pairs(mapTable) do
+
+            local tyranFontstring =  _G["KM_MapLevelT"..i..mapid]
+            tyranFontstring:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
+            local fortFontString = _G["KM_MapLevelF"..i..mapid]
+            fortFontString:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
+
+            if (tyranFontstring) then
+                tyranFontstring:SetFont(tfPath, tfSize, tfFlags)
+                tyranFontstring:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
+            end
+            if (fortFontString) then
+                fortFontString:SetFont(ffPath, ffSize, ffFlags)
+                fortFontString:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
+            end
+
+        end
+    end
+
+end
+
 function MainInterface:CreatePartyDataFrame(parentFrame)
     local playerNumber
     if (parentFrame:GetName() == "KM_PlayerRow1") then playerNumber = 1
@@ -150,7 +194,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     end
 
     if (not playerNumber) then
-        KeyMaster:Print("Error: ", "Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
+        KeyMaster:Print("Error: ", "Invalid party row reference for data frame: "..playerNumber) -- Debug
     end
 
     -- Data frame
@@ -204,10 +248,6 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     local bolColHighlight = false
     local partyColColor = {}
     partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
-    local tyrannicalRGB = {}
-    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor("Tyrannical")
-    local fortifiedRGB = {}
-    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor("Fortified")
 
     for mapid, mapData in pairs(mapTable) do
         bolColHighlight = not bolColHighlight -- alternate row highlighting
@@ -231,9 +271,8 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         end
 
         -- Tyrannical Scores
-        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
+        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
         tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
-        tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
         prevAnchor = tempText1
 
         --[[ local tempText2 = temp_Frame:CreateFontString("KM_MapScoreT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
@@ -243,9 +282,8 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
 
         -- Fortified Scores
-        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", DungeonTools:GetWeekFont("Fortified"))
+        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
         tempText4:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -8)
-        tempText4:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
         prevAnchor = tempText4
 
         --[[ local tempText5 = temp_Frame:CreateFontString("KM_MapScoreF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
@@ -286,10 +324,9 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
     --local yOfs = select(5, _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint())
-    local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
+    local tempText1 = temp_Frame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText1:SetText(KeyMasterLocals.TYRANNICAL..":")
-    tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
     
 
     --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
@@ -299,10 +336,9 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical")) ]]
 
     --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
-    local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Fortified"))
+    local tempText3 = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText3:SetText(KeyMasterLocals.FORTIFIED..":")
-    tempText3:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
 
     --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
     --[[ local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
