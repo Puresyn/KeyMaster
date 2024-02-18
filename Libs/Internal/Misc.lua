@@ -90,3 +90,12 @@ function KeyMaster:GetTableLength(table)
 
     return count
 end
+
+function KeyMaster:IsTextureAvailable(texturePath)
+    local texture = UIParent:CreateTexture()
+    texture:SetPoint("CENTER")
+    texture:SetTexture(texturePath)
+    print(texture:GetTexture())
+
+    return texture:GetTexture() ~= nil
+end
