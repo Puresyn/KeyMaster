@@ -40,13 +40,13 @@ end
 
 local function createPartyDungeonHeader(anchorFrame, mapId)
     if not anchorFrame and mapId then 
-        print("No valid refrences passed to createPartyDungeonHeader()")
+        KeyMaster:Print("ERROR: ", "No valid refrences passed to createPartyDungeonHeader()")
     end
     if (not anchorFrame) then
-        print("Invalid anchorFrame for createPartyDungeonHeader() mapId:"..mapId)
+        KeyMaster:Print("Error: ", "Invalid anchorFrame for createPartyDungeonHeader() mapId:"..mapId)
     end
     if (not mapId) then
-        print("Invalid mapId for createPartyDungeonHeader() anchorFrame:"..anchorFrame:GetName())
+        KeyMaster:Print("ERROR: ", "Invalid mapId for createPartyDungeonHeader() anchorFrame:"..anchorFrame:GetName())
     end
     -- END DEBUG
 
@@ -150,7 +150,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     end
 
     if (not playerNumber) then
-        print("Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
+        KeyMaster:Print("Error: ", "Invalid party row reference for data frame: "..tostringall(rowNumber)) -- Debug
     end
 
     -- Data frame
@@ -170,19 +170,19 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     -- Player does not have the addon
     tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     local font, fontSize, flags = tempText:GetFont()
-    tempText:SetFont(font, 25, flags)
-    tempText:SetTextColor(0.4, 0.4, 0.4, 1)
-    tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
-    tempText:SetText("This player does not have "..KM_ADDON_NAME.." installed. :(")
+    tempText:SetFont(font, 20, flags)
+    tempText:SetTextColor(0.6, 0.6, 0.6, 1)
+    tempText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    tempText:SetText(KM_ADDON_NAME.." "..KeyMasterLocals.PARTYFRAME["NoAddon"].text)
     tempText:Hide()
 
     -- Player is offline
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "KeyMasterFontBig")
     font, fontSize, flags = tempText:GetFont()
-    tempText:SetFont(font, 25, flags)
-    tempText:SetTextColor(0.4, 0.4, 0.4, 1)
-    tempText:SetPoint("CENTER", dataFrame, "CENTER", 0, 0)
-    tempText:SetText("This player is offline.")
+    tempText:SetFont(font, 20, flags)
+    tempText:SetTextColor(0.6, 0.6, 0.6, 1)
+    tempText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    tempText:SetText(KeyMasterLocals.PARTYFRAME["PlayerOffline"].text)
     tempText:Hide()
 
     -- Player's Owned Key
@@ -287,7 +287,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     --local yOfs = select(5, _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint())
     local tempText1 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Tyrannical"))
     tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText1:SetText("Tyrannical:")
+    tempText1:SetText(KeyMasterLocals.TYRANNICAL..":")
     tempText1:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
     
 
@@ -300,7 +300,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
     local tempText3 = temp_Frame:CreateFontString(nil, "OVERLAY", DungeonTools:GetWeekFont("Fortified"))
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText3:SetText("Fortified:")
+    tempText3:SetText(KeyMasterLocals.FORTIFIED..":")
     tempText3:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
 
     --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
@@ -312,7 +312,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText5:SetText("Overall Score:")
+    tempText5:SetText(KeyMasterLocals.PARTYFRAME["OverallScore"].name..":")
     
     _G["KM_MapDataLegend"..playerNumber]:Show()
 
@@ -390,7 +390,7 @@ function MainInterface:CreatePartyScoreTallyFooter()
     partyTallyFrame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3) -- temporary bg color ]]
 
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    local prevMapId, prevAnchor
+    local prevMapId, prevAnchor, lastPointsFrame
     local firstItem = true
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local bolColHighlight = false
@@ -429,12 +429,22 @@ function MainInterface:CreatePartyScoreTallyFooter()
         local r, g, b, _ = Theme:GetThemeColor("color_TOPE")
         tempText6:SetTextColor(r, g, b, 1)
         tempText6:SetJustifyV("CENTER")
-        tempText6:SetText(2344)
+        --tempText6:SetText(2344)
 
         firstItem = false
         prevMapId = mapid
+        lastPointsFrame = temp_Frame
     end
     KeyMaster:CreateHLine(partyTallyFrame:GetWidth(), partyTallyFrame, "TOP", 4, 0)
+
+    local tallyDescTextBox = CreateFrame("Frame", "KM_TallyDesc", lastPointsFrame)
+    tallyDescTextBox:SetPoint("RIGHT", lastPointsFrame, "LEFT", -4, 0)
+    tallyDescTextBox:SetSize(180, partyTallyFrame:GetHeight())
+    tallyDescTextBox.text = tallyDescTextBox:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    tallyDescTextBox.text:SetAllPoints(tallyDescTextBox)
+    tallyDescTextBox.text:SetJustifyH("RIGHT")
+    tallyDescTextBox.text:SetJustifyV("CENTER")
+    tallyDescTextBox.text:SetText(KeyMasterLocals.ASTERISK..KeyMasterLocals.PARTYFRAME.TeamRatingGain.name..":")
 end
 
 function MainInterface:CreatePartyRowsFrame(parentFrame)    
@@ -456,7 +466,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
     txtPlaceHolder:SetFont(Path, 20, Flags)
     txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Party Information:")
+    txtPlaceHolder:SetText(KeyMasterLocals.PARTYFRAME["PartyInformation"].name..":")
 
     temp_frame.texture = temp_frame:CreateTexture()
     temp_frame.texture:SetAllPoints(temp_frame)
