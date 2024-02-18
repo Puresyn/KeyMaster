@@ -157,8 +157,10 @@ function MainInterface:SetPartyWeeklyDataTheme()
     for i=1, 5, 1 do
         local tyranTitleFontString = _G["KM_TyranTitle"..i]
         tyranTitleFontString:SetFont(tfPath, tfSize, tfFlags)
+        tyranTitleFontString:SetTextColor(tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b, 1)
         local fortTitleFontString = _G["KM_FortTitle"..i]
         fortTitleFontString:SetFont(ffPath, ffSize, ffFlags)
+        fortTitleFontString:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
 
         for mapid, _ in pairs(mapTable) do
 
