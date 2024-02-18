@@ -91,13 +91,9 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     -- Dungeon Scores
     if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then
         local mapTable = DungeonTools:GetCurrentSeasonMaps()
-        local r, g, b, colorWeekHex = Theme:GetWeekScoreColor()
         for n, v in pairs(mapTable) do
-            -- TODO: Determine if the current week is Fortified or Tyrannical and ask for the relating data.
             _G["KM_MapLevelT"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Tyrannical"].Level)
-            --_G["KM_MapScoreT"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Tyrannical"].Score.."|r")
             _G["KM_MapLevelF"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Fortified"].Level)
-            --_G["KM_MapScoreF"..partyPlayer..n]:SetText("|cff"..colorWeekHex..playerData.DungeonRuns[n]["Fortified"].Score.."|r")
             _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
         end
     else

@@ -33,7 +33,7 @@ function MainInterface:CreateTab(parentFrame, id, tabText, contentFrame, isActiv
     tinsert(tabContentFrames, contentFrame:GetName())
     
     if (id == 1) then
-        tabFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 5, 3)
+        tabFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 5, 2)
     else        
         tabFrame:SetPoint("TOPLEFT", _G[frameName.."Tab"..(id-1)], "TOPRIGHT", 0, 0) -- appends to previous tab
     end
