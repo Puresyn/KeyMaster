@@ -1,5 +1,6 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
+local Header = KeyMaster.Header
 local ViewModel = KeyMaster.ViewModel
 
 function MainInterface:Initialize()
@@ -8,6 +9,8 @@ function MainInterface:Initialize()
     local addonIcon = _G["KeyMaster_Icon"] or MainInterface:createAddonIcon(mainFrame)
     local headerRegion = _G["KeyMaster_HeaderRegion"] or MainInterface:CreateHeaderRegion(mainFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
+    local headerAffixes = Header:createAffixFrames(headerContent) -- todo: this does not make just one frame for return
+    local headerRaiting = _G["KeyMaster_RatingFrame"] or Header:createHeaderRating(headerContent)
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
@@ -23,7 +26,7 @@ function MainInterface:Initialize()
       local partyRowDataFrames = MainInterface:CreatePartyDataFrame(partyRow)
       partyRow:Hide()
     end
-    
+
     -- create io score tally frames
     local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 

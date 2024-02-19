@@ -1,5 +1,7 @@
 local _, KeyMaster = ...
+KeyMaster.Header = {}
 local MainInterface = KeyMaster.MainInterface
+local Header = KeyMaster.Header
 local DungeonTools = KeyMaster.DungeonTools
 
 -- Setup header region
@@ -18,7 +20,7 @@ end
 --------------------------------
 -- Weekly Affix
 --------------------------------
-local function createAffixFrames(parentFrame)
+function Header:createAffixFrames(parentFrame)
     if (parentFrame == nil) then 
         KeyMaster:Print("Error: Parameter Null - No parent frame passed to CreateAffixFrames function.")
         return
@@ -87,7 +89,7 @@ end
 --------------------------------
 -- Mythic Rating
 --------------------------------
-local function createHeaderRating(parentFrame)
+function Header:createHeaderRating(parentFrame)
     
     local ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", parentFrame)
     ratingPanel:SetWidth(150)
@@ -146,9 +148,6 @@ function MainInterface:CreateHeaderContent(parentFrame)
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
     VersionText:SetText(KM_VERSION)
-
-    createAffixFrames(headerContent)
-    createHeaderRating(headerContent)
     
     return headerContent
 end
