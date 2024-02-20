@@ -34,6 +34,7 @@ function MainInterface:Initialize()
     -- create player row frames
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
     local playerRowData = _G["KM_PlayerDataFrame1"] or MainInterface:CreatePartyDataFrame(playerRow)
+
     
     -- create party row frames
     local maxPartySize = 4
@@ -42,6 +43,13 @@ function MainInterface:Initialize()
       local partyRowDataFrames = MainInterface:CreatePartyDataFrame(partyRow)
       partyRow:Hide()
     end
+
+    MainInterface:PartyColHighlight("KM_MapData1248", true)
+    MainInterface:PartyColHighlight("KM_MapData2248", true)
+    MainInterface:PartyColHighlight("KM_MapData1463", true)
+    MainInterface:PartyColHighlight("KM_MapData2463", true)
+    --[[  MainInterface:PartyColHighlight("KM_MapData3248", true)
+    MainInterface:PartyColHighlight("KM_MapTally248", true) ]]
 
     -- create io score tally frames
     local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()

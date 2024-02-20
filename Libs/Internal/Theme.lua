@@ -189,6 +189,12 @@ local Colors = {
         g = 0.7,
         b = 0.7,
         hex = "cccccc"
+    },
+    color_NONPHOTOBLUE = {
+        r = 0.64,
+        g = 0.91,
+        b = 0.99,
+        hex = "A3E7FC"
     }
 }
 
