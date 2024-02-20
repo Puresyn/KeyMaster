@@ -324,37 +324,17 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
     temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", -4, 0)
 
-    --point, relativeTo, relativePoint, xOfs, yOfs = MyRegion:GetPoint(n)
-    --local yOfs = select(5, _G["KM_MapLevelT"..playerNumber..prevMapId]:GetPoint())
     local tempText1 = temp_Frame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText1:SetText(KeyMasterLocals.TYRANNICAL..":")
     
-
-    --yOfs = select(5, _G["KM_MapScoreT"..playerNumber..prevMapId]:GetPoint())
-    --[[ local tempText2 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    tempText2:SetPoint("RIGHT", _G["KM_MapScoreT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText2:SetText("Tyrannical:")
-    tempText2:SetAlpha(KeyMaster:GetWeekAlpha("Tyrannical")) ]]
-
-    --yOfs = select(5, _G["KM_MapLevelF"..playerNumber..prevMapId]:GetPoint())
     local tempText3 = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText3:SetText(KeyMasterLocals.FORTIFIED..":")
 
-    --yOfs = select(5, _G["KM_MapScoreF"..playerNumber..prevMapId]:GetPoint())
-    --[[ local tempText4 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    tempText4:SetPoint("RIGHT", _G["KM_MapScoreF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText4:SetText("Fortified:")
-    tempText4:SetAlpha(KeyMaster:GetWeekAlpha("Fortified")) ]]
-
-    --yOfs = select(5, _G["KM_MapTotalScore"..playerNumber..prevMapId]:GetPoint())
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText5:SetText(KeyMasterLocals.PARTYFRAME["OverallScore"].name..":")
-    
-    _G["KM_MapDataLegend"..playerNumber]:Show()
-
 
 end
 
