@@ -30,14 +30,26 @@ function UnitData:GetUnitId(unitGUID)
     end
 end
 
-function UnitData:SetUnitData(unitData)
+function UnitData:DisplayUnitData(unitId, unitData)
+    ViewModel:UpdateUnitFrameData(unitId, unitData)
+    ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
+end
+
+function UnitData:SetUnitData(unitData, updateUI)
+    if updateUI == nil then updateUI = true end
+
     local unitId = UnitData:GetUnitId(unitData.GUID)
+    if unitId == nil then
+        KeyMaster:Print("UnitData:SetUnitData() - unitId is nil.  Cannot store data for "..unitData.name)
+        return
+    end
     unitData.unitId = unitId -- set unitId for this client
     unitInformation[unitData.GUID] = unitData
 
     KeyMaster:Print("Stored data for "..unitData.name)
-    ViewModel:UpdateUnitFrameData(unitId, unitData)
-    ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
+    if updateUI then
+        UnitData:DisplayUnitData(unitData.unitId, unitData)
+    end
 end
 
 function UnitData:SetUnitDataUnitPosition(name, newUnitId)
@@ -93,17 +105,40 @@ function UnitData:DeleteAllUnitData()
     end
 end
 
--- Maps all PlayerRows to an "default" set of data available by ONLY blizzard API
 function UnitData:MapPartyUnitData()
     for i=1,4,1 do
         local currentUnitId = "party"..i
         if (UnitName(currentUnitId) ~= nil) then
-            local unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)
-            KeyMaster:Print("Getting API Data on "..currentUnitId)
-            UnitData:SetUnitData(unitData)  
+            -- find if we have data for this player, if not get a set of default data from blizzard
+            KeyMaster:Print("Mapping data for "..currentUnitId)
+            local unitData = unitInformation[UnitGUID(currentUnitId)]
+            if unitData == nil then
+                KeyMaster:Print("Getting Blizzard data on "..currentUnitId)
+                unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
+            end
+            -- remap and display data for this unitid
+            UnitData:DisplayUnitData(currentUnitId, unitData)
         else
+            -- no active player found, hide ui for this unitid
             _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
         end
     end
     KeyMaster.MainInterface:ResetTallyFramePositioning()
+end
+
+function UnitData:UnitDataAudit()
+    local partyUnits = { "party1", "party2", "party3", "party4" }
+    local unitIdsToProcess = {}
+    for _, unitId in partyUnits do
+        print("Processing... "..unitId)
+        local currentUnitGUID = UnitGUID(unitId)
+        local unitData = unitInformation[currentUnitGUID]
+        if unitData == nil then
+            tinsert(unitIdsToProcess, unitId)
+        else
+            if unitData.unitId ~= unitId then
+                unitInformation[currentUnitGUID].unitId = unitId
+            end
+        end
+    end
 end

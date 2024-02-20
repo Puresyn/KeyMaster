@@ -118,13 +118,6 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print(KeyMasterLocals.WELCOMEMESSAGE, "|cff"..hexColor..UnitName("player").."|r"..KeyMasterLocals.EXCLIMATIONPOINT)
-
-    -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
-    -- see our github issue #6
-    C_MythicPlus.RequestCurrentAffixes()
-    C_MythicPlus.RequestMapInfo()
-    C_MythicPlus.RequestRewards()
-    KeyMaster:Print("C_MythicPlus requests sent.")
 end
 
 local events = CreateFrame("Frame")
@@ -136,6 +129,10 @@ local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
     if (event == "GROUP_JOINED") then
+        -- fetch self data
+        local playerUnit = UnitData:GetUnitDataByUnitId("player")
+        -- Transmit unit data to party members with addon
+        MyAddon:Transmit(playerUnit, "PARTY", nil) -- STORES DATA #2 IN RETRIEVE COMS
         lastPartyEvent = "GROUP_JOINED"
     end
     if (event == "GROUP_LEFT") then
@@ -150,19 +147,17 @@ local function onEvent_PartyChanges(self, event, ...)
     if (event == "GROUP_ROSTER_UPDATE") then
         -- This is checked because when a player joins a party it fires two events e.g., GROUP_LEFT and GROUP_ROSTER_UPDATE.  We only want to process this once.
         -- skip this event since it was all processed in the last one OR not needed
-        if lastPartyEvent == "GROUP_LEFT" then
+        if lastPartyEvent == "GROUP_LEFT" or lastPartyEvent == "GROUP_JOINED" then
             lastPartyEvent = "GROUP_ROSTER_UPDATE"
             return
         end
+        
         -- The following resets the party data then repopulates it.
         local inGroup = UnitInRaid("player") or IsInGroup()
         if inGroup and GetNumGroupMembers() >= 2 then
             -- destroy all party data
-            UnitData:DeleteAllUnitData()
-            -- fetch self data
-            local playerUnit = UnitData:GetUnitDataByUnitId("player")
-            -- Transmit unit data to party members with addon
-            MyAddon:Transmit(playerUnit, "PARTY", nil) -- STORES DATA #2 IN RETRIEVE COMS
+            -- UnitData:DeleteAllUnitData()
+            
             -- process party1-4 with min. data
             UnitData:MapPartyUnitData()-- STORES DATA #3 IN RETRIEVE COMS
         end
@@ -181,24 +176,34 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if (event ~= "PLAYER_ENTERING_WORLD") then return end
     
     if (isLogin) then
-        
+        -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
+        -- see our github issue #6
+        C_MythicPlus.RequestCurrentAffixes()
+        C_MythicPlus.RequestMapInfo()
+        C_MythicPlus.RequestRewards()
+        KeyMaster:Print("C_MythicPlus requests sent.")
     end
     if isLogin or isReload then
         -- Create UI frames
         MainInterface:Initialize()
 
-        C_Timer.After(1, function()
+        C_Timer.After(3, function()
             -- Get player data
             local playerData = CharacterInfo:GetMyCharacterInfo()
 
             -- Stores Data AND shows associated ui frame
-            UnitData:SetUnitData(playerData)
-            MainInterface:SetPartyWeeklyDataTheme() -- SetPartyWeeklyDataTheme
+            UnitData:SetUnitData(playerData, true)
+
+            -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
+            MainInterface:SetPartyWeeklyDataTheme() 
         end) 
 
         -- process party
-        print("in player entering world...")
-        UnitData:MapPartyUnitData()
+        local inGroup = UnitInRaid("player") or IsInGroup()
+        if inGroup and GetNumGroupMembers() >= 2 then
+            print("in player entering world...")
+            UnitData:MapPartyUnitData()
+        end
     end    
 end
 

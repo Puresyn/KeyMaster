@@ -3,13 +3,29 @@ local MainInterface = KeyMaster.MainInterface
 local Header = KeyMaster.Header
 local ViewModel = KeyMaster.ViewModel
 
+local function createAffixFramesWithRetries(parent, retryCount)
+  if retryCount == nil then retryCount = 0 end
+  local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
+  if seasonalAffixes ~= nil then
+    Header:createAffixFrames(parent, seasonalAffixes)
+  else
+    --print("Retrying to create affix frames in 3 seconds..."..retryCount.."/5")
+    if retryCount < 5 then
+      C_Timer.After(3, function() createAffixFramesWithRetries(parent, retryCount + 1) end)
+    else
+      KeyMaster:Print("Failed to create affix frames after 5 retries.")
+    end
+  end
+end
+
 function MainInterface:Initialize()
     -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
     local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()
     local addonIcon = _G["KeyMaster_Icon"] or MainInterface:createAddonIcon(mainFrame)
     local headerRegion = _G["KeyMaster_HeaderRegion"] or MainInterface:CreateHeaderRegion(mainFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
-    local headerAffixes = Header:createAffixFrames(headerContent) -- todo: this does not make just one frame for return
+    createAffixFramesWithRetries(headerContent)
+    
     local headerRaiting = _G["KeyMaster_RatingFrame"] or Header:createHeaderRating(headerContent)
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);

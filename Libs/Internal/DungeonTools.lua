@@ -35,10 +35,9 @@ local portalSpellIds = {
 }
 
 -- Gets a list of the current weeks affixes.
-local weeklyAffixs
+local weeklyAffixs = nil
 function DungeonTools:GetAffixes()
-    if (weeklyAffixs) then return weeklyAffixs end
-    
+    if weeklyAffixs ~= nil then return weeklyAffixs end
     local affixData = {}
     local affixes = C_MythicPlus.GetCurrentAffixes() -- Bug when this returned nils?
     if (affixes == nil) then return nil end

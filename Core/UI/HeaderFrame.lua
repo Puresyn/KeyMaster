@@ -20,20 +20,20 @@ end
 --------------------------------
 -- Weekly Affix
 --------------------------------
-function Header:createAffixFrames(parentFrame)
+function Header:createAffixFrames(parentFrame, seasonalAffixes)
     if (parentFrame == nil) then 
         KeyMaster:Print("Error: Parameter Null - No parent frame passed to CreateAffixFrames function.")
         return
     end
     
-    local weekData = DungeonTools:GetAffixes()
-    if (weekData == nil) then 
+    --local weekData = DungeonTools:GetAffixes()
+    if (seasonalAffixes == nil) then 
         KeyMaster:Print("Error: No mythic plus season affixes found!")
         return 
     end
-    for i=1, #weekData, 1 do
+    for i=1, #seasonalAffixes, 1 do
 
-        local affixName = weekData[i].name
+        local affixName = seasonalAffixes[i].name
         local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostringall(i), parentFrame)
         temp_frame:SetSize(50, 50)
         if (i == 1) then
@@ -46,7 +46,7 @@ function Header:createAffixFrames(parentFrame)
         -- Affix Icon
         local tex = temp_frame:CreateTexture()
         tex:SetAllPoints(temp_frame)
-        tex:SetTexture(weekData[i].filedataid)
+        tex:SetTexture(seasonalAffixes[i].filedataid)
         
         -- Affix Name
         local affixNameFrame = CreateFrame("Frame", nil, temp_frame)

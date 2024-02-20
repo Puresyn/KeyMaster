@@ -72,7 +72,7 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
         unitClassSpec = unitClass
     end
     _G["KM_Player"..partyPlayer.."Class"]:SetText(unitClassSpec)
-    
+        
     -- Player Name
     _G["KM_PlayerName"..partyPlayer]:SetText("|cff"..CharacterInfo:GetMyClassColor(unitId)..playerData.name.."|r")
 
