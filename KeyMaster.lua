@@ -96,6 +96,7 @@ end
 -- Addon Loading Event
 local function OnEvent_AddonLoaded(self, event, name, ...)
     if (name ~= "KeyMaster") then return end
+
     --------------------------------
     -- Register Slash Commands:
     --------------------------------
@@ -157,12 +158,12 @@ local function onEvent_PartyChanges(self, event, ...)
         if inGroup and GetNumGroupMembers() >= 2 then
             -- destroy all party data
             -- UnitData:DeleteAllUnitData()
-            
-            -- process party1-4 with min. data
-            UnitData:MapPartyUnitData()-- STORES DATA #3 IN RETRIEVE COMS
         end
         lastPartyEvent = "GROUP_ROSTER_UPDATE"
     end
+
+    -- process party1-4 with min. data
+    UnitData:MapPartyUnitData()-- STORES DATA #3 IN RETRIEVE COMS
 end
 
 local partyEvents = CreateFrame("Frame")
@@ -204,7 +205,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             print("in player entering world...")
             UnitData:MapPartyUnitData()
         end
-    end    
+    end
 end
 
 local playerEnterEvents = CreateFrame("Frame")
