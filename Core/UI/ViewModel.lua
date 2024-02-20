@@ -95,14 +95,20 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     _G["KM_OwnedKeyInfo"..partyPlayer]:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
 
     -- Dungeon Scores
-    if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then
-        local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then        
         for n, v in pairs(mapTable) do
             _G["KM_MapLevelT"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Tyrannical"].Level)
             _G["KM_MapLevelF"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Fortified"].Level)
             _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
         end
+        _G["KM_MapDataLegend"..partyPlayer]:Show()
     else
+        for n, v in pairs(mapTable) do
+            _G["KM_MapLevelT"..partyPlayer..n]:SetText("")
+            _G["KM_MapLevelF"..partyPlayer..n]:SetText("")
+            _G["KM_MapTotalScore"..partyPlayer..n]:SetText("")
+        end
         _G["KM_MapDataLegend"..partyPlayer]:Hide()
     end
 

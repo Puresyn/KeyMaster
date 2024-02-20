@@ -130,11 +130,7 @@ local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
     if (event == "GROUP_JOINED") then
-        -- fetch self data
-        local playerUnit = UnitData:GetUnitDataByUnitId("player")
-        -- Transmit unit data to party members with addon
-        MyAddon:Transmit(playerUnit, "PARTY", nil) -- STORES DATA #2 IN RETRIEVE COMS
-        lastPartyEvent = "GROUP_JOINED"
+        
     end
     if (event == "GROUP_LEFT") then
         --local partySize, partyId = ...
@@ -158,6 +154,11 @@ local function onEvent_PartyChanges(self, event, ...)
         if inGroup and GetNumGroupMembers() >= 2 then
             -- destroy all party data
             -- UnitData:DeleteAllUnitData()
+
+            -- fetch self data
+            local playerUnit = UnitData:GetUnitDataByUnitId("player")
+            -- Transmit unit data to party members with addon
+            MyAddon:Transmit(playerUnit, "PARTY", nil)
         end
         lastPartyEvent = "GROUP_ROSTER_UPDATE"
     end
@@ -185,26 +186,32 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         KeyMaster:Print("C_MythicPlus requests sent.")
     end
     if isLogin or isReload then
+        print("reloading")
         -- Create UI frames
         MainInterface:Initialize()
 
         C_Timer.After(3, function()
             -- Get player data
             local playerData = CharacterInfo:GetMyCharacterInfo()
-
+            assert(playerData ~= nil, "Player Data is nil.")
             -- Stores Data AND shows associated ui frame
             UnitData:SetUnitData(playerData, true)
 
             -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
             MainInterface:SetPartyWeeklyDataTheme() 
-        end) 
 
-        -- process party
-        local inGroup = UnitInRaid("player") or IsInGroup()
-        if inGroup and GetNumGroupMembers() >= 2 then
-            print("in player entering world...")
-            UnitData:MapPartyUnitData()
-        end
+            -- process party
+            local inGroup = UnitInRaid("player") or IsInGroup()
+            if inGroup and GetNumGroupMembers() >= 2 then
+                --print("in player entering world...")
+                UnitData:MapPartyUnitData()
+                -- fetch self data
+                local playerUnit = UnitData:GetUnitDataByUnitId("player")
+                
+                -- Transmit unit data to party members with addon
+                MyAddon:Transmit(playerUnit, "PARTY", nil)
+            end
+        end) 
     end
 end
 
