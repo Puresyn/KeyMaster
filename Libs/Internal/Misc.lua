@@ -99,3 +99,7 @@ function KeyMaster:IsTextureAvailable(texturePath)
 
     return texture:GetTexture() ~= nil
 end
+
+-- Global KeyMaster error output function
+function  KM_Error(funcName , lineNumb, errMsg, debugInfo)
+end

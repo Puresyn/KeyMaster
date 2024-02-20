@@ -178,17 +178,27 @@ local Colors = {
         b = 0.8,
         hex = "cccccc"
     },
-    color_TOPE = {
+    color_TAUPE = {
         r = 0.9,
         g = 0.69,
         b = 0.5,
         hex = "e6b080"
+    },
+    color_PORTRAITFRAME = {
+        r = 0.7,
+        g = 0.7,
+        b = 0.7,
+        hex = "cccccc"
     }
 }
 
 function Theme:GetThemeColor(colorName)
 	local c = Colors[colorName];
-	return c.r, c.g, c.b, c.hex
+    if (c) then
+	    return c.r, c.g, c.b, c.hex
+    else
+        KeyMaster:Print("Error: Theme color "..colorName.." was not found.")
+    end
 end
 
 function Theme:GetFrameRegions(myRegion, mainPanel)
