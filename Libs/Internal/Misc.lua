@@ -111,7 +111,7 @@ end
 
 -- Usage KeyMaster:_ErrorMsg(str, str, str)
 function KeyMaster:_ErrorMsg(funcName, fileName, ...)
-    if (KeyMaster_DB.addonConfig.showDebugging == true) then
+    if (KeyMaster_DB.addonConfig.showErrors == true) then
         local errorHex = "d00000"
         local msg = string.format("|cff%s%s|r", errorHex:upper(), "[ERROR] "  .. funcName .. " in " .. fileName .. " - " .. ...)
         KM_Print(msg)
@@ -120,7 +120,7 @@ end
 
 -- Usage KeyMaster:_DebugMsg(str, str, str)
 function KeyMaster:_DebugMsg(funcName, fileName, ...)
-    if (KeyMaster_DB.addonConfig.showErrors == true) then
+    if (KeyMaster_DB.addonConfig.showDebugging == true) then
         local debugHex = "A3E7FC"
         local msg = string.format("|cff%s%s|r", debugHex:upper(), "[DEBUG] " .. funcName .. " in " .. fileName .. " - " .. ...);	
         KM_Print(msg)

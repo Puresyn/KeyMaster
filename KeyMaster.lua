@@ -125,6 +125,9 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     --SLASH_KeyMaster1 = "/km"  -- Localized
     --SLASH_KeyMaster2 = "/keymaster" -- Localized
     SlashCmdList.KeyMaster = HandleSlashCommands
+
+    KeyMaster:PLAYER_LOGIN()
+    KeyMaster:loadSavedVariables()
     
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
@@ -187,8 +190,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         C_MythicPlus.RequestMapInfo()
         C_MythicPlus.RequestRewards()
         KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")
-        KeyMaster:PLAYER_LOGIN()
-        KeyMaster:loadSavedVariables()
+        
     end
     if isLogin or isReload then
         KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
