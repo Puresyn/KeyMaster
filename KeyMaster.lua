@@ -106,7 +106,6 @@ end
 -- Addon Loading Event
 local function OnEvent_AddonLoaded(self, event, name, ...)
     if (name ~= "KeyMaster") then return end
-
     --------------------------------
     -- Register Slash Commands:
     --------------------------------
@@ -162,12 +161,13 @@ local function onEvent_PartyChanges(self, event, ...)
             local playerUnit = UnitData:GetUnitDataByUnitId("player")
 
             -- Transmit unit data to party members with addon
-            MyAddon:Transmit(playerUnit, "PARTY", nil)
-            print("transmitting player data to party members...")
-        else
+            --MyAddon:Transmit(playerUnit, "PARTY", nil)
+            KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "transmitting player data to party members...")
+        end
+        if not inGroup then
             -- purge all party data EXCEPT player
             UnitData:DeleteAllUnitData()
-            print("purging all party data...")
+            KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "purging all party data...")
         end
     end
 
@@ -182,7 +182,12 @@ partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
 -- Player Entering World Event
 local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if (event ~= "PLAYER_ENTERING_WORLD") then return end
-    
+    -- isLogin ONLY OCCURS when logging in from character select screen
+    -- isReload occurs when reloading the UI
+    -- zoning into a new area does not trigger isLogin or isReload
+    print("Entered world")
+    print("isLogin: "..tostring(isLogin))
+    print("isReload: "..tostring(isReload))
     if (isLogin) then
         -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
         -- see our github issue #6
@@ -191,6 +196,12 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         C_MythicPlus.RequestRewards()
         KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")
         
+    end
+    if isReload then
+        local requestData = {}
+        requestData.requestType = "playerData"
+
+        MyAddon:TransmitRequest(requestData)
     end
     if isLogin or isReload then
         KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
