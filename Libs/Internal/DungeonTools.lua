@@ -18,6 +18,10 @@ local instanceAbbrTable = {
     [456] = "ToTT"       -- Throne of the Tides
 }
 
+function DungeonTools:instanceAbbrs()
+    return instanceAbbrTable
+end
+
 --------------------------------
 -- Dungeon Portal spell IDs
 -- Must be manually maintained.
@@ -33,6 +37,10 @@ local portalSpellIds = {
     [168] = 159901      -- The Everbloom
 
 }
+
+function DungeonTools:portalSpells()
+    return portalSpellIds
+end
 
 -- Gets a list of the current weeks affixes.
 local weeklyAffixs = nil
