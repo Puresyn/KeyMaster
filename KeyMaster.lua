@@ -156,7 +156,7 @@ local function onEvent_PartyChanges(self, event, ...)
             local playerUnit = UnitData:GetUnitDataByUnitId("player")
 
             -- Transmit unit data to party members with addon
-            --MyAddon:Transmit(playerUnit, "PARTY", nil)
+            MyAddon:Transmit(playerUnit, "PARTY", nil)
             KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "transmitting player data to party members...")
         end
         if not inGroup then
