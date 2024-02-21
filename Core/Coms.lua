@@ -67,16 +67,21 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     local decompressed = LibDeflate:DecompressDeflate(decoded)
     if not decompressed then return end
     local success, data = LibSerialize:Deserialize(decompressed)
-    if not success then return end
+    if not success then
+        KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Failed to deserialize data from "..sender)
+        return
+    end
+    if (sender == UnitName("player")) then return end
     
-    if (data == nil) then return end    
-
+    if (data == nil) then
+        KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received nil data from "..sender)
+        return
+    end    
     --do something with data
-    if (prefix ~= "KM2" or prefix ~= "KM3") then return end   
+    if (prefix ~= "KM2" and prefix ~= "KM3") then return end   
     if (prefix == "KM3") then
         processKM3Data(data, distribution, sender)
     elseif (prefix == "KM2") then
-        if (data.GUID == UnitGUID("player")) then return end
         KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
