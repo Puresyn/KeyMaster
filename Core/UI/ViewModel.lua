@@ -86,13 +86,15 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end
 
     -- Dungeon Key Information
-    local ownedKeyLevel
+    local keyInfoFrame = _G["KM_OwnedKeyInfo"..partyPlayer]    
     if (not playerData.ownedKeyLevel or playerData.ownedKeyLevel == 0) then
-        ownedKeyLevel = ""
+        keyInfoFrame:SetText("")
+        keyInfoFrame:Hide()
     else 
-        ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
+        local ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
+        keyInfoFrame:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
     end
-    _G["KM_OwnedKeyInfo"..partyPlayer]:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
+    
 
     -- Dungeon Scores
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
