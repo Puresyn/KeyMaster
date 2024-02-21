@@ -115,6 +115,8 @@ function UnitData:MapPartyUnitData()
             if unitData == nil then
                 KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
                 unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
+            else
+                KeyMaster:Print("Found local data on "..currentUnitId)
             end
             -- remap and display data for this unitid
             UnitData:DisplayUnitData(currentUnitId, unitData)
