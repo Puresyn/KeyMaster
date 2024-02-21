@@ -23,12 +23,16 @@ KM_VERSION = tostringall("v"..KM_AUTOVERSION.."-"..KM_VERSION_STATUS) -- for dis
 --------------------------------
 KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
+    [KeyMasterLocals.COMMANDLINE['Debug'].name] = KeyMaster.ToggleDebug,
+    [KeyMasterLocals.COMMANDLINE["Errors"].name] = KeyMaster.ToggleErrors,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         print("=====================")
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Errors"].name.."|r"..KeyMasterLocals.COMMANDLINE["Errors"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Debug"].name.."|r"..KeyMasterLocals.COMMANDLINE["Debug"].text)
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
         print("=====================")
     end,
@@ -73,7 +77,8 @@ local function HandleSlashCommands(str)
 				end
 			else
 				-- does not exist!
-				KeyMaster.Commands.show()
+                local commandColor = select(4, Theme:GetThemeColor("themeFontColorYellow"))
+				KeyMaster:Print(KeyMasterLocals.COMMANDERROR1 .." \"|cff" .. commandColor .. arg .. "|r\". ".. KeyMasterLocals.COMMANDERROR2 .. " |cff" .. commandColor .. KeyMasterLocals.COMMANDLINE["/km"].name .. " " .. KeyMasterLocals.COMMANDLINE["Help"].name .."|r " .. KeyMasterLocals.COMMANDERROR3 .. ".")
 				return;
 			end
 		end
@@ -91,6 +96,11 @@ function KeyMaster:Print(...)
     local hex = select(4, Theme:GetThemeColor("default"))
     local prefix = string.format("|cff%s%s|r", hex:upper(), KeyMasterLocals.ADDONNAME..":");	
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
+end
+
+function KeyMaster:loadSavedVariables()
+    KeyMaster.KEYMASTER_ERRORS = KeyMaster_DB.addonConfig.showErrors
+    KeyMaster.KEYMASTER_DEBUG = KeyMaster_DB.addonConfig.showDebugging
 end
 
 -- Addon Loading Event
@@ -119,6 +129,18 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
     KeyMaster:Print(KeyMasterLocals.WELCOMEMESSAGE, "|cff"..hexColor..UnitName("player").."|r"..KeyMasterLocals.EXCLIMATIONPOINT)
+    
+    local hexColor = select(4, Theme:GetThemeColor("color_ERRORMSG"))
+    local status = KeyMaster_DB.addonConfig.showErrors
+    if (status) then
+        KeyMaster:Print("|cff"..hexColor.. KeyMasterLocals.ERRORMESSAGESNOTIFY .. "|r")
+    end
+
+    local hexColor = select(4, Theme:GetThemeColor("color_DEBUGMSG"))
+    status = KeyMaster_DB.addonConfig.showDebugging
+    if (status) then
+        KeyMaster:Print("|cff"..hexColor.. KeyMasterLocals.DEBUGMESSAGESNOTIFY .. "|r")
+    end
 end
 
 local events = CreateFrame("Frame")
@@ -183,10 +205,12 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         C_MythicPlus.RequestCurrentAffixes()
         C_MythicPlus.RequestMapInfo()
         C_MythicPlus.RequestRewards()
-        KeyMaster:Print("C_MythicPlus requests sent.")
+        KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")
+        KeyMaster:PLAYER_LOGIN()
+        KeyMaster:loadSavedVariables()
     end
     if isLogin or isReload then
-        print("reloading")
+        KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
         -- Create UI frames
         MainInterface:Initialize()
 
@@ -218,3 +242,7 @@ end
 local playerEnterEvents = CreateFrame("Frame")
 playerEnterEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 playerEnterEvents:SetScript("OnEvent", onEvent_PlayerEnterWorld)
+
+-- Error and debug handling
+--KeyMaster.KEYMASTER_ERRORS = KeyMaster_DB.addonConfig.showErrors
+--KeyMaster.KEYMASTER_DEBUG = KeyMaster_DB.addonConfig.showDebugging

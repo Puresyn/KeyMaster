@@ -40,13 +40,13 @@ end
 
 local function createPartyDungeonHeader(anchorFrame, mapId)
     if not anchorFrame and mapId then 
-        KeyMaster:Print("ERROR: ", "No valid refrences passed to createPartyDungeonHeader()")
+        KeyMaster:_ErrorMsg("createPartyDungeonHeader", "PartyFrame", "No valid parameters passed.")
     end
     if (not anchorFrame) then
-        KeyMaster:Print("Error: ", "Invalid anchorFrame for createPartyDungeonHeader() mapId:"..mapId)
+        KeyMaster:_ErrorMsg("createPartyDungeonHeader", "PartyFrame", "Invalid anchorFrame for mapId: "..mapId)
     end
     if (not mapId) then
-        KeyMaster:Print("ERROR: ", "Invalid mapId for createPartyDungeonHeader() anchorFrame:"..anchorFrame:GetName())
+        KeyMaster:_ErrorMsg("createPartyDungeonHeader", "PartyFrame", "Invalid mapId for anchorFrame: "..anchorFrame:GetName())
     end
     -- END DEBUG
 
@@ -191,12 +191,12 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     elseif (parentFrame:GetName() == "KM_PlayerRow4") then playerNumber = 4
     elseif (parentFrame:GetName() == "KM_PlayerRow5") then playerNumber = 5
     else
-        KeyMaster:Print("Error: Only support for 5 party rows is allowed...invalid parentFrame")
+        KeyMaster:_ErrorMsg("CreatePartyDataFrame", "PartyFrame", "Supports only 5 party members...invalid parentFrame")
         return
     end
 
     if (not playerNumber) then
-        KeyMaster:Print("Error: ", "Invalid party row reference for data frame: "..playerNumber) -- Debug
+        KeyMaster:_ErrorMsg("CreatePartyDataFrame", "PartyFrame","Invalid party row reference for data frame: "..playerNumber)
     end
 
     -- Data frame
@@ -346,7 +346,7 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
     elseif (unitId == "party3") then partyNumber = 4
     elseif (unitId == "party4") then partyNumber = 5
     else
-        KeyMaster:Print("Invalid paramater value for unitId, expected 'player' or 'party1-4'")
+        KeyMaster:_ErrorMsg("CreatePartyMemberFrame", "PartyFrame", "Invalid paramater value for unitId, expected 'player' or 'party1-4'")
         return
     end
 
@@ -399,8 +399,7 @@ end
 function MainInterface:CreatePartyScoreTallyFooter()
     local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
     if (not parentFrame) then
-        KeyMaster:Print("Error: Tally footer could not find a valid parent.")
-        KeyMaster:Print("--Action: [Skipped Creation]")
+        KeyMaster:_DebugMsg("CreatePartyScoreTallyFooter", "PartyFrame", "Tally footer could not find a valid parent. [Skipped Creation]")
         return
     end
 
@@ -582,6 +581,6 @@ function MainInterface:PartyColHighlight(parentFrame, visible)
         end
     else
         --print(_G[parentFrame]:GetName())
-        KeyMaster:Print("Error: PartyColHighlight - invalid parameters: " .. parentFrame .. ", " .. tostring(visible))
+        KeyMaster:_ErrorMsg("PartyColHighlight", "PartyFrame", "Invalid parameters: " .. parentFrame .. ", " .. tostring(visible))
     end
 end

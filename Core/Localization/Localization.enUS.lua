@@ -1,9 +1,6 @@
 KeyMasterLocals = {}
 local L = KeyMasterLocals
 
-SLASH_KeyMaster1 = "/km"
-SLASH_KeyMaster2 = "/keymaster"
-
 L.ADDONNAME = "Key Master"
 L.BUILDRELEASE = "release"
 L.BUILDBETA = "beta"
@@ -15,11 +12,21 @@ L.THISWEEKSAFFIXES = "This Week\'s Affixes"
 L.YOURRATING = "Your Rating"
 L.TYRANNICAL = "Tyrannical"
 L.FORTIFIED = "Fortified"
+L.ERRORMESSAGES = "Error messages"
+L.ERRORMESSAGESNOTIFY = "Notify: Error messages are on."
+L.DEBUGMESSAGES = "Debug messages"
+L.DEBUGMESSAGESNOTIFY = "Notify: Debug messages are on."
+L.COMMANDERROR1 = "Invalid command"
+L.COMMANDERROR2 = "Enter"
+L.COMMANDERROR3 = "for commands"
 
 L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
-L.COMMANDLINE["Show"] = { name = "show", text = " - shows the main window."}
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
+L.COMMANDLINE["Show"] = { name = "show", text = " - show/hide the main window."}
 L.COMMANDLINE["Help"] = { name = "help", text = " - shows this help menu."}
+L.COMMANDLINE["Errors"] = { name = "errors", text = " - toggle error messages."}
+L.COMMANDLINE["Debug"] = { name = "debug", text = " - toggle debug messages."}
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Mythic Rating", text = "This is the chacacter's current Mythic Plus rating." }
@@ -48,5 +55,11 @@ L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
 
 L.CHARACTERINFO = {}
+L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
 L.CHARACTERINFO["KeyInVault"] = { name = "Key in Vault", text = "In Vault"}
-L.CHARACTERINFO["AskMerchant"] = { name = "Ask Key Merchant", text = "Ask Key Merchant"}
+L.CHARACTERINFO["AskMerchant"] = { name = "Ask Key Merchant", text = "Key Merchant"}
+
+
+-- DO NOT EDIT
+SLASH_KeyMaster1 = L.COMMANDLINE["/km"].name
+SLASH_KeyMaster2 = L.COMMANDLINE["/keymaster"].name

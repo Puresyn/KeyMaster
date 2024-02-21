@@ -4,7 +4,9 @@
 --------------------------------
 local _, KeyMaster = ...
 local DungeonTools = KeyMaster.DungeonTools
+local Theme = KeyMaster.Theme
 
+-- sort arrays by order (order optional)
 function KeyMaster:spairs(t, order)
     -- collect the keys
     local keys = {}
@@ -55,7 +57,7 @@ end
 -- CreateHLine(width [INT], parentFrame [FRAME], xOfs [INT (optional)], yOfs [INT (optional)])
 function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     local lrm = 8 -- left/right line margin
-    if (not width and parentFrame and realativeAnchor) then KeyMaster:print("ERROR: Invalid params provided: CreateHLine") return end
+    if (not width and parentFrame and realativeAnchor) then KeyMaster:_ErrorMsg("CreateHLine", "Misc", "Invalid params provided.") return end
     if (not xOfs) then xOfs = 0 end
     if (not yOfs) then yOfs = 0 end
     local f = CreateFrame("Frame", nil, parentFrame)
@@ -95,11 +97,85 @@ function KeyMaster:IsTextureAvailable(texturePath)
     local texture = UIParent:CreateTexture()
     texture:SetPoint("CENTER")
     texture:SetTexture(texturePath)
-    print(texture:GetTexture())
+    KeyMaster:_DebugMsg("IsTextureAvailable", "Misc", texture:GetTexture())
 
     return texture:GetTexture() ~= nil
 end
 
--- Global KeyMaster error output function
-function  KM_Error(funcName , lineNumb, errMsg, debugInfo)
+-- KeyMaster error/debug output functions
+local function KM_Print(...)
+    local brandHex = select(4, Theme:GetThemeColor("default"))
+    local prefix = string.format("|cff%s%s|r", brandHex:upper(), KeyMasterLocals.ADDONNAME..":");
+    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...))
 end
+
+-- Usage KeyMaster:_ErrorMsg(str, str, str)
+function KeyMaster:_ErrorMsg(funcName, fileName, ...)
+    if (KeyMaster_DB.addonConfig.showDebugging == true) then
+        local errorHex = "d00000"
+        local msg = string.format("|cff%s%s|r", errorHex:upper(), "[ERROR] "  .. funcName .. " in " .. fileName .. " - " .. ...)
+        KM_Print(msg)
+    end
+end
+
+-- Usage KeyMaster:_DebugMsg(str, str, str)
+function KeyMaster:_DebugMsg(funcName, fileName, ...)
+    if (KeyMaster_DB.addonConfig.showErrors == true) then
+        local debugHex = "A3E7FC"
+        local msg = string.format("|cff%s%s|r", debugHex:upper(), "[DEBUG] " .. funcName .. " in " .. fileName .. " - " .. ...);	
+        KM_Print(msg)
+    end
+end
+
+
+-- This function gets run when the PLAYER_LOGIN event fires:
+    function KeyMaster:PLAYER_LOGIN()
+        -- This table defines the addon's default settings:
+        local defaults = {
+            addonConfig = {
+                showErrors = false,
+                showDebugging = false
+            }
+        }
+    
+        -- This function copies values from one table into another:
+        local function copyDefaults(src, dst)
+            -- If no source (defaults) is specified, return an empty table:
+            if type(src) ~= "table" then return {} end
+            -- If no target (saved variable) is specified, create a new table:
+            if type(dst) ~= "table" then dst = { } end
+            -- Loop through the source (defaults):
+            for k, v in pairs(src) do
+                -- If the value is a sub-table:
+                if type(v) == "table" then
+                    -- Recursively call the function:
+                    dst[k] = copyDefaults(v, dst[k])
+                -- Or if the default value type doesn't match the existing value type:
+                elseif type(v) ~= type(dst[k]) then
+                    -- Overwrite the existing value with the default one:
+                    dst[k] = v
+                end
+            end
+            -- Return the destination table:
+            return dst
+        end
+    
+        -- Copy the values from the defaults table into the saved variables table
+        -- if it exists, and assign the result to the saved variable:
+        KeyMaster_DB = copyDefaults(defaults, KeyMaster_DB)
+    
+    end
+
+    function KeyMaster:ToggleDebug()
+        KeyMaster_DB.addonConfig.showDebugging = not KeyMaster_DB.addonConfig.showDebugging
+        local status = KeyMaster_DB.addonConfig.showDebugging
+        if (status) then status = "on." else status = "off." end
+        KeyMaster:Print(KeyMasterLocals.DEBUGMESSAGES .. " " .. status)
+    end
+
+    function KeyMaster:ToggleErrors()
+        KeyMaster_DB.addonConfig.showErrors = not KeyMaster_DB.addonConfig.showErrors
+        local status = KeyMaster_DB.addonConfig.showErrors
+        if (status) then status = "on." else status = "off." end
+        KeyMaster:Print(KeyMasterLocals.ERRORMESSAGES.. " " .. status)
+    end

@@ -65,7 +65,7 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     
     if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
-       KeyMaster:Print("Error: ", "Incorrect weeklyAffix value in GetMplusScoreForMap function")
+       KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo", "Incorrect weeklyAffix value provided.")
        return nil   
     end
     
@@ -181,6 +181,6 @@ function CharacterInfo:GetMyCharacterInfo()
         myCharacterInfo.DungeonRuns[mapid] = keyRun
     end
 
-    KeyMaster:Print("Character data fetched.")
+    KeyMaster:_DebugMsg("GetMyCharacterInfo", "CharacterInfo", "Character data fetched.")
     return myCharacterInfo
 end

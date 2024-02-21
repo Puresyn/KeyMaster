@@ -195,6 +195,18 @@ local Colors = {
         g = 0.91,
         b = 0.99,
         hex = "A3E7FC"
+    },
+    color_ERRORMSG = {
+        r = 1,
+        g = 1,
+        b = 1,
+        hex = "FF2F2F"
+    },
+    color_DEBUGMSG = {
+        r = 0.64,
+        g = 0.91,
+        b = 0.99,
+        hex = "A3E7FC"
     }
 }
 
@@ -203,7 +215,7 @@ function Theme:GetThemeColor(colorName)
     if (c) then
 	    return c.r, c.g, c.b, c.hex
     else
-        KeyMaster:Print("Error: Theme color "..colorName.." was not found.")
+        KeyMaster:_ErrorMsg("GetThemeColor", "Theme", "Theme color \""..colorName.."\" was not found.")
     end
 end
 

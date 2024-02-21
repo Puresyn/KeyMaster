@@ -22,13 +22,13 @@ end
 --------------------------------
 function Header:createAffixFrames(parentFrame, seasonalAffixes)
     if (parentFrame == nil) then 
-        KeyMaster:Print("Error: Parameter Null - No parent frame passed to CreateAffixFrames function.")
+        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
         return
     end
     
     --local weekData = DungeonTools:GetAffixes()
     if (seasonalAffixes == nil) then 
-        KeyMaster:Print("Error: No mythic plus season affixes found!")
+        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found!")
         return 
     end
     for i=1, #seasonalAffixes, 1 do

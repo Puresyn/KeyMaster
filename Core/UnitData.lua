@@ -40,13 +40,13 @@ function UnitData:SetUnitData(unitData, updateUI)
 
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
-        KeyMaster:Print("UnitData:SetUnitData() - unitId is nil.  Cannot store data for "..unitData.name)
+        KeyMaster:_ErrorMsg("SetUnitData", "UnitData", "UnitId is nil.  Cannot store data for "..unitData.name)
         return
     end
     unitData.unitId = unitId -- set unitId for this client
     unitInformation[unitData.GUID] = unitData
 
-    KeyMaster:Print("Stored data for "..unitData.name)
+    KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
     if updateUI then
         UnitData:DisplayUnitData(unitData.unitId, unitData)
     end
@@ -55,7 +55,7 @@ end
 function UnitData:SetUnitDataUnitPosition(name, newUnitId)
     local unitData = UnitData:GetUnitDataByName(name)
     if unitData == nil then
-        KeyMaster:Print("Cannot update "..name.." position, because a unit cannot be found by that name.")
+        KeyMaster:_ErrorMsg("SetUnitDataUnitPostion", "UnitDat", "Cannot update position for "..name.." because a unit cannot be found by that name.")
         return
     end
 
@@ -110,10 +110,10 @@ function UnitData:MapPartyUnitData()
         local currentUnitId = "party"..i
         if (UnitName(currentUnitId) ~= nil) then
             -- find if we have data for this player, if not get a set of default data from blizzard
-            KeyMaster:Print("Mapping data for "..currentUnitId)
+            KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Mapping data for "..currentUnitId)
             local unitData = unitInformation[UnitGUID(currentUnitId)]
             if unitData == nil then
-                KeyMaster:Print("Getting Blizzard data on "..currentUnitId)
+                KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
                 unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
             end
             -- remap and display data for this unitid
@@ -130,7 +130,7 @@ function UnitData:UnitDataAudit()
     local partyUnits = { "party1", "party2", "party3", "party4" }
     local unitIdsToProcess = {}
     for _, unitId in partyUnits do
-        print("Processing... "..unitId)
+        KeyMaster:_DebugMsg("UnitDataAudit", "UnitData", "Processing... "..unitId)
         local currentUnitGUID = UnitGUID(unitId)
         local unitData = unitInformation[currentUnitGUID]
         if unitData == nil then

@@ -13,7 +13,7 @@ local function createAffixFramesWithRetries(parent, retryCount)
     if retryCount < 5 then
       C_Timer.After(3, function() createAffixFramesWithRetries(parent, retryCount + 1) end)
     else
-      KeyMaster:Print("Failed to create affix frames after 5 retries.")
+      KeyMaster:_DebugMsg("createAffixFramesWithRetries", "UIinit", "Failed to create affix frames after 5 retries.")
     end
   end
 end

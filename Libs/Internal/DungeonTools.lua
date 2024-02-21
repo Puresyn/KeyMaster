@@ -62,7 +62,7 @@ function DungeonTools:GetMapName(mapid)
     local name,_,_,_,_ = C_ChallengeMode.GetMapUIInfo(mapid)
 
     if (name == nil) then
-        print("Unable to find mapname for id " .. mapid)   
+        KeyMaster:_ErrorMsg("GetMapName", "DungeonTools", "Unable to find mapname for id " .. mapid)   
         return nil   
     end
 

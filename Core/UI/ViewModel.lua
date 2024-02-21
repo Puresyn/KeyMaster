@@ -30,13 +30,13 @@ end
 -- Party member data assign
 function ViewModel:UpdateUnitFrameData(unitId, playerData)
     if(unitId == nil) then 
-        print("ERROR: parameter unitId in function UpdateUnitFrameData cannot be empty.")
+        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "ViewModel", "Parameter unitId cannot be empty.")
         return
     end
 
     --local playerData = UnitData:GetUnitDataByUnitId(unitId)
     if(playerData == nil) then 
-        print("ERROR: 'playerData' in function UpdateUnitFrameData cannot be empty.")
+        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "ViewModel", "\"playerData\" cannot be empty.")
         return
     end
 

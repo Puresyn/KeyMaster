@@ -52,7 +52,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
 
     --print("Recieved Data: "..data) -- CREATES BLANK LUA ERROR
     
-    KeyMaster:Print("Received data from "..sender)
+    KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
     data.hasAddon = true
     UnitData:SetUnitData(data)
 end
