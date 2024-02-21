@@ -129,7 +129,7 @@ end
 
 
 -- This function gets run when the PLAYER_LOGIN event fires:
-    function KeyMaster:PLAYER_LOGIN()
+    function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
         -- This table defines the addon's default settings:
         local defaults = {
             addonConfig = {
