@@ -125,51 +125,32 @@ local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnEvent_AddonLoaded)
 
-local lastPartyEvent = ""
 local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     
-    if (event == "GROUP_JOINED") then
-        
-    end
-    if (event == "GROUP_LEFT") then
-        --local partySize, partyId = ...
-        -- purge all party data EXCEPT player        
-        UnitData:DeleteAllUnitData()
-        -- process party1-4 state
-        UnitData:MapPartyUnitData()
-        -- sets this as the last party event occured
-        lastPartyEvent = "GROUP_LEFT"       
-    end
+    -- process party changes
     if (event == "GROUP_ROSTER_UPDATE") then
-        -- This is checked because when a player joins a party it fires two events e.g., GROUP_LEFT and GROUP_ROSTER_UPDATE.  We only want to process this once.
-        -- skip this event since it was all processed in the last one OR not needed
-        if lastPartyEvent == "GROUP_LEFT" or lastPartyEvent == "GROUP_JOINED" then
-            lastPartyEvent = "GROUP_ROSTER_UPDATE"
-            return
-        end
-        
         -- The following resets the party data then repopulates it.
         local inGroup = UnitInRaid("player") or IsInGroup()
         if inGroup and GetNumGroupMembers() >= 2 then
-            -- destroy all party data
-            -- UnitData:DeleteAllUnitData()
-
             -- fetch self data
             local playerUnit = UnitData:GetUnitDataByUnitId("player")
+
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerUnit, "PARTY", nil)
+            print("transmitting player data to party members...")
+        else
+            -- purge all party data EXCEPT player
+            UnitData:DeleteAllUnitData()
+            print("purging all party data...")
         end
-        lastPartyEvent = "GROUP_ROSTER_UPDATE"
     end
 
-    -- process party1-4 with min. data
-    UnitData:MapPartyUnitData()-- STORES DATA #3 IN RETRIEVE COMS
+    -- reprocess party1-4 units
+    UnitData:MapPartyUnitData()
 end
 
 local partyEvents = CreateFrame("Frame")
-partyEvents:RegisterEvent("GROUP_JOINED")
-partyEvents:RegisterEvent("GROUP_LEFT")
 partyEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
 partyEvents:SetScript("OnEvent", onEvent_PartyChanges)
 

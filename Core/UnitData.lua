@@ -110,11 +110,13 @@ function UnitData:MapPartyUnitData()
         local currentUnitId = "party"..i
         if (UnitName(currentUnitId) ~= nil) then
             -- find if we have data for this player, if not get a set of default data from blizzard
-            KeyMaster:Print("Mapping data for "..currentUnitId)
+            KeyMaster:Print("Looking for data on "..currentUnitId)
             local unitData = unitInformation[UnitGUID(currentUnitId)]
             if unitData == nil then
                 KeyMaster:Print("Getting Blizzard data on "..currentUnitId)
                 unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
+            else
+                KeyMaster:Print("Found local data on "..currentUnitId)
             end
             -- remap and display data for this unitid
             UnitData:DisplayUnitData(currentUnitId, unitData)
@@ -124,21 +126,4 @@ function UnitData:MapPartyUnitData()
         end
     end
     KeyMaster.MainInterface:ResetTallyFramePositioning()
-end
-
-function UnitData:UnitDataAudit()
-    local partyUnits = { "party1", "party2", "party3", "party4" }
-    local unitIdsToProcess = {}
-    for _, unitId in partyUnits do
-        print("Processing... "..unitId)
-        local currentUnitGUID = UnitGUID(unitId)
-        local unitData = unitInformation[currentUnitGUID]
-        if unitData == nil then
-            tinsert(unitIdsToProcess, unitId)
-        else
-            if unitData.unitId ~= unitId then
-                unitInformation[currentUnitGUID].unitId = unitId
-            end
-        end
-    end
 end
