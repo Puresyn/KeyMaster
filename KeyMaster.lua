@@ -98,10 +98,6 @@ function KeyMaster:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
-function KeyMaster:loadSavedVariables()
-    KeyMaster.KEYMASTER_ERRORS = KeyMaster_DB.addonConfig.showErrors
-    KeyMaster.KEYMASTER_DEBUG = KeyMaster_DB.addonConfig.showDebugging
-end
 
 -- Addon Loading Event
 local function OnEvent_AddonLoaded(self, event, name, ...)
@@ -125,8 +121,7 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     --SLASH_KeyMaster2 = "/keymaster" -- Localized
     SlashCmdList.KeyMaster = HandleSlashCommands
 
-    KeyMaster:PLAYER_LOGIN()
-    KeyMaster:loadSavedVariables()
+    KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     
     -- Welcome message
     local hexColor = CharacterInfo:GetMyClassColor("player")
