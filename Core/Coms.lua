@@ -40,7 +40,7 @@ end
 -- sends request to party members to transmit their data
 function MyAddon:TransmitRequest(requestData)
     if requestData == nil or requestData.requestType == nil then 
-        KeyMaster._DebugMsg("TransmitRequest", "Coms", "Received invalid data request type.")
+        KeyMaster:_DebugMsg("TransmitRequest", "Coms", "Received invalid data request type.")
         return
     end
     local serialized = LibSerialize:Serialize(requestData)
@@ -55,7 +55,7 @@ local function processKM3Data(data, distribution, sender)
         -- send player data to party members
         local playerData = UnitData:GetUnitDataByUnitId("player")
         MyAddon:Transmit(playerData)
-        KeyMaster._DebugMsg("processKM3Data", "Coms", "Request replied with player data...")
+        KeyMaster:_DebugMsg("processKM3Data", "Coms", "Request replied with player data...")
     end   
 end
 
