@@ -67,10 +67,10 @@ local DungeonAbbreviations = DungeonTools:instanceAbbrs()
  end
  local function computeScores(dungeonId, level, timeInSeconds)
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    local parTime = mapTable[dungeonId].timelimit
+    local parTime = mapTable[dungeonId].timeLimit
     --local _, _, parTime, _, _ = C_ChallengeMode.GetMapUIInfo(dungeonId)
     
-    local baseScore = q [math.min(level, 10)] + max(0, level - 10) * 5;
+    local baseScore = DungeonBaseScores[math.min(level, 10)] + max(0, level - 10) * 5;
     local parTimeFraction = timeInSeconds / parTime;
     local timeScore = computeTimeModifier(parTimeFraction);
     formatNumber(parTimeFraction * 100, 2)
@@ -111,9 +111,44 @@ local DungeonAbbreviations = DungeonTools:instanceAbbrs()
     "complete     " ..
     padString(blizzardScores.Complete, 3) .. " | " .. padString(round(computedKeyScore), 3)
  end
+
+ -- Clean up how Key Master stores cached member run data
+ local function CleanRunData(runInfo)
+
+   local cleanMapData = {}
+   local cleanOverallScoreData
+   local tempTable = {}
+   tempTable = {}
+
+   if runInfo["bestOverall"] > 0 then
+      cleanOverallScoreData = runInfo.bestOverall
+   end
+
+   if runInfo["Fortified"].DurationSec > 0 then
+      tempTable = {
+            name =  "Fortified",
+            score = runInfo["Fortified"].Score,
+            level = runInfo["Fortified"].Level,
+            durationSec = runInfo["Fortified"].DurationSec,
+            overTime = runInfo["Fortified"].IsOverTime
+      }
+      tinsert(cleanMapData, tempTable)
+   end
+
+   if runInfo["Tyrannical"].DurationSec > 0 then
+      tempTable = {
+         name =  "Tyrannical",
+         score = runInfo["Tyrannical"].Score,
+         level = runInfo["Tyrannical"].Level,
+         durationSec = runInfo["Tyrannical"].DurationSec,
+         overTime = runInfo["Tyrannical"].IsOverTime
+      }
+      tinsert(cleanMapData, tempTable)
+   end
+   return cleanMapData, cleanOverallScoreData
+ end
  
- -- affix = "Tyrannical" or "Fortified"
- local function computeTTEnhancement(dungeonId, unitId, affix)
+  local function computeTTEnhancement(dungeonId, unitId)
     local computedAffixScoreData = {
        Tyrannical = { baseScore = 0, timeScore = 0, timeBonus = 0, parTimePercentageString = "   0.00%" },
        Fortified = { baseScore = 0, timeScore = 0, timeBonus = 0, parTimePercentageString = "   0.00%" },
@@ -126,19 +161,8 @@ local DungeonAbbreviations = DungeonTools:instanceAbbrs()
     --local blizzardAffixScoreData, blizzardTotalScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(dungeonId)
     local UnitInfo = UnitData:GetUnitDataByUnitId(unitId)
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    local runInfo = UnitInfo.DungeonRuns[dungeonId].keyRun[affix]
-    local blizzardAffixScoreData = {
-      unused = {},
-      info = {
-         name =  mapTable[dungeonId].name,
-         score = runInfo.score,
-         level = runInfo.level,
-         durationSec = runInfo.DurationSec,
-         overTime = runInfo.IsOverTime
-      }
-    }
-    
-    local blizzardTotalScore = runInfo.bestOverall
+    local runInfo = UnitInfo.DungeonRuns[dungeonId]
+    local blizzardAffixScoreData, blizzardTotalScore = CleanRunData(runInfo)
 
     if (blizzardAffixScoreData ~= nil) then
        for _, info in pairs(blizzardAffixScoreData) do
@@ -152,39 +176,17 @@ local DungeonAbbreviations = DungeonTools:instanceAbbrs()
     return buildKeyDataString(blizzardScores, computedAffixScoreData)
  end
 
- function KeyScoreCalc:PrintScores(unitId, affix)
+ function KeyScoreCalc:PrintScores(unitId)
+   
    local mapTable = DungeonTools:GetCurrentSeasonMaps()
    for dungeonId, abbreviation in pairs(DungeonAbbreviations) do
       print(abbreviation .. " - " .. mapTable[dungeonId].name)
       print("        Blizzard | Computed")
-      print(computeTTEnhancement(dungeonId, unitId, affix))
+      print(computeTTEnhancement(dungeonId, unitId))
    end
-   local unitData = UnitData:GetUnitDataByUnitId(unitId)
-   local currentScore = unitData[unitId].mythicPlusRating
+   local unitInfo = UnitData:GetUnitDataByUnitId(unitId)
+   local currentScore = unitInfo.mythicPlusRating
       print("========================================")
       print("Total        " .. padString(currentScore, 3) .. " | " .. padString(round(totalScore), 3))
       print("========================================")
 end
-
- 
---[[  local function printScoreTable()
-    for dungeonId, abbreviation in pairs(DungeonAbbreviations) do
-       print(abbreviation .. " - " .. C_ChallengeMode.GetMapUIInfo(dungeonId))
-       print("        Blizzard | Computed")
-       print(computeTTEnhancement(dungeonId))
-    end
-    local currentScore = C_ChallengeMode.GetOverallDungeonScore()
-    print("========================================")
-    print("Total        " .. padString(currentScore, 3) .. " | " .. padString(round(totalScore), 3))
-    print("========================================")
- end ]]
- --printScoreTable()
-
-
- -- reference only
---[[  function KeyScoreCalc(mapID, currLevel, currTime, mapToCalcById)
-    --local _, id, timeLimit, _ = C_ChallengeMode.GetMapUIInfo(dungeonId)
-    --local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    --local blizzardAffixScoreData, blizzardTotalScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap()
-
-    end ]]
