@@ -217,6 +217,9 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
             MainInterface:SetPartyWeeklyDataTheme() 
 
+            -- Highlight key and level on map frames
+            KeyMaster.ViewModel:HighlightKeystones(playerData.ownedKeyId, playerData.ownedKeyLevel)
+
             -- process party
             local inGroup = UnitInRaid("player") or IsInGroup()
             if inGroup and GetNumGroupMembers() >= 2 then

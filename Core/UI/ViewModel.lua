@@ -27,6 +27,33 @@ function ViewModel:HideAllPartyFrame()
     end
 end
 
+function ViewModel:HighlightKeystones(mapId, level)
+    if (mapId == nil or mapId == 0) then
+        KeyMaster:_DebugMsg("HighlightKeystones", "ViewModel", "Parameter mapId cannot be empty.")
+        return
+    end
+    -- Highlight column for mapid for each row member
+    local rows = {"player", "party1", "party2", "party3", "party4"}
+    local counter = 1
+    for _,unitid in pairs(rows) do
+        local visible = false
+        if (UnitGUID(unitid) ~= nil) then
+            visible = true
+        end
+        KeyMaster.MainInterface:PartyColHighlight("KM_MapData"..counter..mapId, visible)
+        counter = counter + 1
+    end
+
+    -- Highlight the header if the player has a higher key
+    local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
+    local currentLevel = tonumber(keyLevelText:GetText())
+    if (currentLevel == nil or level > currentLevel) then
+        keyLevelText:SetText(level)
+        keyLevelText:Show()
+    else
+        keyLevelText:Hide()
+    end    
+end
 -- Party member data assign
 function ViewModel:UpdateUnitFrameData(unitId, playerData)
     if(unitId == nil) then 

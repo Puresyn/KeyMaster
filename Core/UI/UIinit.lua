@@ -44,13 +44,6 @@ function MainInterface:Initialize()
       partyRow:Hide()
     end
 
-    MainInterface:PartyColHighlight("KM_MapData1248", true)
-    MainInterface:PartyColHighlight("KM_MapData2248", true)
-    MainInterface:PartyColHighlight("KM_MapData1463", true)
-    MainInterface:PartyColHighlight("KM_MapData2463", true)
-    --[[  MainInterface:PartyColHighlight("KM_MapData3248", true)
-    MainInterface:PartyColHighlight("KM_MapTally248", true) ]]
-
     -- create io score tally frames
     local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 
