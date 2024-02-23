@@ -27,7 +27,7 @@ KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE['Debug'].name] = KeyMaster.ToggleDebug,
     [KeyMasterLocals.COMMANDLINE["Errors"].name] = KeyMaster.ToggleErrors,
     ["scorecalc"] = function()
-        KeyScoreCalc:PrintScores("player", "Fortified")
+        KeyScoreCalc:PrintScores("player")
     end,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
