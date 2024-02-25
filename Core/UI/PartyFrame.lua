@@ -334,7 +334,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText5:SetText(KeyMasterLocals.PARTYFRAME["OverallScore"].name..":")
+    tempText5:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
 
 end
 

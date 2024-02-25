@@ -35,7 +35,7 @@ L.TOOLTIPS["TeamRatingGain"] = { name = "Estimated Rating Gain", text = "This is
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Party Information", text = "Party Information"}
-L.PARTYFRAME["OverallScore"] = { name = "Overall Score", text = "Overall Score" }
+L.PARTYFRAME["OverallRating"] = { name = "Overall Rating", text = "Overall Rating" }
 L.PARTYFRAME["PartyPointGain"] = { name = "Party Point Gain", text = "Party Point Gain"}
 L.PARTYFRAME["Level"] = { name = "Level", text = "Level" }
 L.PARTYFRAME["Weekly"] = { name = "Weekly", text = "Weekly"}
