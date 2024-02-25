@@ -184,9 +184,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     -- isLogin ONLY OCCURS when logging in from character select screen
     -- isReload occurs when reloading the UI
     -- zoning into a new area does not trigger isLogin or isReload
-    print("Entered world")
-    print("isLogin: "..tostring(isLogin))
-    print("isReload: "..tostring(isReload))
+
     if (isLogin) then
         -- This section is required because of some C_MythicPlus blizzard functions returning nil without it
         -- see our github issue #6
@@ -197,6 +195,8 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         
     end
     if isReload then
+        -- Covers scenario where player reloadUI and doesn't have party data anymore.
+        -- This sends a request to players in party to resend their data.
         local requestData = {}
         requestData.requestType = "playerData"
 

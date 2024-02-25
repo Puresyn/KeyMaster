@@ -163,3 +163,15 @@ function DungeonTools:GetWeekFont(currentAffix)
     end
     return myFont
 end
+
+function DungeonTools:CalculateChest(dungeonID, timeCompleted)
+    if timeCompleted == nil or timeCompleted == 0 then return "" end
+    if currentSeasonMaps == nil then
+        currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    end
+    local timeLimit = currentSeasonMaps[dungeonID].timeLimit
+    if(timeCompleted <= (timeLimit * 0.6)) then return "+++" end
+    if(timeCompleted <= (timeLimit * 0.8)) then return "++" end
+    if(timeCompleted <= timeLimit) then return "+" end
+    return ""
+end

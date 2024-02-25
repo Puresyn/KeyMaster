@@ -126,10 +126,17 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     -- Dungeon Scores
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then        
-        for n, v in pairs(mapTable) do
-            _G["KM_MapLevelT"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Tyrannical"].Level)
-            _G["KM_MapLevelF"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["Fortified"].Level)
-            _G["KM_MapTotalScore"..partyPlayer..n]:SetText(playerData.DungeonRuns[n]["bestOverall"])
+        for mapid, v in pairs(mapTable) do
+            -- Tyrannical
+            local tyranChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Tyrannical"].DurationSec)
+            local tyranScore = playerData.DungeonRuns[mapid]["Tyrannical"].Level .. tyranChestCount
+            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(tyranScore)
+            -- Fortified
+            local fortChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Fortified"].DurationSec)
+            local fortScore = playerData.DungeonRuns[mapid]["Fortified"].Level .. fortChestCount            
+            _G["KM_MapLevelF"..partyPlayer..mapid]:SetText(fortScore)
+            -- Overall Score
+            _G["KM_MapTotalScore"..partyPlayer..mapid]:SetText(playerData.DungeonRuns[mapid]["bestOverall"])
         end
         _G["KM_MapDataLegend"..partyPlayer]:Show()
     else
