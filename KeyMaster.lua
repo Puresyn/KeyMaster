@@ -217,6 +217,8 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
             MainInterface:SetPartyWeeklyDataTheme() 
 
+            KeyMaster.ViewModel:UpdateTallyCalculations(playerData)
+
             -- Highlight key and level on map frames
             KeyMaster.ViewModel:HighlightKeystones(playerData.ownedKeyId, playerData.ownedKeyLevel)
 
@@ -231,6 +233,16 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
                 -- Transmit unit data to party members with addon
                 MyAddon:Transmit(playerUnit, "PARTY", nil)
             end
+
+            -- test
+            -- local dungeonId = 244 -- AD
+            -- local dungeonDuration = 1800 -- 30 minutes
+            -- local dungeonLevel = 14
+            -- local chestLevel = KeyMaster.DungeonTools:CalculateChest(dungeonId, dungeonDuration)
+            -- local potentialScore = KeyMaster.DungeonTools:CalculateRating(dungeonId, dungeonLevel, dungeonDuration)
+            -- print("Map: ", KeyMaster.DungeonTools:GetMapName(dungeonId))
+            -- print("Potential Score:", potentialScore)
+            -- print("Chest Level:", chestLevel)
         end) 
     end
 end

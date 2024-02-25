@@ -3,6 +3,8 @@ KeyMaster.DungeonTools = {}
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
+local maxModifier = 0.4
+
 --------------------------------
 -- Challenge Dungeon Instance Abbreviations.
 -- Must be manually maintained.
@@ -164,6 +166,18 @@ function DungeonTools:GetWeekFont(currentAffix)
     return myFont
 end
 
+function DungeonTools:GetWeeklyAffix()
+    local weeklyAffix = DungeonTools:GetAffixes()
+    if (weeklyAffix == nil) then
+        return "No Affixes"
+    end
+    return weeklyAffix[1].name
+end
+
+-- Calculates the dungeon runs performance based on its timer thresholds. 
+---@param dungeonID integer - the id of the dungeon
+---@param timeCompleted integer - the runs time in seconds
+---@return string - string of the performance i.e. + or +++
 function DungeonTools:CalculateChest(dungeonID, timeCompleted)
     if timeCompleted == nil or timeCompleted == 0 then return "" end
     if currentSeasonMaps == nil then
@@ -174,4 +188,90 @@ function DungeonTools:CalculateChest(dungeonID, timeCompleted)
     if(timeCompleted <= (timeLimit * 0.8)) then return "++" end
     if(timeCompleted <= timeLimit) then return "+" end
     return ""
+end
+
+local function getBaseScore(level)
+    -- Every completed key has a bonus of 20 rating
+    local baseRating = 20
+
+    -- First 10 levels are worth 5 rating per level
+    local firstRating = 0
+    if level >= 10 then
+        firstRating = 10 * 5
+    else
+        firstRating = level * 5
+    end
+
+    -- Every level after 10 is worth 7 rating per level
+    local secondRating = 0
+    if level > 10 then
+        secondRating = (level - 10) * 7
+    end
+
+    -- Every affix added is worth 10 rating
+    -- Currently affixes are added at key level 2, 7 and 14
+    local affixScore = 0
+    if level >= 2 then
+        affixScore = affixScore + 10
+    end
+    if level >= 7 then
+        affixScore = affixScore + 10
+    end
+    if level >= 14 then
+        affixScore = affixScore + 10
+    end
+
+    return baseRating + firstRating + secondRating + affixScore
+end
+
+---@param dungeonID integer
+---@param keyLevel integer level of mythic plus key to calculate
+---@param runTime integer
+---@return integer Total score for a dungeon by dungeon id, key level, and run time.
+function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
+    -- ((totaltime - runTime)/(totaltime * maxModifier)) * 5 = bonusScore
+    -- Subtract 5 if overtime
+    if currentSeasonMaps == nil then
+        currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    end
+    local bonusRating = 0
+    local dungeonTimeLimit = currentSeasonMaps[dungeonID].timeLimit
+    -- Runs over time by 40% are a 0 score.
+    if(runTime > (dungeonTimeLimit + (dungeonTimeLimit * maxModifier))) then
+        return 0
+    end
+    
+    -- Calculate the bonus score from timer
+    local numerator = dungeonTimeLimit - runTime
+    local denominator = dungeonTimeLimit * maxModifier
+    local quotient = numerator/denominator    
+    if(quotient >= 1) then bonusRating = 5
+    elseif(quotient <= -1) then bonusRating = -5
+    else bonusRating = quotient * 5 end
+
+    if(runTime > dungeonTimeLimit) then
+        bonusRating  = bonusRating - 5
+    end
+    
+    -- Untimed keys over 20 use the base score of a 20.
+    if(keyLevel > 20 and runTime > dungeonTimeLimit) then
+        keyLevel = 20
+    end
+    return getBaseScore(keyLevel) + bonusRating
+end
+
+--[[
+    CalculateDungeonTotal - Calculates a dungeons overall score contributing to a players rating.
+    @param seasonAffixScore1 - best score for dungeon for a weekly affix
+    @param seasonAffixScore2 - best score for dungeon for a weekly affix
+    @return - the total rating for the dungeons scores
+--]]
+function DungeonTools:CalculateDungeonTotal(seasonAffixScore1, seasonAffixScore2)
+    local total
+    if(seasonAffixScore1 > seasonAffixScore2) then
+        total = seasonAffixScore1 * 1.5 + seasonAffixScore2 * 0.5
+    else
+        total = seasonAffixScore1 * 0.5 + seasonAffixScore2 * 1.5
+    end
+    return total
 end
