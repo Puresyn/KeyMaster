@@ -129,57 +129,70 @@ end
 
 
 -- This function gets run when the PLAYER_LOGIN event fires:
-    function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
-        -- This table defines the addon's default settings:
-        local defaults = {
-            addonConfig = {
-                showErrors = false,
-                showDebugging = false
-            }
+function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
+    -- This table defines the addon's default settings:
+    local defaults = {
+        addonConfig = {
+            showErrors = false,
+            showDebugging = false
         }
-    
-        -- This function copies values from one table into another:
-        local function copyDefaults(src, dst)
-            -- If no source (defaults) is specified, return an empty table:
-            if type(src) ~= "table" then return {} end
-            -- If no target (saved variable) is specified, create a new table:
-            if type(dst) ~= "table" then dst = { } end
-            -- Loop through the source (defaults):
-            for k, v in pairs(src) do
-                -- If the value is a sub-table:
-                if type(v) == "table" then
-                    -- Recursively call the function:
-                    dst[k] = copyDefaults(v, dst[k])
-                -- Or if the default value type doesn't match the existing value type:
-                elseif type(v) ~= type(dst[k]) then
-                    -- Overwrite the existing value with the default one:
-                    dst[k] = v
-                end
+    }
+
+    -- This function copies values from one table into another:
+    local function copyDefaults(src, dst)
+        -- If no source (defaults) is specified, return an empty table:
+        if type(src) ~= "table" then return {} end
+        -- If no target (saved variable) is specified, create a new table:
+        if type(dst) ~= "table" then dst = { } end
+        -- Loop through the source (defaults):
+        for k, v in pairs(src) do
+            -- If the value is a sub-table:
+            if type(v) == "table" then
+                -- Recursively call the function:
+                dst[k] = copyDefaults(v, dst[k])
+            -- Or if the default value type doesn't match the existing value type:
+            elseif type(v) ~= type(dst[k]) then
+                -- Overwrite the existing value with the default one:
+                dst[k] = v
             end
-            -- Return the destination table:
-            return dst
         end
-    
-        -- Copy the values from the defaults table into the saved variables table
-        -- if it exists, and assign the result to the saved variable:
-        KeyMaster_DB = copyDefaults(defaults, KeyMaster_DB)
-    
+        -- Return the destination table:
+        return dst
     end
 
-    function KeyMaster:ToggleDebug()
-        KeyMaster_DB.addonConfig.showDebugging = not KeyMaster_DB.addonConfig.showDebugging
-        local status = KeyMaster_DB.addonConfig.showDebugging
-        if (status) then status = "on." else status = "off." end
-        KeyMaster:Print(KeyMasterLocals.DEBUGMESSAGES .. " " .. status)
-    end
+    -- Copy the values from the defaults table into the saved variables table
+    -- if it exists, and assign the result to the saved variable:
+    KeyMaster_DB = copyDefaults(defaults, KeyMaster_DB)
 
-    function KeyMaster:ToggleErrors()
-        KeyMaster_DB.addonConfig.showErrors = not KeyMaster_DB.addonConfig.showErrors
-        local status = KeyMaster_DB.addonConfig.showErrors
-        if (status) then status = "on." else status = "off." end
-        KeyMaster:Print(KeyMasterLocals.ERRORMESSAGES.. " " .. status)
-    end
+end
 
-    function KeyMaster:RoundToOneDecimal(number)
-        return math.floor((number * 10) + 0.5) * 0.1
+function KeyMaster:ToggleDebug()
+    KeyMaster_DB.addonConfig.showDebugging = not KeyMaster_DB.addonConfig.showDebugging
+    local status = KeyMaster_DB.addonConfig.showDebugging
+    if (status) then status = "on." else status = "off." end
+    KeyMaster:Print(KeyMasterLocals.DEBUGMESSAGES .. " " .. status)
+end
+
+function KeyMaster:ToggleErrors()
+    KeyMaster_DB.addonConfig.showErrors = not KeyMaster_DB.addonConfig.showErrors
+    local status = KeyMaster_DB.addonConfig.showErrors
+    if (status) then status = "on." else status = "off." end
+    KeyMaster:Print(KeyMasterLocals.ERRORMESSAGES.. " " .. status)
+end
+
+function KeyMaster:RoundToOneDecimal(number)
+    return math.floor((number * 10) + 0.5) * 0.1
+end
+
+
+--[[ local f = CreateFrame("Frame")
+f:RegisterEvent("CHAT_MSG_LOOT")
+ 
+function Log_Loot(self, event, message, _, _, _, player, _, _, _, _, _, _, ...)
+    if player == "player" then
+        local itemId = message:match("item:(%d+):")
+        --LootLog[itemId] = {}
     end
+end
+ 
+f:SetScript('OnEvent', Log_Loot) ]]
