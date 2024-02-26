@@ -11,9 +11,9 @@ local unitInformation = {}
 function UnitData:GetUnitId(unitGUID)
     local player = UnitGUID("player")
     local p1 = UnitGUID("party1")
-    local p2 = UnitGUID("Party2")
-    local p3 = UnitGUID("Party3")
-    local p4 = UnitGUID("Party4")
+    local p2 = UnitGUID("party2")
+    local p3 = UnitGUID("party3")
+    local p4 = UnitGUID("party4")
 
     if (unitGUID == player) then
         return "player"
@@ -127,6 +127,5 @@ function UnitData:MapPartyUnitData()
             _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
         end
     end
-    KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
     KeyMaster.MainInterface:ResetTallyFramePositioning()    
 end

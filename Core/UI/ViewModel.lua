@@ -214,6 +214,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
             if (unitGuid ~= nil) then
                 local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
                 if playerData ~= nil then
+                    --print("Checking rating gain for "..playerData.name.." on key "..keyData.ownedKeyId.." level "..keyData.ownedKeyLevel..".")
                     local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
                     local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Score
                     local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Score

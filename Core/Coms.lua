@@ -85,6 +85,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
+        KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
     end
     --print("Recieved Data: "..data) -- CREATES BLANK LUA ERROR
 end
