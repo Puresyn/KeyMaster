@@ -193,7 +193,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
         if (unitGuid ~= nil) then
             local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
             if playerData ~= nil then
-                if (playerData.ownedKeyId ~= nil and playerData.ownedKeyLevel ~= nil) then
+                if (playerData.ownedKeyLevel ~= 0) then
                     local keyData = {}
                     keyData.ownedKeyId = playerData.ownedKeyId
                     keyData.ownedKeyLevel = playerData.ownedKeyLevel
@@ -213,22 +213,26 @@ function ViewModel:CalculateTotalRatingGainPotential()
             local unitGuid = UnitGUID(unitid)
             if (unitGuid ~= nil) then
                 local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
-                local ratingChange = KeyMaster.DungeonTools:CalculateRating(playerData.ownedKeyId, playerData.ownedKeyLevel, dungeonTimer)
-                local fortRating = playerData.DungeonRuns[playerData.ownedKeyId]["Fortified"].Score
-                local tyranRating = playerData.DungeonRuns[playerData.ownedKeyId]["Tyrannical"].Score
-                local currentOverallRating = playerData.DungeonRuns[playerData.ownedKeyId].bestOverall
-                
-                if (currentWeeklyAffix == "Tyrannical") then
-                    if ratingChange > tyranRating then
-                        local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
-                        totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
+                if playerData ~= nil then
+                    local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
+                    local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Score
+                    local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Score
+                    local currentOverallRating = playerData.DungeonRuns[keyData.ownedKeyId].bestOverall
+                    
+                    if (currentWeeklyAffix == "Tyrannical") then
+                        if ratingChange > tyranRating then
+                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
+                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
+                        end
+                    else
+                        if ratingChange > fortRating then
+                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
+                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
+                        end
                     end
                 else
-                    if ratingChange > fortRating then
-                        local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
-                        totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
-                    end
-                end                
+                    KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "ViewModel", "Player data not found for "..unitid)
+                end                               
             end
         end
         local mapTallyFrame = _G["KM_MapTallyScore"..keyData.ownedKeyId]
