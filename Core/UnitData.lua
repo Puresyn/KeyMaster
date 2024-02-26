@@ -108,7 +108,7 @@ end
 function UnitData:MapPartyUnitData()
     for i=1,4,1 do
         local currentUnitId = "party"..i
-        if (UnitName(currentUnitId) ~= nil) then
+        if (UnitGUID(currentUnitId) ~= nil) then
             -- find if we have data for this player, if not get a set of default data from blizzard
             KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Mapping data for "..currentUnitId)
             local unitData = unitInformation[UnitGUID(currentUnitId)]
@@ -116,9 +116,7 @@ function UnitData:MapPartyUnitData()
                 KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
                 unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
             else
-                KeyMaster:_DebugMsg("MapPartyUnitData","UnitData","Found local data on "..currentUnitId)     
-                -- Highlight key and level on map frames
-                KeyMaster.ViewModel:HighlightKeystones(unitData.ownedKeyId, unitData.ownedKeyLevel)           
+                KeyMaster:_DebugMsg("MapPartyUnitData","UnitData","Found local data on "..currentUnitId)  
             end
             -- remap and display data for this unitid
             UnitData:DisplayUnitData(currentUnitId, unitData)
@@ -127,5 +125,6 @@ function UnitData:MapPartyUnitData()
             _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
         end
     end
+    -- reposition the tally frame based on last party member showing
     KeyMaster.MainInterface:ResetTallyFramePositioning()    
 end

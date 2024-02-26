@@ -27,7 +27,25 @@ function ViewModel:HideAllPartyFrame()
     end
 end
 
-function ViewModel:HighlightKeystones(mapId, level)
+-- hides all highlight frames
+local function resetKeystoneHighlights()
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()    
+    for mapId,_ in pairs(mapTable) do
+        for i=1,4,1 do
+            KeyMaster.MainInterface:PartyColHighlight("KM_MapData"..i..mapId, false)
+        end
+    end
+
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    for mapId,_ in pairs(mapTable) do
+        local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
+        keyLevelText:SetText("")
+    end
+end
+
+-- turns on highlight textures and level text
+local function highlightKeystones(mapId, level)
     if (mapId == nil or mapId == 0) then
         KeyMaster:_DebugMsg("HighlightKeystones", "ViewModel", "Parameter mapId cannot be empty.")
         return
@@ -51,9 +69,38 @@ function ViewModel:HighlightKeystones(mapId, level)
         keyLevelText:SetText(level)
         keyLevelText:Show()
     else
-        keyLevelText:Hide()
+        keyLevelText:SetText("")
     end    
 end
+
+function ViewModel:UpdateKeystoneHighlights()
+    -- resets all highlights and text to default
+    resetKeystoneHighlights()
+
+    local keystoneInformation = {}
+
+    -- Cycle through unitids to get their keystone infromation
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    for _,unitId in pairs(partyMembers) do
+        local unitGuid = UnitGUID(unitId)
+        if (unitGuid ~= nil) then
+            local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
+            if playerData ~= nil then
+                if (playerData.ownedKeyLevel ~= 0) then
+                    local keyData = {}
+                    keyData.ownedKeyId = playerData.ownedKeyId
+                    keyData.ownedKeyLevel = playerData.ownedKeyLevel
+                    tinsert(keystoneInformation, keyData)
+                end    
+            end            
+        end
+    end
+
+    for _, keyData in pairs(keystoneInformation) do
+        highlightKeystones(keyData.ownedKeyId, keyData.ownedKeyLevel)
+    end
+end
+
 -- Party member data assign
 function ViewModel:UpdateUnitFrameData(unitId, playerData)
     if(unitId == nil) then 
@@ -157,6 +204,7 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end    
 end
 
+-- calculates the total rating gain potential for each player in the party
 function ViewModel:CalculateTotalRatingGainPotential()
     local keystoneInformation = {}
 

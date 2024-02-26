@@ -172,8 +172,6 @@ local function onEvent_PartyChanges(self, event, ...)
 
             -- Calculate keystone upgrades for party members and player
             KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
-
-            print("Party Changes Processed...")
         end
     end
 end
@@ -222,7 +220,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             MainInterface:SetPartyWeeklyDataTheme() 
 
             -- Highlight key and level on map frames
-            KeyMaster.ViewModel:HighlightKeystones(playerData.ownedKeyId, playerData.ownedKeyLevel)
+            KeyMaster.ViewModel:UpdateKeystoneHighlights()
 
             -- process party
             local inGroup = UnitInRaid("player") or IsInGroup()
