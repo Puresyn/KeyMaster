@@ -160,6 +160,7 @@ end
 function ViewModel:CalculateTotalRatingGainPotential()
     local keystoneInformation = {}
 
+    -- Cycle through unitids to get their keystone infromation
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
@@ -179,6 +180,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local currentWeeklyAffix = DungeonTools:GetWeeklyAffix()
     
+    -- cycle through keystone information to calculate rating gained for EACH unitid (who has the addon installed)
     for _, keyData in pairs(keystoneInformation) do
         local dungeonTimer = mapTable[keyData.ownedKeyId].timeLimit
         local totalKeyRatingChange = 0
