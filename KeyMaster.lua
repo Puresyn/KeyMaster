@@ -164,11 +164,18 @@ local function onEvent_PartyChanges(self, event, ...)
             -- purge all party data EXCEPT player
             UnitData:DeleteAllUnitData()
             KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "purging all party data...")
+            
+        end
+        if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
+            -- reprocess party1-4 units
+            UnitData:MapPartyUnitData()
+
+            -- Calculate keystone upgrades for party members and player
+            KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
+
+            print("Party Changes Processed...")
         end
     end
-
-    -- reprocess party1-4 units
-    UnitData:MapPartyUnitData()
 end
 
 local partyEvents = CreateFrame("Frame")
