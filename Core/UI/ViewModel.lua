@@ -106,17 +106,19 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     -- Player Rating
     _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
 
-    if unitId == "player" then
+ --[[    if unitId == "player" then
         local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(playerData.mythicPlusRating) -- todo: cache this? but it is relevant to the client rating.
         _G["KeyMaster_RatingScore"]:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
         _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.    
-    end
+    end ]]
 
     -- Dungeon Key Information
     local keyInfoFrame = _G["KM_OwnedKeyInfo"..partyPlayer]    
     if (not playerData.ownedKeyLevel or playerData.ownedKeyLevel == 0) then
         keyInfoFrame:SetText("")
-        keyInfoFrame:Hide()
+        if (playerData.hasAddon == true) then
+            keyInfoFrame:SetText("No Key")
+        end
     else 
         local ownedKeyLevel = "("..playerData.ownedKeyLevel..") "
         keyInfoFrame:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))

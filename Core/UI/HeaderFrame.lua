@@ -16,6 +16,17 @@ function MainInterface:CreateHeaderRegion(parentFrame)
     return headerRegion
 end
 
+function Header:createPlayerInfoBox(parentFrame)
+    local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
+    headerPlayerInfoBox:SetSize(198, 80)
+    headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 4)
+    --[[ headerPlayerInfoBox.texture = headerPlayerInfoBox:CreateTexture()
+    headerPlayerInfoBox.texture:SetAllPoints(headerPlayerInfoBox)
+    headerPlayerInfoBox.texture:SetColorTexture(0, 0, 0, 0.7) ]]
+    --KeyMaster:CreateHLine(headerPlayerInfoBox:GetWidth()+8, headerPlayerInfoBox, "BOTTOM", 0, 0)
+    return headerPlayerInfoBox
+end
+
 
 --------------------------------
 -- Weekly Affix
@@ -31,16 +42,17 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
         KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found!")
         return 
     end
+    
     for i=1, #seasonalAffixes, 1 do
 
         local affixName = seasonalAffixes[i].name
-        local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostringall(i), parentFrame)
+        local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
         temp_frame:SetSize(50, 50)
         if (i == 1) then
-            temp_frame:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT", 270, 4)
+            temp_frame:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT", 0, 0)
         else
             local a = i - 1
-            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostringall(a), "TOPRIGHT", 20, 0)
+            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostring(a), "TOPRIGHT", 20, 0)
         end
         
         -- Affix Icon
@@ -80,7 +92,7 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
             temp_headertxt:SetFont(path, 14, flags)
             temp_headertxt:SetPoint("LEFT", 0, 0)
             temp_headertxt:SetTextColor(1,1,1)
-            temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES..":")
+            temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
         end
 
     end
@@ -89,25 +101,25 @@ end
 --------------------------------
 -- Mythic Rating
 --------------------------------
-function Header:createHeaderRating(parentFrame)
+--[[ function Header:createHeaderRating(parentFrame)
     
     local ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", parentFrame)
-    ratingPanel:SetWidth(150)
-    ratingPanel:SetHeight(13)
-    ratingPanel:SetPoint("TOPRIGHT", -4, -50)
+    ratingPanel:SetWidth(40)
+    ratingPanel:SetHeight(42)
+    ratingPanel:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -4, -(((ratingPanel:GetParent():GetHeight() - ratingPanel:GetHeight())/2)))
     local mythicRatingPreText = ratingPanel:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 12, Flags)
-    mythicRatingPreText:SetPoint("CENTER")
+    mythicRatingPreText:SetPoint("TOP")
     mythicRatingPreText:SetText(KeyMasterLocals.YOURRATING..":")
 
     mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = mythicRatingPreText:GetFont()
     mythicRatingPreText:SetFont(Path, 30, Flags)
-    mythicRatingPreText:SetPoint("CENTER", 0, -22)
+    mythicRatingPreText:SetPoint("BOTTOM", 0, 0)
 
     return ratingPanel
-end
+end ]]
 
 --------------------------------
 -- Key Master Icon

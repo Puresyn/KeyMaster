@@ -24,9 +24,10 @@ function MainInterface:Initialize()
     local addonIcon = _G["KeyMaster_Icon"] or MainInterface:createAddonIcon(mainFrame)
     local headerRegion = _G["KeyMaster_HeaderRegion"] or MainInterface:CreateHeaderRegion(mainFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
-    createAffixFramesWithRetries(headerContent)
+    local headerInfoBox = Header:createPlayerInfoBox(headerContent)
+    createAffixFramesWithRetries(headerInfoBox)
     
-    local headerRaiting = _G["KeyMaster_RatingFrame"] or Header:createHeaderRating(headerContent)
+    --local headerRaiting = _G["KeyMaster_RatingFrame"] or Header:createHeaderRating(headerInfoBox)
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
