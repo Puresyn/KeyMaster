@@ -157,33 +157,6 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end    
 end
 
-function ViewModel:GetKeystoneRating(keyLevel, mapid)
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    local dungeonTimer = mapTable[mapid].timeLimit
-    
-    local keyRating = KeyMaster.DungeonTools:CalculateRating(playerData.ownedKeyId, playerData.ownedKeyLevel, dungeonTimer)
-    local fortRating = playerData.DungeonRuns[playerData.ownedKeyId]["Fortified"].Score
-    local tyranRating = playerData.DungeonRuns[playerData.ownedKeyId]["Tyrannical"].Score
-    local currentOverallRating = playerData.DungeonRuns[playerData.ownedKeyId].bestOverall
-    local currentWeeklyAffix = DungeonTools:GetWeeklyAffix()
-    if (currentWeeklyAffix == "Tyrannical") then
-        if keyRating > tyranRating then
-            print("You have a higher rating on Tyrannical than your key.")
-        else
-            print("You have a lower rating on Tyrannical than your key.")
-        end
-    else
-        if keyRating > fortRating then
-            local newTotal = DungeonTools:CalculateDungeonTotal(keyRating, tyranRating)
-            local mapTallyFrame = _G["KM_MapTallyScore"..playerData.ownedKeyId]
-            mapTallyFrame:SetText(newTotal-currentOverallRating)
-
-        else
-            print("You CANNOT gain fortified score from your key.")
-        end
-    end
-end
-
 function ViewModel:CalculateTotalRatingGainPotential()
     local keystoneInformation = {}
 
