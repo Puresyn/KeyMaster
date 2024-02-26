@@ -127,5 +127,6 @@ function UnitData:MapPartyUnitData()
             _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
         end
     end
-    KeyMaster.MainInterface:ResetTallyFramePositioning()
+    KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
+    KeyMaster.MainInterface:ResetTallyFramePositioning()    
 end

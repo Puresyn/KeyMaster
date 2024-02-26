@@ -179,3 +179,7 @@ end
         if (status) then status = "on." else status = "off." end
         KeyMaster:Print(KeyMasterLocals.ERRORMESSAGES.. " " .. status)
     end
+
+    function KeyMaster:RoundToOneDecimal(number)
+        return math.floor((number * 10) + 0.5) * 0.1
+    end
