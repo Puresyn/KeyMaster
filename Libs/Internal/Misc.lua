@@ -184,9 +184,19 @@ function KeyMaster:RoundToOneDecimal(number)
     return math.floor((number * 10) + 0.5) * 0.1
 end
 
+-- ITEM_COUNT_CHANGED 
+-- arg1: 180653 -- this is THE M+ keystone id
+
+-- ITEM_CHANGED
+-- arg1 "[Mythic Keystone]", 
+-- arg2 "[Mythic Keystone]]"
+
+-- CHAT_MSG_LOOT
+-- "Your [Mythic Keystone] was changed..."
 
 --[[ local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_LOOT")
+
  
 function Log_Loot(self, event, message, _, _, _, player, _, _, _, _, _, _, ...)
     if player == "player" then
