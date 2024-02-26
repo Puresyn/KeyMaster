@@ -14,7 +14,6 @@ Core\CharacterInfo.lua
 Core\UI\ViewModel.lua
 Core\UI\MainInterface.lua
 Core\UnitData.lua
-Libs\Internal\KeyScoreCalc.lua
 Core\Coms.lua
 Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua
