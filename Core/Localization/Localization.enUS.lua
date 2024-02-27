@@ -19,6 +19,7 @@ L.DEBUGMESSAGESNOTIFY = "Notify: Debug messages are on."
 L.COMMANDERROR1 = "Invalid command"
 L.COMMANDERROR2 = "Enter"
 L.COMMANDERROR3 = "for commands"
+L.YOURCURRENTKEY = "YOUR KEY"
 
 L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}

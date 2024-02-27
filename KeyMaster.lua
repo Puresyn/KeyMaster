@@ -237,6 +237,8 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             -- Calculate keystone upgrades for party members and player
             KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
 
+            KeyMaster.ViewModel:SetPlayerHeaderKeyInfo()
+
             -- test
             -- local dungeonId = 244 -- AD
             -- local dungeonDuration = 1800 -- 30 minutes

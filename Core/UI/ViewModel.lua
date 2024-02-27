@@ -263,3 +263,19 @@ function ViewModel:CalculateTotalRatingGainPotential()
         mapTallyFrame:SetText(KeyMaster:RoundToOneDecimal(totalKeyRatingChange))
     end
 end
+
+function ViewModel:SetPlayerHeaderKeyInfo()
+    local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+    local playerKeyHeader = _G["KeyMaster_MythicKeyHeader"]
+    if (playerData) then
+        if (playerData.ownedKeyLevel > 0) then
+            playerKeyHeader.keyLevelText:SetText(playerData.ownedKeyLevel)
+            playerKeyHeader.keyAbbrText:SetText(DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
+            playerKeyHeader:Show()
+        else
+            playerKeyHeader:Hide()
+        end 
+    else
+        playerKeyHeader:Hide()
+    end
+end

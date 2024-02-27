@@ -91,11 +91,54 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
             local temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
             temp_headertxt:SetFont(path, 14, flags)
             temp_headertxt:SetPoint("LEFT", 0, 0)
-            temp_headertxt:SetTextColor(1,1,1)
+            temp_headertxt:SetTextColor(1,1,1,1)
             temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
         end
 
     end
+end
+
+--------------------------------
+-- Mythic Key
+--------------------------------
+function Header:createHeaderKeyFrame(parentFrame, anchorFrame)
+    local key_frame = CreateFrame("Frame", "KeyMaster_MythicKeyHeader", parentFrame)
+    key_frame:SetSize(anchorFrame:GetHeight(), anchorFrame:GetHeight())
+    key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 0)
+
+    key_frame.keyLevelText = key_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    local path, _, flags = key_frame.keyLevelText:GetFont()
+    key_frame.keyLevelText:SetFont(path, 26, flags)
+    key_frame.keyLevelText:SetPoint("BOTTOM", 0, 28)
+    key_frame.keyLevelText:SetTextColor(1,1,1,1)
+    key_frame.keyLevelText:SetText("")
+    key_frame:SetAttribute("keyLevel", key_frame.keyLevelText)
+
+    key_frame.keyAbbrText = key_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    key_frame.keyAbbrText:SetFont(path, 26, flags)
+    key_frame.keyAbbrText:SetPoint("BOTTOM", 0, 0)
+    key_frame.keyAbbrText:SetTextColor(1,1,1,1)
+    key_frame.keyAbbrText:SetText("")
+    key_frame:SetAttribute("keyAbbr", key_frame.keyAbbrText)
+
+    key_frame.titleText = key_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    key_frame.titleText:SetPoint("LEFT", key_frame.keyAbbrText, "BOTTOMLEFT", -18, -2)
+    key_frame.titleText:SetFont(path, 10, flags)
+    key_frame.titleText:SetTextColor(1,1,1,1)
+    key_frame.titleText:SetText(KeyMasterLocals.YOURCURRENTKEY)
+    key_frame.titleText:SetJustifyH("LEFT")
+    key_frame.titleText:SetRotation(math.pi/2)
+    key_frame:SetAttribute("title", key_frame.titleText)
+
+    local line_frame = CreateFrame("Frame", nil, key_frame)
+    line_frame:SetSize(40, 1)
+    line_frame:SetPoint("BOTTOM", key_frame, "BOTTOM", 0, 26)
+    line_frame.texture = line_frame:CreateTexture(nil, "BACKGROUND",nil)
+    line_frame.texture:SetAllPoints(line_frame)
+    line_frame.texture:SetColorTexture(1, 1, 1, 1)
+
+
+    return key_frame
 end
 
 --------------------------------
