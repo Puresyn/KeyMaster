@@ -26,11 +26,13 @@ function MainInterface:Initialize()
     local headerContent = _G["KeyMaster_HeaderFrame"] or MainInterface:CreateHeaderContent(headerRegion)
     local headerInfoBox = Header:createPlayerInfoBox(headerContent)
     createAffixFramesWithRetries(headerInfoBox)
+    local headerKey = _G["KeyMaster_MythicKeyHeader"] or Header:createHeaderKeyFrame(headerContent, headerInfoBox)
     
     --local headerRaiting = _G["KeyMaster_RatingFrame"] or Header:createHeaderRating(headerInfoBox)
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
+   
 
     -- create player row frames
     local playerRow = _G["KM_PlayerRow1"] or MainInterface:CreatePartyMemberFrame("player", partyRowsFrame)
