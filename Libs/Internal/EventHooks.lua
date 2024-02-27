@@ -14,8 +14,20 @@ local MYTHIC_PLUS_KEY_ID = 180653
 ---@param event string A string representing the name of the local function for an event.
 local function NotifyEvent(event)
     if (event == "KEY_CHANGED") then
-        -- todo: Process a client key change
         KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
+        -- fetch self data
+        local playerUnit = UnitData:GetUnitDataByUnitId("player")
+
+        -- get new key information
+        local mapid, _, keyLevel = KeyMaster.CharacterInfo:GetOwnedKey()
+        playerUnit.ownedKeyLevel = keyLevel
+        playerUnit.ownedKeyId = mapid
+
+        -- Store new data
+        KeyMaster.UnitData:SetUnitData("player", playerUnit)
+                
+        -- Transmit unit data to party members with addon
+        MyAddon:Transmit(playerUnit, "PARTY", nil)
     end
 end
 
