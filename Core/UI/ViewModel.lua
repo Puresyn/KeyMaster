@@ -29,75 +29,52 @@ end
 
 -- hides all highlight frames
 local function resetKeystoneHighlights()
-    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
     local mapTable = DungeonTools:GetCurrentSeasonMaps()    
     for mapId,_ in pairs(mapTable) do
-        for i=1,4,1 do
-            KeyMaster.MainInterface:PartyColHighlight("KM_MapData"..i..mapId, false)
+        -- hide all highlight frames
+        for i=1,5,1 do
+            local leftHighlightFrame = _G["KM_MapData"..i..mapId.."_lColHighlight"] 
+            local rightHighlightFrame = _G["KM_MapData"..i..mapId.."_rColHighlight"]
+            leftHighlightFrame:Hide()
+            rightHighlightFrame:Hide()
         end
-    end
-
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    for mapId,_ in pairs(mapTable) do
+        -- reset text on dungeon icons
         local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
         keyLevelText:SetText("")
     end
-end
-
--- turns on highlight textures and level text
-local function highlightKeystones(mapId, level)
-    if (mapId == nil or mapId == 0) then
-        KeyMaster:_DebugMsg("HighlightKeystones", "ViewModel", "Parameter mapId cannot be empty.")
-        return
-    end
-    -- Highlight column for mapid for each row member
-    local rows = {"player", "party1", "party2", "party3", "party4"}
-    local counter = 1
-    for _,unitid in pairs(rows) do
-        local visible = false
-        if (UnitGUID(unitid) ~= nil) then
-            visible = true
-        end
-        KeyMaster.MainInterface:PartyColHighlight("KM_MapData"..counter..mapId, visible)
-        counter = counter + 1
-    end
-
-    -- Highlight the header if the player has a higher key
-    local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
-    local currentLevel = tonumber(keyLevelText:GetText())
-    if (currentLevel == nil or level > currentLevel) then
-        keyLevelText:SetText(level)
-        keyLevelText:Show()
-    else
-        keyLevelText:SetText("")
-    end    
 end
 
 function ViewModel:UpdateKeystoneHighlights()
     -- resets all highlights and text to default
     resetKeystoneHighlights()
 
-    local keystoneInformation = {}
-
-    -- Cycle through unitids to get their keystone infromation
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    local counter = 1
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
         if (unitGuid ~= nil) then
-            local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
-            if playerData ~= nil then
-                if (playerData.ownedKeyLevel ~= 0) then
-                    local keyData = {}
-                    keyData.ownedKeyId = playerData.ownedKeyId
-                    keyData.ownedKeyLevel = playerData.ownedKeyLevel
-                    tinsert(keystoneInformation, keyData)
-                end    
+            local unitData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
+            if unitData ~= nil and unitData.ownedKeyLevel ~= 0 then
+                -- loop through each unit frame to turn on the highlight
+                for i=1,5,1 do
+                    local leftHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_lColHighlight"] 
+                    local rightHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_rColHighlight"]
+                    leftHighlightFrame:Show()
+                    rightHighlightFrame:Show()
+                end
+
+                -- Highlight the header if the player has a higher key
+                local keyLevelText = _G["Dungeon_"..unitData.ownedKeyId.."_HeaderKeyLevelText"]
+                local currentLevel = tonumber(keyLevelText:GetText())
+                if (currentLevel == nil or unitData.ownedKeyLevel > currentLevel) then
+                    keyLevelText:SetText(unitData.ownedKeyLevel)
+                    keyLevelText:Show()
+                else
+                    keyLevelText:SetText("")
+                end                
             end            
         end
-    end
-
-    for _, keyData in pairs(keystoneInformation) do
-        highlightKeystones(keyData.ownedKeyId, keyData.ownedKeyLevel)
+        counter = counter + 1
     end
 end
 

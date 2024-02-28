@@ -163,8 +163,7 @@ local function onEvent_PartyChanges(self, event, ...)
         if not inGroup then
             -- purge all party data EXCEPT player
             UnitData:DeleteAllUnitData()
-            KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "purging all party data...")
-            
+            KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "purging all party data...")          
         end
         if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
             -- reprocess party1-4 units
@@ -172,6 +171,9 @@ local function onEvent_PartyChanges(self, event, ...)
 
             -- Calculate keystone upgrades for party members and player
             KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
+
+            -- Highlight key and level on map frames
+            KeyMaster.ViewModel:UpdateKeystoneHighlights()  
         end
     end
 end
