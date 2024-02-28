@@ -16,18 +16,18 @@ local function NotifyEvent(event)
     if (event == "KEY_CHANGED") then
         KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
         -- fetch self data
-        local playerUnit = UnitData:GetUnitDataByUnitId("player")
+        local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
         -- get new key information
         local mapid, _, keyLevel = KeyMaster.CharacterInfo:GetOwnedKey()
-        playerUnit.ownedKeyLevel = keyLevel
-        playerUnit.ownedKeyId = mapid
-
+        playerData.ownedKeyLevel = keyLevel
+        playerData.ownedKeyId = mapid
+        
         -- Store new data
-        KeyMaster.UnitData:SetUnitData("player", playerUnit)
+        KeyMaster.UnitData:SetUnitData(playerData)
                 
         -- Transmit unit data to party members with addon
-        MyAddon:Transmit(playerUnit, "PARTY", nil)
+        MyAddon:Transmit(playerData, "PARTY", nil)
     end
 end
 
@@ -50,16 +50,16 @@ local function KeyWatch()
             ---@param itemID integer Arg1 returned ID of the count changed item.
             local itemID, _ = ...
             if (itemID == MYTHIC_PLUS_KEY_ID) then
-                NotifyEvent("KEY_CHANGED")
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_COUNT_CHANGED: "..tostring(MYTHIC_PLUS_KEY_ID))
+                NotifyEvent("KEY_CHANGED")                
             end
         end
         if event == "ITEM_CHANGED" then
             local itemChangedFrom, itemChangedTo, _ = ...
             itemChangedFrom = tostring(itemChangedFrom)
             if (string.match(itemChangedFrom, "Mythic Keystone")) then
-                NotifyEvent("KEY_CHANGED")
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_CHANGED: "..itemChangedFrom)
+                NotifyEvent("KEY_CHANGED")                
             end
         end
     end)
