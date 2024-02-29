@@ -247,12 +247,12 @@ end
 function ViewModel:SetPlayerHeaderKeyInfo()
     local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
     local playerKeyHeader = _G["KeyMaster_MythicKeyHeader"]
+    playerKeyHeader.keyLevelText:SetText("--")
+    playerKeyHeader.keyAbbrText:SetText("---")
     if (playerData) then
         if (playerData.ownedKeyLevel > 0) then
             playerKeyHeader.keyLevelText:SetText(playerData.ownedKeyLevel)
             playerKeyHeader.keyAbbrText:SetText(DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
         end
-        playerKeyHeader.keyLevelText:SetText("--")
-        playerKeyHeader.keyAbbrText:SetText("---")
     end
 end
