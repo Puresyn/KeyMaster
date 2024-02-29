@@ -137,6 +137,44 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
 end
 
+local function createMapColumnHighlightFrames(parentFrame)
+    local pFrameName = parentFrame:GetName()
+    local rightFrameName = pFrameName .. "_rColHighlight"
+    local leftFrameName = pFrameName .. "_lColHighlight"
+    local frameHeight = parentFrame:GetHeight()
+    local parentLevel = parentFrame:GetFrameLevel()
+    local phc = {}
+    phc.r, phc.g, phc.b, _ = Theme:GetThemeColor("color_COMMON") -- color_NONPHOTOBLUE
+
+    local rightHighlight = CreateFrame("Frame", rightFrameName, parentFrame)
+    rightHighlight:SetHeight(frameHeight)
+    rightHighlight:SetWidth(2)
+    rightHighlight:SetFrameLevel(parentLevel + 1)
+    rightHighlight:SetPoint("CENTER", parentFrame, "RIGHT", 1, 0)
+    rightHighlight.texture = rightHighlight:CreateTexture()
+    rightHighlight.shadowTexture = rightHighlight:CreateTexture()
+    rightHighlight.texture:SetPoint("LEFT", 0, 0)
+    rightHighlight.texture:SetSize(1, frameHeight)
+    rightHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
+    rightHighlight.shadowTexture:SetSize(1, frameHeight)
+    rightHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
+    rightHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
+    
+    local leftHighlight = CreateFrame("Frame", leftFrameName, parentFrame)
+    leftHighlight:SetHeight(frameHeight)
+    leftHighlight:SetWidth(2)
+    leftHighlight:SetFrameLevel(parentLevel + 1)
+    leftHighlight:SetPoint("CENTER", parentFrame, "LEFT", 1, 0)
+    leftHighlight.texture = leftHighlight:CreateTexture()
+    leftHighlight.shadowTexture = leftHighlight:CreateTexture()
+    leftHighlight.texture:SetPoint("LEFT", 0, 0)
+    leftHighlight.texture:SetSize(1, frameHeight)
+    leftHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
+    leftHighlight.shadowTexture:SetSize(1, frameHeight)
+    leftHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
+    leftHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
+end
+
 -- Set the font and color of the party frames map data.
 function MainInterface:SetPartyWeeklyDataTheme()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
@@ -308,9 +346,11 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             createPartyDungeonHeader(anchorFrame, id)
         end
 
+        -- create vertical highlights for keystone data
+        createMapColumnHighlightFrames(temp_Frame)
+
         firstItem = false
         prevMapId = mapid
-
     end
 
     -- LEGEND FRAME
@@ -498,7 +538,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
     temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -60)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -55)
     --temp_frame:SetScript("OnUpdate", keyMaster_Frame_Party_OnUpdate)
     timeSinceLastUpdate = 0
     
@@ -521,88 +561,6 @@ function MainInterface:CreatePartyFrame(parentFrame)
     partyScreen:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     partyScreen:SetAllPoints(true)
     partyScreen:Hide()
-    --[[ PartyScreen:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
-        edgeFile="", 
-        tile = false, 
-        tileSize = 0, 
-        edgeSize = 0, 
-        insets = {left = 0, right = 0, top = 0, bottom = 0}})
-    PartyScreen:SetBackdropColor(160,160,160,1); -- color for testing ]]
-    --[[ txtPlaceHolder = PartyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = txtPlaceHolder:GetFont()
-    txtPlaceHolder:SetFont(Path, 30, Flags)
-    txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
-    txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Party Screen") ]]
-
-    --[[ PartyScreen.texture = PartyScreen:CreateTexture()
-    PartyScreen.texture:SetAllPoints(PartyScreen)
-    PartyScreen.texture:SetColorTexture(0.531, 0.531, 0.531, 1) -- temporary bg color ]]
-
-    --[[ local txtPlaceHolder = partyScreen:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = txtPlaceHolder:GetFont()
-    txtPlaceHolder:SetFont(Path, 30, Flags)
-    txtPlaceHolder:SetPoint("BOTTOMLEFT", 50, 50)
-    txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText("Party Screen") ]]
 
     return partyScreen
-end
-
-function MainInterface:PartyColHighlight(parentFrame, visible)
-    if (parentFrame == nil) then
-        KeyMaster:_DebugMsg("PartyColHighlight", "PartyFrame", "Parameter parentFrame cannot be empty.")
-        return
-    end
-    local phc = {}
-    local parentFrame = _G[parentFrame]
-    local pFrameName = parentFrame:GetName()
-    local rightFrameName = pFrameName .. "_rColHighlight"
-    local leftFrameName = pFrameName .. "_lColHighlight"
-    if (not _G[rightFrameName]) then
-        local frameHeight = parentFrame:GetHeight()
-        local parentLevel = parentFrame:GetFrameLevel()
-        phc.r, phc.g, phc.b, _ = Theme:GetThemeColor("color_COMMON") -- color_NONPHOTOBLUE
-
-        local rightHighlight = CreateFrame("Frame", rightFrameName, parentFrame)
-        rightHighlight:SetHeight(frameHeight)
-        rightHighlight:SetWidth(2)
-        rightHighlight:SetFrameLevel(parentLevel + 1)
-        rightHighlight:SetPoint("CENTER", parentFrame, "RIGHT", 1, 0)
-        rightHighlight.texture = rightHighlight:CreateTexture()
-        rightHighlight.shadowTexture = rightHighlight:CreateTexture()
-        rightHighlight.texture:SetPoint("LEFT", 0, 0)
-        rightHighlight.texture:SetSize(1, frameHeight)
-        rightHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
-        rightHighlight.shadowTexture:SetSize(1, frameHeight)
-        rightHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
-        rightHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
-    end
-    if (not _G[leftFrameName]) then
-        local frameHeight = parentFrame:GetHeight()
-        local parentLevel = parentFrame:GetFrameLevel()
-        phc.r, phc.g, phc.b, _ = Theme:GetThemeColor("color_COMMON") -- color_NONPHOTOBLUE
-
-        local leftHighlight = CreateFrame("Frame", leftFrameName, parentFrame)
-        leftHighlight:SetHeight(frameHeight)
-        leftHighlight:SetWidth(2)
-        leftHighlight:SetFrameLevel(parentLevel + 1)
-        leftHighlight:SetPoint("CENTER", parentFrame, "LEFT", 1, 0)
-        leftHighlight.texture = leftHighlight:CreateTexture()
-        leftHighlight.shadowTexture = leftHighlight:CreateTexture()
-        leftHighlight.texture:SetPoint("LEFT", 0, 0)
-        leftHighlight.texture:SetSize(1, frameHeight)
-        leftHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
-        leftHighlight.shadowTexture:SetSize(1, frameHeight)
-        leftHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
-        leftHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
-
-    end
-    if (visible == true) then
-        _G[rightFrameName]:Show()
-        _G[leftFrameName]:Show()
-    else
-        _G[rightFrameName]:Hide()
-        _G[leftFrameName]:Hide()
-    end
 end
