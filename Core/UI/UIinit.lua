@@ -2,6 +2,8 @@ local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local Header = KeyMaster.Header
 local ViewModel = KeyMaster.ViewModel
+local ConfigFrame = KeyMaster.ConfigFrame
+local InfoFrame = KeyMaster.InfoFrame
 
 local function createAffixFramesWithRetries(parent, retryCount)
   if retryCount == nil then retryCount = 0 end
@@ -32,6 +34,8 @@ function MainInterface:Initialize()
     local contentRegion =  _G["KeyMaster_ContentRegion"] or MainInterface:CreateContentRegion(mainFrame, headerRegion);
     local partyContent = _G["KeyMaster_PartyScreen"] or MainInterface:CreatePartyFrame(contentRegion);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
+    local configContent = _G["KM_Configuration_Frame"] or ConfigFrame:CreateConfigFrame(contentRegion)
+    local infoContent = _G["KM_Info_Frame"] or InfoFrame:CreateInfoFrame(contentRegion)
    
 
     -- create player row frames
@@ -53,14 +57,16 @@ function MainInterface:Initialize()
     -- Create tabs
     local tabContents = partyContent
     local partyTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
+    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Configuration", configContent, false)
+    local infoTab = _G["KeyMaster_MainFrameTab3"] or MainInterface:CreateTab(mainFrame, 3, "Information", infoContent, false)
 
-    -- testing multiple tabs
+    --[[ -- testing multiple tabs
     local tempFrame = _G["KeyMaster_TempFrame"] or CreateFrame("Frame", "KeyMaster_TempFrame", mainFrame);
     tempFrame:SetSize(mainFrame:GetWidth(), mainFrame:GetHeight())
     tempFrame:SetAllPoints(true)
     tempFrame:Hide()
 
-    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false)
+    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false) ]]
 
     Tab_OnClick(partyTab)
 

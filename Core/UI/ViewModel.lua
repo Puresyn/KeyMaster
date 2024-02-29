@@ -145,6 +145,9 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     else
         unitClassSpec = unitClass
     end
+    local classRGB = {}  
+    classRGB.r, classRGB.g, classRGB.b, _ = GetClassColor(string.upper(unitClass))
+    _G["KM_Player_Row_Class_Bios"..partyPlayer]:SetVertexColor(classRGB.r, classRGB.g, classRGB.b, 1)
     _G["KM_Player"..partyPlayer.."Class"]:SetText(unitClassSpec)
         
     -- Player Name
@@ -271,11 +274,8 @@ function ViewModel:SetPlayerHeaderKeyInfo()
         if (playerData.ownedKeyLevel > 0) then
             playerKeyHeader.keyLevelText:SetText(playerData.ownedKeyLevel)
             playerKeyHeader.keyAbbrText:SetText(DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
-            playerKeyHeader:Show()
-        else
-            playerKeyHeader:Hide()
-        end 
-    else
-        playerKeyHeader:Hide()
+        end
+        playerKeyHeader.keyLevelText:SetText("--")
+        playerKeyHeader.keyAbbrText:SetText("---")
     end
 end

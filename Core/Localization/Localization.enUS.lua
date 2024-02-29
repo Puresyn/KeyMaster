@@ -7,7 +7,6 @@ L.BUILDBETA = "beta"
 L.BUILDALPHA = "alpha"
 L.WELCOMEMESSAGE = "Welcome back"
 L.EXCLIMATIONPOINT = "!"
-L.ASTERISK = "*"
 L.THISWEEKSAFFIXES = "This Week..."
 L.YOURRATING = "Your Rating"
 L.TYRANNICAL = "Tyrannical"
@@ -32,7 +31,7 @@ L.COMMANDLINE["Debug"] = { name = "debug", text = " - toggle debug messages."}
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Mythic Rating", text = "This is the chacacter's current Mythic Plus rating." }
 L.TOOLTIPS["OverallScore"] = { name = "Overall Score", text = "The ovrall score is a combination of both Tyrannical and Fortified run scores for a map. (With lots of math involved)"}
-L.TOOLTIPS["TeamRatingGain"] = { name = "Estimated Rating Gain", text = "This is an estimation that Key Master does internally. This number represents your current party\'s total minimum Rating gain potential for successfully completing the given party key. It may not be 100% accurate and is only here for estimation purposes."}
+L.TOOLTIPS["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "This is an estimation that Key Master does internally. This number represents your current party\'s total minimum Rating gain potential for successfully completing the given party key. It may not be 100% accurate and is only here for estimation purposes."}
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Party Information", text = "Party Information"}
@@ -42,7 +41,7 @@ L.PARTYFRAME["Level"] = { name = "Level", text = "Level" }
 L.PARTYFRAME["Weekly"] = { name = "Weekly", text = "Weekly"}
 L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
-L.PARTYFRAME["TeamRatingGain"] = { name = "Estimated Rating Gain", text = "Estimated Rating Gain"}
+L.PARTYFRAME["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "Estimated Rating Gain"}
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }

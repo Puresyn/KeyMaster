@@ -207,7 +207,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player's Name
     local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 6, -3)
+    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 10, -3)
 
     -- Player class
     tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
@@ -365,30 +365,36 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
     end
 
     temp_RowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
-    temp_RowFrame.texture = temp_RowFrame:CreateTexture()
-    temp_RowFrame.texture:SetAllPoints(temp_RowFrame)
-    temp_RowFrame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- todo: temporary bg color 
+    temp_RowFrame.texture = temp_RowFrame:CreateTexture("KM_Player_Row_Class_Bios"..partyNumber)
+    --[[ temp_RowFrame.texture:SetAllPoints(temp_RowFrame)
+    temp_RowFrame.texture:SetColorTexture(0.331, 0.331, 0.331, 0.8) -- todo: temporary bg color  ]]
+    temp_RowFrame.texture:SetSize(temp_RowFrame:GetWidth(), temp_RowFrame:GetHeight())
+    temp_RowFrame.texture:SetPoint("LEFT")
+    temp_RowFrame.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    --temp_RowFrame.texture:SetVertexColor(0.96, 0.55, 0.73, 1)
+    --temp_RowFrame.texture:SetAlpha(0.6)
+    --temp_RowFrame.texture:SetHorizTile(true)
 
     local temp_frame = CreateFrame("Frame", "KM_PortraitFrame"..partyNumber, _G["KM_PlayerRow"..partyNumber])
-    temp_frame:SetSize(parentFrame:GetWidth()+(temp_RowFrame:GetHeight()/2), temp_RowFrame:GetHeight())
+    temp_frame:SetSize(temp_RowFrame:GetHeight(), temp_RowFrame:GetHeight())
     temp_frame:ClearAllPoints()
-    temp_frame:SetPoint("RIGHT", temp_frame:GetParent(), "RIGHT", 0, 0)
+    temp_frame:SetPoint("CENTER", temp_RowFrame, "LEFT", 0, 0)
 
     local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
-    img1:SetHeight(temp_RowFrame:GetHeight())
-    img1:SetWidth(temp_RowFrame:GetHeight())
+    img1:SetHeight(temp_RowFrame:GetHeight()-12)
+    img1:SetWidth(temp_RowFrame:GetHeight()-12)
     img1:ClearAllPoints()
-    img1:SetPoint("LEFT", 0, 0)
+    img1:SetPoint("CENTER", temp_frame, "CENTER", 0, 0)
 
     -- the ring around the portrait
     local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
-    img2:SetHeight(temp_RowFrame:GetHeight()+12)
-    img2:SetWidth(temp_RowFrame:GetHeight()+12)
+    img2:SetHeight(temp_RowFrame:GetHeight()+8)
+    img2:SetWidth(temp_RowFrame:GetHeight()+8)
     img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_frame2",false)
-    local r, g, b, _ = Theme:GetThemeColor("color_PORTRAITFRAME")
-    img2:SetVertexColor(r, g, b, 1)
+    --local r, g, b, _ = Theme:GetThemeColor("color_PORTRAITFRAME")
+    --img2:SetVertexColor(r, g, b, 1)
     img2:ClearAllPoints()
-    img2:SetPoint("LEFT", -6, 0)
+    img2:SetPoint("CENTER", img1, "CENTER", 0, 0)
 
     KeyMaster:CreateHLine(temp_RowFrame:GetWidth()+8, temp_RowFrame, "TOP", 0, 0)
 
@@ -410,6 +416,7 @@ function MainInterface:CreatePartyScoreTallyFooter()
     --[[ partyTallyFrame.texture = partyTallyFrame:CreateTexture()
     partyTallyFrame.texture:SetAllPoints(partyTallyFrame)
     partyTallyFrame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3) -- temporary bg color ]]
+
 
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local prevMapId, prevAnchor, lastPointsFrame
@@ -434,14 +441,23 @@ function MainInterface:CreatePartyScoreTallyFooter()
 
         temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12), partyTallyFrame:GetHeight())
 
+        temp_Frame.bgTexture = temp_Frame:CreateTexture()
+        temp_Frame.bgTexture:SetSize(temp_Frame:GetWidth(), temp_Frame:GetHeight())
+        temp_Frame.bgTexture:SetPoint("LEFT")
+        --temp_Frame.bgTexture:SetTexCoord(0, 1, 36/64, 1)
+        temp_Frame.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight-Inverted")
+        local r, g, b, _ = Theme:GetThemeColor("themeFontColorGreen2")
+        --temp_Frame.bgTexture:SetVertexColor(r, g, b, 1)
+        --temp_Frame.bgTexture:SetAlpha(1)
+
         if (not bolColHighlight) then
-            temp_Frame.texture = temp_Frame:CreateTexture()
+            temp_Frame.texture = temp_Frame:CreateTexture("OVERLAY")
             temp_Frame.texture:SetAllPoints(temp_Frame)
-            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
+            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.15)
         else
-            temp_Frame.texture = temp_Frame:CreateTexture()
+            --[[ temp_Frame.texture = temp_Frame:CreateTexture()
             temp_Frame.texture:SetAllPoints(temp_Frame)
-            temp_Frame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3)
+            temp_Frame.texture:SetColorTexture(0.431, 0.431, 0.431, 0.3) ]]
         end
 
         -- Map Total Tally
@@ -453,11 +469,14 @@ function MainInterface:CreatePartyScoreTallyFooter()
         tempText6:SetJustifyV("CENTER")
         --tempText6:SetText(2344)
 
+        --KeyMaster:CreateHLine(temp_Frame:GetWidth()+8, temp_Frame, "TOP", 4, 0)
+
+
         firstItem = false
         prevMapId = mapid
         lastPointsFrame = temp_Frame
     end
-    KeyMaster:CreateHLine(partyTallyFrame:GetWidth(), partyTallyFrame, "TOP", 4, 0)
+    --KeyMaster:CreateHLine(partyTallyFrame:GetWidth(), partyTallyFrame, "TOP", 4, 0)
 
     local tallyDescTextBox = CreateFrame("Frame", "KM_TallyDesc", lastPointsFrame)
     tallyDescTextBox:SetPoint("RIGHT", lastPointsFrame, "LEFT", -4, 0)
@@ -466,7 +485,7 @@ function MainInterface:CreatePartyScoreTallyFooter()
     tallyDescTextBox.text:SetAllPoints(tallyDescTextBox)
     tallyDescTextBox.text:SetJustifyH("RIGHT")
     tallyDescTextBox.text:SetJustifyV("CENTER")
-    tallyDescTextBox.text:SetText(KeyMasterLocals.ASTERISK..KeyMasterLocals.PARTYFRAME.TeamRatingGain.name..":")
+    tallyDescTextBox.text:SetText(KeyMasterLocals.PARTYFRAME.TeamRatingGain.name..":")
 end
 
 function MainInterface:CreatePartyRowsFrame(parentFrame)    
@@ -479,7 +498,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
     temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -55)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -60)
     --temp_frame:SetScript("OnUpdate", keyMaster_Frame_Party_OnUpdate)
     timeSinceLastUpdate = 0
     
@@ -490,9 +509,9 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
     txtPlaceHolder:SetTextColor(1, 1, 1)
     txtPlaceHolder:SetText(KeyMasterLocals.PARTYFRAME["PartyInformation"].name..":")
 
-    temp_frame.texture = temp_frame:CreateTexture()
+    --[[ temp_frame.texture = temp_frame:CreateTexture()
     temp_frame.texture:SetAllPoints(temp_frame)
-    temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.3) -- temporary bg color 
+    temp_frame.texture:SetColorTexture(0.531, 0.531, 0.531, 0.8) -- temporary bg color  ]]
 
     return temp_frame
 end

@@ -11,9 +11,55 @@ function MainInterface:CreateHeaderRegion(parentFrame)
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
     headerRegion.texture = headerRegion:CreateTexture()
-    headerRegion.texture:SetAllPoints(headerRegion)
-    headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    --headerRegion.texture:SetAllPoints(headerRegion)
+    --headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    headerRegion.texture:SetHeight(114)
+    headerRegion.texture:SetWidth(headerRegion:GetWidth())
+    headerRegion.texture:SetPoint("TOP", 0, 0)
+    headerRegion.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster")
+    --obj:SetTexCoord(left,right,top,bottom)
+    headerRegion.texture:SetTexCoord(0, 1, 398/512, 1)    
+    --headerRegion.texture:SetHorizTile(true)
+
+    --[[ headerRegion.texture:SetTexCoord(0, (headerRegion:GetWidth())/2048, 948, (headerRegion:GetHeight())/2048)
+    headerRegion.texture:SetPoint("TOPLEFT", headerRegion,"TOPLEFT", 0 ,0)
+    headerRegion.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\_GarrMissionLocation-ShadowmoonSea-Back") ]]
+
     return headerRegion
+
+    --[[ local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
+    addonIcon:SetHeight(addonIconFrame:GetHeight())
+    addonIcon:SetWidth(addonIconFrame:GetHeight())
+    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
+    addonIcon:ClearAllPoints()
+    addonIcon:SetPoint("LEFT", 15, -15) ]]
+end
+
+local function AddTopBar(parentFrame)
+    local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper",parentFrame);
+    topBar:SetFrameLevel(parentFrame:GetFrameLevel()-1)
+    local w = _G["KeyMaster_PlayerInfobox"]:GetWidth()
+    w = w + _G["KeyMaster_MythicKeyHeader"]:GetWidth()
+
+    topBar.bar = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    local dynOffset = 134
+    topBar:SetSize(w + dynOffset + 20, 80)
+    topBar:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", -dynOffset, -4)
+    --headerRegion.texture:SetAllPoints(headerRegion)
+    --headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
+    
+    topBar.bar:SetHeight(114)
+    topBar.bar:SetWidth(topBar:GetWidth())
+    topBar.bar:SetPoint("TOP", 0, 0)
+    local magicNumber = 1/512
+    topBar.bar:SetTexCoord(0, topBar:GetWidth()/512, 0, 112/512)
+    topBar.bar:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Top-Bar")
+
+    topBar.texture = topBar:CreateTexture(nil, "BACKGROUND", nil, -1)
+    topBar.texture:SetSize(topBar:GetWidth()-100, topBar:GetHeight()-8)
+    topBar.texture:SetPoint("RIGHT", topBar, "RIGHT", 0, -5)
+    topBar.texture:SetColorTexture(0, 0, 0, 0.9)
+
 end
 
 function Header:createPlayerInfoBox(parentFrame)
@@ -24,7 +70,9 @@ function Header:createPlayerInfoBox(parentFrame)
     headerPlayerInfoBox.texture:SetAllPoints(headerPlayerInfoBox)
     headerPlayerInfoBox.texture:SetColorTexture(0, 0, 0, 0.7) ]]
     --KeyMaster:CreateHLine(headerPlayerInfoBox:GetWidth()+8, headerPlayerInfoBox, "BOTTOM", 0, 0)
+
     return headerPlayerInfoBox
+
 end
 
 
@@ -84,7 +132,7 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
         --affixBGFrame.texture:SetPoint("LEFT", -20, -10)
 
         -- create a title and set it to the first affix's frame
-        if (i == 1) then
+        --[[ if (i == 1) then
             local temp_header = CreateFrame("Frame", "KeyMaster_AffixFrameTitle", temp_frame)
             temp_header:SetSize(168, 20)
             temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -16, 0)
@@ -93,9 +141,10 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
             temp_headertxt:SetPoint("LEFT", 0, 0)
             temp_headertxt:SetTextColor(1,1,1,1)
             temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
-        end
+        end ]]
 
     end
+
 end
 
 --------------------------------
@@ -137,6 +186,7 @@ function Header:createHeaderKeyFrame(parentFrame, anchorFrame)
     line_frame.texture:SetAllPoints(line_frame)
     line_frame.texture:SetColorTexture(1, 1, 1, 1)
 
+    AddTopBar(key_frame)
 
     return key_frame
 end
@@ -192,13 +242,19 @@ function MainInterface:CreateHeaderContent(parentFrame)
     local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
+    
+    headerContent.logo = headerContent:CreateTexture(nil, "OVERLAY")
+    headerContent.logo:SetSize(300, 38)
+    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 4, 0)
+    headerContent.logo:SetTexCoord(0, 1, 15/512, 79/512)
+    headerContent.logo:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster")
 
-    local txtPlaceHolder = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    --[[ local txtPlaceHolder = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 30, Flags)
     txtPlaceHolder:SetPoint("BOTTOMLEFT", 10, 10)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText(KM_ADDON_NAME)
+    txtPlaceHolder:SetText(KM_ADDON_NAME) ]]
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)

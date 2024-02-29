@@ -5,14 +5,14 @@ function MainInterface:CreateMainFrame()
     local mainFrame = CreateFrame("Frame", "KeyMaster_MainFrame", UIParent, "MainFrameTemplate");
     mainFrame:ClearAllPoints(); -- Fixes SetPoint bug thus far.
     mainFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
-    mainFrame:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background", 
-        edgeFile="Interface\\Tooltips\\UI-Tooltip-Border", 
+    mainFrame:SetBackdrop({bgFile="Interface\\Addons\\KeyMaster\\Assets\\Images\\M-Background", 
+        edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
         tile = false, 
         tileSize = 0, 
         edgeSize = 16, 
         insets = {left = 4, right = 4, top = 4, bottom = 4}})
 
-    mainFrame:SetBackdropColor(0,0,0,1);
+    --mainFrame:SetBackdropColor(0,0,0,1);
 
     mainFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
     mainFrame.closeBtn:SetPoint("TOPRIGHT")
