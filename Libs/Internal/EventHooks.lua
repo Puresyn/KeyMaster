@@ -29,6 +29,12 @@ local function NotifyEvent(event)
         -- Transmit unit data to party members with addon
         MyAddon:Transmit(playerData, "PARTY", nil)
     end
+    
+    if (event == "CHECK_DATA_AND_UPDATE") then
+        -- todo: Add logic here to check stored run and key data
+        -- against real-time data; if different, transmit
+        -- new data to the party.
+    end
 end
 
 ---@type fun() Sets up the event watch frame.
@@ -55,6 +61,8 @@ local function KeyWatch()
             end
         end
         if event == "ITEM_CHANGED" then
+            ---@param itemChangedFrom integer Returned ID of the changed item.
+            ---@param itemChangedTo integer Returned ID of what the item changed to.
             local itemChangedFrom, itemChangedTo, _ = ...
             itemChangedFrom = tostring(itemChangedFrom)
             if (string.match(itemChangedFrom, "Mythic Keystone")) then
@@ -62,7 +70,15 @@ local function KeyWatch()
                 NotifyEvent("KEY_CHANGED")                
             end
         end
+        if event == "CHALLENGE_MODE_START" then -- payload arg1: mapId
+            NotifyEvent("CHECK_DATA_AND_UPDATE")
+        end
+        if event == "CHALLENGE_MODE_COMPLETED" then -- no payload
+            NotifyEvent("CHECK_DATA_AND_UPDATE")
+        end
     end)
+    f:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+    f:RegisterEvent("CHALLENGE_MODE_START")
     f:RegisterEvent("ITEM_COUNT_CHANGED")
     f:RegisterEvent("ITEM_CHANGED")
 end
