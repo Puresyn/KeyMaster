@@ -79,7 +79,6 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     
     -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
     if (mapScore == nil) then
-       --print("-- "..tostring(mapid)..": Dungeon score NOT found!")
        return emptyData
     end   
     
@@ -148,12 +147,6 @@ function CharacterInfo:GetMyCharacterInfo()
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
-        
-        --DEBUG OUTPUT
-        -- print("---------")
-        -- print("Processing: " .. DungeonTools:GetMapName(mapid))
-        -- print ("MapID: " .. mapid)
-        -- print("---------")
         
         -- Overall Dungeon Score
         keyRun["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)

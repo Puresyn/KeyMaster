@@ -260,12 +260,11 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     return getBaseScore(keyLevel) + bonusRating
 end
 
---[[
-    CalculateDungeonTotal - Calculates a dungeons overall score contributing to a players rating.
-    @param seasonAffixScore1 - best score for dungeon for a weekly affix
-    @param seasonAffixScore2 - best score for dungeon for a weekly affix
-    @return - the total rating for the dungeons scores
---]]
+
+--CalculateDungeonTotal - Calculates a dungeons overall score contributing to a players rating.
+---@param seasonAffixScore1 integer - best score for dungeon for a weekly affix
+---@param seasonAffixScore2 integer - best score for dungeon for a weekly affix
+---@return integer - the total rating for the dungeons scores
 function DungeonTools:CalculateDungeonTotal(seasonAffixScore1, seasonAffixScore2)
     local total
     if(seasonAffixScore1 > seasonAffixScore2) then

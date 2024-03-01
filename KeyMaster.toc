@@ -1,5 +1,5 @@
 ## Interface: 100205
-## Version: v0.0.3-alpha
+## Version: v0.0.7-alpha
 ## Title: |cffff5a00KeyMaster|r
 ## Notes: Mythic Dungeon KeystoneMaster
 ## Authors: Strylor-Proudmoore, Shantisoc-Proudmoore

@@ -106,13 +106,7 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     
     -- Set Player Portrait
     SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
-    --_G["KM_Portrait"..partyPlayer]:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_default")
-    -- local tex = _G["KM_Portrait"..partyPlayer]:GetTexture()
-    -- print(tex) 
-    
-    --_G["KM_Portrait"..partyPlayer]:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_default")
-    
-        
+          
     -- Spec & Class
     local unitClassSpec
     local unitClass, _ = UnitClass(unitId)
@@ -132,12 +126,6 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
 
     -- Player Rating
     _G["KM_Player"..partyPlayer.."OverallRating"]:SetText(playerData.mythicPlusRating)
-
-    -- if unitId == "player" then
-    --     local myRatingColor = C_ChallengeMode.GetDungeonScoreRarityColor(playerData.mythicPlusRating) -- todo: cache this? but it is relevant to the client rating.
-    --     _G["KeyMaster_RatingScore"]:SetTextColor(myRatingColor.r, myRatingColor.g, myRatingColor.b)
-    --     _G["KeyMaster_RatingScore"]:SetText((playerData.mythicPlusRating)) -- todo: This doesn't belong here. Refreshes rating in header.    
-    -- end
 
     -- Dungeon Key Information
     local keyInfoFrame = _G["KM_OwnedKeyInfo"..partyPlayer]    

@@ -15,8 +15,8 @@ local KeyScoreCalc = KeyMaster.KeyScoreCalc
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '0.0.5' -- DO NOT EDIT!
-KM_VERSION_STATUS = KeyMasterLocals.BUILDALPHA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes"
+KM_AUTOVERSION = '0.0.7' -- DO NOT EDIT!
+KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes"
 KM_VERSION = tostringall("v"..KM_AUTOVERSION.."-"..KM_VERSION_STATUS) -- for display purposes
 
 --------------------------------
@@ -241,15 +241,6 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
 
             KeyMaster.ViewModel:SetPlayerHeaderKeyInfo()
 
-            -- test
-            -- local dungeonId = 244 -- AD
-            -- local dungeonDuration = 1800 -- 30 minutes
-            -- local dungeonLevel = 14
-            -- local chestLevel = KeyMaster.DungeonTools:CalculateChest(dungeonId, dungeonDuration)
-            -- local potentialScore = KeyMaster.DungeonTools:CalculateRating(dungeonId, dungeonLevel, dungeonDuration)
-            -- print("Map: ", KeyMaster.DungeonTools:GetMapName(dungeonId))
-            -- print("Potential Score:", potentialScore)
-            -- print("Chest Level:", chestLevel)
         end) 
     end
 end
@@ -257,7 +248,3 @@ end
 local playerEnterEvents = CreateFrame("Frame")
 playerEnterEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 playerEnterEvents:SetScript("OnEvent", onEvent_PlayerEnterWorld)
-
--- Error and debug handling
---KeyMaster.KEYMASTER_ERRORS = KeyMaster_DB.addonConfig.showErrors
---KeyMaster.KEYMASTER_DEBUG = KeyMaster_DB.addonConfig.showDebugging

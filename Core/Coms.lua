@@ -92,6 +92,5 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         -- Highlight key and level on map frames
         KeyMaster.ViewModel:UpdateKeystoneHighlights()
     end
-    --print("Recieved Data: "..data) -- CREATES BLANK LUA ERROR
 end
 

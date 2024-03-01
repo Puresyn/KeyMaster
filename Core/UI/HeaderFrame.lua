@@ -11,28 +11,13 @@ function MainInterface:CreateHeaderRegion(parentFrame)
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
     headerRegion.texture = headerRegion:CreateTexture()
-    --headerRegion.texture:SetAllPoints(headerRegion)
-    --headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
     headerRegion.texture:SetHeight(114)
     headerRegion.texture:SetWidth(headerRegion:GetWidth())
     headerRegion.texture:SetPoint("TOP", 0, 0)
     headerRegion.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster")
-    --obj:SetTexCoord(left,right,top,bottom)
-    headerRegion.texture:SetTexCoord(0, 1, 398/512, 1)    
-    --headerRegion.texture:SetHorizTile(true)
-
-    --[[ headerRegion.texture:SetTexCoord(0, (headerRegion:GetWidth())/2048, 948, (headerRegion:GetHeight())/2048)
-    headerRegion.texture:SetPoint("TOPLEFT", headerRegion,"TOPLEFT", 0 ,0)
-    headerRegion.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\_GarrMissionLocation-ShadowmoonSea-Back") ]]
+    headerRegion.texture:SetTexCoord(0, 1, 398/512, 1)
 
     return headerRegion
-
-    --[[ local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
-    addonIcon:SetHeight(addonIconFrame:GetHeight())
-    addonIcon:SetWidth(addonIconFrame:GetHeight())
-    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
-    addonIcon:ClearAllPoints()
-    addonIcon:SetPoint("LEFT", 15, -15) ]]
 end
 
 local function AddTopBar(parentFrame)
@@ -45,8 +30,6 @@ local function AddTopBar(parentFrame)
     local dynOffset = 134
     topBar:SetSize(w + dynOffset + 20, 80)
     topBar:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", -dynOffset, -4)
-    --headerRegion.texture:SetAllPoints(headerRegion)
-    --headerRegion.texture:SetColorTexture(0.231, 0.231, 0.231, 1) -- temporary bg color
     
     topBar.bar:SetHeight(114)
     topBar.bar:SetWidth(topBar:GetWidth())
@@ -85,7 +68,6 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
         return
     end
     
-    --local weekData = DungeonTools:GetAffixes()
     if (seasonalAffixes == nil) then 
         KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found!")
         return 
@@ -129,7 +111,6 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
         affixBGFrame.texture = affixBGFrame:CreateTexture(nil, "BACKGROUND",nil)
         affixBGFrame.texture:SetAllPoints(affixBGFrame)
         affixBGFrame.texture:SetColorTexture(0, 0, 0, 0.7)
-        --affixBGFrame.texture:SetPoint("LEFT", -20, -10)
 
         -- create a title and set it to the first affix's frame
         --[[ if (i == 1) then

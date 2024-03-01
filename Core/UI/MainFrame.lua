@@ -12,8 +12,6 @@ function MainInterface:CreateMainFrame()
         edgeSize = 16, 
         insets = {left = 4, right = 4, top = 4, bottom = 4}})
 
-    --mainFrame:SetBackdropColor(0,0,0,1);
-
     mainFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
     mainFrame.closeBtn:SetPoint("TOPRIGHT")
     mainFrame.closeBtn:SetSize(20, 20)

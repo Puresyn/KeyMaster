@@ -11,7 +11,6 @@ local function createAffixFramesWithRetries(parent, retryCount)
   if seasonalAffixes ~= nil then
     Header:createAffixFrames(parent, seasonalAffixes)
   else
-    --print("Retrying to create affix frames in 3 seconds..."..retryCount.."/5")
     if retryCount < 5 then
       C_Timer.After(3, function() createAffixFramesWithRetries(parent, retryCount + 1) end)
     else
@@ -59,14 +58,6 @@ function MainInterface:Initialize()
     local partyTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
     local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Configuration", configContent, false)
     local infoTab = _G["KeyMaster_MainFrameTab3"] or MainInterface:CreateTab(mainFrame, 3, "Information", infoContent, false)
-
-    --[[ -- testing multiple tabs
-    local tempFrame = _G["KeyMaster_TempFrame"] or CreateFrame("Frame", "KeyMaster_TempFrame", mainFrame);
-    tempFrame:SetSize(mainFrame:GetWidth(), mainFrame:GetHeight())
-    tempFrame:SetAllPoints(true)
-    tempFrame:Hide()
-
-    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Config", tempFrame, false) ]]
 
     Tab_OnClick(partyTab)
 
