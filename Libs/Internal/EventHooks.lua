@@ -99,10 +99,10 @@ local function KeyWatch()
             NotifyEvent("SCORE_GAINED")
         end
     end)
-    f:RegisterEvent("ITEM_COUNT_CHANGED")
-    f:RegisterEvent("ITEM_CHANGED")
-    f:RegisterEvent("CHALLENGE_MODE_START")
-    f:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+    f:RegisterEvent("ITEM_COUNT_CHANGED") -- fired when getting key from vendor
+    f:RegisterEvent("ITEM_CHANGED") -- fires on key downgrade from vendor
+    f:RegisterEvent("CHALLENGE_MODE_START") -- key going down on start
+    f:RegisterEvent("CHALLENGE_MODE_COMPLETED") -- key going up & score change
 end
 
 -- Trigger all event staging here. (for now)
