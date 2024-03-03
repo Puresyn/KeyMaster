@@ -77,31 +77,27 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
        overTime = false -- was completion overtime
     }
     
-    -- Check for empty key runs such as a character that hasn't run any M+ or a particular dungeon/affix combo
+    -- No data means no keys ran on either weekly affix
     if (mapScore == nil) then
        return emptyData
     end   
-    
-    --print("-- "..weeklyAffix..":"..tostring(mapid)..": Dungeon score found!")
-    if(weeklyAffix == "Tyrannical") then
-       if (mapScore[2] == nil) then
-          --print ("No Tyrannical Key found.")
-          return emptyData
-       end
-       
-       return mapScore[2]
+    -- No data means no keys ran on either weekly affix
+    if mapScore[1] == nil and mapScore[2] == nil then
+       return emptyData
     end
     
-    if(weeklyAffix == "Fortified") then
-       if (mapScore[1] == nil) then
-          --print ("No Fortified Key found.")
-          return emptyData
-       end
-       
-       return mapScore[1]
+    -- This is setup this way because blizzard returns the data in a table with the first index being the weekly affix
+    -- So on a tyrannical week mapScore[1] is for Tyrannical information and mapScore[2] is for Fortified information
+    -- on a fortified week mapScore[1] is for Fortified information and mapScore[2] is for Tyrannical information
+    if mapScore[1].name == weeklyAffix then
+        return mapScore[1]
+    else
+        if mapScore[2] == nil then
+            return emptyData
+        else
+            return mapScore[2]
+        end
     end
-    
-    return nil
 end
 
 function CharacterInfo:GetPlayerSpecialization(unitId)
