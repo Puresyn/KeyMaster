@@ -23,33 +23,37 @@ end
 ---@param event string A string representing the name of the local function for an event.
 local function NotifyEvent(event)
     if (event == "KEY_CHANGED") then
-        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
+            C_Timer.After(5, function()
+            KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
 
-        -- fetch self data
-        local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+            -- fetch self data
+            local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
-        -- update key data
-        playerData = UpdateKeyInformation(playerData)
+            -- update key data
+            playerData = UpdateKeyInformation(playerData)
 
-        -- Store new data
-        KeyMaster.UnitData:SetUnitData(playerData)
+            -- Store new data
+            KeyMaster.UnitData:SetUnitData(playerData)
 
-        -- Transmit unit data to party members with addon
-        MyAddon:Transmit(playerData, "PARTY", nil)    
+            -- Transmit unit data to party members with addon
+            MyAddon:Transmit(playerData, "PARTY", nil) 
+        end)
     end
     if event == "SCORE_GAINED" then
         KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: SCORE_GAINED")
-        -- fetch self data
-        local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
-        
-        -- update key data
-        playerData = UpdateKeyInformation(playerData)
+        C_Timer.After(5, function()
+            -- fetch self data
+            local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
+            
+            -- update key data
+            playerData = UpdateKeyInformation(playerData)
 
-        -- Store new data
-        KeyMaster.UnitData:SetUnitData(playerData)
-                
-        -- Transmit unit data to party members with addon
-        MyAddon:Transmit(playerData, "PARTY", nil)    
+            -- Store new data
+            KeyMaster.UnitData:SetUnitData(playerData)
+                    
+            -- Transmit unit data to party members with addon
+            MyAddon:Transmit(playerData, "PARTY", nil)    
+        end)
     end
 end
 
