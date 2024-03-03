@@ -27,19 +27,29 @@ function ViewModel:HideAllPartyFrame()
     end
 end
 
+-- fades all text data on unit frames for dungeons that do not have a keystone in the party
+local function fadeNonKeystoneData()
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    for i=1,5,1 do        
+        for mapId,_ in pairs(mapTable) do
+            local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
+            local currentLevel = tonumber(keyLevelText:GetText())
+            if currentLevel == nil then
+                _G["KM_MapData"..i..mapId]:SetAlpha(0.6)
+            end
+        end
+    end
+end
+
 -- hides all highlight frames
 local function resetKeystoneHighlights()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()    
     for mapId,_ in pairs(mapTable) do
-        -- hide all highlight frames
+        -- reset all text alpha to 100%
         for i=1,5,1 do
-            local leftHighlightFrame = _G["KM_MapData"..i..mapId.."_lColHighlight"] 
-            local rightHighlightFrame = _G["KM_MapData"..i..mapId.."_rColHighlight"]
-            leftHighlightFrame:Hide()
-            rightHighlightFrame:Hide()
             _G["KM_MapData"..i..mapId]:SetAlpha(1)
         end
-        -- reset text on dungeon icons
+        -- remove all text on dungeon icons
         local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
         _G["KM_GroupKeyShadow"..mapId]:Hide()
         _G["KM_MapHeaderHighlight"..mapId]:Hide()
@@ -54,45 +64,34 @@ function ViewModel:UpdateKeystoneHighlights()
     resetKeystoneHighlights()
 
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
-    local counter = 1
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
         if (unitGuid ~= nil) then
             local unitData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
             if unitData ~= nil and unitData.ownedKeyLevel ~= 0 then
 
-                -- Highlight the header if the player has a higher key
+                -- insert key level into dungeon icon
                 local keyLevelText = _G["Dungeon_"..unitData.ownedKeyId.."_HeaderKeyLevelText"]
                 local currentLevel = tonumber(keyLevelText:GetText())
-                if (currentLevel == nil or unitData.ownedKeyLevel > currentLevel) then
-                keyLevelText:SetText(unitData.ownedKeyLevel)
-                _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
-                _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
+                if currentLevel == nil or currentLevel == "" or unitData.ownedKeyLevel > currentLevel then
+                    keyLevelText:SetText(unitData.ownedKeyLevel)
+                    _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
+                    _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
                 elseif currentLevel ~= "" then
                     -- do nothing
                 else
                     keyLevelText:SetText("")
                 end
-                keyLevelText:Show()    
-                
-                 -- loop through each unit frame to turn on the highlight
-                 for i=1,5,1 do
-                    --[[ local leftHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_lColHighlight"] 
-                    local rightHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_rColHighlight"]
-                    leftHighlightFrame:Show()
-                    rightHighlightFrame:Show() ]]
-                end
+                keyLevelText:Show()
             end         
         end
-        counter = counter + 1
     end
+
+    -- fade non-active keystone data
+    fadeNonKeystoneData()
 end
 
---[[ local currentLevel = tonumber(keyLevelText:GetText())
-print(currentLevel)
-if (currentLevel == nil) then
-    _G["KM_MapData"..i..unitData.ownedKeyId]:SetAlpha(0.6)
-end ]]
+
 
 -- Party member data assign
 function ViewModel:UpdateUnitFrameData(unitId, playerData)
