@@ -35,7 +35,7 @@ local function NotifyEvent(event)
         KeyMaster.UnitData:SetUnitData(playerData)
 
         -- Transmit unit data to party members with addon
-        MyAddon:Transmit(playerData, "PARTY", nil)
+        MyAddon:Transmit(playerData, "PARTY", nil)    
     end
     if event == "SCORE_GAINED" then
         KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: SCORE_GAINED")
@@ -77,6 +77,8 @@ local function KeyWatch()
             end
         end
         if event == "ITEM_CHANGED" then
+            ---@param itemChangedFrom integer Returned ID of the changed item.
+            ---@param itemChangedTo integer Returned ID of what the item changed to.
             local itemChangedFrom, itemChangedTo, _ = ...
             if (string.match(itemChangedFrom, "Mythic Keystone")) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_CHANGED: "..tostring(itemChangedFrom))
