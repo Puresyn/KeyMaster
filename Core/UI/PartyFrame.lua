@@ -253,9 +253,8 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     -- Player does not have the addon
     local NoAddonText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
     local font, fontSize, flags = NoAddonText:GetFont()
-    NoAddonText:SetFont(font, 20, flags)
     NoAddonText:SetTextColor(0.6, 0.6, 0.6, 1)
-    NoAddonText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    NoAddonText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
     NoAddonText:SetText(KM_ADDON_NAME.." "..KeyMasterLocals.PARTYFRAME["NoAddon"].text)
     NoAddonText:Hide()
 
