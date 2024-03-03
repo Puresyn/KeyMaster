@@ -20,6 +20,25 @@ function MainInterface:CreateHeaderRegion(parentFrame)
     return headerRegion
 end
 
+function MainInterface:AddonVersionNotify(parentframe)
+    local addonOudatedFrame = CreateFrame("FRAME", "KM_AddonOutdated", parentframe)
+    addonOudatedFrame:SetSize(252, 32)
+    addonOudatedFrame:SetPoint("BOTTOMRIGHT", parentframe, "TOPRIGHT", -2, 4)
+    addonOudatedFrame.border = addonOudatedFrame:CreateTexture(nil, "BACKGROUND")
+    addonOudatedFrame.border:SetAllPoints(addonOudatedFrame)
+    addonOudatedFrame.border:SetColorTexture(1,0,0,1)
+    addonOudatedFrame.boxBackground = addonOudatedFrame:CreateTexture(nil, "ARTWORK")
+    addonOudatedFrame.boxBackground:SetSize(addonOudatedFrame:GetWidth()-2, addonOudatedFrame:GetHeight()-2)
+    addonOudatedFrame.boxBackground:SetPoint("CENTER", addonOudatedFrame, "CENTER")
+    addonOudatedFrame.boxBackground:SetColorTexture(0,0,0,1)
+    addonOudatedFrame.text = addonOudatedFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    addonOudatedFrame.text:SetPoint("CENTER", addonOudatedFrame, "CENTER")
+    addonOudatedFrame.text:SetSize(addonOudatedFrame:GetWidth()-8, addonOudatedFrame:GetHeight()-8)
+    addonOudatedFrame.text:SetTextColor(1,1,0,1)
+    addonOudatedFrame.text:SetText(KeyMasterLocals.ADDONOUTOFDATE)
+    addonOudatedFrame:Hide()
+end
+
 local function AddTopBar(parentFrame)
     local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper",parentFrame);
     topBar:SetFrameLevel(parentFrame:GetFrameLevel()-1)

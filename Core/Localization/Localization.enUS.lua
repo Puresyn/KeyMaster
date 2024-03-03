@@ -19,6 +19,7 @@ L.COMMANDERROR1 = "Invalid command"
 L.COMMANDERROR2 = "Enter"
 L.COMMANDERROR3 = "for commands"
 L.YOURCURRENTKEY = "YOUR KEY"
+L.ADDONOUTOFDATE = "Your Key Master addon is out of date!"
 
 L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
