@@ -35,14 +35,14 @@ L.TOOLTIPS["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "T
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Party Information", text = "Party Information"}
-L.PARTYFRAME["OverallRating"] = { name = "Overall Rating", text = "Overall Rating" }
+L.PARTYFRAME["OverallRating"] = { name = "Current Overall", text = "Current Overall" }
 L.PARTYFRAME["PartyPointGain"] = { name = "Party Point Gain", text = "Party Point Gain"}
 L.PARTYFRAME["Level"] = { name = "Level", text = "Level" }
 L.PARTYFRAME["Weekly"] = { name = "Weekly", text = "Weekly"}
 L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
-L.PARTYFRAME["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "Estimated Rating Gain"}
-L.PARTYFRAME["MemberPointsGain"] = { name = "Personal Gain", text = "Estimated personal point Gain for available key(s) at +1 completion."}
+L.PARTYFRAME["TeamRatingGain"] = { name = "Party Gain Potential", text = "Estimated Party Rating Gain"}
+L.PARTYFRAME["MemberPointsGain"] = { name = "Gain Potential", text = "Estimated personal point gain for available key(s) at +1 completion."}
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
