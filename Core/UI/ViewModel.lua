@@ -68,10 +68,12 @@ function ViewModel:UpdateKeystoneHighlights()
                 local currentLevel = tonumber(keyLevelText:GetText())
                 if (currentLevel == nil or unitData.ownedKeyLevel > currentLevel) then
                     keyLevelText:SetText(unitData.ownedKeyLevel)
-                    keyLevelText:Show()
+                elseif currentLevel ~= "" then
+                    -- do nothing
                 else
                     keyLevelText:SetText("")
-                end                
+                end 
+                keyLevelText:Show()               
             end            
         end
         counter = counter + 1
@@ -223,7 +225,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
                         end
                     end
                 else
-                    KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "ViewModel", "Player data not found for "..unitid)
+                    --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "ViewModel", "Player data not found for "..unitid)
                 end                               
             end
         end

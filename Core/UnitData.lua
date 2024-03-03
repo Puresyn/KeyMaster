@@ -110,13 +110,13 @@ function UnitData:MapPartyUnitData()
         local currentUnitId = "party"..i
         if (UnitGUID(currentUnitId) ~= nil) then
             -- find if we have data for this player, if not get a set of default data from blizzard
-            KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Mapping data for "..currentUnitId)
+            --KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Mapping data for "..currentUnitId)
             local unitData = unitInformation[UnitGUID(currentUnitId)]
             if unitData == nil then
-                KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
+                --KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
                 unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
             else
-                KeyMaster:_DebugMsg("MapPartyUnitData","UnitData","Found local data on "..currentUnitId)  
+                --KeyMaster:_DebugMsg("MapPartyUnitData","UnitData","Found local data on "..currentUnitId)  
             end
             -- remap and display data for this unitid
             UnitData:DisplayUnitData(currentUnitId, unitData)

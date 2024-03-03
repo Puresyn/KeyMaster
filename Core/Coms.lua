@@ -34,6 +34,8 @@ function MyAddon:Transmit(data)
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
+    
+    KeyMaster:_DebugMsg("Transmit", "Coms", "transmitting data ...")
     self:SendCommMessage(comPrefix, encoded, "PARTY", nil)
 end
 
