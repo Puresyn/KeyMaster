@@ -40,6 +40,7 @@ local function resetKeystoneHighlights()
         end
         -- reset text on dungeon icons
         local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
+        _G["KM_GroupKeyShadow"..mapId]:Hide()
         keyLevelText:SetText("")
     end
 end
@@ -70,6 +71,7 @@ function ViewModel:UpdateKeystoneHighlights()
                 local currentLevel = tonumber(keyLevelText:GetText())
                 if (currentLevel == nil or unitData.ownedKeyLevel > currentLevel) then
                     keyLevelText:SetText(unitData.ownedKeyLevel)
+                    _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
                 elseif currentLevel ~= "" then
                     -- do nothing
                 else
