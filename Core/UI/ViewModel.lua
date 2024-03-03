@@ -44,6 +44,8 @@ local function resetKeystoneHighlights()
     end
 end
 
+-- updates the keystone highlights for each party member for known keys
+-- highlights include vertical bars and the dungeon level text in dungeon icon row
 function ViewModel:UpdateKeystoneHighlights()
     -- resets all highlights and text to default
     resetKeystoneHighlights()
@@ -176,11 +178,25 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end    
 end
 
+-- resets each unit's "Gain Potential" text for each dungeon to empty
+local function resetPersonalGains()
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+
+    for i=1,5,1 do
+        for mapId,_ in pairs(mapTable) do
+            _G["KM_PointGain"..i..mapId]:SetText("")
+        end
+    end
+end
+
 -- calculates the total rating gain potential for each player in the party
 function ViewModel:CalculateTotalRatingGainPotential()
-    local keystoneInformation = {}
+    resetPersonalGains()
 
-    -- Cycle through unitids to get their keystone infromation
+    local keystoneInformation = {}
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local currentWeeklyAffix = DungeonTools:GetWeeklyAffix()
+
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
@@ -196,14 +212,12 @@ function ViewModel:CalculateTotalRatingGainPotential()
             end            
         end
     end
-
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    local currentWeeklyAffix = DungeonTools:GetWeeklyAffix()
     
     -- cycle through keystone information to calculate rating gained for EACH unitid (who has the addon installed)
     for _, keyData in pairs(keystoneInformation) do
         local dungeonTimer = mapTable[keyData.ownedKeyId].timeLimit
         local totalKeyRatingChange = 0
+        local playerNumber = 1
         for _, unitid in pairs(partyMembers) do
             local unitGuid = UnitGUID(unitid)
             if (unitGuid ~= nil) then
@@ -218,19 +232,27 @@ function ViewModel:CalculateTotalRatingGainPotential()
                     if (currentWeeklyAffix == "Tyrannical") then
                         if ratingChange > tyranRating then
                             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(newTotal - currentOverallRating)
                             totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
+                        else
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
                         end
                     else
                         if ratingChange > fortRating then
                             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(newTotal - currentOverallRating)
                             totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
+                        else
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
                         end
                     end
                 else
                     --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "ViewModel", "Player data not found for "..unitid)
                 end                               
             end
+            playerNumber = playerNumber + 1
         end
+        
         local mapTallyFrame = _G["KM_MapTallyScore"..keyData.ownedKeyId]
         mapTallyFrame:SetText(KeyMaster:RoundToOneDecimal(totalKeyRatingChange))
     end
