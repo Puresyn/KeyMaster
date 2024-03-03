@@ -33,6 +33,7 @@ end
 function UnitData:DisplayUnitData(unitId, unitData)
     ViewModel:UpdateUnitFrameData(unitId, unitData)
     ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
+    ViewModel:SetPlayerHeaderKeyInfo()
 end
 
 function UnitData:SetUnitData(unitData, updateUI)
