@@ -319,6 +319,13 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         tempText4:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -8)
         prevAnchor = tempText4
 
+        -- Member Point Gain From Key
+        local tempText5 = temp_Frame:CreateFontString("KM_PointGain"..playerNumber..mapid, "OVERLAY", "KeyMasterFontSmall")
+        tempText5:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -10)
+        local r, g, b = Theme:GetThemeColor("color_TAUPE")
+        tempText5:SetTextColor(r, g, b, 1)
+        prevAnchor = tempText5
+
         -- Map Total Score
         local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
@@ -357,6 +364,13 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     local tempText3 = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     tempText3:SetText(KeyMasterLocals.FORTIFIED..":")
+
+    local tempText4 = temp_Frame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
+    tempText4:SetPoint("RIGHT", _G["KM_PointGain"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    local r, g, b = Theme:GetThemeColor("color_TAUPE")
+    tempText4:SetTextColor(r, g, b, 1)
+    tempText:SetTextColor(tempText3:GetTextColor())
+    tempText4:SetText(KeyMasterLocals.PARTYFRAME["MemberPointsGain"].name..":")
 
     local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)

@@ -42,6 +42,7 @@ L.PARTYFRAME["Weekly"] = { name = "Weekly", text = "Weekly"}
 L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
 L.PARTYFRAME["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "Estimated Rating Gain"}
+L.PARTYFRAME["MemberPointsGain"] = { name = "Personal Gain", text = "Estimated personal point Gain for available key(s) at +1 completion."}
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
