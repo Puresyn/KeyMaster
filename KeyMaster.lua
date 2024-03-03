@@ -220,9 +220,6 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
             MainInterface:SetPartyWeeklyDataTheme() 
 
-            -- Highlight key and level on map frames
-            KeyMaster.ViewModel:UpdateKeystoneHighlights()
-
             -- process party
             local inGroup = UnitInRaid("player") or IsInGroup()
             if inGroup and GetNumGroupMembers() >= 2 then
@@ -234,12 +231,6 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
                 -- Transmit unit data to party members with addon
                 MyAddon:Transmit(playerUnit, "PARTY", nil)
             end
-
-            -- Calculate keystone upgrades for party members and player
-            KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
-
-            KeyMaster.ViewModel:SetPlayerHeaderKeyInfo()
-
         end) 
     end
 end
