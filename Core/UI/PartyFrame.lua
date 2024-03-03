@@ -243,42 +243,43 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     dataFrame:SetSize((parentFrame:GetWidth() - ((_G["KM_Portrait"..playerNumber]:GetWidth())/2)), parentFrame:GetHeight())
 
     -- Player's Name
-    local tempText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 10, -3)
+    local PlayerNameText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
+    PlayerNameText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 10, -3)
 
     -- Player class
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
-    tempText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
+    local PlayerClassText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
+    PlayerClassText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
 
     -- Player does not have the addon
-    tempText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    local font, fontSize, flags = tempText:GetFont()
-    tempText:SetFont(font, 20, flags)
-    tempText:SetTextColor(0.6, 0.6, 0.6, 1)
-    tempText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
-    tempText:SetText(KM_ADDON_NAME.." "..KeyMasterLocals.PARTYFRAME["NoAddon"].text)
-    tempText:Hide()
+    local NoAddonText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
+    local font, fontSize, flags = NoAddonText:GetFont()
+    NoAddonText:SetFont(font, 20, flags)
+    NoAddonText:SetTextColor(0.6, 0.6, 0.6, 1)
+    NoAddonText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    NoAddonText:SetText(KM_ADDON_NAME.." "..KeyMasterLocals.PARTYFRAME["NoAddon"].text)
+    NoAddonText:Hide()
 
     -- Player is offline
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "KeyMasterFontBig")
-    font, fontSize, flags = tempText:GetFont()
-    tempText:SetFont(font, 20, flags)
-    tempText:SetTextColor(0.6, 0.6, 0.6, 1)
-    tempText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
-    tempText:SetText(KeyMasterLocals.PARTYFRAME["PlayerOffline"].text)
-    tempText:Hide()
+    local OfflineText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "KeyMasterFontBig")
+    font, fontSize, flags = OfflineText:GetFont()
+    OfflineText:SetFont(font, 20, flags)
+    OfflineText:SetTextColor(0.6, 0.6, 0.6, 1)
+    OfflineText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    OfflineText:SetText(KeyMasterLocals.PARTYFRAME["PlayerOffline"].text)
+    OfflineText:Hide()
 
     -- Player's Owned Key
-    tempText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
+    local OwnedKeyText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
+    OwnedKeyText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
 
     -- Player Rating
-    tempText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
-    tempText:SetPoint("TOPLEFT", "KM_Player"..playerNumber.."Class", "BOTTOMLEFT", 0, -1)
-    font, fontSize, flags = tempText:GetFont()
-    tempText:SetFont(font, 20, flags)
-    local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
-    tempText:SetTextColor(r, g, b, 1)
+    local OverallRatingText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
+    OverallRatingText:SetPoint("TOPLEFT", "KM_Player"..playerNumber.."Class", "BOTTOMLEFT", 0, -1)
+    font, fontSize, flags = OverallRatingText:GetFont()
+    OverallRatingText:SetFont(font, 20, flags)
+    local RatingColor = {}
+    RatingColor.r, RatingColor.g, RatingColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+    OverallRatingText:SetTextColor(RatingColor.r, RatingColor.g, RatingColor.b, 1)
     
     -- Create frames for map scores
     local prevMapId, prevAnchor
@@ -322,15 +323,17 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
         -- Member Point Gain From Key
         local tempText5 = temp_Frame:CreateFontString("KM_PointGain"..playerNumber..mapid, "OVERLAY", "KeyMasterFontSmall")
         tempText5:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -10)
-        local r, g, b = Theme:GetThemeColor("color_TAUPE")
-        tempText5:SetTextColor(r, g, b, 1)
+        local PointGainColor = {}
+        PointGainColor.r, PointGainColor.g, PointGainColor.b, _ = Theme:GetThemeColor("color_TAUPE")
+        tempText5:SetTextColor(PointGainColor.r, PointGainColor.g, PointGainColor.b, 1)
         prevAnchor = tempText5
 
         -- Map Total Score
         local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
-        local r, g, b, _ = Theme:GetThemeColor("color_HEIRLOOM")
-        tempText6:SetTextColor(r, g, b, 1)
+        local MapScoreTotalColor = {}
+        MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+        tempText6:SetTextColor(MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, 1)
 
         -- create dungeon identity header if this is the clinets row (the first row)
         if (playerNumber == 1) then
@@ -357,24 +360,24 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
     temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
     temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", -4, 0)
 
-    local tempText1 = temp_Frame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
-    tempText1:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText1:SetText(KeyMasterLocals.TYRANNICAL..":")
+    local PartyTitleText = temp_Frame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
+    PartyTitleText:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    PartyTitleText:SetText(KeyMasterLocals.TYRANNICAL..":")
     
-    local tempText3 = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
-    tempText3:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText3:SetText(KeyMasterLocals.FORTIFIED..":")
+    local FortTitleText = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
+    FortTitleText:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    FortTitleText:SetText(KeyMasterLocals.FORTIFIED..":")
 
-    local tempText4 = temp_Frame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
-    tempText4:SetPoint("RIGHT", _G["KM_PointGain"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    local r, g, b = Theme:GetThemeColor("color_TAUPE")
-    tempText4:SetTextColor(r, g, b, 1)
-    tempText:SetTextColor(tempText3:GetTextColor())
-    tempText4:SetText(KeyMasterLocals.PARTYFRAME["MemberPointsGain"].name..":")
+    local PointGainTitleText = temp_Frame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
+    PointGainTitleText:SetPoint("RIGHT", _G["KM_PointGain"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    local PointGainTitleColor = {}
+    PointGainTitleColor.r, PointGainTitleColor.g, PointGainTitleColor.b = Theme:GetThemeColor("color_TAUPE")
+    PointGainTitleText:SetTextColor(PointGainTitleColor.r, PointGainTitleColor.g, PointGainTitleColor.b, 1)
+    PointGainTitleText:SetText(KeyMasterLocals.PARTYFRAME["MemberPointsGain"].name..":")
 
-    local tempText5 = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    tempText5:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    tempText5:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
+    local OverallRatingTitleText = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    OverallRatingTitleText:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
+    OverallRatingTitleText:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
 
 end
 
