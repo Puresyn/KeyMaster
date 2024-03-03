@@ -61,10 +61,21 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     -- Dungeon Header Icon Frame
     local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
     temp_frame:SetSize(iconSizex, iconSizey)
-    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 4)
+    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10)
+
+    local backgroundHighlight = CreateFrame("Frame", "KM_MapHeaderHighlight"..mapId, temp_frame)
+    backgroundHighlight:SetFrameLevel(temp_frame:GetFrameLevel()-1)
+    backgroundHighlight:SetPoint("TOP", temp_frame, "BOTTOM", 0, -4)
+    backgroundHighlight:SetSize(temp_frame:GetWidth(), 2)
+    backgroundHighlight.texture = backgroundHighlight:CreateTexture()
+    backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
+    local highlightColor = {}
+    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    backgroundHighlight.texture:SetColorTexture(highlightColor.r,highlightColor.g,highlightColor.b, 1)
+    backgroundHighlight:Hide()
 
     -- Dungeon abbr text
-    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    local txtPlaceHolder = temp_frame:CreateFontString("KM_Dungeon_"..mapId.."_Abbr", "OVERLAY", "KeyMasterFontSmall")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 12, Flags)
     txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
@@ -403,7 +414,7 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
     temp_RowFrame:ClearAllPoints()
 
     if (unitId == "player") then -- first spot
-        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -2)
+        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -4)
         frameHeight = (parentFrame:GetHeight()/5) - (mtb*2)
     else
         temp_RowFrame:SetPoint("TOPLEFT", _G["KM_PlayerRow"..partyNumber - 1], "BOTTOMLEFT", 0, -4)
@@ -520,7 +531,7 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
     temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -59)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -62)
     timeSinceLastUpdate = 0
     
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")

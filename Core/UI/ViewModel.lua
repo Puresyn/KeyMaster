@@ -37,10 +37,12 @@ local function resetKeystoneHighlights()
             local rightHighlightFrame = _G["KM_MapData"..i..mapId.."_rColHighlight"]
             leftHighlightFrame:Hide()
             rightHighlightFrame:Hide()
+            _G["KM_MapData"..i..mapId]:SetAlpha(1)
         end
         -- reset text on dungeon icons
         local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
         _G["KM_GroupKeyShadow"..mapId]:Hide()
+        _G["KM_MapHeaderHighlight"..mapId]:Hide()
         keyLevelText:SetText("")
     end
 end
@@ -58,31 +60,39 @@ function ViewModel:UpdateKeystoneHighlights()
         if (unitGuid ~= nil) then
             local unitData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
             if unitData ~= nil and unitData.ownedKeyLevel ~= 0 then
-                -- loop through each unit frame to turn on the highlight
-                for i=1,5,1 do
-                    local leftHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_lColHighlight"] 
-                    local rightHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_rColHighlight"]
-                    leftHighlightFrame:Show()
-                    rightHighlightFrame:Show()
-                end
 
                 -- Highlight the header if the player has a higher key
                 local keyLevelText = _G["Dungeon_"..unitData.ownedKeyId.."_HeaderKeyLevelText"]
                 local currentLevel = tonumber(keyLevelText:GetText())
                 if (currentLevel == nil or unitData.ownedKeyLevel > currentLevel) then
-                    keyLevelText:SetText(unitData.ownedKeyLevel)
-                    _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
+                keyLevelText:SetText(unitData.ownedKeyLevel)
+                _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
+                _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
                 elseif currentLevel ~= "" then
                     -- do nothing
                 else
                     keyLevelText:SetText("")
-                end 
-                keyLevelText:Show()               
-            end            
+                end
+                keyLevelText:Show()    
+                
+                 -- loop through each unit frame to turn on the highlight
+                 for i=1,5,1 do
+                    --[[ local leftHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_lColHighlight"] 
+                    local rightHighlightFrame = _G["KM_MapData"..i..unitData.ownedKeyId.."_rColHighlight"]
+                    leftHighlightFrame:Show()
+                    rightHighlightFrame:Show() ]]
+                end
+            end         
         end
         counter = counter + 1
     end
 end
+
+--[[ local currentLevel = tonumber(keyLevelText:GetText())
+print(currentLevel)
+if (currentLevel == nil) then
+    _G["KM_MapData"..i..unitData.ownedKeyId]:SetAlpha(0.6)
+end ]]
 
 -- Party member data assign
 function ViewModel:UpdateUnitFrameData(unitId, playerData)
