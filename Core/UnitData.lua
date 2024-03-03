@@ -34,6 +34,8 @@ function UnitData:DisplayUnitData(unitId, unitData)
     ViewModel:UpdateUnitFrameData(unitId, unitData)
     ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
     ViewModel:SetPlayerHeaderKeyInfo()
+    ViewModel:UpdateKeystoneHighlights()
+    ViewModel:CalculateTotalRatingGainPotential()
 end
 
 function UnitData:SetUnitData(unitData, updateUI)

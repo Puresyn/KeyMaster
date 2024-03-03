@@ -87,12 +87,6 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
-        
-        -- Calculate keystone upgrades for party members and player
-        KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
-        
-        -- Highlight key and level on map frames
-        KeyMaster.ViewModel:UpdateKeystoneHighlights()
     end
 end
 
