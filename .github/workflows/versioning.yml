@@ -29,23 +29,16 @@ jobs:
           touch version.lua
           echo "hello world" >> version.lua
         shell: bash
-        
-      - name: Commit files
-        id: commit
+
+      - name: Commit changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add --all
-          if [-z "$(git status --porcelain)"]; then
-           echo "::set-output name=push::false"
-          else
-           git commit -m "Add changes" -a
-           echo "::set-output name=push::true"
-          fi
-        shell: bash
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "GitHub Actions"
+          git add static/blog.json
+          git commit -m "Update blog.json"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
-      - name: Push changes
-        if: steps.commit.outputs.push == 'true'
-        uses: ad-m/github-push-action@master
-        with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
+      
