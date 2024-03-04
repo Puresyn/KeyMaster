@@ -120,7 +120,11 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
     end
     
     -- Set Player Portrait
-    SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
+    if UnitIsConnected(unitId) then
+        SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
+    else
+        _G["KM_Portrait"..partyPlayer]:SetTexture("interface/Addons/KeyMaster/Assets/Images/portrait_x")
+    end    
           
     -- Spec & Class
     local unitClassSpec
@@ -182,11 +186,23 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
         _G["KM_MapDataLegend"..partyPlayer]:Hide()
     end
 
-    if (not playerData.hasAddon) then
-        _G["KM_NoAddon"..partyPlayer]:Show()        
+    -- check player online/offline status and addon
+    if UnitIsConnected(unitId) then
+        -- hide offline text
+        _G["KM_Player"..partyPlayer.."Offline"]:Hide()
+
+        if playerData.hasAddon then
+            -- hide no addon text
+            _G["KM_NoAddon"..partyPlayer]:Hide()
+        else
+            -- show the unit frame for this unit
+            _G["KM_NoAddon"..partyPlayer]:Show()
+        end
     else
+        -- show offline text and hide no addon text
         _G["KM_NoAddon"..partyPlayer]:Hide()
-    end    
+        _G["KM_Player"..partyPlayer.."Offline"]:Hide()
+    end  
 end
 
 -- resets each unit's "Gain Potential" text for each dungeon to empty

@@ -282,10 +282,9 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
     -- Player is offline
     local OfflineText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Offline", "OVERLAY", "KeyMasterFontBig")
-    font, fontSize, flags = OfflineText:GetFont()
-    OfflineText:SetFont(font, 20, flags)
+    local font, fontSize, flags = OfflineText:GetFont()
     OfflineText:SetTextColor(0.6, 0.6, 0.6, 1)
-    OfflineText:SetPoint("CENTER", dataFrame, "CENTER", 105, 0)
+    OfflineText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 10, 4)
     OfflineText:SetText(KeyMasterLocals.PARTYFRAME["PlayerOffline"].text)
     OfflineText:Hide()
 
