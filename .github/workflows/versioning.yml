@@ -32,3 +32,4 @@ jobs:
         run: |
           touch version.lua
           echo "hello world" >> version.lua
+        shell: bash
