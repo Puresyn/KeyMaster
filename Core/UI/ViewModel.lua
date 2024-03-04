@@ -206,19 +206,20 @@ function ViewModel:UpdateUnitFrameData(unitId, playerData)
 end
 
 -- resets each unit's "Gain Potential" text for each dungeon to empty
-local function resetPersonalGains()
+local function resetRatingGains()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
 
-    for i=1,5,1 do
-        for mapId,_ in pairs(mapTable) do
+    for mapId,_ in pairs(mapTable) do
+        for i=1,5,1 do
             _G["KM_PointGain"..i..mapId]:SetText("")
         end
+        _G["KM_MapTallyScore"..mapId]:SetText("")
     end
 end
 
 -- calculates the total rating gain potential for each player in the party
 function ViewModel:CalculateTotalRatingGainPotential()
-    resetPersonalGains()
+    resetRatingGains()
 
     local keystoneInformation = {}
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
