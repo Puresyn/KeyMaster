@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+n# This is a basic workflow to help you get started with Actions
 
 name: 'versioning'
 
@@ -34,8 +34,8 @@ jobs:
         run: |
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
-          git add static/blog.json
-          git commit -m "Update blog.json"
+          git add version.lua
+          git commit -m "Update version.lua"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
         env:
