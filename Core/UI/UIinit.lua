@@ -4,6 +4,7 @@ local Header = KeyMaster.Header
 local ViewModel = KeyMaster.ViewModel
 local ConfigFrame = KeyMaster.ConfigFrame
 local InfoFrame = KeyMaster.InfoFrame
+local PlayerFrame = KeyMaster.PlayerFrame
 
 local function createAffixFramesWithRetries(parent, retryCount)
   if retryCount == nil then retryCount = 0 end
@@ -36,6 +37,8 @@ function MainInterface:Initialize()
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
     local configContent = _G["KM_Configuration_Frame"] or ConfigFrame:CreateConfigFrame(contentRegion)
     local infoContent = _G["KM_Info_Frame"] or InfoFrame:CreateInfoFrame(contentRegion)
+    local playerContent = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(contentRegion)
+    local playerInfoFrame = _G["KM_PlayerFrameInfo"] or PlayerFrame:CreateMapData(playerContent)
    
 
     -- create player row frames
@@ -55,12 +58,16 @@ function MainInterface:Initialize()
     local partyScoreTally = _G["PartyTallyFooter"] or MainInterface:CreatePartyScoreTallyFooter()
 
     -- Create tabs
-    local tabContents = partyContent
-    local partyTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Party", tabContents, true)
-    local configTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Configuration", configContent, false)
-    local infoTab = _G["KeyMaster_MainFrameTab3"] or MainInterface:CreateTab(mainFrame, 3, "Information", infoContent, false)
+    local playerTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Player", playerContent, true)
+    local partyTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Party", partyContent, true)
+    local configTab = _G["KeyMaster_MainFrameTab3"] or MainInterface:CreateTab(mainFrame, 3, "Configuration", configContent, false)
+    local infoTab = _G["KeyMaster_MainFrameTab4"] or MainInterface:CreateTab(mainFrame, 4, "Information", infoContent, false)
 
-    Tab_OnClick(partyTab)
+    if(UnitInParty("player")) then
+      Tab_OnClick(partyTab)
+    else
+      Tab_OnClick(playerTab)
+    end
 
     return mainFrame
 end
