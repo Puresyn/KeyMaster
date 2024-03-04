@@ -158,44 +158,6 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 
 end
 
-local function createMapColumnHighlightFrames(parentFrame)
-    local pFrameName = parentFrame:GetName()
-    local rightFrameName = pFrameName .. "_rColHighlight"
-    local leftFrameName = pFrameName .. "_lColHighlight"
-    local frameHeight = parentFrame:GetHeight()
-    local parentLevel = parentFrame:GetFrameLevel()
-    local phc = {}
-    phc.r, phc.g, phc.b, _ = Theme:GetThemeColor("color_COMMON") -- color_NONPHOTOBLUE
-
-    local rightHighlight = CreateFrame("Frame", rightFrameName, parentFrame)
-    rightHighlight:SetHeight(frameHeight)
-    rightHighlight:SetWidth(2)
-    rightHighlight:SetFrameLevel(parentLevel + 1)
-    rightHighlight:SetPoint("CENTER", parentFrame, "RIGHT", 1, 0)
-    rightHighlight.texture = rightHighlight:CreateTexture()
-    rightHighlight.shadowTexture = rightHighlight:CreateTexture()
-    rightHighlight.texture:SetPoint("LEFT", 0, 0)
-    rightHighlight.texture:SetSize(1, frameHeight)
-    rightHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
-    rightHighlight.shadowTexture:SetSize(1, frameHeight)
-    rightHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
-    rightHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
-    
-    local leftHighlight = CreateFrame("Frame", leftFrameName, parentFrame)
-    leftHighlight:SetHeight(frameHeight)
-    leftHighlight:SetWidth(2)
-    leftHighlight:SetFrameLevel(parentLevel + 1)
-    leftHighlight:SetPoint("CENTER", parentFrame, "LEFT", 1, 0)
-    leftHighlight.texture = leftHighlight:CreateTexture()
-    leftHighlight.shadowTexture = leftHighlight:CreateTexture()
-    leftHighlight.texture:SetPoint("LEFT", 0, 0)
-    leftHighlight.texture:SetSize(1, frameHeight)
-    leftHighlight.shadowTexture:SetPoint("RIGHT", 1, 0)
-    leftHighlight.shadowTexture:SetSize(1, frameHeight)
-    leftHighlight.texture:SetColorTexture(phc.r, phc.g, phc.b, 1)
-    leftHighlight.shadowTexture:SetColorTexture(0, 0, 0, 0.6)
-end
-
 -- Set the font and color of the party frames map data.
 function MainInterface:SetPartyWeeklyDataTheme()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
@@ -362,9 +324,6 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
             local id = mapid
             createPartyDungeonHeader(anchorFrame, id)
         end
-
-        -- create vertical highlights for keystone data
-        createMapColumnHighlightFrames(temp_Frame)
 
         firstItem = false
         prevMapId = mapid
