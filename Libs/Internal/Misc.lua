@@ -183,3 +183,38 @@ end
 function KeyMaster:RoundToOneDecimal(number)
     return math.floor((number * 10) + 0.5) * 0.1
 end
+
+-- if result is 0 than values are equal
+-- if result is -1 than version1 is older
+-- if result is 1 than version1 is newer
+function KeyMaster:VersionCompare(version1, version2)
+    local _, _, major1, minor1, patch1 = strfind(version1, "(%d+)%.(%d+)%.(%d+)")
+    local _, _, major2, minor2, patch2 = strfind(version2, "(%d+)%.(%d+)%.(%d+)")
+    major1 = tonumber(major1)
+    minor1 = tonumber(minor1)
+    patch1 = tonumber(patch1)
+    
+    major2 = tonumber(major2)
+    minor2 = tonumber(minor2)
+    patch2 = tonumber(patch2)   
+    
+    if (major1 == major2) then
+       if (minor1 == minor2) then
+          if (patch1 == patch2) then
+             return 0
+          elseif (patch1 > patch2) then
+             return 1
+          else
+             return -1
+          end
+       elseif (minor1 > minor2) then
+          return 1
+       else
+          return -1
+       end
+    elseif (major1 > major2) then
+       return 1
+    else
+       return -1
+    end
+end

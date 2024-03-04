@@ -139,7 +139,8 @@ function CharacterInfo:GetMyCharacterInfo()
     myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
     myCharacterInfo.unitId = "player"
     myCharacterInfo.hasAddon = true
-    myCharacterInfo.addonVersion = KM_AUTOVERSION
+    myCharacterInfo.buildVersion = KM_AUTOVERSION
+    myCharacterInfo.buildType = KM_VERSION_STATUS
 
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do

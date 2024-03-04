@@ -87,6 +87,27 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
+
+        -- if result is 0 than values are equal
+        -- if result is -1 than version1 is older
+        -- if result is 1 than version1 is newer
+        local compareValue = KeyMaster:VersionCompare(data.buildVersion, KM_AUTOVERSION)
+        if compareValue == 0 then
+            KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is the same as mine.")
+        else
+            if data.buildType == KM_VERSION_STATUS then
+                if compareValue == 1 then
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")
+                else
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is lower than mine. Ignoring.")
+                end
+            else
+                if compareValue == 1 and data.buildType ~= "beta" then
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")                    
+                else
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is being ignored.")
+                end
+            end
+        end
     end
 end
-
