@@ -89,9 +89,17 @@ local function KeyWatch()
                 NotifyEvent("KEY_CHANGED")                
             end
         end
+        --[[ if event == "ITEM_DATA_LOAD_RESULT" then
+            local itemID
+            itemID, _ = ...
+            if (itemID == MYTHIC_PLUS_KEY_ID) then
+                KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_DATA_LOAD_RESULT")
+                NotifyEvent("KEY_CHANGED")
+            end
+        end ]]
         if event == "CHALLENGE_MODE_START" then
             local mapid = ...
-            KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_START"..tostring(mapid))
+            KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_START")
             NotifyEvent("KEY_CHANGED")
         end
         if event == "CHALLENGE_MODE_COMPLETED" then
@@ -103,6 +111,7 @@ local function KeyWatch()
     f:RegisterEvent("ITEM_CHANGED") -- fires on key downgrade from vendor
     f:RegisterEvent("CHALLENGE_MODE_START") -- key going down on start
     f:RegisterEvent("CHALLENGE_MODE_COMPLETED") -- key going up & score change
+    --f:RegisterEvent("ITEM_DATA_LOAD_RESULT")
 end
 
 -- Trigger all event staging here. (for now)

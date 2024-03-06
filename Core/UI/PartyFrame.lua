@@ -7,7 +7,11 @@ local UnitData = KeyMaster.UnitData
 local ViewModel = KeyMaster.ViewModel
 
 local function portalButton_buttonevent(self, event)
-   -- MainInterface:Toggle(); -- commented out because it needs a unit is spell casting check
+    local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
+    local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
+    if (dur < 2) then
+        MainInterface:Toggle()
+    end
 end
 
 local function portalButton_tooltipon(self, event)

@@ -20,6 +20,10 @@ L.COMMANDERROR2 = "Enter"
 L.COMMANDERROR3 = "for commands"
 L.YOURCURRENTKEY = "YOUR KEY"
 L.ADDONOUTOFDATE = "Your Key Master addon is out of date!"
+L.INSTANCEINFORMATION = "Instance Information"
+L.VAULTINFORMATION = "M+ Vault Information"
+L.TIMELIMIT = "Time Limit"
+L.SEASON = "Season"
 
 L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}

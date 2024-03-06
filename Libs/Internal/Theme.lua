@@ -207,6 +207,12 @@ local Colors = {
         g = 0.91,
         b = 0.99,
         hex = "A3E7FC"
+    },
+    color_DARKGREY = {
+        r = 0.3,
+        g = 0.3,
+        b = 0.3,
+        hex = "000000"
     }
 }
 

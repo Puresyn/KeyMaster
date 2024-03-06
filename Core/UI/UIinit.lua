@@ -37,8 +37,12 @@ function MainInterface:Initialize()
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or MainInterface:CreatePartyRowsFrame(partyContent)
     local configContent = _G["KM_Configuration_Frame"] or ConfigFrame:CreateConfigFrame(contentRegion)
     local infoContent = _G["KM_Info_Frame"] or InfoFrame:CreateInfoFrame(contentRegion)
-    local playerContent = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(contentRegion)
-    local playerInfoFrame = _G["KM_PlayerFrameInfo"] or PlayerFrame:CreateMapData(playerContent)
+
+    local playerContent = _G["KM_PlayerContentFrame"] or PlayerFrame:CreatePlayerContentFrame(contentRegion)
+    local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
+    local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame)
+    local playerExtraFrame = _G["KM_PLayerExtraInfo"] or PlayerFrame:CreateExtraInfoFrame(playerMapFrame)
+    local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame)
    
 
     -- create player row frames
