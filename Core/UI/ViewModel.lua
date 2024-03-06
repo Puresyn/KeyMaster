@@ -30,12 +30,33 @@ end
 -- fades all text data on unit frames for dungeons that do not have a keystone in the party
 local function fadeNonKeystoneData()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
-    for i=1,5,1 do        
+    local hasKeystones = false
+    
+    -- check if any keystone is present in the party
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    for _,unitId in pairs(partyMembers) do
+        local unitGuid = UnitGUID(unitId)
+        if (unitGuid ~= nil) then
+            local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
+            if playerData ~= nil and playerData.ownedKeyLevel ~= 0 then
+                hasKeystones = true
+                break
+            end
+        end
+    end
+
+    -- someone has a key, so exit early to avoid unnecessary fading
+    if hasKeystones == false then
+        return
+    end
+
+    -- fade non-keystone data
+    for i=1,5,1 do
         for mapId,_ in pairs(mapTable) do
             local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
-            local currentLevel = tonumber(keyLevelText:GetText())
+            local currentLevel = tonumber(keyLevelText:GetText()) -- non-parsable number will return nil
             if currentLevel == nil then
-                _G["KM_MapData"..i..mapId]:SetAlpha(0.6)
+                _G["KM_MapData"..i..mapId]:SetAlpha(0.5)
             end
         end
     end
@@ -73,12 +94,11 @@ function ViewModel:UpdateKeystoneHighlights()
                 -- insert key level into dungeon icon
                 local keyLevelText = _G["Dungeon_"..unitData.ownedKeyId.."_HeaderKeyLevelText"]
                 local currentLevel = tonumber(keyLevelText:GetText())
-                if currentLevel == nil or currentLevel == "" or unitData.ownedKeyLevel > currentLevel then
+                if currentLevel == nil or currentLevel == "" then currentLevel = 0 end
+                if unitData.ownedKeyLevel > currentLevel then
                     keyLevelText:SetText(unitData.ownedKeyLevel)
                     _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
                     _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
-                elseif currentLevel ~= "" then
-                    -- do nothing
                 else
                     keyLevelText:SetText("")
                 end
