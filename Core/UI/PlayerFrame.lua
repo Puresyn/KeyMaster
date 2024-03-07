@@ -5,9 +5,57 @@ local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
 local DungeonTools = KeyMaster.DungeonTools
 local MainInterface = KeyMaster.MainInterface
+local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
 local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
 local mapCount = KeyMaster:GetTableLength(seasonMaps)
+
+local function shortenDungeonName(fullDungeonName)
+    local length = string.len(fullDungeonName)
+    local _, e = string.find(fullDungeonName, ":")
+    if (e) then
+        local splice = string.sub(fullDungeonName, e+2, length)         
+        return splice
+    else
+        return fullDungeonName
+    end
+end
+
+-- NOT SURE IF THIS WORKS
+local function getInstances(tier)
+    EJ_SelectTier(tier); -- sets dungeon journal data to current tier data
+    local instances = {}
+    local dataIndex = 1;
+	local instanceID, name, description, _, buttonImage, _, _, _, link, _, mapID = EJ_GetInstanceByIndex(dataIndex, false);
+
+	while instanceID ~= nil do
+		tinsert(instances,
+        {
+			instanceID = instanceID,
+			name = name,
+			description = description,
+			buttonImage = buttonImage,
+			link = link,
+			mapID = mapID,
+		});
+
+		dataIndex = dataIndex + 1;
+		instanceID, name, description, _, buttonImage, _, _, _, link, _, mapID = EJ_GetInstanceByIndex(dataIndex, false);
+	end
+
+    return instances
+end
+
+-- NOT SURE IF THIS WORKS
+local function showDungeonJournal()
+    local mythicPlusDifficultiyId = 8
+    local currentTier = EJ_GetCurrentTier()
+    local instances = getInstances(currentTier)
+    if (not EncounterJournal_OpenJournal) then
+        UIParentLoadAddOn('Blizzard_EncounterJournal')
+    end
+    EncounterJournal_OpenJournal(mythicPlusDifficultiyId, instances[1].instanceID) -- Throws blizzard only action error   
+end
 
 local function portalButton_buttonevent(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
@@ -68,9 +116,20 @@ local function mapData_onmouseout(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor(defColor)
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, defAlpha)
 end
-local function mapdData_buttonevent(self, event)
-    local mapId = self:GetAttribute("mapId")
-    -- todo: Do something with the map row click
+local function mapdData_OnRowClick(self, event)
+    local selectedMapId = self:GetAttribute("mapId")
+    local mapDetailsFrame = _G["KM_MapDetailView"]
+    local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
+    
+    if mapDetailsFrame.MapName:GetText() ~= dungeonName then        
+        mapDetailsFrame.MapName:SetText(dungeonName) 
+        mapDetailsFrame.InstanceBGT:SetTexture(seasonMaps[selectedMapId].backgroundTexture)
+
+        local timers = DungeonTools:GetChestTimers(selectedMapId)
+        mapDetailsFrame.TimeLimit:SetText(KeyMaster:FormatDurationSec(timers["1chest"]))
+        --mapDetailsFrame.TwoChestTimer:SetText(KeyMaster:FormatDurationSec(timers["2chest"])) -- todo: add frame
+        --mapDetailsFrame.ThreeChestTimer:SetText(KeyMaster:FormatDurationSec(timers["3chest"])) -- todo: add frame
+    end
 end
 
 function PlayerFrame:CreatePlayerContentFrame(parentFrame)
@@ -92,6 +151,9 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.texture = playerFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     playerFrame.texture:SetAllPoints(playerFrame)
     playerFrame.texture:SetColorTexture(0, 0, 0, 1)
+    playerFrame:SetScript("OnShow", function(self)
+        PlayerFrameMapping:RefreshData()
+    end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
     modelFrame:SetSize(playerFrame:GetHeight(), playerFrame:GetHeight()-2)
@@ -143,9 +205,9 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerNameLarge:SetAlpha(0.08)
     playerFrame.playerNameLarge:SetJustifyH("LEFT")
 
-    C_MythicPlus.RequestMapInfo() -- wakes up C_MythicPlus API
-    local seasonID = C_MythicPlus.GetCurrentSeason()
-    if (seasonID) then
+    -- Season ID
+    local seasonID = DungeonTools:GetCurrentSeasonId()
+    if seasonID then
         playerFrame.SeasonInformation = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
         local Path, _, Flags = playerFrame.SeasonInformation:GetFont()
         playerFrame.SeasonInformation:SetFont(Path, 60, Flags)
@@ -154,7 +216,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
         playerFrame.SeasonInformation:SetText(KeyMasterLocals.SEASON..": "..seasonID)
     end
 
-    -- Player character details
+    -- Player Specialization and Class
     playerFrame.playerDetails = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     local _, Size, _ = playerFrame.playerDetails:GetFont()
     --playerFrame.playerDetails:SetFont(Path, 20, Flags)
@@ -175,7 +237,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     local ratingColor = {}
     ratingColor.r, ratingColor.g, ratingColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
     playerFrame.playerRating:SetTextColor(ratingColor.r, ratingColor.g, ratingColor.b, 1)
-    playerFrame.playerRating:SetText("3977") -- todo: REPLACE ME WITH DYNAMIC INFO
+    playerFrame.playerRating:SetText("")
     playerFrame.playerRating:SetJustifyH("RIGHT")
 
     -- Realm Name
@@ -230,7 +292,6 @@ function PlayerFrame:CreateMapData(parentFrame)
             mapFrame:SetFrameLevel(prevRowAnchor:GetFrameLevel()+1)
         end
 
-
         mapFrame.maskTexture = mapFrame:CreateMaskTexture()
         mapFrame.maskTexture:SetPoint("TOPLEFT", mapFrame, "TOPLEFT", -4, 4)
         mapFrame.maskTexture:SetSize(128, 128)
@@ -263,14 +324,7 @@ function PlayerFrame:CreateMapData(parentFrame)
         mapFrame.dungeonName:SetWidth(mapFrame:GetWidth())
         --mapFrame.dungeonName:SetJustifyV("TOP")
         mapFrame.dungeonName:SetJustifyH("LEFT")
-        local shortenBlizzardsStupidLongInstanceNames = seasonMaps[mapId].name
-        local length = string.len(shortenBlizzardsStupidLongInstanceNames)
-        local _, e = string.find(shortenBlizzardsStupidLongInstanceNames, ":")
-        if (e) then
-            local splice = string.sub(shortenBlizzardsStupidLongInstanceNames, e+2, length) 
-            shortenBlizzardsStupidLongInstanceNames = splice
-        end
-
+        local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
         mapFrame.dungeonName:SetText(shortenBlizzardsStupidLongInstanceNames)
 
         mapFrame.overallScore = mapFrame:CreateFontString("KM_PlayerFrame"..mapId.."_Overall", "OVERLAY", "KeyMasterFontNormal")
@@ -280,7 +334,7 @@ function PlayerFrame:CreateMapData(parentFrame)
         local OverallColor = {}
         OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         mapFrame.overallScore:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1)
-        mapFrame.overallScore:SetText(mapId) -- todo: REPLACE ME WITH DYNAMIC INFO
+        mapFrame.overallScore:SetText("")
 
 
         --[[ mapFrame.nameBackground = mapFrame:CreateTexture()
@@ -299,11 +353,10 @@ function PlayerFrame:CreateMapData(parentFrame)
         dataFrame:SetSize(mapFrame:GetWidth()-offset, mapFrame:GetHeight())
 
         --dataFrame:Events
-        mapFrame:SetScript("OnMouseUp", mapdData_buttonevent)
+        mapFrame:SetScript("OnMouseUp", mapdData_OnRowClick)
         mapFrame:SetScript("OnEnter", mapData_onmouseover)
         mapFrame:SetScript("OnLeave", mapData_onmouseout)
-
-    
+            
         --[[ dataFrame.texture = dataFrame:CreateTexture()
         dataFrame.texture:SetAllPoints(dataFrame)
         dataFrame.texture:SetColorTexture(1, 1, 1, 0.3) ]]
@@ -337,24 +390,24 @@ function PlayerFrame:CreateMapData(parentFrame)
         dataFrame.tyrannicalLevel:SetPoint("RIGHT", dataFrame.divider2, "LEFT", keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.tyrannicalLevel:GetFont()
         dataFrame.tyrannicalLevel:SetFont(Path, 24, Flags)
-        dataFrame.tyrannicalLevel:SetText(22) -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.tyrannicalLevel:SetText("")
 
         -- Tyrannical Bonus Time
         dataFrame.tyrannicalBonus = dataFrame:CreateFontString("KM_PlayerFrameTyranBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.tyrannicalBonus:SetPoint("RIGHT", dataFrame.tyrannicalLevel, "LEFT", affixBonusOffsetx, affixBonusOffsety)
-        dataFrame.tyrannicalBonus:SetText("+++") -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.tyrannicalBonus:SetText("")
 
         -- Tyrannical Score
         dataFrame.tyrannicalScore = dataFrame:CreateFontString("KM_PlayerFrameTyranScore"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.tyrannicalScore:SetPoint("TOPRIGHT", dataFrame.tyrannicalLevel, "TOPLEFT", -affixScoreOffsetx, affixScoreOffsety)
         dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
-        dataFrame.tyrannicalScore:SetText(234) -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.tyrannicalScore:SetText("")
 
         -- Tyrannical RunTime
         dataFrame.tyrannicalRunTime = dataFrame:CreateFontString("KM_PlayerFrameTyranRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.tyrannicalRunTime:SetPoint("BOTTOMRIGHT", dataFrame.tyrannicalLevel, "BOTTOMLEFT", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
-        dataFrame.tyrannicalRunTime:SetText("28:52") -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.tyrannicalRunTime:SetText("") 
 
         --///// FORTIFIED /////--
         -- Fortified Key Level
@@ -362,24 +415,24 @@ function PlayerFrame:CreateMapData(parentFrame)
         dataFrame.fortifiedLevel:SetPoint("LEFT", dataFrame.divider2, "RIGHT", keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.fortifiedLevel:GetFont()
         dataFrame.fortifiedLevel:SetFont(Path, 24, Flags)
-        dataFrame.fortifiedLevel:SetText(18) -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.fortifiedLevel:SetText("")
 
         -- Fortified Bonus Time
         dataFrame.fortifiedBonus = dataFrame:CreateFontString("KM_PlayerFrameFortBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.fortifiedBonus:SetPoint("LEFT", dataFrame.fortifiedLevel, "RIGHT", affixBonusOffsetx, affixBonusOffsety)
-        dataFrame.fortifiedBonus:SetText("++") -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.fortifiedBonus:SetText("") 
 
         -- Fortified Score
         dataFrame.fortifiedScore = dataFrame:CreateFontString("KM_PlayerFrameFortScore"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.fortifiedScore:SetPoint("TOPLEFT", dataFrame.fortifiedLevel, "TOPRIGHT", affixScoreOffsetx, affixScoreOffsety)
         dataFrame.fortifiedScore:SetJustifyH("LEFT")
-        dataFrame.fortifiedScore:SetText(187) -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.fortifiedScore:SetText("")
 
         -- Tyrannical RunTime
         dataFrame.fortifiedRunTime = dataFrame:CreateFontString("KM_PlayerFrameFortRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.fortifiedRunTime:SetPoint("BOTTOMLEFT", dataFrame.fortifiedLevel, "BOTTOMRIGHT", afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.fortifiedRunTime:SetJustifyH("LEFT")
-        dataFrame.fortifiedRunTime:SetText("22:52") -- todo: REPLACE ME WITH DYNAMIC INFO
+        dataFrame.fortifiedRunTime:SetText("")
 
         --[[ currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel()
         print("currentWeekBestLevel: "..currentWeekBestLevel)
@@ -548,7 +601,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame)
     mapDetails.InstanceBGT = mapDetails:CreateTexture(nil, "ARTWORK", nil, 0)
     mapDetails.InstanceBGT:SetSize(mapDetails:GetWidth(), mapDetails:GetWidth())
     mapDetails.InstanceBGT:SetPoint("TOP", mapDetails.DetailsTitle, "BOTTOM", 22, -8)
-    mapDetails.InstanceBGT:SetTexture(1060545)
+    mapDetails.InstanceBGT:SetTexture() -- todo: dynamic first map image
 
     mapDetails.MapName = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     mapDetails.MapName:SetPoint("TOP", mapDetails.InstanceBGT, "TOP", -22, -40)
@@ -557,14 +610,15 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame)
     mapDetails.MapName:SetTextColor(hlColor.r,hlColor.g,hlColor.b, 1)
     local Path, _, Flags = mapDetails.MapName:GetFont()
     mapDetails.MapName:SetFont(Path, 16, Flags)
-    mapDetails.MapName:SetText("The Everbloom")
+    mapDetails.MapName:SetText("")-- todo: dynamic first map name
 
     mapDetails.TimeLimit = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     mapDetails.TimeLimit:SetPoint("TOP", mapDetails.MapName, "BOTTOM", 0, -8)
     --[[ local hlColor = {}
     hlColor.r,hlColor.g,hlColor.b, _ = getColor("themeFontColorYellow")
     mapDetails.TimeLimit:SetTextColor(hlColor.r,hlColor.g,hlColor.b, 1) ]]
-    mapDetails.TimeLimit:SetText(KeyMasterLocals.TIMELIMIT..": ".."29:00")
+    mapDetails.TimeLimit:SetText("")
+    -- KeyMasterLocals.TIMELIMIT..": ".."29:00"
 
 
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)

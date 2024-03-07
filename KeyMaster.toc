@@ -12,6 +12,7 @@ Embeds.xml
 Core\Localization\Localization.enUS.lua
 Core\CharacterInfo.lua
 Core\UI\ViewModel.lua
+Core\UI\PlayerFrameMapping.lua
 Core\UI\MainInterface.lua
 Core\UnitData.lua
 Core\Coms.lua

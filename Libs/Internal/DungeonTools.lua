@@ -79,6 +79,16 @@ function DungeonTools:GetMapName(mapid)
     return name
 end
 
+local currentSeason
+function DungeonTools:GetCurrentSeasonId()
+    if currentSeason then return currentSeason end
+
+    local season = C_MythicPlus.GetCurrentSeason()
+
+    currentSeason = season -- stores locally to prevent multiple api calls
+    return season
+end
+
 -- Gets a list of the live seasons challenge maps
 local currentSeasonMaps
 function DungeonTools:GetCurrentSeasonMaps()
@@ -188,6 +198,18 @@ function DungeonTools:CalculateChest(dungeonID, timeCompleted)
     if(timeCompleted <= (timeLimit * 0.8)) then return "++" end
     if(timeCompleted <= timeLimit) then return "+" end
     return ""
+end
+
+function DungeonTools:GetChestTimers(mapId)
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local timeLimit = mapTable[mapId].timeLimit
+
+    local chestTimers = {
+        ["3chest"] = timeLimit * 0.6,
+        ["2chest"] = timeLimit * 0.8,
+        ["1chest"] = timeLimit
+    }
+    return chestTimers
 end
 
 local function getBaseScore(level)

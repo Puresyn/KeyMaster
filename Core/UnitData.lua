@@ -2,6 +2,7 @@ local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
 local ViewModel = KeyMaster.ViewModel
+local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
 local unitInformation = {}
 
@@ -36,6 +37,9 @@ function UnitData:DisplayUnitData(unitId, unitData)
     ViewModel:SetPlayerHeaderKeyInfo()
     ViewModel:UpdateKeystoneHighlights()
     ViewModel:CalculateTotalRatingGainPotential()
+    if unitId == "player" then
+        PlayerFrameMapping:RefreshData()
+    end
 end
 
 function UnitData:SetUnitData(unitData, updateUI)
