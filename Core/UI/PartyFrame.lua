@@ -436,7 +436,6 @@ function MainInterface:CreatePartyScoreTallyFooter()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local prevMapId, prevAnchor, lastPointsFrame
     local firstItem = true
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local bolColHighlight = false
     local partyColColor = {}
     partyColColor.r,  partyColColor.g, partyColColor.b, _ = Theme:GetThemeColor("party_colHighlight")
