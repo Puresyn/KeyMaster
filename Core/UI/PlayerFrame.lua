@@ -250,6 +250,38 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     return playerFrame
 end
 
+local keyLevelOffsetx = 0
+local keyLevelOffsety = 2
+local affixScoreOffsetx = 34
+local affixScoreOffsety = 2
+local affixBonusOffsetx = 0
+local affixBonusOffsety = 0
+local afffixRuntimeOffsetx = 34
+local afffixRuntimeOffsety = -2
+
+local function SetupHeaederTitles(firstRowMapID)
+
+    -- Header setup
+    _G["KM_Player_Frame"].divider1 = _G["KM_Player_Frame"]:CreateTexture()
+    _G["KM_Player_Frame"].divider1:SetPoint("BOTTOM", _G["KM_RowDivider"..firstRowMapID], "TOP", 0, 4)
+    _G["KM_Player_Frame"].divider1:SetSize(32, 32)
+    _G["KM_Player_Frame"].divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
+    _G["KM_Player_Frame"].divider1:SetAlpha(0.3)
+
+    _G["KM_Player_Frame"].tyranText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
+    _G["KM_Player_Frame"].tyranText:SetPoint("RIGHT", _G["KM_Player_Frame"].divider1, "LEFT", keyLevelOffsetx-6, 2)
+    local Path, _, Flags = _G["KM_Player_Frame"].tyranText:GetFont()
+    _G["KM_Player_Frame"].tyranText:SetFont(Path, 18, Flags)
+    _G["KM_Player_Frame"].tyranText:SetJustifyH("RIGHT")
+    _G["KM_Player_Frame"].tyranText:SetText(string.upper(KeyMasterLocals.TYRANNICAL))
+
+    _G["KM_Player_Frame"].fortText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
+    _G["KM_Player_Frame"].fortText:SetPoint("LEFT", _G["KM_Player_Frame"].divider1, "RIGHT", -keyLevelOffsetx+6, 2)
+    _G["KM_Player_Frame"].fortText:SetFont(_G["KM_Player_Frame"].tyranText:GetFont())
+    _G["KM_Player_Frame"].fortText:SetJustifyH("LEFT")
+    _G["KM_Player_Frame"].fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
+end
+
 function PlayerFrame:CreateMapData(parentFrame)
     local mapFrameHeight = 48
     local mtb = 4 -- margin top/bottom
@@ -265,21 +297,14 @@ function PlayerFrame:CreateMapData(parentFrame)
 
     local count = -8
     local prevFrame
-    
     local prevRowAnchor
     local mapFrameWidth = playerInformationFrame:GetWidth() - mr
     local firstRowId
-    local keyLevelOffsetx = 0
-    local keyLevelOffsety = 2
-    local affixScoreOffsetx = 34
-    local affixScoreOffsety = 2
-    local affixBonusOffsetx = 0
-    local affixBonusOffsety = 0
-    local afffixRuntimeOffsetx = 34
-    local afffixRuntimeOffsety = -2
+
     -- Instance Cards
     for mapId in pairs (seasonMaps) do
         if not (firstRowId) then firstRowId = mapId end
+        SetupHeaederTitles(firstRowId)
         local mapFrame = CreateFrame("Frame", "KM_PlayerFrameMapInfo"..mapId, playerInformationFrame)
         mapFrame:SetAttribute("mapId", mapId)
         mapFrame:SetSize(mapFrameWidth-mr, mapFrameHeight)
@@ -378,7 +403,7 @@ function PlayerFrame:CreateMapData(parentFrame)
         dataFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
         dataFrame.divider1:SetAlpha(0.3)
 
-        dataFrame.divider2 = dataFrame:CreateTexture()
+        dataFrame.divider2 = dataFrame:CreateTexture("KM_RowDivider"..mapId)
         dataFrame.divider2:SetPoint("CENTER", dataFrame, "CENTER", -portalFrame:GetWidth(), 0)
         dataFrame.divider2:SetSize(dataFrame:GetHeight(), dataFrame:GetHeight())
         dataFrame.divider2:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
@@ -510,26 +535,6 @@ function PlayerFrame:CreateMapData(parentFrame)
         prevFrame = mapFrame
         count = count + 1
     end
-
-    -- Header setup
-    _G["KM_Player_Frame"].divider1 = _G["KM_Player_Frame"]:CreateTexture()
-    _G["KM_Player_Frame"].divider1:SetPoint("BOTTOM", _G["KM_PlayerFrame_Data"..firstRowId].divider2, "TOP", 0, 4)
-    _G["KM_Player_Frame"].divider1:SetSize(32, 32)
-    _G["KM_Player_Frame"].divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    _G["KM_Player_Frame"].divider1:SetAlpha(0.3)
-
-    _G["KM_Player_Frame"].tyranText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    _G["KM_Player_Frame"].tyranText:SetPoint("RIGHT", _G["KM_Player_Frame"].divider1, "LEFT", keyLevelOffsetx-6, 2)
-    local Path, _, Flags = _G["KM_Player_Frame"].tyranText:GetFont()
-    _G["KM_Player_Frame"].tyranText:SetFont(Path, 18, Flags)
-    _G["KM_Player_Frame"].tyranText:SetJustifyH("RIGHT")
-    _G["KM_Player_Frame"].tyranText:SetText(string.upper(KeyMasterLocals.TYRANNICAL))
-
-    _G["KM_Player_Frame"].fortText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    _G["KM_Player_Frame"].fortText:SetPoint("LEFT", _G["KM_Player_Frame"].divider1, "RIGHT", -keyLevelOffsetx+6, 2)
-    _G["KM_Player_Frame"].fortText:SetFont(_G["KM_Player_Frame"].tyranText:GetFont())
-    _G["KM_Player_Frame"].fortText:SetJustifyH("LEFT")
-    _G["KM_Player_Frame"].fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
     
     return playerInformationFrame
 end

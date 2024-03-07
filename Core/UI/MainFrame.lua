@@ -3,6 +3,7 @@ local MainInterface = KeyMaster.MainInterface
 
 function MainInterface:CreateMainFrame()
     local mainFrame = CreateFrame("Frame", "KeyMaster_MainFrame", UIParent, "MainFrameTemplate");
+    mainFrame:SetClampedToScreen( true )
     mainFrame:ClearAllPoints(); -- Fixes SetPoint bug thus far.
     mainFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
     mainFrame:SetBackdrop({bgFile="Interface\\Addons\\KeyMaster\\Assets\\Images\\M-Background", 
