@@ -500,7 +500,7 @@ function PartyFrame:CreatePartyRowsFrame(parentFrame)
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
     temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -62)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -70)
     timeSinceLastUpdate = 0
     
     local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")

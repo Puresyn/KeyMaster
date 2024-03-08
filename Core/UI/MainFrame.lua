@@ -6,12 +6,13 @@ function MainInterface:CreateMainFrame()
     mainFrame:SetClampedToScreen( true )
     mainFrame:ClearAllPoints(); -- Fixes SetPoint bug thus far.
     mainFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
-    mainFrame:SetBackdrop({bgFile="Interface\\Addons\\KeyMaster\\Assets\\Images\\M-Background", 
+    mainFrame:SetBackdrop({bgFile="", 
         edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
         tile = false, 
         tileSize = 0, 
         edgeSize = 16, 
         insets = {left = 4, right = 4, top = 4, bottom = 4}})
+
 
     mainFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
     mainFrame.closeBtn:SetPoint("TOPRIGHT")

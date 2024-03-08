@@ -4,18 +4,56 @@ local MainInterface = KeyMaster.MainInterface
 local Header = KeyMaster.Header
 local DungeonTools = KeyMaster.DungeonTools
 
+local function AddTopBar(parentFrame)
+    local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper",parentFrame)
+    --topBar:SetFrameLevel(parentFrame:GetFrameLevel()+1)
+    topBar:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
+    topBar:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT")
+
+    --[[ topBar.bar = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    local dynOffset = 134
+    topBar:SetSize(w + dynOffset + 20, 80)
+    topBar:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", -dynOffset, -4)
+    
+    topBar.bar:SetHeight(114)
+    topBar.bar:SetWidth(topBar:GetWidth())
+    topBar.bar:SetPoint("TOP", 0, 0)
+    local magicNumber = 1/512
+    topBar.bar:SetTexCoord(0, topBar:GetWidth()/512, 0, 112/512)
+    topBar.bar:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Top-Bar") ]]
+
+    topBar.bgTexture = topBar:CreateTexture(nil, "BACKGROUND", nil, 1)
+    topBar.bgTexture:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -8)
+    topBar.bgTexture:SetSize(topBar:GetWidth(), 104)
+    topBar.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
+    topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
+
+    --[[ topBar.texture = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    topBar.texture:SetSize(topBar:GetWidth(), topBar:GetHeight())
+    topBar.texture:SetPoint("RIGHT", topBar, "RIGHT", 0, 0)
+    topBar.texture:SetColorTexture(1, 1, 1, 1) ]]
+
+    topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    topBar.displayBG:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -2)
+    topBar.displayBG:SetSize(320, 77)
+    topBar.displayBG:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
+    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1)
+
+end
+
 -- Setup header region
 function MainInterface:CreateHeaderRegion(parentFrame)
     local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
     local headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", parentFrame);
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
-    headerRegion.texture = headerRegion:CreateTexture()
-    headerRegion.texture:SetHeight(114)
-    headerRegion.texture:SetWidth(headerRegion:GetWidth())
-    headerRegion.texture:SetPoint("TOP", 0, 0)
-    headerRegion.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster")
-    headerRegion.texture:SetTexCoord(0, 1, 398/512, 1)
+
+    headerRegion.bgTexture = headerRegion:CreateTexture()
+    headerRegion.bgTexture:SetAllPoints(headerRegion)
+    headerRegion.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
+    headerRegion.bgTexture:SetTexCoord(0, 856/1024, 0, 116/1024)
+
+    AddTopBar(headerRegion)
 
     return headerRegion
 end
@@ -39,35 +77,10 @@ function MainInterface:AddonVersionNotify(parentframe)
     addonOudatedFrame:Hide()
 end
 
-local function AddTopBar(parentFrame)
-    local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper",parentFrame);
-    topBar:SetFrameLevel(parentFrame:GetFrameLevel()-1)
-    local w = _G["KeyMaster_PlayerInfobox"]:GetWidth()
-    w = w + _G["KeyMaster_MythicKeyHeader"]:GetWidth()
-
-    topBar.bar = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
-    local dynOffset = 134
-    topBar:SetSize(w + dynOffset + 20, 80)
-    topBar:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", -dynOffset, -4)
-    
-    topBar.bar:SetHeight(114)
-    topBar.bar:SetWidth(topBar:GetWidth())
-    topBar.bar:SetPoint("TOP", 0, 0)
-    local magicNumber = 1/512
-    topBar.bar:SetTexCoord(0, topBar:GetWidth()/512, 0, 112/512)
-    topBar.bar:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Top-Bar")
-
-    topBar.texture = topBar:CreateTexture(nil, "BACKGROUND", nil, -1)
-    topBar.texture:SetSize(topBar:GetWidth()-100, topBar:GetHeight()-8)
-    topBar.texture:SetPoint("RIGHT", topBar, "RIGHT", 0, -5)
-    topBar.texture:SetColorTexture(0, 0, 0, 0.9)
-
-end
-
 function Header:createPlayerInfoBox(parentFrame)
     local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
     headerPlayerInfoBox:SetSize(198, 80)
-    headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 4)
+    headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 10)
     --[[ headerPlayerInfoBox.texture = headerPlayerInfoBox:CreateTexture()
     headerPlayerInfoBox.texture:SetAllPoints(headerPlayerInfoBox)
     headerPlayerInfoBox.texture:SetColorTexture(0, 0, 0, 0.7) ]]
@@ -186,8 +199,6 @@ function Header:createHeaderKeyFrame(parentFrame, anchorFrame)
     line_frame.texture:SetAllPoints(line_frame)
     line_frame.texture:SetColorTexture(1, 1, 1, 1)
 
-    AddTopBar(key_frame)
-
     return key_frame
 end
 
@@ -242,19 +253,12 @@ function MainInterface:CreateHeaderContent(parentFrame)
     local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
-    
-    headerContent.logo = headerContent:CreateTexture(nil, "OVERLAY")
-    headerContent.logo:SetSize(300, 38)
-    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 4, 0)
-    headerContent.logo:SetTexCoord(0, 1, 15/512, 79/512)
-    headerContent.logo:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster")
 
-    --[[ local txtPlaceHolder = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = txtPlaceHolder:GetFont()
-    txtPlaceHolder:SetFont(Path, 30, Flags)
-    txtPlaceHolder:SetPoint("BOTTOMLEFT", 10, 10)
-    txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText(KM_ADDON_NAME) ]]
+    headerContent.logo = headerContent:CreateTexture()
+    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 0, 4)
+    headerContent.logo:SetSize(200, 28)
+    headerContent.logo:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
+    headerContent.logo:SetTexCoord(20/1024, 240/1024, 980/1024, 1008/1024)
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
