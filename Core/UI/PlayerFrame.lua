@@ -333,6 +333,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
             mapFrame:SetFrameLevel(prevRowAnchor:GetFrameLevel()+1)
         end
 
+        KeyMaster:CreateHLine(mapFrame:GetWidth()+8, mapFrame, "TOP", 0, 0)
 
         local highlightAlpha = 0.5
         mapFrame.textureHighlight = mapFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
@@ -382,15 +383,20 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
 
         dataFrame.dungeonName = dataFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
         dataFrame.dungeonName:SetPoint("TOP", dataFrame, "TOP", 0, -4)
-        dataFrame.dungeonName:SetWidth(140)
+        dataFrame.dungeonName:SetSize(140, 22)
         dataFrame.dungeonName:SetJustifyV("TOP")
         --mapFrame.dungeonName:SetJustifyH("LEFT")
         local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
         dataFrame.dungeonName:SetText(shortenBlizzardsStupidLongInstanceNames)
-        dataFrame.dungeonNametexture = dataFrame:CreateTexture(nil, "ARTWORK", nil, 3)
-        dataFrame.dungeonNametexture:SetPoint("TOP", dataFrame, "TOP")
-        dataFrame.dungeonNametexture:SetSize(140, 22)
-        dataFrame.dungeonNametexture:SetColorTexture(0, 0, 0, 0.6)
+        dataFrame.dungeonNametexture = dataFrame:CreateTexture(nil, "OVERLAY", nil, 0)
+        dataFrame.dungeonNametexture:SetPoint("TOP", dataFrame, "TOP", 0, 0)
+        --dataFrame.dungeonNametexture:SetAllPoints(dataFrame.dungeonName)
+        dataFrame.dungeonNametexture:SetSize(140, 21)
+        dataFrame.dungeonNametexture:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Title-BG1")
+        dataFrame.dungeonNametexture:SetTexCoord(0, 1, 22/64, 1 )
+        --dataFrame.dungeonNametexture:SetColorTexture(0, 0, 0, 0.6)
+
+        --KeyMaster:CreateHLine(140, dataFrame, "CENTER", 0, 2)
 
         dataFrame.overallScore = dataFrame:CreateFontString("KM_PlayerFrame"..mapId.."_Overall", "OVERLAY", "KeyMasterFontNormal")
         dataFrame.overallScore:SetPoint("BOTTOM", dataFrame, "BOTTOM", 0, 0)
