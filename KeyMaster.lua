@@ -12,6 +12,7 @@ local MainInterface = KeyMaster.MainInterface
 local Theme = KeyMaster.Theme
 local UnitData = KeyMaster.UnitData
 local KeyScoreCalc = KeyMaster.KeyScoreCalc
+local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
@@ -169,10 +170,10 @@ local function onEvent_PartyChanges(self, event, ...)
             UnitData:MapPartyUnitData()
 
             -- Calculate keystone upgrades for party members and player
-            KeyMaster.ViewModel:CalculateTotalRatingGainPotential()
+            KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
 
             -- Highlight key and level on map frames
-            KeyMaster.ViewModel:UpdateKeystoneHighlights()  
+            KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()  
         end
     end
 end
@@ -218,7 +219,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
             UnitData:SetUnitData(playerData, true)
 
             -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
-            MainInterface:SetPartyWeeklyDataTheme() 
+            PartyFrame:SetPartyWeeklyDataTheme() 
 
             -- process party
             local inGroup = UnitInRaid("player") or IsInGroup()

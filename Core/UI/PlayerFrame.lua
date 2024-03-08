@@ -139,7 +139,6 @@ function PlayerFrame:CreatePlayerContentFrame(parentFrame)
     return playerContentFrame
 end
 
-
 function PlayerFrame:CreatePlayerFrame(parentFrame)
 
     local characterData = CharacterInfo:GetMyCharacterInfo()
@@ -715,4 +714,8 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
     vaultDetails.textureHighlight:SetAlpha(0.5) ]]
 
+end
+
+function PlayerFrame:Initialize()
+    
 end

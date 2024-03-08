@@ -1,7 +1,7 @@
 local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
-local ViewModel = KeyMaster.ViewModel
+local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
 local unitInformation = {}
@@ -32,11 +32,11 @@ function UnitData:GetUnitId(unitGUID)
 end
 
 function UnitData:DisplayUnitData(unitId, unitData)
-    ViewModel:UpdateUnitFrameData(unitId, unitData)
-    ViewModel:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
-    ViewModel:SetPlayerHeaderKeyInfo()
-    ViewModel:UpdateKeystoneHighlights()
-    ViewModel:CalculateTotalRatingGainPotential()
+    PartyFrameMapping:UpdateUnitFrameData(unitId, unitData)
+    PartyFrameMapping:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
+    PartyFrameMapping:SetPlayerHeaderKeyInfo()
+    PartyFrameMapping:UpdateKeystoneHighlights()
+    PartyFrameMapping:CalculateTotalRatingGainPotential()
     if unitId == "player" then
         PlayerFrameMapping:RefreshData()
     end
@@ -96,7 +96,7 @@ function UnitData:DeleteUnitDataByUnitId(unitId)
     local data = UnitData:GetUnitDataByUnitId(unitId)
     if (data ~= nil) then
         UnitData:DeleteUnitDataByGUID(data.GUID)
-        ViewModel:HidePartyRow(unitId)
+        PartyFrameMapping:HidePartyRow(unitId)
     end
 end
 
@@ -133,5 +133,5 @@ function UnitData:MapPartyUnitData()
         end
     end
     -- reposition the tally frame based on last party member showing
-    KeyMaster.MainInterface:ResetTallyFramePositioning()    
+    KeyMaster.PartyFrame:ResetTallyFramePositioning()    
 end
