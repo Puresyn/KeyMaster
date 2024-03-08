@@ -80,7 +80,7 @@ function DungeonTools:GetMapName(mapid)
 end
 
 local currentSeason
-function DungeonTools:GetCurrentSeasonId()
+function DungeonTools:GetCurrentSeason()
     if currentSeason then return currentSeason end
 
     local season = C_MythicPlus.GetCurrentSeason()

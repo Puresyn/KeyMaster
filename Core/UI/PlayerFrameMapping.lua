@@ -21,11 +21,11 @@ function PlayerFrameMapping:RefreshData()
     for mapId, _ in pairs(mapTable) do
         local mapFrame = _G["KM_PlayerFrameMapInfo"..mapId]
 
+        local playerMapDataFrame = _G["KM_PlayerFrame_Data"..mapId]
+
         -- Overall Dungeon Score
         local mapScore = playerData.DungeonRuns[mapId].bestOverall
-        mapFrame.overallScore:SetText(mapScore or defaultString)
-
-        local playerMapDataFrame = _G["KM_PlayerFrame_Data"..mapId]
+        playerMapDataFrame.overallScore:SetText(mapScore or defaultString)
 
         ------------ Tyrannical ------------
 

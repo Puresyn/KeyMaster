@@ -127,8 +127,8 @@ local function mapdData_OnRowClick(self, event)
 
         local timers = DungeonTools:GetChestTimers(selectedMapId)
         mapDetailsFrame.TimeLimit:SetText(KeyMaster:FormatDurationSec(timers["1chest"]))
-        --mapDetailsFrame.TwoChestTimer:SetText(KeyMaster:FormatDurationSec(timers["2chest"])) -- todo: add frame
-        --mapDetailsFrame.ThreeChestTimer:SetText(KeyMaster:FormatDurationSec(timers["3chest"])) -- todo: add frame
+        mapDetailsFrame.TwoChestTimer:SetText(KeyMaster:FormatDurationSec(timers["2chest"])) -- todo: add frame
+        mapDetailsFrame.ThreeChestTimer:SetText(KeyMaster:FormatDurationSec(timers["3chest"])) -- todo: add frame
     end
 end
 
@@ -156,7 +156,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
-    modelFrame:SetSize(playerFrame:GetHeight(), playerFrame:GetHeight()-2)
+    modelFrame:SetSize(playerFrame:GetHeight()+40, playerFrame:GetHeight()-2)
     modelFrame:ClearAllPoints()
     modelFrame:SetPoint("TOPLEFT", playerFrame, "TOPLEFT", 0, 0)
     --m:SetDisplayInfo(21723) -- creature/murloccostume/murloccostume.m2
@@ -165,9 +165,8 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
 
     modelFrame:SetScript("OnShow", function(self)
         self:SetCamera(0)
-        self:SetPortraitZoom(0.6)
-        --self:SetPosition(-0.32, 0.05,0)
-        self:SetPosition(0, 0.05, -0.1)
+        self:SetPortraitZoom(0.5)
+        self:SetPosition(0, 0, -0.15)
         self:SetFacing(0.40)
         self:RefreshCamera() 
     end)
@@ -199,21 +198,23 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerNameLarge = playerFrame:CreateFontString("KM_PLayerFramePlayerName", "BACKGROUND", "KeyMasterFontBig")
     local Path, _, Flags = playerFrame.playerNameLarge:GetFont()
     playerFrame.playerNameLarge:SetFont(Path, 120, Flags)
-    playerFrame.playerNameLarge:SetAllPoints(playerFrame)
+    local largeNameOffset = 12
+    playerFrame.playerNameLarge:SetSize(playerFrame:GetWidth(), playerFrame:GetHeight())
+    playerFrame.playerNameLarge:SetPoint("BOTTOMLEFT", playerFrame, "BOTTOMLEFT", -4, -8)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     playerFrame.playerNameLarge:SetText("|cff"..hexColor..UnitName("player").."|r")
     playerFrame.playerNameLarge:SetAlpha(0.08)
     playerFrame.playerNameLarge:SetJustifyH("LEFT")
 
     -- Season ID
-    local seasonID = DungeonTools:GetCurrentSeasonId()
-    if seasonID then
-        playerFrame.SeasonInformation = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    local seasonNum = DungeonTools:GetCurrentSeason()
+    if (seasonNum ~= nil and seasonNum > 0) then
+        playerFrame.SeasonInformation = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontDieDieDieBig")
         local Path, _, Flags = playerFrame.SeasonInformation:GetFont()
         playerFrame.SeasonInformation:SetFont(Path, 60, Flags)
-        playerFrame.SeasonInformation:SetPoint("LEFT", modelFrame, "RIGHT", 45, 8)
+        playerFrame.SeasonInformation:SetPoint("CENTER", playerFrame, "CENTER", -20, -12)
         playerFrame.SeasonInformation:SetAlpha(0.3)
-        playerFrame.SeasonInformation:SetText(KeyMasterLocals.SEASON..": "..seasonID)
+        playerFrame.SeasonInformation:SetText(KeyMasterLocals.SEASON.." "..seasonNum)
     end
 
     -- Player Specialization and Class
@@ -250,47 +251,25 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     return playerFrame
 end
 
-local keyLevelOffsetx = 0
+local keyLevelOffsetx = 75
 local keyLevelOffsety = 2
-local affixScoreOffsetx = 34
-local affixScoreOffsety = 2
+local affixScoreOffsetx = 135
+local affixScoreOffsety = 8
 local affixBonusOffsetx = 0
 local affixBonusOffsety = 0
-local afffixRuntimeOffsetx = 34
-local afffixRuntimeOffsety = -2
+local afffixRuntimeOffsetx = 135
+local afffixRuntimeOffsety = -6
 
-local function SetupHeaederTitles(firstRowMapID)
-
-    -- Header setup
-    _G["KM_Player_Frame"].divider1 = _G["KM_Player_Frame"]:CreateTexture()
-    _G["KM_Player_Frame"].divider1:SetPoint("BOTTOM", _G["KM_RowDivider"..firstRowMapID], "TOP", 0, 4)
-    _G["KM_Player_Frame"].divider1:SetSize(32, 32)
-    _G["KM_Player_Frame"].divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    _G["KM_Player_Frame"].divider1:SetAlpha(0.3)
-
-    _G["KM_Player_Frame"].tyranText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    _G["KM_Player_Frame"].tyranText:SetPoint("RIGHT", _G["KM_Player_Frame"].divider1, "LEFT", keyLevelOffsetx-6, 2)
-    local Path, _, Flags = _G["KM_Player_Frame"].tyranText:GetFont()
-    _G["KM_Player_Frame"].tyranText:SetFont(Path, 18, Flags)
-    _G["KM_Player_Frame"].tyranText:SetJustifyH("RIGHT")
-    _G["KM_Player_Frame"].tyranText:SetText(string.upper(KeyMasterLocals.TYRANNICAL))
-
-    _G["KM_Player_Frame"].fortText = _G["KM_Player_Frame"]:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    _G["KM_Player_Frame"].fortText:SetPoint("LEFT", _G["KM_Player_Frame"].divider1, "RIGHT", -keyLevelOffsetx+6, 2)
-    _G["KM_Player_Frame"].fortText:SetFont(_G["KM_Player_Frame"].tyranText:GetFont())
-    _G["KM_Player_Frame"].fortText:SetJustifyH("LEFT")
-    _G["KM_Player_Frame"].fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
-end
-
-function PlayerFrame:CreateMapData(parentFrame)
-    local mapFrameHeight = 48
+function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
+    local mapFrameHeaderHeight = 48
+    local mapFrameWIdthPercent = 0.7
 
-    -- Player Details Panel
+    -- Maps Panel
     local playerInformationFrame = CreateFrame("Frame", "KM_PlayerMapInfo", parentFrame)
-    playerInformationFrame:SetSize((parentFrame:GetWidth()*0.7)+mr, (mapFrameHeight*mapCount)+((mapCount+1)*mtb))
-    playerInformationFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", -4, 0)
+    playerInformationFrame:SetSize((parentFrame:GetWidth()*mapFrameWIdthPercent)+mr, (contentFrame:GetHeight() - parentFrame:GetHeight()) - (mtb*2))
+    playerInformationFrame:SetPoint("TOPLEFT", parentFrame, "BOTTOMLEFT", 0, 0)
     --[[ playerInformationFrame.texture = playerInformationFrame:CreateTexture()
     playerInformationFrame.texture:SetAllPoints(playerInformationFrame)
     playerInformationFrame.texture:SetColorTexture(1, 1, 1, 0.6) ]]
@@ -301,15 +280,53 @@ function PlayerFrame:CreateMapData(parentFrame)
     local mapFrameWidth = playerInformationFrame:GetWidth() - mr
     local firstRowId
 
+    -- Header row
+    local mapHeaderFrame = CreateFrame("Frame", "KM_PlayerFrameMapInfoHeader", playerInformationFrame)
+    mapHeaderFrame:SetPoint("TOPLEFT", playerInformationFrame, "TOPLEFT", 0,-mtb)
+    mapHeaderFrame:SetSize(mapFrameWidth-mr, mapFrameHeaderHeight)
+    mapHeaderFrame:SetFrameLevel(playerInformationFrame:GetFrameLevel()+1)
+    --[[ mapHeaderFrame.divider1 = mapHeaderFrame:CreateTexture()
+    mapHeaderFrame.divider1:SetPoint("CENTER", mapHeaderFrame, "CENTER", 0, 0)
+    mapHeaderFrame.divider1:SetSize(32, 32)
+    mapHeaderFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
+    mapHeaderFrame.divider1:SetAlpha(0.3) ]]
+
+    mapHeaderFrame.texture = mapHeaderFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+    mapHeaderFrame.texture:SetAllPoints(mapHeaderFrame)
+    mapHeaderFrame.texture:SetColorTexture(0, 0, 0, 1)
+
+    mapHeaderFrame.textureHighlight = mapHeaderFrame:CreateTexture(nil, "OVERLAY", nil)
+    mapHeaderFrame.textureHighlight:SetPoint("TOPLEFT", mapHeaderFrame, "TOPLEFT")
+    mapHeaderFrame.textureHighlight:SetSize(mapHeaderFrame:GetWidth(), 64)
+    mapHeaderFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    local headerColor = {}  
+    headerColor.r, headerColor.g, headerColor.b, _ = getColor("color_NONPHOTOBLUE")
+    mapHeaderFrame.textureHighlight:SetVertexColor(headerColor.r, headerColor.g, headerColor.b, 0.6)
+    mapHeaderFrame.textureHighlight:SetRotation(math.pi)
+
+    mapHeaderFrame.tyranText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
+    mapHeaderFrame.tyranText:SetPoint("LEFT", mapHeaderFrame, "LEFT", 8, 0)
+    local Path, _, Flags = mapHeaderFrame.tyranText:GetFont()
+    mapHeaderFrame.tyranText:SetFont(Path, 18, Flags)
+    mapHeaderFrame.tyranText:SetJustifyH("LEFT")
+    mapHeaderFrame.tyranText:SetText(string.upper(KeyMasterLocals.TYRANNICAL))
+
+    mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
+    mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0)
+    mapHeaderFrame.fortText:SetFont(mapHeaderFrame.tyranText:GetFont())
+    mapHeaderFrame.fortText:SetJustifyH("RIGHT")
+    mapHeaderFrame.fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
+
+
+    local mapRowHeight = (((playerInformationFrame:GetHeight() - (mapHeaderFrame:GetHeight() + mtb))/ mapCount)) - mtb
+    
     -- Instance Cards
     for mapId in pairs (seasonMaps) do
-        if not (firstRowId) then firstRowId = mapId end
-        SetupHeaederTitles(firstRowId)
-        local mapFrame = CreateFrame("Frame", "KM_PlayerFrameMapInfo"..mapId, playerInformationFrame)
+        local mapFrame = CreateFrame("Frame", "KM_PlayerFrameMapInfo"..mapId, mapHeaderFrame)
         mapFrame:SetAttribute("mapId", mapId)
-        mapFrame:SetSize(mapFrameWidth-mr, mapFrameHeight)
+        mapFrame:SetSize(mapFrameWidth-mr, mapRowHeight)
         if count == -8 then
-            mapFrame:SetPoint("TOPLEFT", playerInformationFrame, "TOPLEFT", mr, -mtb)
+            mapFrame:SetPoint("TOPLEFT", mapHeaderFrame, "BOTTOMLEFT", 0, -mtb)
             mapFrame:SetFrameLevel(playerInformationFrame:GetFrameLevel()+1)
             prevRowAnchor = mapFrame
         else
@@ -317,18 +334,6 @@ function PlayerFrame:CreateMapData(parentFrame)
             mapFrame:SetFrameLevel(prevRowAnchor:GetFrameLevel()+1)
         end
 
-        mapFrame.maskTexture = mapFrame:CreateMaskTexture()
-        mapFrame.maskTexture:SetPoint("TOPLEFT", mapFrame, "TOPLEFT", -4, 4)
-        mapFrame.maskTexture:SetSize(128, 128)
-        mapFrame.maskTexture:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Player-Frame-Map-Mask-128")
-        mapFrame.texturemap = mapFrame:CreateTexture(nil, "ARTWORK",nil)
-        mapFrame.texturemap:SetPoint("TOPLEFT", mapFrame, "TOPLEFT", -4, 40)
-        mapFrame.texturemap:SetSize(128, 128)
-        mapFrame.texturemap:SetTexture(seasonMaps[mapId].texture)
-        mapFrame.texturemap:AddMaskTexture(mapFrame.maskTexture)
-        mapFrame.texture = mapFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
-        mapFrame.texture:SetAllPoints(mapFrame)
-        mapFrame.texture:SetColorTexture(0, 0, 0, 1)
 
         local highlightAlpha = 0.5
         mapFrame.textureHighlight = mapFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
@@ -343,23 +348,9 @@ function PlayerFrame:CreateMapData(parentFrame)
         mapFrame:SetAttribute("highlight", mapFrame.textureHighlight)
         mapFrame:SetAttribute("defColor", hlColorString)
         mapFrame:SetAttribute("defAlpha", highlightAlpha)
-
-        mapFrame.dungeonName = mapFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-        mapFrame.dungeonName:SetPoint("TOPLEFT", mapFrame, "TOPLEFT", 4, -4)
-        mapFrame.dungeonName:SetWidth(mapFrame:GetWidth())
-        --mapFrame.dungeonName:SetJustifyV("TOP")
-        mapFrame.dungeonName:SetJustifyH("LEFT")
-        local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
-        mapFrame.dungeonName:SetText(shortenBlizzardsStupidLongInstanceNames)
-
-        mapFrame.overallScore = mapFrame:CreateFontString("KM_PlayerFrame"..mapId.."_Overall", "OVERLAY", "KeyMasterFontNormal")
-        mapFrame.overallScore:SetPoint("BOTTOMLEFT", mapFrame, "BOTTOMLEFT", 4, 4)
-        local Path, _, Flags = mapFrame.overallScore:GetFont()
-        mapFrame.overallScore:SetFont(Path, 24, Flags)
-        local OverallColor = {}
-        OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
-        mapFrame.overallScore:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1)
-        mapFrame.overallScore:SetText("")
+        mapFrame.texture = mapFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+        mapFrame.texture:SetAllPoints(mapFrame)
+        mapFrame.texture:SetColorTexture(0, 0, 0, 1)
 
 
         --[[ mapFrame.nameBackground = mapFrame:CreateTexture()
@@ -372,10 +363,45 @@ function PlayerFrame:CreateMapData(parentFrame)
         mapFrame.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Map-Overlay")
         mapFrame.texture:SetAlpha(0.9) ]]
 
-        local offset = 120
         local dataFrame = CreateFrame("Frame", "KM_PlayerFrame_Data"..mapId, mapFrame)
-        dataFrame:SetPoint("LEFT", mapFrame, "LEFT", offset, 0)
-        dataFrame:SetSize(mapFrame:GetWidth()-offset, mapFrame:GetHeight())
+        dataFrame:SetPoint("LEFT", mapFrame, "LEFT", 0, 0)
+        dataFrame:SetSize(mapFrame:GetWidth()-mapFrame:GetHeight()-5, mapFrame:GetHeight())
+
+        -- map image base size 128x128
+        local mapImageRatio = 2.666666666666667 -- set pre-calculated aspect ratio because image data doesn't include size
+        local mapImageDisplaySize = mapImageRatio * mapRowHeight
+        dataFrame.maskTexture = dataFrame:CreateMaskTexture()
+        dataFrame.maskTexture:SetPoint("TOP", dataFrame, "TOP", -4, 4)
+        dataFrame.maskTexture:SetSize(mapImageDisplaySize, mapImageDisplaySize)
+        dataFrame.maskTexture:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Player-Frame-Map-Mask2-128")
+        dataFrame.texturemap = dataFrame:CreateTexture(nil, "ARTWORK", nil, 0)
+        dataFrame.texturemap:SetPoint("TOP", dataFrame, "TOP", -4, 40)
+        dataFrame.texturemap:SetSize(mapImageDisplaySize, mapImageDisplaySize)
+        dataFrame.texturemap:SetTexture(seasonMaps[mapId].texture)
+        dataFrame.texturemap:AddMaskTexture(dataFrame.maskTexture)
+        dataFrame.texturemap:SetAlpha(1)
+
+        dataFrame.dungeonName = dataFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+        dataFrame.dungeonName:SetPoint("TOP", dataFrame, "TOP", 0, -4)
+        dataFrame.dungeonName:SetWidth(140)
+        dataFrame.dungeonName:SetJustifyV("TOP")
+        --mapFrame.dungeonName:SetJustifyH("LEFT")
+        local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
+        dataFrame.dungeonName:SetText(shortenBlizzardsStupidLongInstanceNames)
+        dataFrame.dungeonNametexture = dataFrame:CreateTexture(nil, "ARTWORK", nil, 3)
+        dataFrame.dungeonNametexture:SetPoint("TOP", dataFrame, "TOP")
+        dataFrame.dungeonNametexture:SetSize(140, 22)
+        dataFrame.dungeonNametexture:SetColorTexture(0, 0, 0, 0.6)
+
+        dataFrame.overallScore = dataFrame:CreateFontString("KM_PlayerFrame"..mapId.."_Overall", "OVERLAY", "KeyMasterFontNormal")
+        dataFrame.overallScore:SetPoint("BOTTOM", dataFrame, "BOTTOM", 0, 0)
+        dataFrame.overallScore:SetJustifyV("BOTTOM")
+        local Path, _, Flags = dataFrame.overallScore:GetFont()
+        dataFrame.overallScore:SetFont(Path, 24, Flags)
+        local OverallColor = {}
+        OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
+        dataFrame.overallScore:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1)
+        dataFrame.overallScore:SetText("")
 
         --dataFrame:Events
         mapFrame:SetScript("OnMouseUp", mapdData_OnRowClick)
@@ -403,60 +429,67 @@ function PlayerFrame:CreateMapData(parentFrame)
         dataFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
         dataFrame.divider1:SetAlpha(0.3)
 
-        dataFrame.divider2 = dataFrame:CreateTexture("KM_RowDivider"..mapId)
+        --[[ dataFrame.divider2 = dataFrame:CreateTexture("KM_RowDivider"..mapId)
         dataFrame.divider2:SetPoint("CENTER", dataFrame, "CENTER", -portalFrame:GetWidth(), 0)
         dataFrame.divider2:SetSize(dataFrame:GetHeight(), dataFrame:GetHeight())
         dataFrame.divider2:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-        dataFrame.divider2:SetAlpha(0.3)
+        dataFrame.divider2:SetAlpha(0.3) ]]
 
         --///// TYRANNICAL /////--
         -- Tyrannical Key Level
         dataFrame.tyrannicalLevel = dataFrame:CreateFontString("KM_PlayerFrameTyranLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalLevel:SetPoint("RIGHT", dataFrame.divider2, "LEFT", keyLevelOffsetx, keyLevelOffsety)
+        dataFrame.tyrannicalLevel:SetPoint("RIGHT",dataFrame.texturemap, "CENTER", -keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.tyrannicalLevel:GetFont()
         dataFrame.tyrannicalLevel:SetFont(Path, 24, Flags)
+        dataFrame.tyrannicalLevel:SetJustifyH("RIGHT")
         dataFrame.tyrannicalLevel:SetText("")
 
         -- Tyrannical Bonus Time
         dataFrame.tyrannicalBonus = dataFrame:CreateFontString("KM_PlayerFrameTyranBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.tyrannicalBonus:SetPoint("RIGHT", dataFrame.tyrannicalLevel, "LEFT", affixBonusOffsetx, affixBonusOffsety)
+        dataFrame.tyrannicalBonus:SetJustifyH("RIGHT")
         dataFrame.tyrannicalBonus:SetText("")
 
         -- Tyrannical Score
         dataFrame.tyrannicalScore = dataFrame:CreateFontString("KM_PlayerFrameTyranScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalScore:SetPoint("TOPRIGHT", dataFrame.tyrannicalLevel, "TOPLEFT", -affixScoreOffsetx, affixScoreOffsety)
+        dataFrame.tyrannicalScore:SetPoint("RIGHT", dataFrame.texturemap, "CENTER", -affixScoreOffsetx, affixScoreOffsety)
         dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
+        dataFrame.tyrannicalScore:SetJustifyV("BOTTOM")
         dataFrame.tyrannicalScore:SetText("")
 
         -- Tyrannical RunTime
         dataFrame.tyrannicalRunTime = dataFrame:CreateFontString("KM_PlayerFrameTyranRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalRunTime:SetPoint("BOTTOMRIGHT", dataFrame.tyrannicalLevel, "BOTTOMLEFT", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
+        dataFrame.tyrannicalRunTime:SetPoint("RIGHT", dataFrame.texturemap, "CENTER", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
+        dataFrame.tyrannicalScore:SetJustifyV("TOP")
         dataFrame.tyrannicalRunTime:SetText("") 
 
         --///// FORTIFIED /////--
         -- Fortified Key Level
         dataFrame.fortifiedLevel = dataFrame:CreateFontString("KM_PlayerFrameFortLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedLevel:SetPoint("LEFT", dataFrame.divider2, "RIGHT", keyLevelOffsetx, keyLevelOffsety)
+        dataFrame.fortifiedLevel:SetPoint("LEFT", dataFrame.texturemap, "CENTER", keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.fortifiedLevel:GetFont()
         dataFrame.fortifiedLevel:SetFont(Path, 24, Flags)
+        dataFrame.fortifiedLevel:SetJustifyH("LEFT")
         dataFrame.fortifiedLevel:SetText("")
 
         -- Fortified Bonus Time
         dataFrame.fortifiedBonus = dataFrame:CreateFontString("KM_PlayerFrameFortBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.fortifiedBonus:SetPoint("LEFT", dataFrame.fortifiedLevel, "RIGHT", affixBonusOffsetx, affixBonusOffsety)
+        dataFrame.fortifiedBonus:SetJustifyH("LEFT")
         dataFrame.fortifiedBonus:SetText("") 
 
         -- Fortified Score
         dataFrame.fortifiedScore = dataFrame:CreateFontString("KM_PlayerFrameFortScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedScore:SetPoint("TOPLEFT", dataFrame.fortifiedLevel, "TOPRIGHT", affixScoreOffsetx, affixScoreOffsety)
+        dataFrame.fortifiedScore:SetPoint("LEFT", dataFrame.texturemap, "CENTER", affixScoreOffsetx, affixScoreOffsety)
         dataFrame.fortifiedScore:SetJustifyH("LEFT")
         dataFrame.fortifiedScore:SetText("")
 
         -- Tyrannical RunTime
         dataFrame.fortifiedRunTime = dataFrame:CreateFontString("KM_PlayerFrameFortRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedRunTime:SetPoint("BOTTOMLEFT", dataFrame.fortifiedLevel, "BOTTOMRIGHT", afffixRuntimeOffsetx, afffixRuntimeOffsety)
+        dataFrame.fortifiedRunTime:SetPoint("LEFT",dataFrame.texturemap, "CENTER", afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.fortifiedRunTime:SetJustifyH("LEFT")
+        dataFrame.fortifiedRunTime:SetJustifyV("TOP")
         dataFrame.fortifiedRunTime:SetText("")
 
         --[[ currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel()
@@ -507,7 +540,7 @@ function PlayerFrame:CreateMapData(parentFrame)
             --portalFrame.textureportal:SetSize(40, 40)
             --portalFrame.textureportal:SetPoint("CENTER", portalFrame, "CENTER", 0, 0)
             anim_frame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Active")
-            anim_frame.textureportal:SetRotation(math.random(0,1) + math.random())
+            anim_frame.textureportal:SetRotation(math.random(0,2) + math.random())
             anim_frame.textureportal:SetAlpha(0.6)
 
             local pButton
@@ -532,6 +565,8 @@ function PlayerFrame:CreateMapData(parentFrame)
             anim_frame.textureportal:SetAlpha(0.6)
         end
 
+        --[[ mapHeaderFrame.tyranText:SetPoint("CENTER", mapHeaderFrame, "CENTER", affixScoreOffsetx, 0)
+        mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0) ]]
         prevFrame = mapFrame
         count = count + 1
     end
@@ -569,76 +604,97 @@ function PlayerFrame:CreateExtraInfoFrame(parentFrame)
     return extraInfoFrame
 end
 
-function PlayerFrame:CreateMapDetailsFrame(parentFrame)
+function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local detailsFrame = CreateFrame("Frame", "KM_PlayerFrame_MapDetails", parentFrame)
-    detailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
-    detailsFrame:SetSize(parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4, _G["KM_PlayerMapInfo"]:GetHeight() + _G["KM_PLayerExtraInfo"]:GetHeight()-4)
+    detailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, 0)
+    detailsFrame:SetSize(parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4, contentFrame:GetHeight() - parentFrame:GetHeight()-8)
 
-    detailsFrame.texture = detailsFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
-    detailsFrame.texture:SetPoint("CENTER", detailsFrame, "CENTER")
-    detailsFrame.texture:SetSize(detailsFrame:GetWidth()-1, detailsFrame:GetHeight()-1)
-    detailsFrame.texture:SetColorTexture(0, 0, 0, 1)
-
-    detailsFrame.border = detailsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    detailsFrame.border:SetAllPoints(detailsFrame)
-    local borderColor = {}
-    borderColor.r, borderColor.g, borderColor.b, _ = Theme:GetThemeColor("color_DARKGREY")
-    detailsFrame.border:SetColorTexture(borderColor.r, borderColor.g, borderColor.b, 1)
-
-    detailsFrame.divider1 = detailsFrame:CreateTexture(nil, "OVERLAY")
-    detailsFrame.divider1:SetPoint("CENTER", detailsFrame, "CENTER", 0, 0)
-    detailsFrame.divider1:SetSize(32, detailsFrame:GetWidth()-10)
-    detailsFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    detailsFrame.divider1:SetRotation(math.pi/2)
-    detailsFrame.divider1:SetAlpha(0.3)
-
-    -- seasonMaps[mapId].texture
     -- Map Details Frame
+    local highlightAlpha = 0.5
+    local hlColor = {}
+    local hlColorString = "color_NONPHOTOBLUE"
+    hlColor.r, hlColor.g, hlColor.b, _ = Theme:GetThemeColor(hlColorString)
+
     local mapDetails = CreateFrame("Frame", "KM_MapDetailView", detailsFrame)
     mapDetails:SetPoint("TOP", detailsFrame, "TOP", 0, -4)
-    mapDetails:SetSize(detailsFrame:GetWidth()-8, (detailsFrame:GetHeight()/2)-10)
+    mapDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()/2)-4)
 
+    mapDetails.texture = mapDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
+    mapDetails.texture:SetAllPoints(mapDetails)
+    mapDetails.texture:SetSize(mapDetails:GetWidth(), mapDetails:GetHeight())
+    mapDetails.texture:SetColorTexture(0,0,0,1)
 
-    mapDetails.DetailsTitle = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    mapDetails.DetailsTitle:SetPoint("TOP", detailsFrame, "TOP", 4, -4)
-    mapDetails.DetailsTitle:SetText(".:: "..KeyMasterLocals.INSTANCEINFORMATION.." ::.")
+    mapDetails.textureHighlight = mapDetails:CreateTexture(nil, "BACKGROUND", nil, 1)
+    mapDetails.textureHighlight:SetSize(mapDetails:GetWidth(), 64)
+    mapDetails.textureHighlight:SetPoint("TOPLEFT", mapDetails, "TOPLEFT", 0, 0)
+    mapDetails.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    mapDetails.textureHighlight:SetAlpha(highlightAlpha)
+    mapDetails.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+    mapDetails.textureHighlight:SetRotation(math.pi)
+
+    mapDetails.DetailsTitle = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    mapDetails.DetailsTitle:SetPoint("TOP", detailsFrame, "TOP", 0, -8)
+    mapDetails.DetailsTitle:SetJustifyV("TOP")
+    mapDetails.DetailsTitle:SetText(KeyMasterLocals.INSTANCETIMER)
 
     mapDetails.InstanceBGT = mapDetails:CreateTexture(nil, "ARTWORK", nil, 0)
     mapDetails.InstanceBGT:SetSize(mapDetails:GetWidth(), mapDetails:GetWidth())
-    mapDetails.InstanceBGT:SetPoint("TOP", mapDetails.DetailsTitle, "BOTTOM", 22, -8)
+    mapDetails.InstanceBGT:SetPoint("TOP", mapDetails.DetailsTitle, "BOTTOM", 28, -8)
     mapDetails.InstanceBGT:SetTexture() -- todo: dynamic first map image
 
     mapDetails.MapName = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    mapDetails.MapName:SetPoint("TOP", mapDetails.InstanceBGT, "TOP", -22, -40)
-    local hlColor = {}
-    hlColor.r,hlColor.g,hlColor.b, _ = getColor("themeFontColorYellow")
-    mapDetails.MapName:SetTextColor(hlColor.r,hlColor.g,hlColor.b, 1)
+    mapDetails.MapName:SetPoint("TOP", mapDetails, "TOP", 0, -50)
+    local mapNameColor = {}
+    mapNameColor.r,mapNameColor.g,mapNameColor.b, _ = getColor("themeFontColorYellow")
+    mapDetails.MapName:SetTextColor(mapNameColor.r,mapNameColor.g,mapNameColor.b, 1)
     local Path, _, Flags = mapDetails.MapName:GetFont()
     mapDetails.MapName:SetFont(Path, 16, Flags)
     mapDetails.MapName:SetText("")-- todo: dynamic first map name
 
     mapDetails.TimeLimit = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    mapDetails.TimeLimit:SetPoint("TOP", mapDetails.MapName, "BOTTOM", 0, -8)
+    mapDetails.TimeLimit:SetPoint("TOP", mapDetails.MapName, "BOTTOM", 0, -12)
     --[[ local hlColor = {}
     hlColor.r,hlColor.g,hlColor.b, _ = getColor("themeFontColorYellow")
     mapDetails.TimeLimit:SetTextColor(hlColor.r,hlColor.g,hlColor.b, 1) ]]
     mapDetails.TimeLimit:SetText("")
     -- KeyMasterLocals.TIMELIMIT..": ".."29:00"
 
+    mapDetails.TwoChestTimer = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    mapDetails.TwoChestTimer:SetPoint("TOP", mapDetails.TimeLimit, "BOTTOM", 0, -4)
+    mapDetails.TwoChestTimer:SetText("")
 
+    mapDetails.ThreeChestTimer = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    mapDetails.ThreeChestTimer:SetPoint("TOP",  mapDetails.TwoChestTimer, "BOTTOM", 0, -4)
+    mapDetails.ThreeChestTimer:SetText("")
+
+
+
+    -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
-    vaultDetails:SetPoint("BOTTOM", detailsFrame, "BOTTOM", 0, 4)
-    vaultDetails:SetSize(detailsFrame:GetWidth()-8, (detailsFrame:GetHeight()/2)-10)
+    vaultDetails:SetPoint("BOTTOM", detailsFrame, "BOTTOM", 0, 0)
+    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()/2)-4)
 
-    vaultDetails.DetailsTitle = vaultDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
+    vaultDetails.texture:SetAllPoints(vaultDetails)
+    vaultDetails.texture:SetSize(vaultDetails:GetWidth(), vaultDetails:GetHeight())
+    vaultDetails.texture:SetColorTexture(0,0,0,1)
+
+    vaultDetails.textureHighlight = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 1)
+    vaultDetails.textureHighlight:SetSize(vaultDetails:GetWidth(), 64)
+    vaultDetails.textureHighlight:SetPoint("BOTTOMLEFT", vaultDetails, "BOTTOMLEFT", 0, 0)
+    vaultDetails.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    vaultDetails.textureHighlight:SetAlpha(highlightAlpha)
+    vaultDetails.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    vaultDetails.DetailsTitle = vaultDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     vaultDetails.DetailsTitle:SetPoint("TOP", vaultDetails, "TOP", 4, -4)
-    vaultDetails.DetailsTitle:SetText(".:: "..KeyMasterLocals.VAULTINFORMATION.." ::.")
+    vaultDetails.DetailsTitle:SetText(KeyMasterLocals.VAULTINFORMATION)
 
     local currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel
     currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel()
 
     vaultDetails.CurrentBestLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultDetails.CurrentBestLevel:SetPoint("TOP", vaultDetails.DetailsTitle, "BOTTOM", 0, -8)
+    vaultDetails.CurrentBestLevel:SetPoint("TOP", vaultDetails.DetailsTitle, "BOTTOM", 0, -18)
     vaultDetails.CurrentBestLevel:SetText("Current Best Level: "..currentWeekBestLevel)
 
     vaultDetails.RewardLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
