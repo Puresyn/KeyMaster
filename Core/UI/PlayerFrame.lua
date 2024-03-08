@@ -105,7 +105,8 @@ end
 local function mapData_onmouseover(self, event)
     local highlight = self:GetAttribute("highlight")
     local hlColor = {}
-    hlColor.r,hlColor.g,hlColor.b, hlColor.a = getColor("color_HEIRLOOM")
+    hlColor.a = 1
+    hlColor.r,hlColor.g,hlColor.b, _ = getColor("color_HEIRLOOM")
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, hlColor.a)
 end
 local function mapData_onmouseout(self, event)
@@ -258,11 +259,12 @@ local affixBonusOffsetx = 0
 local affixBonusOffsety = 0
 local afffixRuntimeOffsetx = 135
 local afffixRuntimeOffsety = -6
+local doOnce = 0
 
 function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
-    local mapFrameHeaderHeight = 48
+    local mapFrameHeaderHeight = 25
     local mapFrameWIdthPercent = 0.7
 
     -- Maps Panel
@@ -304,16 +306,16 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.textureHighlight:SetRotation(math.pi)
 
     mapHeaderFrame.tyranText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.tyranText:SetPoint("LEFT", mapHeaderFrame, "LEFT", 8, 0)
+    --mapHeaderFrame.tyranText:SetPoint("LEFT", mapHeaderFrame, "LEFT", 8, 0)
     local Path, _, Flags = mapHeaderFrame.tyranText:GetFont()
     mapHeaderFrame.tyranText:SetFont(Path, 18, Flags)
-    mapHeaderFrame.tyranText:SetJustifyH("LEFT")
+    mapHeaderFrame.tyranText:SetJustifyH("RIGHT")
     mapHeaderFrame.tyranText:SetText(string.upper(KeyMasterLocals.TYRANNICAL))
 
     mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0)
+    --mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0)
     mapHeaderFrame.fortText:SetFont(mapHeaderFrame.tyranText:GetFont())
-    mapHeaderFrame.fortText:SetJustifyH("RIGHT")
+    mapHeaderFrame.fortText:SetJustifyH("LEFT")
     mapHeaderFrame.fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
 
 
@@ -570,8 +572,13 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
             anim_frame.textureportal:SetAlpha(0.6)
         end
 
-        --[[ mapHeaderFrame.tyranText:SetPoint("CENTER", mapHeaderFrame, "CENTER", affixScoreOffsetx, 0)
-        mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0) ]]
+        if (doOnce == 0) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.tyrannicalLevel:GetPoint()
+            mapHeaderFrame.tyranText:SetPoint("RIGHT", mapHeaderFrame, "CENTER", xOfs, 0)
+            point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.fortifiedLevel:GetPoint()
+            mapHeaderFrame.fortText:SetPoint("LEFT", mapHeaderFrame, "CENTER", xOfs, 0)
+            doOnce = 1
+        end
         prevFrame = mapFrame
         count = count + 1
     end
