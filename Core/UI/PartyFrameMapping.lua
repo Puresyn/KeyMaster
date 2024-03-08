@@ -1,6 +1,6 @@
 local _, KeyMaster = ...
-KeyMaster.ViewModel = {}
-local ViewModel = KeyMaster.ViewModel
+KeyMaster.PartyFrameMapping = {}
+local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local CharacterInfo = KeyMaster.CharacterInfo
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
@@ -13,15 +13,15 @@ local partyFrameLookup = {
     ["party4"] = "KM_PlayerRow5"
 }
 
-function ViewModel:ShowPartyRow(unitId)
+function PartyFrameMapping:ShowPartyRow(unitId)
     _G[partyFrameLookup[unitId]]:Show()    
 end
 
-function ViewModel:HidePartyRow(unitId)
+function PartyFrameMapping:HidePartyRow(unitId)
     _G[partyFrameLookup[unitId]]:Hide()
 end
 
-function ViewModel:HideAllPartyFrame()
+function PartyFrameMapping:HideAllPartyFrame()
     for i=1,4,1 do
         _G[partyFrameLookup["party"..i]]:Hide()
     end
@@ -80,7 +80,7 @@ end
 
 -- updates the keystone highlights for each party member for known keys
 -- highlights include vertical bars and the dungeon level text in dungeon icon row
-function ViewModel:UpdateKeystoneHighlights()
+function PartyFrameMapping:UpdateKeystoneHighlights()
     -- resets all highlights and text to default
     resetKeystoneHighlights()
 
@@ -114,15 +114,15 @@ end
 
 
 -- Party member data assign
-function ViewModel:UpdateUnitFrameData(unitId, playerData)
+function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     if(unitId == nil) then 
-        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "ViewModel", "Parameter unitId cannot be empty.")
+        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "PartyFrameMapping", "Parameter unitId cannot be empty.")
         return
     end
 
     --local playerData = UnitData:GetUnitDataByUnitId(unitId)
     if(playerData == nil) then 
-        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "ViewModel", "\"playerData\" cannot be empty.")
+        KeyMaster:_ErrorMsg("UpdateUnitFrameData", "PartyFrameMapping", "\"playerData\" cannot be empty.")
         return
     end
 
@@ -238,7 +238,7 @@ local function resetRatingGains()
 end
 
 -- calculates the total rating gain potential for each player in the party
-function ViewModel:CalculateTotalRatingGainPotential()
+function PartyFrameMapping:CalculateTotalRatingGainPotential()
     resetRatingGains()
 
     local keystoneInformation = {}
@@ -295,7 +295,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
                         end
                     end
                 else
-                    --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "ViewModel", "Player data not found for "..unitid)
+                    --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "PartyFrameMapping", "Player data not found for "..unitid)
                 end                               
             end
             playerNumber = playerNumber + 1
@@ -306,7 +306,7 @@ function ViewModel:CalculateTotalRatingGainPotential()
     end
 end
 
-function ViewModel:SetPlayerHeaderKeyInfo()
+function PartyFrameMapping:SetPlayerHeaderKeyInfo()
     local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
     local playerKeyHeader = _G["KeyMaster_MythicKeyHeader"]
     playerKeyHeader.keyLevelText:SetText("--")

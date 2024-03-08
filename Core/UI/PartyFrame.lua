@@ -4,7 +4,9 @@ local DungeonTools = KeyMaster.DungeonTools
 local CharacterInfo = KeyMaster.CharacterInfo
 local Theme = KeyMaster.Theme
 local UnitData = KeyMaster.UnitData
-local ViewModel = KeyMaster.ViewModel
+local PartyFrameMapping = KeyMaster.PartyFrameMapping
+KeyMaster.PartyFrame = {}
+local PartyFrame = KeyMaster.PartyFrame
 
 local function portalButton_buttonevent(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
@@ -129,13 +131,11 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     anim_frame:SetAllPoints(temp_frame)
     temp_frame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
 
-
     -- Add clickable portal spell casting to dungeon texture frames if they have the spell
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
     
     if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
-    local pButton
-        pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
+        local pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
         pButton:SetAttribute("type", "spell")
         pButton:SetAttribute("spell", portalSpellName)
         pButton:RegisterForClicks("LeftButtonDown")
@@ -163,7 +163,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
 end
 
 -- Set the font and color of the party frames map data.
-function MainInterface:SetPartyWeeklyDataTheme()
+function PartyFrame:SetPartyWeeklyDataTheme()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     if (not mapTable) then return end
 
@@ -208,7 +208,8 @@ function MainInterface:SetPartyWeeklyDataTheme()
 
 end
 
-function MainInterface:CreatePartyDataFrame(parentFrame)
+
+function PartyFrame:CreatePartyDataFrame(parentFrame)
     local playerNumber
     if (parentFrame:GetName() == "KM_PlayerRow1") then playerNumber = 1
     elseif (parentFrame:GetName() == "KM_PlayerRow2") then playerNumber = 2
@@ -364,7 +365,7 @@ function MainInterface:CreatePartyDataFrame(parentFrame)
 
 end
 
-function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
+function PartyFrame:CreatePartyMemberFrame(unitId, parentFrame)
     local partyNumber
     if (unitId == "player") then partyNumber = 1
     elseif (unitId == "party1") then partyNumber = 2
@@ -421,7 +422,7 @@ function MainInterface:CreatePartyMemberFrame(unitId, parentFrame)
 end
 
 -- Party Frame Score Tally Footer
-function MainInterface:CreatePartyScoreTallyFooter()
+function PartyFrame:CreatePartyScoreTallyFooter()
     local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
     if (not parentFrame) then
         KeyMaster:_DebugMsg("CreatePartyScoreTallyFooter", "PartyFrame", "Tally footer could not find a valid parent. [Skipped Creation]")
@@ -489,7 +490,7 @@ function MainInterface:CreatePartyScoreTallyFooter()
     tallyDescTextBox.text:SetText(KeyMasterLocals.PARTYFRAME.TeamRatingGain.name..":")
 end
 
-function MainInterface:CreatePartyRowsFrame(parentFrame)    
+function PartyFrame:CreatePartyRowsFrame(parentFrame)    
     -- if it already exists, don't make another one
     if _G["KeyMaster_Frame_Party"] then
         return 
@@ -512,11 +513,43 @@ function MainInterface:CreatePartyRowsFrame(parentFrame)
     return temp_frame
 end
 
-function MainInterface:CreatePartyFrame(parentFrame)
+function PartyFrame:CreatePartyFrame(parentFrame)
     local partyScreen = CreateFrame("Frame", "KeyMaster_PartyScreen", parentFrame);
     partyScreen:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     partyScreen:SetAllPoints(true)
+    partyScreen:SetScript("OnShow", function(self) 
+        -- Load data into the party frame's
+    end)
     partyScreen:Hide()
 
     return partyScreen
+end
+
+function PartyFrame:ResetTallyFramePositioning()
+    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
+    local tallyFrame = _G["PartyTallyFooter"]
+    tallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
+end
+
+function PartyFrame:Initialize(parentFrame)
+    -- Party Tab    
+    local partyContent = _G["KeyMaster_PartyScreen"] or PartyFrame:CreatePartyFrame(parentFrame);
+    local partyRowsFrame = _G["KeyMaster_Frame_Party"] or PartyFrame:CreatePartyRowsFrame(partyContent)
+
+    -- create player row frame
+    local playerRow = _G["KM_PlayerRow1"] or PartyFrame:CreatePartyMemberFrame("player", partyRowsFrame)
+    local playerRowData = _G["KM_PlayerDataFrame1"] or PartyFrame:CreatePartyDataFrame(playerRow)
+
+    -- create party row frames
+    local maxPartySize = 4
+    for i=1,maxPartySize,1 do
+        local partyRow = PartyFrame:CreatePartyMemberFrame("party"..i, _G["KM_PlayerRow"..i])
+        local partyRowDataFrames = PartyFrame:CreatePartyDataFrame(partyRow)
+        partyRow:Hide()
+    end
+
+    -- create io score tally frames
+    local partyScoreTally = _G["PartyTallyFooter"] or PartyFrame:CreatePartyScoreTallyFooter()  
+    
+    return partyContent
 end
