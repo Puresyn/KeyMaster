@@ -639,11 +639,14 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     mapDetails.textureHighlight = mapDetails:CreateTexture(nil, "BACKGROUND", nil, 1)
     mapDetails.textureHighlight:SetSize(mapDetails:GetWidth(), 64)
-    mapDetails.textureHighlight:SetPoint("TOPLEFT", mapDetails, "TOPLEFT", 0, 0)
+    mapDetails.textureHighlight:SetPoint("BOTTOMLEFT", mapDetails, "BOTTOMLEFT", 0, 0)
     mapDetails.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
     mapDetails.textureHighlight:SetAlpha(highlightAlpha)
     mapDetails.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
-    mapDetails.textureHighlight:SetRotation(math.pi)
+    --mapDetails.textureHighlight:SetRotation(math.pi)
+
+    local Hline = KeyMaster:CreateHLine(mapDetails:GetWidth()+8, mapDetails, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
 
     --[[ mapDetails.DetailsTitle = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     mapDetails.DetailsTitle:SetPoint("TOP", detailsFrame, "TOP", 0, -8)
@@ -713,17 +716,67 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local threecr, threecg,threecb, _ = Theme:GetThemeColor("themeFontColorGreen2")
     mapDetails.ThreeChestTitle:SetTextColor(threecr, threecg, threecb, 1)
 
+    -- Score Calc
+    local scoreCalc = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
+    scoreCalc:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
+    scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()/3)-4)
 
+    scoreCalc.texture = scoreCalc:CreateTexture(nil, "BACKGROUND", nil, 0)
+    scoreCalc.texture:SetAllPoints(scoreCalc)
+    scoreCalc.texture:SetSize(scoreCalc:GetWidth(), scoreCalc:GetHeight())
+    scoreCalc.texture:SetColorTexture(0,0,0,1)
+
+    scoreCalc.textureHighlight = scoreCalc:CreateTexture(nil, "BACKGROUND", nil, 1)
+    scoreCalc.textureHighlight:SetSize(scoreCalc:GetWidth(), 64)
+    scoreCalc.textureHighlight:SetPoint("BOTTOMLEFT", scoreCalc, "BOTTOMLEFT", 0, 0)
+    scoreCalc.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    scoreCalc.textureHighlight:SetAlpha(highlightAlpha)
+    scoreCalc.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    local Hline = KeyMaster:CreateHLine(scoreCalc:GetWidth()+8, scoreCalc, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    scoreCalc.DetailsTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    scoreCalc.DetailsTitle:SetPoint("TOPRIGHT", scoreCalc, "TOPRIGHT", -4, -4)
+    scoreCalc.DetailsTitle:SetText("The Everbloom") -- todo: Set name dynamicly
+    scoreCalc.DetailsTitle:SetJustifyH("RIGHT")
+
+    scoreCalc.DetailsTitleDesc = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    scoreCalc.DetailsTitleDesc:SetPoint("TOPRIGHT",  scoreCalc.DetailsTitle, "BOTTOMRIGHT", 0, 0)
+    scoreCalc.DetailsTitleDesc:SetText("Calculator")
+    scoreCalc.DetailsTitleDesc:SetJustifyH("RIGHT")
+
+    -- ScoreCalc Key Level Box   
+    scoreCalc.keyLevelTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    scoreCalc.keyLevelTitle:SetPoint("TOPLEFT", scoreCalc, "TOPLEFT", 4, -18)
+    scoreCalc.keyLevelTitle:SetText("Key Level:")
+    
+    local scoreCalcBox = CreateFrame("EditBox", nil, scoreCalc, "InputBoxTemplate");
+    scoreCalcBox:SetPoint("BOTTOMLEFT", scoreCalc.keyLevelTitle, "BOTTOMRIGHT", 8, -5);
+    scoreCalcBox:SetWidth(24);
+    scoreCalcBox:SetHeight(28);
+    scoreCalcBox:SetMovable(false);
+    scoreCalcBox:SetAutoFocus(false);
+    scoreCalcBox:SetMaxLetters(2);
+    scoreCalcBox:SetScript("OnEnterPressed", function(self)
+        self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
+        -- todo: Validate input and do calculation magic here
+        print("Enter Key Pressed: Value of "..self:GetText()) -- todo: DELETE ME -- debug
+        self:SetText("")
+    end)
 
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
     vaultDetails:SetPoint("BOTTOM", detailsFrame, "BOTTOM", 0, 0)
-    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()/2)-4)
+    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()/6)-4)
 
     vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
     vaultDetails.texture:SetAllPoints(vaultDetails)
     vaultDetails.texture:SetSize(vaultDetails:GetWidth(), vaultDetails:GetHeight())
     vaultDetails.texture:SetColorTexture(0,0,0,1)
+
+    local Hline = KeyMaster:CreateHLine(vaultDetails:GetWidth()+8, vaultDetails, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
 
     vaultDetails.textureHighlight = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 1)
     vaultDetails.textureHighlight:SetSize(vaultDetails:GetWidth(), 64)
@@ -735,31 +788,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.DetailsTitle = vaultDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     vaultDetails.DetailsTitle:SetPoint("TOP", vaultDetails, "TOP", 4, -4)
     vaultDetails.DetailsTitle:SetText(KeyMasterLocals.VAULTINFORMATION)
-
-    local currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel
-    currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel()
-
-    vaultDetails.CurrentBestLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultDetails.CurrentBestLevel:SetPoint("TOP", vaultDetails.DetailsTitle, "BOTTOM", 0, -18)
-    vaultDetails.CurrentBestLevel:SetText("Current Best Level: "..currentWeekBestLevel)
-
-    vaultDetails.RewardLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultDetails.RewardLevel:SetPoint("TOP", vaultDetails.CurrentBestLevel, "BOTTOM", 0, 0)
-    vaultDetails.RewardLevel:SetText("Reward Level: "..weeklyRewardLevel)
-
-    vaultDetails.NextLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultDetails.NextLevel:SetPoint("TOP", vaultDetails.RewardLevel, "BOTTOM", 0, -8)
-    vaultDetails.NextLevel:SetText("Next Best Level: "..nextBestLevel)
-    
-    vaultDetails.NextRewardLevel = mapDetails:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultDetails.NextRewardLevel:SetPoint("TOP", vaultDetails.NextLevel, "BOTTOM", 0, 0)
-    vaultDetails.NextRewardLevel:SetText("Next Reward Level: "..nextDifficultyWeeklyRewardLevel)
-
-    --[[ vaultDetails.textureHighlight = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 1)
-    vaultDetails.textureHighlight:SetSize(vaultDetails:GetWidth(), vaultDetails:GetHeight())
-    vaultDetails.textureHighlight:SetPoint("LEFT", vaultDetails, "LEFT", 0, 0)
-    vaultDetails.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-    vaultDetails.textureHighlight:SetAlpha(0.5) ]]
 
 end
 
