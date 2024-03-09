@@ -116,9 +116,9 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
 
-        -- Only update UI if it's open
-        local mainFrame = _G["KeyMaster_MainFrame"]
-        if mainFrame ~= nil and mainFrame:IsShown() then
+        -- Only update UI if party tab is open
+        local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
+        if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
             PartyFrameMapping:UpdateSingleUnitData(data.GUID)
             PartyFrameMapping:UpdateKeystoneHighlights()
             PartyFrameMapping:CalculateTotalRatingGainPotential() 

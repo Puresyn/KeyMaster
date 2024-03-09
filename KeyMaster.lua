@@ -166,8 +166,12 @@ local function onEvent_PartyChanges(self, event, ...)
             KeyMaster:_DebugMsg("onEvent_PartyChanges", "KeyMaster", "purging all party data...")          
         end
         if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
-            -- reprocess party1-4 units
-            KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
+            -- Only update UI if party tab is open
+            local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
+            if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+                -- reprocess party1-4 units
+                KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
+            end
         end
     end
 end

@@ -527,15 +527,8 @@ function PartyFrame:CreatePartyFrame(parentFrame)
         -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
         PartyFrame:SetPartyWeeklyDataTheme() 
 
-        -- process party
-        local inGroup = UnitInRaid("player") or IsInGroup()
-        if inGroup and GetNumGroupMembers() >= 2 then
-            -- reprocess party1-4 units
-            KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
-                        
-            -- Transmit unit data to party members with addon
-            MyAddon:Transmit(playerData, "PARTY", nil)
-        end
+        -- reprocess party1-4 units
+        KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
     end)
     partyScreen:Hide()
 

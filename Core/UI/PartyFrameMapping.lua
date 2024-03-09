@@ -145,7 +145,7 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     elseif (unitId == "party4") then
         partyPlayer = 5
     end
-    print("Updating data for party member "..unitId..".")
+    
     -- Set Player Portrait
     if UnitIsConnected(unitId) then
         SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)

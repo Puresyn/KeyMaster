@@ -35,6 +35,15 @@ local function NotifyEvent(event)
             -- Store new data
             KeyMaster.UnitData:SetUnitData(playerData)
 
+            -- Only update UI if it's open
+            local mainFrame = _G["KeyMaster_MainFrame"]
+            if mainFrame ~= nil and mainFrame:IsShown() then
+                KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
+                KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
+                KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
+                KeyMaster.PlayerFrameMapping:RefreshData()
+            end
+
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerData, "PARTY", nil) 
         end)
@@ -50,6 +59,15 @@ local function NotifyEvent(event)
 
             -- Store new data
             KeyMaster.UnitData:SetUnitData(playerData)
+
+            -- Only update UI if it's open
+            local mainFrame = _G["KeyMaster_MainFrame"]
+            if mainFrame ~= nil and mainFrame:IsShown() then
+                KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
+                KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
+                KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
+                KeyMaster.PlayerFrameMapping:RefreshData()
+            end
                     
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerData, "PARTY", nil)    
