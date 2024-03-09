@@ -195,44 +195,27 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         C_MythicPlus.RequestCurrentAffixes()
         C_MythicPlus.RequestMapInfo()
         C_MythicPlus.RequestRewards()
-        KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")
-        
-    end
-    if isReload then
-        -- Covers scenario where player reloadUI and doesn't have party data anymore.
-        -- This sends a request to players in party to resend their data.
-        local requestData = {}
-        requestData.requestType = "playerData"
-
-        MyAddon:TransmitRequest(requestData)
+        KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")        
     end
     if isLogin or isReload then
         KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
-        -- Create UI frames
-        MainInterface:Initialize()
 
-        C_Timer.After(3, function()
-            -- Get player data
-            local playerData = CharacterInfo:GetMyCharacterInfo()
-            assert(playerData ~= nil, "Player Data is nil.")
-            -- Stores Data AND shows associated ui frame
-            UnitData:SetUnitData(playerData, true)
+        -- Delayed by x seconds due to C_MythicPlus data not being available immediately which is used to draw seasonal information on UI
+        C_Timer.After(2, function()
+            -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
+            local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
+        end)         
+    end
+    if isReload then
+        local inGroup = UnitInRaid("player") or IsInGroup()
+        if inGroup and GetNumGroupMembers() >= 2 then
+            -- Covers scenario where player reloadUI and doesn't have party data anymore.
+            -- This sends a request to players in party to resend their data.
+            local requestData = {}
+            requestData.requestType = "playerData"
 
-            -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
-            PartyFrame:SetPartyWeeklyDataTheme() 
-
-            -- process party
-            local inGroup = UnitInRaid("player") or IsInGroup()
-            if inGroup and GetNumGroupMembers() >= 2 then
-                --print("in player entering world...")
-                UnitData:MapPartyUnitData()
-                -- fetch self data
-                local playerUnit = UnitData:GetUnitDataByUnitId("player")
-                
-                -- Transmit unit data to party members with addon
-                MyAddon:Transmit(playerUnit, "PARTY", nil)
-            end
-        end) 
+            MyAddon:TransmitRequest(requestData)
+        end
     end
 end
 

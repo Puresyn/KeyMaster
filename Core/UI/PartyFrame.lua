@@ -518,7 +518,24 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     partyScreen:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     partyScreen:SetAllPoints(true)
     partyScreen:SetScript("OnShow", function(self) 
-        -- Load data into the party frame's
+        -- Get player data
+        local playerData = CharacterInfo:GetMyCharacterInfo()
+            
+        -- Stores Data AND shows associated ui frame
+        UnitData:SetUnitData(playerData, true)
+
+        -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
+        PartyFrame:SetPartyWeeklyDataTheme() 
+
+        -- process party
+        local inGroup = UnitInRaid("player") or IsInGroup()
+        if inGroup and GetNumGroupMembers() >= 2 then
+            -- resync the party state with UI/Data
+            UnitData:MapPartyUnitData()
+                        
+            -- Transmit unit data to party members with addon
+            MyAddon:Transmit(playerData, "PARTY", nil)
+        end
     end)
     partyScreen:Hide()
 
@@ -531,7 +548,10 @@ function PartyFrame:ResetTallyFramePositioning()
     tallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
 end
 
+-- Creates the entire party frame and its sub-frames
+-- parentFrame: the parent frame to attach the party frame to
 function PartyFrame:Initialize(parentFrame)
+    
     -- Party Tab    
     local partyContent = _G["KeyMaster_PartyScreen"] or PartyFrame:CreatePartyFrame(parentFrame);
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or PartyFrame:CreatePartyRowsFrame(partyContent)

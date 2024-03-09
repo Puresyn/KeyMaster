@@ -78,6 +78,10 @@ local function resetKeystoneHighlights()
     end
 end
 
+function PartyFrameMapping:UpdatePartyFrameData()
+    
+end
+
 -- updates the keystone highlights for each party member for known keys
 -- highlights include vertical bars and the dungeon level text in dungeon icon row
 function PartyFrameMapping:UpdateKeystoneHighlights()

@@ -729,6 +729,14 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
 end
 
-function PlayerFrame:Initialize()
-    
+-- creates the entire player frame and sub-frames
+function PlayerFrame:Initialize(parentFrame)
+    -- Player Tab
+    local playerContent = _G["KM_PlayerContentFrame"] or PlayerFrame:CreatePlayerContentFrame(parentFrame)
+    local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
+    local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
+    --local playerExtraFrame = _G["KM_PLayerExtraInfo"] or PlayerFrame:CreateExtraInfoFrame(playerMapFrame)
+    local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerContent)
+
+    return playerContent
 end

@@ -4,7 +4,6 @@ local CharacterInfo = KeyMaster.CharacterInfo
 local DungeonTools = KeyMaster.DungeonTools
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local Theme = KeyMaster.Theme
-local UnitData = KeyMaster.UnitData
 
 local defaultString = 0
 
@@ -13,6 +12,7 @@ function PlayerFrameMapping:RefreshData()
     local playerMapData = _G["KM_PlayerMapInfo"]
 
     local playerData = CharacterInfo:GetMyCharacterInfo()
+    --KeyMaster.UnitData:SetUnitData(playerData, false)
 
     -- Player Dungeon Rating
     playerFrame.playerRating:SetText(playerData.mythicPlusRating or defaultString)
