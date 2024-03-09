@@ -104,11 +104,12 @@ end
 local function intializeUIWithRetries(retryCount)
     if retryCount == nil then retryCount = 0 end
     local seasonalMaps = KeyMaster.DungeonTools:GetCurrentSeasonMaps()
-    if KeyMaster:GetTableLength(seasonalMaps) > 0 then
+    local seasonNumber = KeyMaster.DungeonTools:GetCurrentSeason()
+    if KeyMaster:GetTableLength(seasonalMaps) > 0 and seasonNumber ~= -1 then
         local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()    
     else
         if retryCount < 5 then
-            print("Retrying UI initialization...")
+            print("Retrying to create UI frames...")
             C_Timer.After(3, function() intializeUIWithRetries(retryCount + 1) end)
         else
             KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
@@ -214,7 +215,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
 
         -- creates the UI but only when bliz data is avaiable from C_MythicPlus
-        intializeUIWithRetries(10)
+        intializeUIWithRetries()
 
         -- fetch player data from bliz and save it to local memory
         local playerData = CharacterInfo:GetMyCharacterInfo()

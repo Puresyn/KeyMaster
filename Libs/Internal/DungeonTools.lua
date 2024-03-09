@@ -81,7 +81,7 @@ end
 
 local currentSeason
 function DungeonTools:GetCurrentSeason()
-    if currentSeason then return currentSeason end
+    if currentSeason ~= nil and currentSeason ~= -1 then return currentSeason end
 
     local season = C_MythicPlus.GetCurrentSeason()
 
