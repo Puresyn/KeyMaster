@@ -313,10 +313,6 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
     end
 end
 
-function PartyFrameMapping:SetPlayerHeaderKeyInfo()
-    
-end
-
 function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
     if unitGUID == nil then
         KeyMaster:_ErrorMsg("MapPartyUnitData", "UnitData", "Parameter unitGUID cannot be empty.")

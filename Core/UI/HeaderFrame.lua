@@ -28,7 +28,7 @@ function HeaderFrame:CreateHeaderRegion(parentFrame)
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
     headerRegion:SetScript("OnShow", function(self)
-        HeaderFrameMapping:RefreshData()
+        HeaderFrameMapping:RefreshData(false)
     end)
 
     headerRegion.bgTexture = headerRegion:CreateTexture()

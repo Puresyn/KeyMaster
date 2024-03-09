@@ -15,8 +15,6 @@ local function UpdateKeyInformation(playerData)
     playerData.ownedKeyLevel = keyLevel
     playerData.ownedKeyId = mapid
 
-    KeyMaster.HeaderFrameMapping:RefreshData()
-
     return playerData
 end
 
@@ -33,7 +31,7 @@ local function NotifyEvent(event)
 
             -- update key data
             playerData = UpdateKeyInformation(playerData)
-
+            
             -- Store new data
             KeyMaster.UnitData:SetUnitData(playerData)
 
@@ -43,7 +41,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
-                KeyMaster.PlayerFrameMapping:RefreshData()
+                KeyMaster.PlayerFrameMapping:RefreshData(true)
+                KeyMaster.HeaderFrameMapping:RefreshData(true)
             end
 
             -- Transmit unit data to party members with addon
@@ -56,9 +55,6 @@ local function NotifyEvent(event)
             -- fetch self data
             local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
             
-            -- update key data
-            playerData = UpdateKeyInformation(playerData)
-
             -- Store new data
             KeyMaster.UnitData:SetUnitData(playerData)
 
@@ -68,7 +64,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
-                KeyMaster.PlayerFrameMapping:RefreshData()
+                KeyMaster.PlayerFrameMapping:RefreshData(true)
+                KeyMaster.HeaderFrameMapping:RefreshData(true)
             end
                     
             -- Transmit unit data to party members with addon

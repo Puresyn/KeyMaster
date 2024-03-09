@@ -4,9 +4,15 @@ local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
 local CharacterInfo = KeyMaster.CharacterInfo
 local DungeonTools = KeyMaster.DungeonTools
 
-function HeaderFrameMapping:RefreshData()
-    local playerData = CharacterInfo:GetMyCharacterInfo()
-    KeyMaster.UnitData:SetUnitData(playerData)
+function HeaderFrameMapping:RefreshData(fetchNew)
+    if fetchNew == nil then fetchNew = true end
+    local playerData 
+    if fetchNew then
+        playerData = CharacterInfo:GetMyCharacterInfo()
+        KeyMaster.UnitData:SetUnitData(playerData)
+    else
+        playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+    end
 
     local playerKeyHeader = _G["KeyMaster_MythicKeyHeader"]
     playerKeyHeader.keyLevelText:SetText("--")

@@ -7,12 +7,18 @@ local Theme = KeyMaster.Theme
 
 local defaultString = 0
 
-function PlayerFrameMapping:RefreshData()
+function PlayerFrameMapping:RefreshData(fetchNew)
     local playerFrame = _G["KM_Player_Frame"]
     local playerMapData = _G["KM_PlayerMapInfo"]
 
-    local playerData = CharacterInfo:GetMyCharacterInfo()
-    KeyMaster.UnitData:SetUnitData(playerData)
+    if fetchNew == nil then fetchNew = true end
+    local playerData 
+    if fetchNew then
+        playerData = CharacterInfo:GetMyCharacterInfo()
+        KeyMaster.UnitData:SetUnitData(playerData)
+    else
+        playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+    end
 
     -- Player Dungeon Rating
     playerFrame.playerRating:SetText(playerData.mythicPlusRating or defaultString)

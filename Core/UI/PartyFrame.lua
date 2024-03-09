@@ -515,11 +515,8 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     partyScreen:SetAllPoints(true)
     partyScreen:SetScript("OnShow", function(self) 
         -- Get player data
-        local playerData = CharacterInfo:GetMyCharacterInfo()
-            
-        -- Stores Data AND shows associated ui frame
-        UnitData:SetUnitData(playerData)
-
+        local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+        
         -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
         PartyFrame:SetPartyWeeklyDataTheme() 
 

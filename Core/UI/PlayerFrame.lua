@@ -60,13 +60,13 @@ local function portalButton_buttonevent(self, event)
     if (dur < 2) then
         MainInterface:Toggle()
     end
- end
+end
  
- local function portalButton_tooltipon(self, event)
- end
- 
- local function portalButton_tooltipoff(self, event)
- end
+local function portalButton_tooltipon(self, event)
+end
+
+local function portalButton_tooltipoff(self, event)
+end
 
 local function portalButton_mouseover(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
@@ -148,7 +148,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.texture:SetAllPoints(playerFrame)
     playerFrame.texture:SetColorTexture(0, 0, 0, 1)
     playerFrame:SetScript("OnShow", function(self)
-        PlayerFrameMapping:RefreshData()
+        PlayerFrameMapping:RefreshData(false)
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
