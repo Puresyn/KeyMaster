@@ -11,6 +11,7 @@ KeyMaster.Coms = {}
 
 local Coms = KeyMaster.Coms
 local UnitData = KeyMaster.UnitData
+local PartyFrameMapping = KeyMaster.PartyFrameMapping
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -61,6 +62,33 @@ local function processKM3Data(data, distribution, sender)
     end   
 end
 
+local function checkVersion(data)
+    -- VersionCompare returns:
+    -- if result is 0 than values are equal
+    -- if result is -1 than version1 is older
+    -- if result is 1 than version1 is newer
+    if data.buildVersion ~= nil then
+        local compareValue = KeyMaster:VersionCompare(data.buildVersion, KM_AUTOVERSION)
+        if compareValue == 0 then
+            --KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is the same as mine.")
+        else
+            if data.buildType == KM_VERSION_STATUS then
+                if compareValue == 1 then
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")
+                else
+                    --KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is lower than mine. Ignoring.")
+                end
+            else
+                if compareValue == 1 and data.buildType ~= "beta" then
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")                    
+                else
+                    --KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is being ignored.")
+                end
+            end
+        end
+    end
+end
+
 -- Deserialize communication data:
 -- Returns nil if something went wrong.
 function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
@@ -88,28 +116,14 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
         data.hasAddon = true
         UnitData:SetUnitData(data)
 
-        -- if result is 0 than values are equal
-        -- if result is -1 than version1 is older
-        -- if result is 1 than version1 is newer
-        if data.buildVersion ~= nil then
-            local compareValue = KeyMaster:VersionCompare(data.buildVersion, KM_AUTOVERSION)
-            if compareValue == 0 then
-                KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is the same as mine.")
-            else
-                if data.buildType == KM_VERSION_STATUS then
-                    if compareValue == 1 then
-                        KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")
-                    else
-                        KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is lower than mine. Ignoring.")
-                    end
-                else
-                    if compareValue == 1 and data.buildType ~= "beta" then
-                        KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")                    
-                    else
-                        KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is being ignored.")
-                    end
-                end
-            end
+        -- Only update UI if it's open
+        local mainFrame = _G["KeyMaster_MainFrame"]
+        if mainFrame ~= nil and mainFrame:IsShown() then
+            PartyFrameMapping:UpdateSingleUnitData(data.GUID)
+            PartyFrameMapping:UpdateKeystoneHighlights()
+            PartyFrameMapping:CalculateTotalRatingGainPotential() 
         end
+
+        checkVersion(data)
     end
 end

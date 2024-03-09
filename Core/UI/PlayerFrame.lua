@@ -142,8 +142,6 @@ end
 
 function PlayerFrame:CreatePlayerFrame(parentFrame)
 
-    local characterData = CharacterInfo:GetMyCharacterInfo()
-
     local playerFrame = CreateFrame("Frame", "KM_Player_Frame",parentFrame)
     --playerFrame:SetAllPoints(parentFrame)
     playerFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 4, -4)

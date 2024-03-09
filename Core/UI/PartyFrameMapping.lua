@@ -4,6 +4,7 @@ local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local CharacterInfo = KeyMaster.CharacterInfo
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
+local UnitData = KeyMaster.UnitData
 
 local partyFrameLookup = {
     ["player"] = "KM_PlayerRow1",
@@ -24,6 +25,14 @@ end
 function PartyFrameMapping:HideAllPartyFrame()
     for i=1,4,1 do
         _G[partyFrameLookup["party"..i]]:Hide()
+    end
+end
+
+function PartyFrameMapping:ResetTallyFramePositioning()
+    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
+    local tallyFrame = _G["PartyTallyFooter"]
+    if tallyFrame ~= nil then
+        tallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
     end
 end
 
@@ -78,10 +87,6 @@ local function resetKeystoneHighlights()
     end
 end
 
-function PartyFrameMapping:UpdatePartyFrameData()
-    
-end
-
 -- updates the keystone highlights for each party member for known keys
 -- highlights include vertical bars and the dungeon level text in dungeon icon row
 function PartyFrameMapping:UpdateKeystoneHighlights()
@@ -115,8 +120,6 @@ function PartyFrameMapping:UpdateKeystoneHighlights()
     fadeNonKeystoneData()
 end
 
-
-
 -- Party member data assign
 function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     if(unitId == nil) then 
@@ -142,7 +145,7 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     elseif (unitId == "party4") then
         partyPlayer = 5
     end
-    
+    print("Updating data for party member "..unitId..".")
     -- Set Player Portrait
     if UnitIsConnected(unitId) then
         SetPortraitTexture(_G["KM_Portrait"..partyPlayer], unitId)
@@ -321,4 +324,40 @@ function PartyFrameMapping:SetPlayerHeaderKeyInfo()
             playerKeyHeader.keyAbbrText:SetText(DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
         end
     end
+end
+
+function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
+    if unitGUID == nil then
+        KeyMaster:_ErrorMsg("MapPartyUnitData", "UnitData", "Parameter unitGUID cannot be empty.")
+        return
+    end
+    local unitId = UnitData:GetUnitId(unitGUID)
+    if unitId == nil then
+        KeyMaster:_ErrorMsg("MapPartyUnitData", "UnitData", "UnitId is nil.  Cannot map data for "..unitGUID)
+        return
+    end
+    -- find if we have data for this player, if not get a set of default data from blizzard
+    local unitData = UnitData:GetUnitDataByGUID(unitGUID)
+    if unitData == nil then
+        unitData = CharacterInfo:GetUnitInfo(unitId)    
+    end
+    -- remap and display data for this unitid
+    PartyFrameMapping:UpdateUnitFrameData(unitId, unitData)
+    PartyFrameMapping:ShowPartyRow(unitId)
+end
+
+function PartyFrameMapping:UpdatePartyFrameData()
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    for _,unitId in pairs(partyMembers) do
+        local unitGuid = UnitGUID(unitId)
+        if (unitGuid ~= nil) then
+            PartyFrameMapping:UpdateSingleUnitData(unitGuid)
+        else
+            PartyFrameMapping:HidePartyRow(unitId)
+        end
+    end
+    PartyFrameMapping:SetPlayerHeaderKeyInfo()
+    PartyFrameMapping:UpdateKeystoneHighlights()
+    PartyFrameMapping:CalculateTotalRatingGainPotential()    
+    PartyFrameMapping:ResetTallyFramePositioning()
 end

@@ -522,7 +522,7 @@ function PartyFrame:CreatePartyFrame(parentFrame)
         local playerData = CharacterInfo:GetMyCharacterInfo()
             
         -- Stores Data AND shows associated ui frame
-        UnitData:SetUnitData(playerData, true)
+        UnitData:SetUnitData(playerData)
 
         -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
         PartyFrame:SetPartyWeeklyDataTheme() 
@@ -530,8 +530,8 @@ function PartyFrame:CreatePartyFrame(parentFrame)
         -- process party
         local inGroup = UnitInRaid("player") or IsInGroup()
         if inGroup and GetNumGroupMembers() >= 2 then
-            -- resync the party state with UI/Data
-            UnitData:MapPartyUnitData()
+            -- reprocess party1-4 units
+            KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
                         
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerData, "PARTY", nil)
@@ -540,12 +540,6 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     partyScreen:Hide()
 
     return partyScreen
-end
-
-function PartyFrame:ResetTallyFramePositioning()
-    local parentFrame = KeyMaster:FindLastVisiblePlayerRow()
-    local tallyFrame = _G["PartyTallyFooter"]
-    tallyFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
 end
 
 -- Creates the entire party frame and its sub-frames

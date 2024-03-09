@@ -1,7 +1,6 @@
 local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
-local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
 local unitInformation = {}
@@ -31,20 +30,7 @@ function UnitData:GetUnitId(unitGUID)
     end
 end
 
-function UnitData:DisplayUnitData(unitId, unitData)
-    PartyFrameMapping:UpdateUnitFrameData(unitId, unitData)
-    PartyFrameMapping:ShowPartyRow(unitId) -- shows UI Frame associated with unitId
-    PartyFrameMapping:SetPlayerHeaderKeyInfo()
-    PartyFrameMapping:UpdateKeystoneHighlights()
-    PartyFrameMapping:CalculateTotalRatingGainPotential()
-    if unitId == "player" then
-        PlayerFrameMapping:RefreshData()
-    end
-end
-
-function UnitData:SetUnitData(unitData, updateUI)
-    if updateUI == nil then updateUI = true end
-
+function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
         KeyMaster:_ErrorMsg("SetUnitData", "UnitData", "UnitId is nil.  Cannot store data for "..unitData.name)
@@ -54,9 +40,6 @@ function UnitData:SetUnitData(unitData, updateUI)
     unitInformation[unitData.GUID] = unitData
 
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
-    if updateUI then
-        UnitData:DisplayUnitData(unitData.unitId, unitData)
-    end
 end
 
 function UnitData:SetUnitDataUnitPosition(name, newUnitId)
@@ -96,7 +79,6 @@ function UnitData:DeleteUnitDataByUnitId(unitId)
     local data = UnitData:GetUnitDataByUnitId(unitId)
     if (data ~= nil) then
         UnitData:DeleteUnitDataByGUID(data.GUID)
-        PartyFrameMapping:HidePartyRow(unitId)
     end
 end
 
@@ -110,28 +92,4 @@ function UnitData:DeleteAllUnitData()
             unitInformation[guid] = nil
         end
     end
-end
-
-function UnitData:MapPartyUnitData()
-    for i=1,4,1 do
-        local currentUnitId = "party"..i
-        if (UnitGUID(currentUnitId) ~= nil) then
-            -- find if we have data for this player, if not get a set of default data from blizzard
-            --KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Mapping data for "..currentUnitId)
-            local unitData = unitInformation[UnitGUID(currentUnitId)]
-            if unitData == nil then
-                --KeyMaster:_DebugMsg("MapPartyUnitData", "UnitData", "Getting Blizzard data on "..currentUnitId)
-                unitData = KeyMaster.CharacterInfo:GetUnitInfo(currentUnitId)    
-            else
-                --KeyMaster:_DebugMsg("MapPartyUnitData","UnitData","Found local data on "..currentUnitId)  
-            end
-            -- remap and display data for this unitid
-            UnitData:DisplayUnitData(currentUnitId, unitData)
-        else
-            -- no active player found, hide ui for this unitid
-            _G["KM_PlayerRow"..(i+1)]:Hide() --hide ui frame
-        end
-    end
-    -- reposition the tally frame based on last party member showing
-    KeyMaster.PartyFrame:ResetTallyFramePositioning()    
 end

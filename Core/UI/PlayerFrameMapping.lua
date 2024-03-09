@@ -12,7 +12,7 @@ function PlayerFrameMapping:RefreshData()
     local playerMapData = _G["KM_PlayerMapInfo"]
 
     local playerData = CharacterInfo:GetMyCharacterInfo()
-    --KeyMaster.UnitData:SetUnitData(playerData, false)
+    --KeyMaster.UnitData:SetUnitData(playerData)
 
     -- Player Dungeon Rating
     playerFrame.playerRating:SetText(playerData.mythicPlusRating or defaultString)

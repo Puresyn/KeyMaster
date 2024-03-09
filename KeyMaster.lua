@@ -167,13 +167,7 @@ local function onEvent_PartyChanges(self, event, ...)
         end
         if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
             -- reprocess party1-4 units
-            UnitData:MapPartyUnitData()
-
-            -- Calculate keystone upgrades for party members and player
-            KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
-
-            -- Highlight key and level on map frames
-            KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()  
+            KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
         end
     end
 end
