@@ -24,3 +24,8 @@ function HeaderFrameMapping:RefreshData(fetchNew)
         end
     end
 end
+
+function HeaderFrameMapping:NewVersionAlert()
+    local versionAlertFrame = _G["KM_AddonOutdated"]
+    versionAlertFrame:Show()
+end

@@ -12,6 +12,7 @@ KeyMaster.Coms = {}
 local Coms = KeyMaster.Coms
 local UnitData = KeyMaster.UnitData
 local PartyFrameMapping = KeyMaster.PartyFrameMapping
+local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -75,12 +76,14 @@ local function checkVersion(data)
             if data.buildType == KM_VERSION_STATUS then
                 if compareValue == 1 then
                     KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")
+                    HeaderFrameMapping:NewVersionAlert()
                 else
                     --KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is lower than mine. Ignoring.")
                 end
             else
                 if compareValue == 1 and data.buildType ~= "beta" then
-                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")                    
+                    KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is higher than mine. NEED TO UPDATE")  
+                    HeaderFrameMapping:NewVersionAlert()                  
                 else
                     --KeyMaster:_DebugMsg("OnCommReceived", "Coms", data.name.."'s version is being ignored.")
                 end
