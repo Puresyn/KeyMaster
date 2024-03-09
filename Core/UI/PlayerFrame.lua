@@ -762,7 +762,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
         self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
         -- todo: Validate input and do calculation magic here
         print("Enter Key Pressed: Value of "..self:GetText()) -- todo: DELETE ME -- debug
-        self:SetText("")
+        self:SetText("") -- Empties the box, duh! ;)
     end)
 
     -- Vault Details
