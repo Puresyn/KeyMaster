@@ -314,16 +314,7 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
 end
 
 function PartyFrameMapping:SetPlayerHeaderKeyInfo()
-    local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
-    local playerKeyHeader = _G["KeyMaster_MythicKeyHeader"]
-    playerKeyHeader.keyLevelText:SetText("--")
-    playerKeyHeader.keyAbbrText:SetText("---")
-    if (playerData) then
-        if (playerData.ownedKeyLevel > 0) then
-            playerKeyHeader.keyLevelText:SetText(playerData.ownedKeyLevel)
-            playerKeyHeader.keyAbbrText:SetText(DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
-        end
-    end
+    
 end
 
 function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
@@ -356,7 +347,6 @@ function PartyFrameMapping:UpdatePartyFrameData()
             PartyFrameMapping:HidePartyRow(unitId)
         end
     end
-    PartyFrameMapping:SetPlayerHeaderKeyInfo()
     PartyFrameMapping:UpdateKeystoneHighlights()
     PartyFrameMapping:CalculateTotalRatingGainPotential()    
     PartyFrameMapping:ResetTallyFramePositioning()

@@ -15,6 +15,7 @@ Core\UI\MainInterface.lua
 Core\UnitData.lua
 Core\UI\PlayerFrameMapping.lua
 Core\UI\PartyFrameMapping.lua
+Core\UI\HeaderFrameMapping.lua
 Core\Coms.lua
 Core\UI\ConfigFrame.lua
 Core\UI\InfoFrame.lua
@@ -23,6 +24,5 @@ Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua
 Core\UI\HeaderFrame.lua
 Core\UI\PartyFrame.lua
-Core\UI\ContentFrame.lua
 Core\UI\UIinit.lua
 KeyMaster.lua

@@ -7,9 +7,6 @@ local DungeonTools = KeyMaster.DungeonTools
 local MainInterface = KeyMaster.MainInterface
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
-local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
-local mapCount = KeyMaster:GetTableLength(seasonMaps)
-
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
     local _, e = string.find(fullDungeonName, ":")
@@ -118,6 +115,7 @@ local function mapData_onmouseout(self, event)
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, defAlpha)
 end
 local function mapdData_OnRowClick(self, event)
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local selectedMapId = self:GetAttribute("mapId")
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
@@ -316,9 +314,10 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.fortText:SetJustifyH("LEFT")
     mapHeaderFrame.fortText:SetText(string.upper(KeyMasterLocals.FORTIFIED))
 
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    local mapCount = KeyMaster:GetTableLength(seasonMaps)
+    local mapRowHeight = (((playerInformationFrame:GetHeight() - (mapHeaderFrame:GetHeight() + mtb))/ mapCount)) - mtb    
 
-    local mapRowHeight = (((playerInformationFrame:GetHeight() - (mapHeaderFrame:GetHeight() + mtb))/ mapCount)) - mtb
-    
     -- Instance Cards
     for mapId in pairs (seasonMaps) do
         local mapFrame = CreateFrame("Frame", "KM_PlayerFrameMapInfo"..mapId, mapHeaderFrame)

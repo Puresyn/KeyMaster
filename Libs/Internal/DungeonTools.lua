@@ -92,7 +92,9 @@ end
 -- Gets a list of the live seasons challenge maps
 local currentSeasonMaps
 function DungeonTools:GetCurrentSeasonMaps()
-    if(currentSeasonMaps) then return currentSeasonMaps end
+    if currentSeasonMaps ~= nil and KeyMaster:GetTableLength(currentSeasonMaps) > 0 then 
+        return currentSeasonMaps 
+    end
 
     local maps = C_ChallengeMode.GetMapTable();
     

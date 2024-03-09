@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
 KeyMaster.MainInterface = {}
 local MainInterface = KeyMaster.MainInterface
+local Theme = KeyMaster.Theme
 
 --------------------------------
 -- Tab Functions
@@ -75,4 +76,37 @@ function MainInterface:GetFrameRegions(myRegion, parentFrame)
     end
 
     return myRegionInfo, mlr, mtb
+end
+
+-- Setup content region
+function MainInterface:CreateContentRegion(parentFrame, headerRegion)
+    local fr, mlr, mtb = MainInterface:GetFrameRegions("content", parentFrame)
+    local contentRegion = CreateFrame("Frame", "KeyMaster_ContentRegion", parentFrame);
+    contentRegion:SetSize(fr.w, fr.h)
+    contentRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mtb, -(headerRegion:GetHeight() + (mtb*2)))
+    contentRegion.bgTexture = contentRegion:CreateTexture()
+    contentRegion.bgTexture:SetAllPoints(contentRegion)
+    contentRegion.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
+    contentRegion.bgTexture:SetTexCoord(0, 856/1024, 175/1024, 840/1024)
+
+    return contentRegion
+end
+
+--------------------------------
+-- Key Master Icon
+--------------------------------
+function MainInterface:CreateAddonIcon(parentFrame)
+    
+    local addonIconFrame = CreateFrame("Frame", "KeyMaster_Icon", parentFrame)
+    addonIconFrame:SetSize(100, 100)
+    addonIconFrame:SetPoint("CENTER", parentFrame, "TOPLEFT", 0, 0)
+
+    local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
+    addonIcon:SetHeight(addonIconFrame:GetHeight())
+    addonIcon:SetWidth(addonIconFrame:GetHeight())
+    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
+    addonIcon:ClearAllPoints()
+    addonIcon:SetPoint("LEFT", 15, -15)
+
+    return addonIcon
 end

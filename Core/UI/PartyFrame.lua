@@ -159,7 +159,6 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     keyText:SetPoint("TOPLEFT", 3, -3)
     keyText:SetJustifyH("LEFT")
     keyText:SetTextColor(1, 1, 1)
-
 end
 
 -- Set the font and color of the party frames map data.
@@ -202,12 +201,9 @@ function PartyFrame:SetPartyWeeklyDataTheme()
                 fortFontString:SetFont(ffPath, ffSize, ffFlags)
                 fortFontString:SetTextColor(fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b, 1)
             end
-
         end
     end
-
 end
-
 
 function PartyFrame:CreatePartyDataFrame(parentFrame)
     local playerNumber

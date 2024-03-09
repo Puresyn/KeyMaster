@@ -1,64 +1,62 @@
 local _, KeyMaster = ...
-KeyMaster.Header = {}
+KeyMaster.HeaderFrame = {}
 local MainInterface = KeyMaster.MainInterface
-local Header = KeyMaster.Header
+local HeaderFrame = KeyMaster.HeaderFrame
 local DungeonTools = KeyMaster.DungeonTools
+local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
+local Theme = KeyMaster.Theme
 
-local function AddTopBar(parentFrame)
-    local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper",parentFrame)
-    --topBar:SetFrameLevel(parentFrame:GetFrameLevel()+1)
-    topBar:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
-    topBar:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT")
-
-    --[[ topBar.bar = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
-    local dynOffset = 134
-    topBar:SetSize(w + dynOffset + 20, 80)
-    topBar:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", -dynOffset, -4)
-    
-    topBar.bar:SetHeight(114)
-    topBar.bar:SetWidth(topBar:GetWidth())
-    topBar.bar:SetPoint("TOP", 0, 0)
-    local magicNumber = 1/512
-    topBar.bar:SetTexCoord(0, topBar:GetWidth()/512, 0, 112/512)
-    topBar.bar:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Top-Bar") ]]
-
-    topBar.bgTexture = topBar:CreateTexture(nil, "BACKGROUND", nil, 1)
-    topBar.bgTexture:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -8)
-    topBar.bgTexture:SetSize(topBar:GetWidth(), 104)
-    topBar.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
-    topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
-
-    --[[ topBar.texture = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
-    topBar.texture:SetSize(topBar:GetWidth(), topBar:GetHeight())
-    topBar.texture:SetPoint("RIGHT", topBar, "RIGHT", 0, 0)
-    topBar.texture:SetColorTexture(1, 1, 1, 1) ]]
-
-    topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
-    topBar.displayBG:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -2)
-    topBar.displayBG:SetSize(320, 77)
-    topBar.displayBG:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
-    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1)
-
+-- This retry logic is done because the C_MythicPlus API is not always available right away and this frame depends on it.
+local function createAffixFramesWithRetries(parent, retryCount)
+    if retryCount == nil then retryCount = 0 end
+    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
+    if seasonalAffixes ~= nil then
+        HeaderFrame:CreateAffixFrames(parent, seasonalAffixes)
+    else
+        if retryCount < 5 then
+            C_Timer.After(3, function() createAffixFramesWithRetries(parent, retryCount + 1) end)
+        else
+            KeyMaster:_DebugMsg("createAffixFramesWithRetries", "UIinit", "Failed to create affix frames after 5 retries.")
+        end
+    end
 end
 
 -- Setup header region
-function MainInterface:CreateHeaderRegion(parentFrame)
+function HeaderFrame:CreateHeaderRegion(parentFrame)
     local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
     local headerRegion = CreateFrame("Frame", "KeyMaster_HeaderRegion", parentFrame);
     headerRegion:SetSize(fr.w, fr.h)
     headerRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mlr, -(mtb))
+    headerRegion:SetScript("OnShow", function(self)
+        HeaderFrameMapping:RefreshData()
+    end)
 
     headerRegion.bgTexture = headerRegion:CreateTexture()
     headerRegion.bgTexture:SetAllPoints(headerRegion)
-    headerRegion.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
+    headerRegion.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     headerRegion.bgTexture:SetTexCoord(0, 856/1024, 0, 116/1024)
 
-    AddTopBar(headerRegion)
+    local topBar = CreateFrame("Frame", "KeyMaster_HeaderInfo_Wrapper", headerRegion)
+    topBar:SetSize(headerRegion:GetWidth(), headerRegion:GetHeight())
+    topBar:SetPoint("BOTTOMLEFT", headerRegion, "BOTTOMLEFT")
+    
+
+    topBar.bgTexture = topBar:CreateTexture(nil, "BACKGROUND", nil, 1)
+    topBar.bgTexture:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -8)
+    topBar.bgTexture:SetSize(topBar:GetWidth(), 104)
+    topBar.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
+    topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
+
+    topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    topBar.displayBG:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -2)
+    topBar.displayBG:SetSize(320, 77)
+    topBar.displayBG:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
+    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1)
 
     return headerRegion
 end
 
-function MainInterface:AddonVersionNotify(parentframe)
+function HeaderFrame:AddonVersionNotify(parentframe)
     local addonOudatedFrame = CreateFrame("FRAME", "KM_AddonOutdated", parentframe)
     addonOudatedFrame:SetSize(252, 32)
     addonOudatedFrame:SetPoint("BOTTOMRIGHT", parentframe, "TOPRIGHT", -2, 4)
@@ -77,24 +75,19 @@ function MainInterface:AddonVersionNotify(parentframe)
     addonOudatedFrame:Hide()
 end
 
-function Header:createPlayerInfoBox(parentFrame)
+function HeaderFrame:CreatePlayerInfoBox(parentFrame)
     local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
     headerPlayerInfoBox:SetSize(198, 80)
     headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 10)
-    --[[ headerPlayerInfoBox.texture = headerPlayerInfoBox:CreateTexture()
-    headerPlayerInfoBox.texture:SetAllPoints(headerPlayerInfoBox)
-    headerPlayerInfoBox.texture:SetColorTexture(0, 0, 0, 0.7) ]]
-    --KeyMaster:CreateHLine(headerPlayerInfoBox:GetWidth()+8, headerPlayerInfoBox, "BOTTOM", 0, 0)
 
     return headerPlayerInfoBox
 
 end
 
-
 --------------------------------
 -- Weekly Affix
 --------------------------------
-function Header:createAffixFrames(parentFrame, seasonalAffixes)
+function HeaderFrame:CreateAffixFrames(parentFrame, seasonalAffixes)
     if (parentFrame == nil) then 
         KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
         return
@@ -143,19 +136,6 @@ function Header:createAffixFrames(parentFrame, seasonalAffixes)
         affixBGFrame.texture = affixBGFrame:CreateTexture(nil, "BACKGROUND",nil)
         affixBGFrame.texture:SetAllPoints(affixBGFrame)
         affixBGFrame.texture:SetColorTexture(0, 0, 0, 0.7)
-
-        -- create a title and set it to the first affix's frame
-        --[[ if (i == 1) then
-            local temp_header = CreateFrame("Frame", "KeyMaster_AffixFrameTitle", temp_frame)
-            temp_header:SetSize(168, 20)
-            temp_header:SetPoint("BOTTOMLEFT", temp_frame, "TOPLEFT", -16, 0)
-            local temp_headertxt = temp_header:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-            temp_headertxt:SetFont(path, 14, flags)
-            temp_headertxt:SetPoint("LEFT", 0, 0)
-            temp_headertxt:SetTextColor(1,1,1,1)
-            temp_headertxt:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
-        end ]]
-
     end
 
 end
@@ -163,7 +143,7 @@ end
 --------------------------------
 -- Mythic Key
 --------------------------------
-function Header:createHeaderKeyFrame(parentFrame, anchorFrame)
+function HeaderFrame:CreateHeaderKeyFrame(parentFrame, anchorFrame)
     local key_frame = CreateFrame("Frame", "KeyMaster_MythicKeyHeader", parentFrame)
     key_frame:SetSize(anchorFrame:GetHeight(), anchorFrame:GetHeight())
     key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 0)
@@ -203,66 +183,36 @@ function Header:createHeaderKeyFrame(parentFrame, anchorFrame)
 end
 
 --------------------------------
--- Mythic Rating
---------------------------------
---[[ function Header:createHeaderRating(parentFrame)
-    
-    local ratingPanel = CreateFrame("Frame", "KeyMaster_RatingFrame", parentFrame)
-    ratingPanel:SetWidth(40)
-    ratingPanel:SetHeight(42)
-    ratingPanel:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -4, -(((ratingPanel:GetParent():GetHeight() - ratingPanel:GetHeight())/2)))
-    local mythicRatingPreText = ratingPanel:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = mythicRatingPreText:GetFont()
-    mythicRatingPreText:SetFont(Path, 12, Flags)
-    mythicRatingPreText:SetPoint("TOP")
-    mythicRatingPreText:SetText(KeyMasterLocals.YOURRATING..":")
-
-    mythicRatingPreText = ratingPanel:CreateFontString("KeyMaster_RatingScore", "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = mythicRatingPreText:GetFont()
-    mythicRatingPreText:SetFont(Path, 30, Flags)
-    mythicRatingPreText:SetPoint("BOTTOM", 0, 0)
-
-    return ratingPanel
-end ]]
-
---------------------------------
--- Key Master Icon
---------------------------------
-function MainInterface:createAddonIcon(parentFrame)
-    
-    local addonIconFrame = CreateFrame("Frame", "KeyMaster_Icon", parentFrame)
-    addonIconFrame:SetSize(100, 100)
-    addonIconFrame:SetPoint("CENTER", parentFrame, "TOPLEFT", 0, 0)
-
-    local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
-    addonIcon:SetHeight(addonIconFrame:GetHeight())
-    addonIcon:SetWidth(addonIconFrame:GetHeight())
-    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
-    addonIcon:ClearAllPoints()
-    addonIcon:SetPoint("LEFT", 15, -15)
-
-    return addonIcon
-end
-
---------------------------------
 -- Create Content Frames
 --------------------------------
-function MainInterface:CreateHeaderContent(parentFrame)
+function HeaderFrame:CreateHeaderContent(parentFrame)
 
     -- Contents
     local headerContent = CreateFrame("Frame", "KeyMaster_HeaderFrameContent", parentFrame);
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
-
+    
     headerContent.logo = headerContent:CreateTexture()
-    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 0, 4)
-    headerContent.logo:SetSize(200, 28)
-    headerContent.logo:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface")
-    headerContent.logo:SetTexCoord(20/1024, 240/1024, 980/1024, 1008/1024)
+    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 2, 4)
+    headerContent.logo:SetSize(280, 34)
+    headerContent.logo:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
+    headerContent.logo:SetTexCoord(20/1024, 353/1024, 970/1024, 1010/1024)
 
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
     VersionText:SetText(KM_VERSION)
     
     return headerContent
+end
+
+function HeaderFrame:Initialize(parentFrame)
+    
+    local headerRegion = _G["KeyMaster_HeaderRegion"] or HeaderFrame:CreateHeaderRegion(parentFrame)
+    local addonVersionNotify = _G["KM_AddonOutdated"] or HeaderFrame:AddonVersionNotify(parentFrame)
+    local headerContent = _G["KeyMaster_HeaderFrame"] or HeaderFrame:CreateHeaderContent(headerRegion)    
+    local headerInfoBox = _G["KeyMaster_PlayerInfobox"] or HeaderFrame:CreatePlayerInfoBox(headerContent)
+    createAffixFramesWithRetries(headerInfoBox)
+    local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
+    
+    return headerRegion
 end

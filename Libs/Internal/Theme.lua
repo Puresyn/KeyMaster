@@ -2,6 +2,8 @@ local _, KeyMaster = ...
 KeyMaster.Theme = {}
 local Theme = KeyMaster.Theme
 
+Theme.style = "KeyMaster-Interface-Clean"
+
 local Colors = {
     default = { 
         r = 1, 

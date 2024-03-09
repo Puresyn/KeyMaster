@@ -100,6 +100,23 @@ function KeyMaster:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, ...));
 end
 
+-- This retry logic is done because the C_MythicPlus API is not always available right away and this frame depends on it.
+local function intializeUIWithRetries(retryCount)
+    if retryCount == nil then retryCount = 0 end
+    local seasonalMaps = KeyMaster.DungeonTools:GetCurrentSeasonMaps()
+    if KeyMaster:GetTableLength(seasonalMaps) > 0 then
+        print("Creating UI frames...")
+        local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
+        print("UI frames created.")        
+    else
+        if retryCount < 5 then
+            print("Retrying UI initialization...")
+            C_Timer.After(3, function() intializeUIWithRetries(retryCount + 1) end)
+        else
+            KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
+        end
+    end
+end
 
 -- Addon Loading Event
 local function OnEvent_AddonLoaded(self, event, name, ...)
@@ -198,11 +215,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
     if isLogin or isReload then
         KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
 
-        -- Delayed by x seconds due to C_MythicPlus data not being available immediately which is used to draw seasonal information on UI
-        C_Timer.After(2, function()
-            -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
-            local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
-        end)         
+        intializeUIWithRetries(10)
     end
     if isReload then
         local inGroup = UnitInRaid("player") or IsInGroup()

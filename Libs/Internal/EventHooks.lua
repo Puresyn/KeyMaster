@@ -15,6 +15,8 @@ local function UpdateKeyInformation(playerData)
     playerData.ownedKeyLevel = keyLevel
     playerData.ownedKeyId = mapid
 
+    KeyMaster.HeaderFrameMapping:RefreshData()
+
     return playerData
 end
 
