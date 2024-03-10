@@ -70,7 +70,7 @@ function MainInterface:GetFrameRegions(myRegion, parentFrame)
     elseif (myRegion == "content") then
         myRegionInfo = {
             w = mw - (mlr*2),
-            h = mh - hh - (mtb*3)
+            h = mh - hh - (mtb*2)
         }
     else return
     end
@@ -83,7 +83,7 @@ function MainInterface:CreateContentRegion(parentFrame, headerRegion)
     local fr, mlr, mtb = MainInterface:GetFrameRegions("content", parentFrame)
     local contentRegion = CreateFrame("Frame", "KeyMaster_ContentRegion", parentFrame);
     contentRegion:SetSize(fr.w, fr.h)
-    contentRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mtb, -(headerRegion:GetHeight() + (mtb*2)))
+    contentRegion:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", mtb, -(headerRegion:GetHeight() + (mtb)))
     contentRegion.bgTexture = contentRegion:CreateTexture()
     contentRegion.bgTexture:SetAllPoints(contentRegion)
     contentRegion.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
