@@ -6,21 +6,6 @@ local DungeonTools = KeyMaster.DungeonTools
 local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
 local Theme = KeyMaster.Theme
 
--- This retry logic is done because the C_MythicPlus API is not always available right away and this frame depends on it.
-local function createAffixFramesWithRetries(parent, retryCount)
-    if retryCount == nil then retryCount = 0 end
-    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
-    if seasonalAffixes ~= nil then
-        HeaderFrame:CreateAffixFrames(parent, seasonalAffixes)
-    else
-        if retryCount < 5 then
-            C_Timer.After(3, function() createAffixFramesWithRetries(parent, retryCount + 1) end)
-        else
-            KeyMaster:_DebugMsg("createAffixFramesWithRetries", "UIinit", "Failed to create affix frames after 5 retries.")
-        end
-    end
-end
-
 -- Setup header region
 function HeaderFrame:CreateHeaderRegion(parentFrame)
     local fr, mlr, mtb = MainInterface:GetFrameRegions("header", parentFrame)
@@ -87,19 +72,17 @@ end
 --------------------------------
 -- Weekly Affix
 --------------------------------
-function HeaderFrame:CreateAffixFrames(parentFrame, seasonalAffixes)
+function HeaderFrame:CreateAffixFrames(parentFrame)
     if (parentFrame == nil) then 
         KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
         return
     end
-    
+    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
     if (seasonalAffixes == nil) then 
         KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found!")
         return 
-    end
-    
+    end    
     for i=1, #seasonalAffixes, 1 do
-
         local affixName = seasonalAffixes[i].name
         local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
         temp_frame:SetSize(50, 50)
@@ -211,7 +194,7 @@ function HeaderFrame:Initialize(parentFrame)
     local addonVersionNotify = _G["KM_AddonOutdated"] or HeaderFrame:AddonVersionNotify(parentFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or HeaderFrame:CreateHeaderContent(headerRegion)    
     local headerInfoBox = _G["KeyMaster_PlayerInfobox"] or HeaderFrame:CreatePlayerInfoBox(headerContent)
-    createAffixFramesWithRetries(headerInfoBox)
+    local headerAffixFrame = HeaderFrame:CreateAffixFrames(headerInfoBox)
     local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
     
     return headerRegion

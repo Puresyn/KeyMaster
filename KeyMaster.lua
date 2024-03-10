@@ -104,8 +104,8 @@ end
 local function intializeUIWithRetries(retryCount)
     if retryCount == nil then retryCount = 0 end
     local seasonalMaps = KeyMaster.DungeonTools:GetCurrentSeasonMaps()
-    local seasonNumber = KeyMaster.DungeonTools:GetCurrentSeason()
-    if KeyMaster:GetTableLength(seasonalMaps) > 0 and seasonNumber ~= -1 then
+    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
+    if KeyMaster:GetTableLength(seasonalMaps) > 0 and seasonalAffixes ~= nil then
         local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()    
     else
         if retryCount < 5 then

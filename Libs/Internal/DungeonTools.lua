@@ -79,14 +79,33 @@ function DungeonTools:GetMapName(mapid)
     return name
 end
 
+-- FUNCTION NOTE:
+-- C_MythicPlus.GetCurrentSeason()
+-- Returns the current Mythic Plus season. Returns -1 until C_MythicPlus.RequestMapInfo() is called at least once.
+-- Returns 0 when there is no active season. (To be confirmed)
+-- source: https://wowpedia.fandom.com/wiki/API_C_MythicPlus.GetCurrentSeason
 local currentSeason
-function DungeonTools:GetCurrentSeason()
+function DungeonTools:GetCurrentSeason(retryCount)
     if currentSeason ~= nil and currentSeason ~= -1 then return currentSeason end
-
-    local season = C_MythicPlus.GetCurrentSeason()
-
-    currentSeason = season -- stores locally to prevent multiple api calls
-    return season
+    if retryCount == nil then retryCount = 0 end
+    local maxRetryCount = 5    
+    
+    local seasonNumber = C_MythicPlus.GetCurrentSeason()
+    print("Season Number: " .. seasonNumber .. " Retry Count: " .. retryCount .. " Max Retry Count: " .. maxRetryCount)
+    if seasonNumber ~= nil and seasonNumber ~= -1 then
+        currentSeason = seasonNumber -- stores locally to prevent multiple api calls
+        print("Current Season: " .. currentSeason)
+        return currentSeason
+    else
+        if retryCount < maxRetryCount then
+            C_MythicPlus.RequestMapInfo()
+            print("Retrying GetCurrentSeason()...")
+            C_Timer.After(3, function() DungeonTools:GetCurrentSeason(retryCount + 1) end)
+        else
+            KeyMaster:_ErrorMsg("GetCurrentSeason", "DungeonTools.lua", "Failed to get data from C_MythicPlus.GetCurrentSeason() after " .. maxRetryCount .. " retries.")
+            return -1
+        end
+    end
 end
 
 -- Gets a list of the live seasons challenge maps
