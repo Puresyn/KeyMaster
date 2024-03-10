@@ -57,7 +57,7 @@ function MainInterface:GetFrameRegions(myRegion, parentFrame)
 
     -- desired region heights and margins in pixels.
     -- todo: Needs pulled from saved variables or some other file instead of hard-coded.
-    local hh = 120 -- header height
+    local hh = 110 -- header height
     local mtb = 4 -- top/bottom margin
     local mlr = 4 -- left/right margin
 

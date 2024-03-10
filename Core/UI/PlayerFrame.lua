@@ -207,17 +207,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerNameLarge:SetAlpha(0.08)
     playerFrame.playerNameLarge:SetJustifyH("LEFT")
 
-    -- Season ID
-    local seasonNum = DungeonTools:GetCurrentSeason()
-    if (seasonNum ~= nil and seasonNum > 0) then
-        playerFrame.SeasonInformation = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontDieDieDieBig")
-        local Path, _, Flags = playerFrame.SeasonInformation:GetFont()
-        playerFrame.SeasonInformation:SetFont(Path, 60, Flags)
-        playerFrame.SeasonInformation:SetPoint("CENTER", playerFrame, "CENTER", -20, -12)
-        playerFrame.SeasonInformation:SetAlpha(0.3)
-        playerFrame.SeasonInformation:SetText(KeyMasterLocals.SEASON.." "..seasonNum)
-    end
-
     -- Player Specialization and Class
     playerFrame.playerDetails = playerFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     local _, Size, _ = playerFrame.playerDetails:GetFont()

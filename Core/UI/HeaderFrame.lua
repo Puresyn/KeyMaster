@@ -176,14 +176,28 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
     
     headerContent.logo = headerContent:CreateTexture()
-    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 2, 4)
+    headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 48, 34)
     headerContent.logo:SetSize(280, 34)
     headerContent.logo:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     headerContent.logo:SetTexCoord(20/1024, 353/1024, 970/1024, 1010/1024)
 
+    -- Season ID
+    local seasonNum = DungeonTools:GetCurrentSeason()
+    if (seasonNum ~= nil and seasonNum > 0) then
+        headerContent.SeasonInformation = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+        --[[ local Path, _, Flags = headerContent.SeasonInformation:GetFont()
+        headerContent.SeasonInformation:SetFont(Path, 60, Flags) ]]
+        headerContent.SeasonInformation:SetPoint("BOTTOMLEFT", headerContent.logo, "TOPLEFT", 10, -2)
+        headerContent.SeasonInformation:SetAlpha(0.3)
+        headerContent.SeasonInformation:SetText(KeyMasterLocals.SEASON.." "..seasonNum)
+    end
+
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    VersionText:SetPoint("TOPRIGHT", parentFrame, "TOPRIGHT", -24, -2)
+    VersionText:SetPoint("TOPRIGHT",  headerContent.logo, "BOTTOMRIGHT", -8, 3)
+    VersionText:SetJustifyH("RIGHT")
+    VersionText:SetJustifyV("TOP")
     VersionText:SetText(KM_VERSION)
+    VersionText:SetAlpha(0.6)
     
     return headerContent
 end
