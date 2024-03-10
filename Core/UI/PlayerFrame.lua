@@ -930,7 +930,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     PlayerFrame:SetVaultRowData(CreateVaultRow(), "1/1", "27", true)
     PlayerFrame:SetVaultRowData(CreateVaultRow(), "4/4", "27, 27, 26", true)
-    PlayerFrame:SetVaultRowData(CreateVaultRow(), "7/8", "26, 26", false)
+    PlayerFrame:SetVaultRowData(CreateVaultRow(), "7/8", "26, 26, 25", false)
 
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
