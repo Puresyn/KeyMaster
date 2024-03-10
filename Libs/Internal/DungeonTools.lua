@@ -91,15 +91,12 @@ function DungeonTools:GetCurrentSeason(retryCount)
     local maxRetryCount = 5    
     
     local seasonNumber = C_MythicPlus.GetCurrentSeason()
-    print("Season Number: " .. seasonNumber .. " Retry Count: " .. retryCount .. " Max Retry Count: " .. maxRetryCount)
     if seasonNumber ~= nil and seasonNumber ~= -1 then
         currentSeason = seasonNumber -- stores locally to prevent multiple api calls
-        print("Current Season: " .. currentSeason)
         return currentSeason
     else
         if retryCount < maxRetryCount then
             C_MythicPlus.RequestMapInfo()
-            print("Retrying GetCurrentSeason()...")
             C_Timer.After(3, function() DungeonTools:GetCurrentSeason(retryCount + 1) end)
         else
             KeyMaster:_ErrorMsg("GetCurrentSeason", "DungeonTools.lua", "Failed to get data from C_MythicPlus.GetCurrentSeason() after " .. maxRetryCount .. " retries.")
