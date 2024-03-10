@@ -842,6 +842,96 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.DetailsTitle:SetText(KeyMasterLocals.VAULTINFORMATION)
     vaultDetails.DetailsTitle:SetJustifyH("RIGHT")
 
+    -- Vualt completion rows
+
+    local function SetVaultCompleteStausIcon(self, vaultSlot, isComplete)
+        local image = "Interface/Addons/KeyMaster/Assets/Images/"..Theme.style
+        local vaultSlotTex = self:GetAttribute(vaultSlot)
+        if (vaultSlotTex) then
+            vaultSlotTex:SetTexture(image)
+            if (isComplete) then
+                vaultSlotTex:SetTexCoord(992/1024 , 1, 0, 32/1024)
+            else
+                vaultSlotTex:SetTexCoord(992/1024 , 1, 32/1024, 64/1024)
+            end
+        end
+    end
+
+    local vaultRowNum
+    if (vaultRowNum ~= 1) then vaultRowNum = 1 end 
+    local function CreateVaultRow()
+        if vaultRowNum > 3 then
+            KeyMaster:_ErrorMsg("CreateVaultRow","PlayerFrame","Too many vault rows! Max of 3!")
+            local emptyFrame = CreateFrame("Frame") -- stops hard errors
+            return emptyFrame
+        end
+
+        local vaultRow = {}
+        local vaultRowFrame = vaultDetails.vaultRow
+        local vaultTitlePadding = 12
+        local vaultRowHeight = (vaultDetails:GetHeight() - vaultTitlePadding) / 3
+
+        vaultRowFrame = CreateFrame("FRAME", "KM_VaultRow"..vaultRowNum, vaultDetails)
+        if (vaultRowNum == 1) then
+            vaultRowFrame:SetPoint("TOP", vaultDetails, "TOP", 0, -(vaultTitlePadding))
+        else
+            vaultRowFrame:SetPoint("TOP", _G[vaultDetails:GetAttribute("vault"..(vaultRowNum-1)):GetName()], "BOTTOM", 0, 0)
+        end
+        
+        vaultRowFrame:SetSize(vaultDetails:GetWidth(), vaultRowHeight)
+        vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+        vaultRowFrame.vaultTotals:SetPoint("BOTTOMLEFT", vaultRowFrame, "BOTTOMLEFT", 4, 0)
+        vaultRowFrame.vaultTotals:SetSize(vaultDetails:GetWidth()*0.15, vaultRowFrame:GetHeight())
+        vaultRowFrame.vaultTotals:SetJustifyH("RIGHT")
+        local Path, _, Flags = vaultRowFrame.vaultTotals:GetFont()
+        vaultRowFrame.vaultTotals:SetFont(Path, 20, Flags)
+        vaultRowFrame.vaultTotals:SetJustifyV("CENTER")
+        vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
+        
+        vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+        vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame.vaultTotals, "RIGHT", 8, 0)
+        vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.66, vaultRowFrame:GetHeight()-4)
+        vaultRowFrame.vaultRuns:SetJustifyH("LEFT")
+        vaultRowFrame.vaultRuns:SetJustifyV("CENTER")
+        vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
+
+        --[[ vaultRowFrame.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+        vaultRowFrame.texture:SetAllPoints(vaultRowFrame.vaultRuns)
+        --vaultRowFrame.texture:SetSize(vaultRowFrame:GetWidth(), vaultRowFrame:GetHeight())
+        vaultRowFrame.texture:SetColorTexture(0.5,0.5,0.5,1) ]]
+
+        vaultRowFrame.vaultComplete = vaultRowFrame:CreateTexture(nil, "OVERLAY")
+        vaultRowFrame.vaultComplete:SetPoint("RIGHT", vaultRowFrame, "RIGHT", -2, 0)
+        vaultRowFrame.vaultComplete:SetSize(24,24)
+        vaultRowFrame:SetAttribute("vaultComplete", vaultRowFrame.vaultComplete)
+
+        if (vaultRowNum ~= 3) then
+            local Hline = KeyMaster:CreateHLine(vaultDetails:GetWidth(), vaultRowFrame, "BOTTOM", 0, 0)
+            Hline:SetAlpha(0.5)
+        end
+
+
+        --if (vaultDetails.vaultRow ~= nil and DungeonTools:GetTableLength(vaultDetails.vaultRow) ~= 0) then
+            vaultDetails:SetAttribute("vault"..vaultRowNum,  vaultRowFrame)
+        --end
+
+        vaultRowNum = vaultRowNum + 1
+
+        return vaultRowFrame
+    end
+
+    function PlayerFrame:SetVaultRowData(rowFrame, totals, runs, isComplete)
+        rowFrame.vaultTotals:SetText(totals)
+        rowFrame.vaultRuns:SetText(runs)
+        rowFrame.vaultComplete:SetTexture()
+        SetVaultCompleteStausIcon(rowFrame, "vaultComplete", isComplete)
+    end
+
+
+    PlayerFrame:SetVaultRowData(CreateVaultRow(), "1/1", "27", true)
+    PlayerFrame:SetVaultRowData(CreateVaultRow(), "4/4", "27, 27, 26", true)
+    PlayerFrame:SetVaultRowData(CreateVaultRow(), "7/8", "26, 26", false)
+
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapCount = KeyMaster:GetTableLength(seasonMaps)
