@@ -49,6 +49,14 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is off
 L.PARTYFRAME["TeamRatingGain"] = { name = "Party Gain Potential", text = "Estimated Party Rating Gain"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Gain Potential", text = "Estimated personal point gain for available key(s) at +1 completion."}
 
+L.PLAYERFRAME = {}
+L.PLAYERFRAME["KeyLevel"] = { name = "Key Level", text = "Key level to be calculated."}
+L.PLAYERFRAME["Gain"] = { name = "Gain", text = "Potential rating gain."}
+L.PLAYERFRAME["New"] = { name = "New", text = "Your rating after completing this key at a +1."}
+L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calculate potential rating gains."}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gane", text = "your base rating gain prediction."}
+
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
