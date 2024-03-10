@@ -27,7 +27,7 @@ function HeaderFrame:CreateHeaderRegion(parentFrame)
     
 
     topBar.bgTexture = topBar:CreateTexture(nil, "BACKGROUND", nil, 1)
-    topBar.bgTexture:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -8)
+    topBar.bgTexture:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -6)
     topBar.bgTexture:SetSize(topBar:GetWidth(), 104)
     topBar.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
