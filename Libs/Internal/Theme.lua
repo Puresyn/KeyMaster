@@ -215,6 +215,12 @@ local Colors = {
         g = 0.3,
         b = 0.3,
         hex = "000000"
+    },
+    color_BADCOLORNAME = {
+        r = 1,
+        g = 0,
+        b = 1,
+        hex = "ff00ff"
     }
 }
 
@@ -223,7 +229,9 @@ function Theme:GetThemeColor(colorName)
     if (c) then
 	    return c.r, c.g, c.b, c.hex
     else
+        c = Colors["color_BADCOLORNAME"]
         KeyMaster:_ErrorMsg("GetThemeColor", "Theme", "Theme color \""..colorName.."\" was not found.")
+        return c.r, c.g, c.b, c.hex
     end
 end
 
