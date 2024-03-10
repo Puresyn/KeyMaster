@@ -44,4 +44,5 @@
 	<Script file='Libs\Internal\DungeonTools.lua'/>
 	<Script file='Libs\Internal\Misc.lua'/>
 	<Script file='Libs\Internal\EventHooks.lua'/>
+	<Script file='Libs\Internal\WeeklyRewards.lua'/>
 </Ui>

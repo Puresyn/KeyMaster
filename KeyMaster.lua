@@ -109,7 +109,6 @@ local function intializeUIWithRetries(retryCount)
         local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()    
     else
         if retryCount < 5 then
-            print("Retrying to create UI frames...")
             C_Timer.After(3, function() intializeUIWithRetries(retryCount + 1) end)
         else
             KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
