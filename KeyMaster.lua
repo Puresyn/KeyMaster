@@ -106,10 +106,16 @@ local function intializeUIWithRetries(retryCount)
     local seasonalMaps = KeyMaster.DungeonTools:GetCurrentSeasonMaps()
     local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
     if KeyMaster:GetTableLength(seasonalMaps) > 0 and seasonalAffixes ~= nil then
-        local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()    
+        -- fetch player data from bliz and save it to local memory
+        -- the next two lines doesn't work if you remove it from here due to data not being available from bliz
+        local playerData = CharacterInfo:GetMyCharacterInfo()
+        KeyMaster.UnitData:SetUnitData(playerData)
+
+        local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
     else
         if retryCount < 5 then
             C_Timer.After(3, function() intializeUIWithRetries(retryCount + 1) end)
+            KeyMaster:_DebugMsg("intializeUIWithRetries", "KeyMaster.lua", "Retrying to create UI frames after "..tostring(retryCount).." retries.")
         else
             KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
         end
@@ -211,14 +217,15 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")        
     end
     if isLogin or isReload then
-        KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "reloading")
+        if isLogin then
+            KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "Logged in...")
+        end
+        if isReload then
+            KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "Reloaded UI...")
+        end        
 
         -- creates the UI but only when bliz data is avaiable from C_MythicPlus
         intializeUIWithRetries()
-
-        -- fetch player data from bliz and save it to local memory
-        local playerData = CharacterInfo:GetMyCharacterInfo()
-        KeyMaster.UnitData:SetUnitData(playerData)
     end
     if isReload then
         local inGroup = UnitInRaid("player") or IsInGroup()

@@ -60,10 +60,26 @@ function CharacterInfo:GetCurrentRating()
     local r = C_ChallengeMode.GetOverallDungeonScore()
     return r
 end
+-- This retry logic is done because the C_MythicPlus API is not always available right away and this frame depends on it.
+local function fetchCharacterMythicPlusData(mapId, retryCount)
+    if retryCount == nil then retryCount = 0 end
+    local maxRetryCount = 5
+    local retryDelay = 3
+    
+    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapId)
+    if mapScore ~= nil then
+        return mapScore, bestOverallScore
+    else
+        if retryCount < 5 then
+            KeyMaster:_DebugMsg("fetchCharacterMythicPlusData", "CharacterInfo.lua", "Retrying to fetch mythic plus data after "..tostring(retryCount).." retries.")
+            fetchCharacterMythicPlusData(mapId, retryCount + 1)            
+        else
+            KeyMaster:_ErrorMsg("fetchCharacterMythicPlusData", "CharacterInfo.lua", "Failed to fetch mythic plus data after "..tostring(retryCount).." retries.")
+        end
+    end
+end
 
 function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
-    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
-    
     if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
        KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo", "Incorrect weeklyAffix value provided.")
        return nil   
@@ -77,13 +93,15 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
        overTime = false -- was completion overtime
     }
     
-    -- No data means no keys ran on either weekly affix
+    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+    -- this is true when a character has not ran a key for this map on either weekly affix.
     if (mapScore == nil) then
        return emptyData
-    end   
+    end
     -- No data means no keys ran on either weekly affix
     if mapScore[1] == nil and mapScore[2] == nil then
-       return emptyData
+        KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo.lua", "Failed to fetch score data for mapid "..mapid)
+        return emptyData
     end
     
     -- This is setup this way because blizzard returns the data in a table with the first index being the weekly affix
