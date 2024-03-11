@@ -178,11 +178,11 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
     headerContent:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     headerContent:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
     
-    headerContent.logo = headerContent:CreateTexture()
+    --[[ headerContent.logo = headerContent:CreateTexture()
     headerContent.logo:SetPoint("BOTTOMLEFT", headerContent, "BOTTOMLEFT", 48, 34)
     headerContent.logo:SetSize(280, 34)
     headerContent.logo:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
-    headerContent.logo:SetTexCoord(20/1024, 353/1024, 970/1024, 1010/1024)
+    headerContent.logo:SetTexCoord(20/1024, 353/1024, 970/1024, 1010/1024) ]]
 
     -- Season ID
     local seasonNum = DungeonTools:GetCurrentSeason()
