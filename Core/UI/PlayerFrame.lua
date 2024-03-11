@@ -474,6 +474,9 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.divider2:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
         dataFrame.divider2:SetAlpha(0.3) ]]
 
+        local scoreColor = {}
+        scoreColor.r, scoreColor.g, scoreColor.b, _ = Theme:GetThemeColor("color_TAUPE")
+
         --///// TYRANNICAL /////--
         -- Tyrannical Key Level
         dataFrame.tyrannicalLevel = dataFrame:CreateFontString("KM_PlayerFrameTyranLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
@@ -494,6 +497,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.tyrannicalScore:SetPoint("RIGHT", dataFrame.overallScore, "CENTER", -affixScoreOffsetx, affixScoreOffsety)
         dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
         dataFrame.tyrannicalScore:SetJustifyV("BOTTOM")
+        dataFrame.tyrannicalScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
         dataFrame.tyrannicalScore:SetText("")
 
         -- Tyrannical RunTime
@@ -522,6 +526,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.fortifiedScore = dataFrame:CreateFontString("KM_PlayerFrameFortScore"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.fortifiedScore:SetPoint("LEFT", dataFrame.overallScore, "CENTER", affixScoreOffsetx, affixScoreOffsety)
         dataFrame.fortifiedScore:SetJustifyH("LEFT")
+        dataFrame.fortifiedScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
         dataFrame.fortifiedScore:SetText("")
 
         -- Tyrannical RunTime
@@ -917,7 +922,7 @@ local function createVaultRow(vaultRowNumber, parentFrame)
 
     local vaultRow = {}
     local vaultRowFrame = parentFrame.vaultRow
-    local vaultTitlePadding = 12
+    local vaultTitlePadding = 18
     local vaultRowHeight = (parentFrame:GetHeight() - vaultTitlePadding) / 3
 
     vaultRowFrame = CreateFrame("FRAME", "KM_VaultRow"..vaultRowNumber, parentFrame)
