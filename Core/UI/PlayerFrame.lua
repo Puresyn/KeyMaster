@@ -845,6 +845,12 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.DetailsTitle:SetText(KeyMasterLocals.VAULTINFORMATION)
     vaultDetails.DetailsTitle:SetJustifyH("RIGHT")
 
+    vaultDetails.divider1 = vaultDetails:CreateTexture()
+    vaultDetails.divider1:SetSize(18, vaultDetails:GetHeight()*0.8)
+    vaultDetails.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
+    vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -60, -10)
+    vaultDetails.divider1:SetAlpha(0.3)
+
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapCount = KeyMaster:GetTableLength(seasonMaps)
@@ -881,31 +887,38 @@ local function createVaultRow(vaultRowNumber, parentFrame)
         vaultRowFrame:SetPoint("TOP", _G[parentFrame:GetAttribute("vault"..(vaultRowNumber-1)):GetName()], "BOTTOM", 0, 0)
     end
     
-    vaultRowFrame:SetSize(parentFrame:GetWidth(), vaultRowHeight)
-    vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    vaultRowFrame.vaultTotals:SetPoint("BOTTOMLEFT", vaultRowFrame, "BOTTOMLEFT", 4, 0)
-    vaultRowFrame.vaultTotals:SetSize(parentFrame:GetWidth()*0.15, vaultRowFrame:GetHeight())
-    vaultRowFrame.vaultTotals:SetJustifyH("RIGHT")
-    local Path, _, Flags = vaultRowFrame.vaultTotals:GetFont()
-    vaultRowFrame.vaultTotals:SetFont(Path, 20, Flags)
-    vaultRowFrame.vaultTotals:SetJustifyV("CENTER")
-    vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
-    
-    vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame.vaultTotals, "RIGHT", 8, 0)
-    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.66, vaultRowFrame:GetHeight()-4)
-    vaultRowFrame.vaultRuns:SetJustifyH("LEFT")
-    vaultRowFrame.vaultRuns:SetJustifyV("CENTER")
-    vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
-
     vaultRowFrame.vaultComplete = vaultRowFrame:CreateTexture(nil, "OVERLAY")
     vaultRowFrame.vaultComplete:SetPoint("RIGHT", vaultRowFrame, "RIGHT", -2, 0)
     vaultRowFrame.vaultComplete:SetSize(24,24)
+
+    vaultRowFrame:SetSize(parentFrame:GetWidth(), vaultRowHeight)
+    vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    vaultRowFrame.vaultTotals:SetPoint("RIGHT", vaultRowFrame.vaultComplete, "LEFT", 0, -1)
+    vaultRowFrame.vaultTotals:SetSize(parentFrame:GetWidth()*0.15, vaultRowFrame:GetHeight())
+    --vaultRowFrame.vaultTotals:SetJustifyH("RIGHT")
+    --[[ local Path, _, Flags = vaultRowFrame.vaultTotals:GetFont()
+    vaultRowFrame.vaultTotals:SetFont(Path, 18, Flags) ]]
+    vaultRowFrame.vaultTotals:SetJustifyV("CENTER")
+    vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
     
-    if (vaultRowNumber ~= 3) then
+    vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 4, -1)
+    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.62, vaultRowFrame:GetHeight()-4)
+    local Path, _, Flags = vaultRowFrame.vaultRuns:GetFont()
+    vaultRowFrame.vaultRuns:SetFont(Path, 16, Flags)
+    vaultRowFrame.vaultRuns:SetJustifyH("RIGHT")
+    vaultRowFrame.vaultRuns:SetJustifyV("CENTER")
+    vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
+
+    --[[ vaultRowFrame.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+    vaultRowFrame.texture:SetAllPoints(vaultRowFrame.vaultRuns)
+    --vaultRowFrame.texture:SetSize(vaultRowFrame:GetWidth(), vaultDetails:GetHeight())
+    vaultRowFrame.texture:SetColorTexture(0.5,0.5,0.5,1) ]]
+    
+   --[[  if (vaultRowNumber ~= 3) then
         local Hline = KeyMaster:CreateHLine(parentFrame:GetWidth(), vaultRowFrame, "BOTTOM", 0, 0)
         Hline:SetAlpha(0.5)
-    end
+    end ]]
     parentFrame:SetAttribute("vault"..vaultRowNumber,  vaultRowFrame)
 
     return vaultRowFrame
