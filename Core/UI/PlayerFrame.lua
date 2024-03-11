@@ -144,6 +144,19 @@ function PlayerFrame:CreatePlayerContentFrame(parentFrame)
     return playerContentFrame
 end
 
+local function updateWeeklyAffixTheme()
+    local cw = {} -- current weekly affix hilight
+    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
+    local weeklyAffix = DungeonTools:GetWeeklyAffix()
+    local baseFrame = _G["KM_PlayerFrameMapInfoHeader"]
+    if weeklyAffix == "Tyrannical" then
+        print("Tyrannical")
+        baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
+    else
+        baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
+    end
+end
+
 function PlayerFrame:CreatePlayerFrame(parentFrame)
 
     local playerFrame = CreateFrame("Frame", "KM_Player_Frame",parentFrame)
@@ -154,10 +167,11 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.texture:SetAllPoints(playerFrame)
     playerFrame.texture:SetColorTexture(0, 0, 0, 1)
     playerFrame:SetScript("OnLoad", function(self)
-        PlayerFrameMapping:RefreshData(true)
+        PlayerFrameMapping:RefreshData(true)        
     end)
     playerFrame:SetScript("OnShow", function(self)
         PlayerFrameMapping:RefreshData(false)
+        updateWeeklyAffixTheme()
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
@@ -309,7 +323,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.tyranText:SetJustifyH("RIGHT")
     mapHeaderFrame.tyranText:SetText(KeyMasterLocals.TYRANNICAL)
 
-    mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
+    mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_FortTitle", "OVERLAY", "KeyMasterFontBig")
     --mapHeaderFrame.fortText:SetPoint("RIGHT", mapHeaderFrame, "RIGHT", -64, 0)
     --mapHeaderFrame.fortText:SetFont(mapHeaderFrame.tyranText:GetFont())
     mapHeaderFrame.fortText:SetJustifyH("LEFT")
