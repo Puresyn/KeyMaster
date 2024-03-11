@@ -56,7 +56,6 @@ function MainInterface:GetFrameRegions(myRegion, parentFrame)
     local mw = parentFrame:GetWidth()
 
     -- desired region heights and margins in pixels.
-    -- todo: Needs pulled from saved variables or some other file instead of hard-coded.
     local hh = 110 -- header height
     local mtb = 4 -- top/bottom margin
     local mlr = 4 -- left/right margin
@@ -98,15 +97,15 @@ end
 function MainInterface:CreateAddonIcon(parentFrame)
     
     local addonIconFrame = CreateFrame("Frame", "KeyMaster_Icon", parentFrame)
-    addonIconFrame:SetSize(100, 100)
-    addonIconFrame:SetPoint("CENTER", parentFrame, "TOPLEFT", 0, 0)
+    addonIconFrame:SetSize(64, 64)
+    addonIconFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
 
     local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
     addonIcon:SetHeight(addonIconFrame:GetHeight())
     addonIcon:SetWidth(addonIconFrame:GetHeight())
-    addonIcon:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Icon2",false)
+    addonIcon:SetTexture("Interface/AddOns/KeyMaster/Assets/Images/KM-Corner")
     addonIcon:ClearAllPoints()
-    addonIcon:SetPoint("LEFT", 15, -15)
+    addonIcon:SetPoint("TOPLEFT", 1, 0)
 
     return addonIcon
 end
