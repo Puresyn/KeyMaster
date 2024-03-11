@@ -65,7 +65,7 @@ local function fadeNonKeystoneData()
             local keyLevelText = _G["Dungeon_"..mapId.."_HeaderKeyLevelText"]
             local currentLevel = tonumber(keyLevelText:GetText()) -- non-parsable number will return nil
             if currentLevel == nil then
-                _G["KM_MapData"..i..mapId]:SetAlpha(0.5)
+                _G["KM_MapData"..i..mapId]:SetAlpha(0.6)
             end
         end
     end
