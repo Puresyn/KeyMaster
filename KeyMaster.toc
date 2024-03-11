@@ -1,12 +1,26 @@
 ## Interface: 100205
-## Version: v0.0.7-alpha
+## X-Max-Interface: 100205
+## X-Min-Interface: 100205
+
+## Version: 0.1.0
 ## Title: |cffff5a00KeyMaster|r
-## Notes: Mythic Dungeon KeystoneMaster
-## Authors: Strylor-Proudmoore, Shantisoc-Proudmoore
+## Notes: Mythic Plus Keystone Information and Collaboration Tool
+## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Slash: /km, /keymaster
 ## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB
+
+## X-IconTexture: Interface/AddOns/KeyMaster/KM-Icon
+
+## X-License: GNU GPL V3
+
+## X-ReleaseDate: "2024-3-16"
+## X-Embeds: Ace3
+## X-Curse-Project-ID: 985862
+## X-GitHub: github.com/Puresyn/KeyMaster
+
+## X-Credits: Rexidan, Xanat, Ithoro, Doc, and many others for alpha testing and feedback. The Last Pull-Proudmoore (guild)
 
 Embeds.xml
 Core\Localization\Localization.enUS.lua
