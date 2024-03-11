@@ -28,9 +28,6 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         KeyMaster.UnitData:SetUnitData(playerData)
     else
         playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
-        if playerData == nil then
-            PlayerFrameMapping:RefreshData(true)
-        end
     end
 
     -- Player Dungeon Rating

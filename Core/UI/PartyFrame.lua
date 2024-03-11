@@ -513,6 +513,9 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     local partyScreen = CreateFrame("Frame", "KeyMaster_PartyScreen", parentFrame);
     partyScreen:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     partyScreen:SetAllPoints(true)
+    partyScreen:SetScript("OnLoad", function(self) 
+        
+    end)
     partyScreen:SetScript("OnShow", function(self) 
         -- Get player data
         local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
