@@ -17,6 +17,49 @@ local function setVaultStatusIcon(vaultRowFrame, isCompleted)
     end
 end
 
+function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+    local scoreFrame = _G["KM_ScoreCalcScores"]
+    if scoreFrame == nil then
+        KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to find ScoreCalcScores frame.")
+        return
+    end
+
+    local mapTable = DungeonTools:GetCurrentSeasonMaps()
+    local dungeonTimeLimit = mapTable[mapId].timeLimit
+    local weeklyAffix = DungeonTools:GetWeeklyAffix()
+    local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+
+    local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
+    local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Score
+    local tyranRating = playerData.DungeonRuns[mapId]["Tyrannical"].Score
+    local currentOverallRating = playerData.DungeonRuns[mapId].bestOverall
+    
+    local totalKeyRatingChange = 0
+    if (weeklyAffix == "Tyrannical") then
+        if ratingChange > tyranRating then
+            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
+            scoreFrame.ratingGain:SetText(newTotal - currentOverallRating)
+            totalKeyRatingChange = newTotal - currentOverallRating
+        else
+            scoreFrame.ratingGain:SetText("0")
+        end
+    else
+        if ratingChange > fortRating then
+            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
+            scoreFrame.ratingGain:SetText(newTotal - currentOverallRating)
+            totalKeyRatingChange = newTotal - currentOverallRating
+        else
+            scoreFrame.ratingGain:SetText("0")
+        end
+    end
+    
+    local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
+    
+    scoreFrame.newRating:SetText(newOverall)
+    
+    scoreFrame.keyLevel:SetText(keyLevel.." "..weeklyAffix)
+end
+
 function PlayerFrameMapping:RefreshData(fetchNew)
     local playerFrame = _G["KM_Player_Frame"]
     local playerMapData = _G["KM_PlayerMapInfo"]

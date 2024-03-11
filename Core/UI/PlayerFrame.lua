@@ -114,9 +114,10 @@ local function mapData_onmouseout(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor(defColor)
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, defAlpha)
 end
+local selectedMapId
 local function mapdData_OnRowClick(self, event)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
-    local selectedMapId = self:GetAttribute("mapId")
+    selectedMapId = self:GetAttribute("mapId")
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
     local mapCalcFrame = _G["KM_ScoreCalc"]
@@ -766,8 +767,12 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalcBox:SetMaxLetters(2);
     scoreCalcBox:SetScript("OnEnterPressed", function(self)
         self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
-        -- todo: Validate input and do calculation magic here
-            scoreCalcScores.keyLevel:SetText(self:GetText().." "..KeyMasterLocals.FORTIFIED) -- todo: Weekly Afffix set dynamicly (KeyMasterLocals.TYRANNICAL)
+        
+        local keyLevel = tonumber(self:GetText())
+        local mapId = selectedMapId -- set from row click
+        
+        PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+        
         self:SetText("") -- Empties the box, duh! ;)
         scoreCalcDirection:Hide()
         scoreCalcScores:Show()

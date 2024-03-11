@@ -21,7 +21,7 @@ L.COMMANDERROR3 = "for commands"
 L.YOURCURRENTKEY = "YOUR KEY"
 L.ADDONOUTOFDATE = "Your Key Master addon is out of date!"
 L.INSTANCETIMER = "Instance Information"
-L.VAULTINFORMATION = "M+ Vault Information"
+L.VAULTINFORMATION = "M+ Vault Progression"
 L.TIMELIMIT = "Time Limit"
 L.SEASON = "Season"
 
