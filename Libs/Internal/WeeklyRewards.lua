@@ -10,36 +10,32 @@ local function runCompare(left, right)
     end
 end
 
-function WeeklyRewards:CalculateMythicPlusWeeklyVault()
-    print("Running Test...")
-    
-    local activities = C_WeeklyRewards.GetActivities(Enum.WeeklyRewardChestThresholdType.Activities)
-    
-    local lastCompletedIndex = 0
+function WeeklyRewards:GetVaultThresholds(eventTypeId)
+    local activities = C_WeeklyRewards.GetActivities(eventTypeId)
+    local thresholds = {}
     for i, activityInfo in ipairs(activities) do
-        if activityInfo.progress >= activityInfo.threshold then
-            lastCompletedIndex = i
-        end
+        tinsert(thresholds, activityInfo.threshold)
     end
-    
-    print("-------------")
-    print("Last Completed Index: ", lastCompletedIndex)
-    
+    return thresholds
+end
+function WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+    local MythicPlusEventTypeId = 1
+    local thresholds = WeeklyRewards:GetVaultThresholds(MythicPlusEventTypeId)
+
     local history = C_MythicPlus.GetRunHistory(false, true)
     sort(history, runCompare)
     
     for i,v in pairs(history) do
-        history[i].mapName = C_ChallengeMode.GetMapUIInfo(v.mapChallengeModeID)
-        history[i].mapLevel = v.level
-        print(history[i].mapName,history[i].mapLevel)
+       history[i].mapName = C_ChallengeMode.GetMapUIInfo(v.mapChallengeModeID)
+       history[i].mapLevel = v.level
     end
     
     local bestKeys = {}
-    for i = 1, 8, 1 do
-        if history[i] then
-            print(history[i].level)
-            bestKeys[i] = history[i].level
-        end
+    for i = 1, thresholds[#thresholds], 1 do
+       if history[i] then
+          bestKeys[i] = history[i].level
+       end
     end
-    KeyMaster:TPrint(bestKeys)
-end
+    
+    return bestKeys
+ end

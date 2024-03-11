@@ -7,6 +7,16 @@ local Theme = KeyMaster.Theme
 
 local defaultString = 0
 
+local function setVaultStatusIcon(vaultRowFrame, isCompleted)
+    local image = "Interface/Addons/KeyMaster/Assets/Images/"..Theme.style
+    vaultRowFrame.vaultComplete:SetTexture(image)
+    if (isCompleted) then
+        vaultRowFrame.vaultComplete:SetTexCoord(992/1024 , 1, 0, 32/1024)
+    else
+        vaultRowFrame.vaultComplete:SetTexCoord(992/1024 , 1, 32/1024, 64/1024)
+    end
+end
+
 function PlayerFrameMapping:RefreshData(fetchNew)
     local playerFrame = _G["KM_Player_Frame"]
     local playerMapData = _G["KM_PlayerMapInfo"]
@@ -18,6 +28,9 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         KeyMaster.UnitData:SetUnitData(playerData)
     else
         playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+        if playerData == nil then
+            PlayerFrameMapping:RefreshData(true)
+        end
     end
 
     -- Player Dungeon Rating
@@ -68,5 +81,64 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         -- Fortified Run Time
         local fortifiedRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
         playerMapDataFrame.fortifiedRunTime:SetText(fortifiedRunTime)
+    end
+
+    -- Player Mythic Plus Weekly Vault
+    local MythicPlusEventTypeId = 1
+    local thresholds = KeyMaster.WeeklyRewards:GetVaultThresholds(MythicPlusEventTypeId)
+    local bestKeys = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+    
+    local numKeysCompleted = #bestKeys
+    if numKeysCompleted > 0 then
+        local numKeysCompleted = #bestKeys
+        local previousThreshold = 1
+        for index=1,#thresholds, 1 do         
+            local vaultKeysOutput = ""
+            local firstKey = true
+            for keyIndex = previousThreshold, thresholds[index], 1 do
+                if bestKeys[keyIndex] ~= nil then
+                    if firstKey then
+                        vaultKeysOutput = bestKeys[keyIndex]
+                        firstKey = false
+                    else
+                        vaultKeysOutput = vaultKeysOutput..", "..bestKeys[keyIndex]
+                    end
+                end
+                previousThreshold = thresholds[index] + 1
+            end
+
+            local isCompleted = false
+            local vaultThreshhold
+            if numKeysCompleted >= thresholds[index] then
+                vaultThreshhold = thresholds[index].."/"..thresholds[index]
+                isCompleted = true
+            else
+                vaultThreshhold = numKeysCompleted.."/"..thresholds[index]
+            end
+
+            local vaultRowFrame = _G["KM_VaultRow"..index]
+            if vaultRowFrame ~= nil then
+                -- Set Vault Threshold
+                vaultRowFrame.vaultTotals:SetText(vaultThreshhold)
+
+                -- Set Vault Runs
+                vaultRowFrame.vaultRuns:SetText(vaultKeysOutput)
+
+                -- Set Vault Slot Image
+                setVaultStatusIcon(vaultRowFrame, isCompleted)
+            end
+        end      
+    else
+        for index=1,#thresholds, 1 do
+            local vaultThreshhold = numKeysCompleted.."/"..thresholds[index]
+            local vaultRowFrame = _G["KM_VaultRow"..index]
+            if vaultRowFrame ~= nil then
+                -- Set Vault Threshold
+                vaultRowFrame.vaultTotals:SetText(vaultThreshhold)
+
+                -- Set Vault Slot Image
+                setVaultStatusIcon(vaultRowFrame, isCompleted)
+            end
+        end
     end
 end
