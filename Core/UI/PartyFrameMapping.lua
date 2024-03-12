@@ -104,7 +104,7 @@ function PartyFrameMapping:UpdateKeystoneHighlights()
                 local keyLevelText = _G["Dungeon_"..unitData.ownedKeyId.."_HeaderKeyLevelText"]
                 local currentLevel = tonumber(keyLevelText:GetText())
                 if currentLevel == nil or currentLevel == "" then currentLevel = 0 end
-                if unitData.ownedKeyLevel > currentLevel then
+                if unitData.ownedKeyLevel >= currentLevel then
                     keyLevelText:SetText(unitData.ownedKeyLevel)
                     _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
                     _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
