@@ -71,7 +71,7 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     infoFrame.textCreditsTitle = infoFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     infoFrame.textCreditsTitle:SetPoint("TOP", infoFrame.textAuthors, "BOTTOM", 0, -14)
     infoFrame.textCreditsTitle:SetSize(200, 20)
-    infoFrame.textCreditsTitle:SetText("Special Thanks:")
+    infoFrame.textCreditsTitle:SetText("Special Thanks")
 
     local creditText = "Rexidan, Ithoro, Xanat, Doc, Sunnie, Charlie, Feathor, and the entire 'Last Pull' crew for invaluable testing and feedback."
 
