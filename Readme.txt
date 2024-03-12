@@ -9,7 +9,7 @@ Use /km or a keybind available in game keybindings to toggle the main window.
 Use /km help for command line options.
 
 About:
-The Key Master is an addon developed for World of Warcraft that assists in
+Key Master is an addon developed for World of Warcraft that assists in
 gathering and displaying detailed information about you and your parties “live”
 (if they also have Key Master) data relating to Mythic Plus Instances.
 This addon was conceived with the idea that it was too laborious to make

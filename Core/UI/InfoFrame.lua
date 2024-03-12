@@ -26,7 +26,7 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     "Use /km help for command line options.\n"..
     
     "\nAbout:\n"..
-    "The Key Master is an addon developed for World of Warcraft that assists in\n"..
+    "Key Master is an addon developed for World of Warcraft that assists in\n"..
     "gathering and displaying detailed information about you and your parties \'live\'\n"..
     "(if they also have Key Master) data relating to Mythic Plus Instances.\n"..
     "This addon was conceived with the idea that it was too laborious to make\n"..
