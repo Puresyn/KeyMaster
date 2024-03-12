@@ -97,15 +97,15 @@ end
 function MainInterface:CreateAddonIcon(parentFrame)
     
     local addonIconFrame = CreateFrame("Frame", "KeyMaster_Icon", parentFrame)
-    addonIconFrame:SetSize(64, 64)
-    addonIconFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, 0)
+    addonIconFrame:SetSize(32, 32)
+    addonIconFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 8, -8)
 
     local addonIcon = addonIconFrame:CreateTexture("KM_Icon", "OVERLAY")
-    addonIcon:SetHeight(addonIconFrame:GetHeight())
-    addonIcon:SetWidth(addonIconFrame:GetHeight())
-    addonIcon:SetTexture("Interface/AddOns/KeyMaster/Assets/Images/KM-Corner")
+    addonIcon:SetSize(32, 32)
+    addonIcon:SetTexture("Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32")
     addonIcon:ClearAllPoints()
-    addonIcon:SetPoint("TOPLEFT", 1, 0)
+    addonIcon:SetPoint("CENTER", 0, 0)
+    addonIcon:SetAlpha(0.8)
 
     return addonIcon
 end
