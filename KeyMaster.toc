@@ -6,8 +6,6 @@
 ## Title: |cffff5a00KeyMaster|r
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
-## LoadManagers: AddonLoader
-## X-LoadOn-Slash: /km, /keymaster
 ## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB
 
@@ -31,7 +29,6 @@ Core\UI\PlayerFrameMapping.lua
 Core\UI\PartyFrameMapping.lua
 Core\UI\HeaderFrameMapping.lua
 Core\Coms.lua
-Core\UI\ConfigFrame.lua
 Core\UI\InfoFrame.lua
 Core\UI\PlayerFrame.lua
 Core\UI\MainFrameTemplate.xml

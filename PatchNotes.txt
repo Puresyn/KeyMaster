@@ -1,1 +1,9 @@
-Key Master Beta release v0.0.7-beta
+Key Master AddOn for World of Warcraft
+(c) 2024 – Released under the GNU General Public License
+
+PATCH NOTES:
+
+--------------------------------------------------
+Key Master Beta release v0.1.00-beta
+--------------------------------------------------
+Initial public beta release.
