@@ -1,10 +1,21 @@
 KeyMasterLocals = {}
 local L = KeyMasterLocals
 
+L.MAPNAMES = {}
+L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
+L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
+L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
+L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
+L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WCM" }
+L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
+L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
+L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
+L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+
 L.ADDONNAME = "Key Master"
 L.BUILDRELEASE = "release"
 L.BUILDBETA = "beta"
-L.BUILDALPHA = "alpha"
+L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Welcome back"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "This Week..."
@@ -57,21 +68,15 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calcul
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gane", text = "your base rating gain prediction."}
 
-L.MAPNAMES = {}
-L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
-L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
-L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
-L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WCM" }
-L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
-L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
-L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
-L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
-
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
 L.CHARACTERINFO["KeyInVault"] = { name = "Key in Vault", text = "In Vault"}
 L.CHARACTERINFO["AskMerchant"] = { name = "Ask Key Merchant", text = "Key Merchant"}
+
+L.TABPLAYER = "Player"
+L.TABPARTY = "Party"
+L.TABABOUT = "About"
+L.TABCONFIG = "Configuration"
 
 
 -- DO NOT EDIT

@@ -16,9 +16,8 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '0.0.91'
-KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes"
-KM_VERSION = tostringall("v"..KM_AUTOVERSION.."-"..KM_VERSION_STATUS) -- for display purposes
+KM_AUTOVERSION = '0.0.92'
+KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
 -- Slash Commands and command menu
@@ -39,11 +38,11 @@ KeyMaster.Commands = {
         print("=====================")
     end,
     -- Sample nested command line functions
-    ["example"] = {
+    --[[ ["example"] = {
         ["test"] = function(...)
             KeyMaster:Print("My Value:", tostringall(...))
         end
-    }
+    } ]]
 }
 
 -- Slash commands handler

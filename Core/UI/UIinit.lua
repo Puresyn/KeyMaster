@@ -32,10 +32,10 @@ function MainInterface:Initialize()
   local infoContent = _G["KM_Info_Frame"] or InfoFrame:CreateInfoFrame(contentRegion)
 
   -- Create tabs
-  local playerTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, "Player", playerTabContent, true)
-  local partyTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, "Party", partyTabContent, true)
+  local playerTab = _G["KeyMaster_MainFrameTab1"] or MainInterface:CreateTab(mainFrame, 1, KeyMasterLocals.TABPLAYER, playerTabContent, true)
+  local partyTab = _G["KeyMaster_MainFrameTab2"] or MainInterface:CreateTab(mainFrame, 2, KeyMasterLocals.TABPARTY, partyTabContent, true)
   --local configTab = _G["KeyMaster_MainFrameTab3"] or MainInterface:CreateTab(mainFrame, 3, "Configuration", configContent, false)
-  local infoTab = _G["KeyMaster_MainFrameTab4"] or MainInterface:CreateTab(mainFrame, 3, "About", infoContent, false)
+  local infoTab = _G["KeyMaster_MainFrameTab4"] or MainInterface:CreateTab(mainFrame, 3, KeyMasterLocals.TABABOUT, infoContent, false)
 
   if(UnitInParty("player")) then
     Tab_OnClick(partyTab)

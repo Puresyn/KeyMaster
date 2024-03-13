@@ -192,11 +192,20 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
         headerContent.SeasonInformation:SetText(KeyMasterLocals.SEASON.." "..seasonNum)
     end
 
+    local displayVersion
+    if (KM_VERSION_STATUS ~= KeyMasterLocals.BUILDBETA) then
+        displayVersion = KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION
+    else
+        displayVersion = KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.. " "..KM_VERSION_STATUS
+    end
+
     local VersionText = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     VersionText:SetPoint("TOPRIGHT",  headerContent.logo, "BOTTOMRIGHT", -8, 3)
+    local path, _, flags = VersionText:GetFont()
+    VersionText:SetFont(path, 9, flags)
     VersionText:SetJustifyH("RIGHT")
     VersionText:SetJustifyV("TOP")
-    VersionText:SetText(KM_VERSION)
+    VersionText:SetText(displayVersion)
     VersionText:SetAlpha(0.6)
     
     return headerContent

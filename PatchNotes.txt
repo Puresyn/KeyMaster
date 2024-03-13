@@ -4,6 +4,6 @@ Key Master AddOn for World of Warcraft
 PATCH NOTES:
 
 --------------------------------------------------
-Key Master Beta release v0.1.00-beta
+Key Master Beta release v0.0.92-beta
 --------------------------------------------------
 Initial public beta release.
