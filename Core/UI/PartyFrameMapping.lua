@@ -108,8 +108,6 @@ function PartyFrameMapping:UpdateKeystoneHighlights()
                     keyLevelText:SetText(unitData.ownedKeyLevel)
                     _G["KM_GroupKeyShadow"..unitData.ownedKeyId]:Show()
                     _G["KM_MapHeaderHighlight"..unitData.ownedKeyId]:Show()
-                else
-                    keyLevelText:SetText("")
                 end
                 keyLevelText:Show()
             end         
@@ -194,14 +192,26 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
         for mapid, v in pairs(mapTable) do
             -- Tyrannical
             local tyranChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Tyrannical"].DurationSec)
-            local tyranScore = tyranChestCount .. playerData.DungeonRuns[mapid]["Tyrannical"].Level
-            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(tyranScore)
+            local tyranLevel = tyranChestCount .. playerData.DungeonRuns[mapid]["Tyrannical"].Level
+            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(tyranLevel)
             -- Fortified
             local fortChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Fortified"].DurationSec)
-            local fortScore = fortChestCount .. playerData.DungeonRuns[mapid]["Fortified"].Level
-            _G["KM_MapLevelF"..partyPlayer..mapid]:SetText(fortScore)
+            local fortLevel = fortChestCount .. playerData.DungeonRuns[mapid]["Fortified"].Level
+            _G["KM_MapLevelF"..partyPlayer..mapid]:SetText(fortLevel)
+
+            local fortRating = playerData.DungeonRuns[mapid]["Fortified"].Rating
+            local tyranRating = playerData.DungeonRuns[mapid]["Tyrannical"].Rating
+            if fortRating > tyranRating then
+                fortRating = fortRating * 1.5
+                tyranRating = tyranRating * 0.5
+            else
+                fortRating = fortRating * 0.5
+                tyranRating = tyranRating * 1.5
+            end
+            local overallRating = fortRating + tyranRating
+
             -- Overall Score
-            _G["KM_MapTotalScore"..partyPlayer..mapid]:SetText(playerData.DungeonRuns[mapid]["bestOverall"])
+            _G["KM_MapTotalScore"..partyPlayer..mapid]:SetText(KeyMaster:RoundSingleDecimal(overallRating))
         end
         _G["KM_MapDataLegend"..partyPlayer]:Show()
     else
@@ -268,6 +278,9 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
         end
     end
     
+    -- sort keystone information by level
+    table.sort(keystoneInformation, function(a, b) return a.ownedKeyLevel < b.ownedKeyLevel end)
+
     -- cycle through keystone information to calculate rating gained for EACH unitid (who has the addon installed)
     for _, keyData in pairs(keystoneInformation) do
         local dungeonTimer = mapTable[keyData.ownedKeyId].timeLimit
@@ -280,8 +293,8 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                 if playerData ~= nil then
                     --print("Checking rating gain for "..playerData.name.." on key "..keyData.ownedKeyId.." level "..keyData.ownedKeyLevel..".")
                     local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
-                    local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Score
-                    local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Score
+                    local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Rating
+                    local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Rating
                     local currentOverallRating = playerData.DungeonRuns[keyData.ownedKeyId].bestOverall
                     
                     if (currentWeeklyAffix == "Tyrannical") then

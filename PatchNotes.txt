@@ -3,6 +3,15 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master Beta release v0.0.94-beta
+--------------------------------------------------
+- Fixed Spelling mistakes on information panel
+- Fixed key highlights when you have two of the same key at different levels
+- Fixed score gained when having two keys of the same dungeon and the lower is processed after the higher
+- Changed displayed data for players from base score to rating and added decimal point rounding to a single digit
+- Fixed dungeon rating calculations to be more accurate since they use rating vs score now
+
+--------------------------------------------------
 Key Master Beta release v0.0.93-beta
 --------------------------------------------------
 -Fixed a couple grammatical errors.

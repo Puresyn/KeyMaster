@@ -170,7 +170,7 @@ function CharacterInfo:GetMyCharacterInfo()
         -- Tyrannical Key Score
         local tyrannicalScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Tyrannical")
         local dungeonDetails = {
-            ["Score"] = tyrannicalScoreInfo.score,
+            ["Rating"] = DungeonTools:CalculateRating(mapid, tyrannicalScoreInfo.level, tyrannicalScoreInfo.durationSec),
             ["Level"] = tyrannicalScoreInfo.level,
             ["DurationSec"] = tyrannicalScoreInfo.durationSec,
             ["IsOverTime"] = tyrannicalScoreInfo.overTime
@@ -180,7 +180,7 @@ function CharacterInfo:GetMyCharacterInfo()
         -- Fortified Key Score
         local fortifiedScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Fortified")
         local dungeonDetails = {
-            ["Score"] = fortifiedScoreInfo.score,
+            ["Rating"] = DungeonTools:CalculateRating(mapid, fortifiedScoreInfo.level, fortifiedScoreInfo.durationSec),
             ["Level"] = fortifiedScoreInfo.level,
             ["DurationSec"] = fortifiedScoreInfo.durationSec,
             ["IsOverTime"] = fortifiedScoreInfo.overTime

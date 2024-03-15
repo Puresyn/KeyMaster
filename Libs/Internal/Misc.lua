@@ -81,6 +81,11 @@ function KeyMaster:FindLastVisiblePlayerRow()
     return
 end
 
+-- custom made rounding function to round to a single decimal place
+function KeyMaster:RoundSingleDecimal(number)
+    return math.floor((number * 10) + 0.5) * .1
+end
+
 function KeyMaster:GetTableLength(table)
     if table == nil then
         return 0

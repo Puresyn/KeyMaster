@@ -30,8 +30,8 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
     local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
-    local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Score
-    local tyranRating = playerData.DungeonRuns[mapId]["Tyrannical"].Score
+    local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
+    local tyranRating = playerData.DungeonRuns[mapId]["Tyrannical"].Rating
     local currentOverallRating = playerData.DungeonRuns[mapId].bestOverall
     
     local totalKeyRatingChange = 0
@@ -82,9 +82,11 @@ function PlayerFrameMapping:RefreshData(fetchNew)
 
         local playerMapDataFrame = _G["KM_PlayerFrame_Data"..mapId]
 
-        -- Overall Dungeon Score
-        local mapScore = playerData.DungeonRuns[mapId].bestOverall
-        playerMapDataFrame.overallScore:SetText(mapScore or defaultString)
+        -- Find highest affix for rating calculation
+        local highestAffix = "Fortified"
+        if playerData.DungeonRuns[mapId]["Tyrannical"].Rating > playerData.DungeonRuns[mapId]["Fortified"].Rating then
+            highestAffix = "Tyrannical"
+        end
 
         ------------ Tyrannical ------------
 
@@ -96,10 +98,15 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         local tyrannicalBonusTime = DungeonTools:CalculateChest(mapId, playerData.DungeonRuns[mapId]["Tyrannical"].DurationSec)
         playerMapDataFrame.tyrannicalBonus:SetText(tyrannicalBonusTime)
 
-        -- Tyrannical Dungeon Score
-        local tyrannicalScore = playerData.DungeonRuns[mapId]["Tyrannical"].Score
-        playerMapDataFrame.tyrannicalScore:SetText(tyrannicalScore or defaultString)
-        
+        -- Dungeon Ratings
+        local tyrannicalRating = playerData.DungeonRuns[mapId]["Tyrannical"].Rating
+        if highestAffix == "Tyrannical" then
+            tyrannicalRating = tyrannicalRating * 1.5
+        else
+            tyrannicalRating = tyrannicalRating * 0.5
+        end
+        playerMapDataFrame.tyrannicalScore:SetText(KeyMaster:RoundSingleDecimal(tyrannicalRating) or defaultString)
+                
         -- Tyrannical Run Time
         local tyrannicalRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Tyrannical"].DurationSec)
         playerMapDataFrame.tyrannicalRunTime:SetText(tyrannicalRunTime or "--:--") 
@@ -115,12 +122,21 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         playerMapDataFrame.fortifiedBonus:SetText(fortifiedBonusTime)
 
         -- Fortified Dungeon Score
-        local fortifiedScore = playerData.DungeonRuns[mapId]["Fortified"].Score
-        playerMapDataFrame.fortifiedScore:SetText(fortifiedScore or defaultString)
+        local fortifiedRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
+        if highestAffix == "Fortified" then
+            fortifiedRating = fortifiedRating * 1.5
+        else
+            fortifiedRating = fortifiedRating * 0.5
+        end
+        playerMapDataFrame.fortifiedScore:SetText(KeyMaster:RoundSingleDecimal(fortifiedRating) or defaultString)
         
         -- Fortified Run Time
         local fortifiedRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
         playerMapDataFrame.fortifiedRunTime:SetText(fortifiedRunTime)
+
+        -- Overall Dungeon Score
+        local mapOverallRating = fortifiedRating + tyrannicalRating
+        playerMapDataFrame.overallScore:SetText(KeyMaster:RoundSingleDecimal(mapOverallRating) or defaultString)
     end
 
     -- Player Mythic Plus Weekly Vault

@@ -28,7 +28,7 @@ While there are many future features in-mind for Key Master to expand its useful
 Diagnostics:
 If you are experiencing difficulties with Key Master not working properly, you may use [/km errors] or or [/km debug] to obtain diagnostic feedback from Key Master. Please note that debug mode is very verbose and may render in-game chat difficult to navigate.]]
     
-    local creditText = "Rexidan, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, and the entire 'Last Pull' crew for invaluable testing and feedback."
+    local creditText = "Rexidan, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, and the entire 'Last Pull' crew for invaluable testing and feedback."
 
     local indent = 10
     local generalFrame = CreateFrame("Frame", nil, infoFrame)
