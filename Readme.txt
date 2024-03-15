@@ -21,7 +21,7 @@ usefulness, how far it may go and when that will happen is largely dependent on
 its user base. So, if you find Key Master useful, tell your friends!
 
 Diagnostics:
-If you are experiencing difficulties with Key Mater not working properly, you
+If you are experiencing difficulties with Key Master not working properly, you
 may use [/km errors] or or [/km debug] to obtain diagnostic feedback from Key
 Master. Please note that debug mode is very verbose and may render in-game chat
 difficult to navigate.
