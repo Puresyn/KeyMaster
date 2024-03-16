@@ -209,9 +209,14 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
                 tyranRating = tyranRating * 1.5
             end
             local overallRating = fortRating + tyranRating
+            if KeyMaster_DB.addonConfig.showRatingFloat then
+                overallRating = KeyMaster:RoundSingleDecimal(overallRating)
+            else
+                overallRating = KeyMaster:RoundWholeNumber(overallRating)
+            end
 
             -- Overall Score
-            _G["KM_MapTotalScore"..partyPlayer..mapid]:SetText(KeyMaster:RoundSingleDecimal(overallRating))
+            _G["KM_MapTotalScore"..partyPlayer..mapid]:SetText(overallRating)
         end
         _G["KM_MapDataLegend"..partyPlayer]:Show()
     else
