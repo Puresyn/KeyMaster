@@ -86,6 +86,11 @@ function KeyMaster:RoundSingleDecimal(number)
     return math.floor((number * 10) + 0.5) * .1
 end
 
+-- custom made rounding function to round to a whole
+function KeyMaster:RoundWholeNumber(number)
+    return math.floor(number + 0.5)
+end
+
 function KeyMaster:GetTableLength(table)
     if table == nil then
         return 0

@@ -105,7 +105,12 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         else
             tyrannicalRating = tyrannicalRating * 0.5
         end
-        playerMapDataFrame.tyrannicalScore:SetText(KeyMaster:RoundSingleDecimal(tyrannicalRating) or defaultString)
+        if KeyMaster_DB.addonConfig.showRatingFloat then
+            tyrannicalRating = KeyMaster:RoundSingleDecimal(tyrannicalRating)
+        else
+            tyrannicalRating = KeyMaster:RoundWholeNumber(tyrannicalRating)
+        end
+        playerMapDataFrame.tyrannicalScore:SetText(tyrannicalRating or defaultString)        
                 
         -- Tyrannical Run Time
         local tyrannicalRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Tyrannical"].DurationSec)
@@ -128,7 +133,12 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         else
             fortifiedRating = fortifiedRating * 0.5
         end
-        playerMapDataFrame.fortifiedScore:SetText(KeyMaster:RoundSingleDecimal(fortifiedRating) or defaultString)
+        if KeyMaster_DB.addonConfig.showRatingFloat then
+            fortifiedRating = KeyMaster:RoundSingleDecimal(fortifiedRating)
+        else
+            fortifiedRating = KeyMaster:RoundWholeNumber(fortifiedRating)
+        end
+        playerMapDataFrame.fortifiedScore:SetText(fortifiedRating or defaultString)
         
         -- Fortified Run Time
         local fortifiedRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
@@ -136,7 +146,12 @@ function PlayerFrameMapping:RefreshData(fetchNew)
 
         -- Overall Dungeon Score
         local mapOverallRating = fortifiedRating + tyrannicalRating
-        playerMapDataFrame.overallScore:SetText(KeyMaster:RoundSingleDecimal(mapOverallRating) or defaultString)
+        if KeyMaster_DB.addonConfig.showRatingFloat then
+            mapOverallRating = KeyMaster:RoundSingleDecimal(mapOverallRating)
+        else
+            mapOverallRating = KeyMaster:RoundWholeNumber(mapOverallRating)
+        end
+        playerMapDataFrame.overallScore:SetText(mapOverallRating or defaultString)
     end
 
     -- Player Mythic Plus Weekly Vault
