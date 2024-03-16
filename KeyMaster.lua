@@ -151,14 +151,12 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     KeyMaster:Print(KeyMasterLocals.WELCOMEMESSAGE, "|cff"..hexColor..UnitName("player").."|r"..KeyMasterLocals.EXCLIMATIONPOINT)
     
     local hexColor = select(4, Theme:GetThemeColor("color_ERRORMSG"))
-    local status = KeyMaster_DB.addonConfig.showErrors
-    if (status) then
+    if (KeyMaster_DB.addonConfig.showErrors == true) then
         KeyMaster:Print("|cff"..hexColor.. KeyMasterLocals.ERRORMESSAGESNOTIFY .. "|r")
     end
 
     local hexColor = select(4, Theme:GetThemeColor("color_DEBUGMSG"))
-    status = KeyMaster_DB.addonConfig.showDebugging
-    if (status) then
+    if (KeyMaster_DB.addonConfig.showDebugging == true) then
         KeyMaster:Print("|cff"..hexColor.. KeyMasterLocals.DEBUGMESSAGESNOTIFY .. "|r")
     end
 end

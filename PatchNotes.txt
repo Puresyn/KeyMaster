@@ -5,6 +5,7 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta
 --------------------------------------------------
+!! This patch IS NOT backwards compatible! !!
 - Fixed Spelling mistakes on information panel
 - Fixed key highlights when you have two of the same key at different levels
 - Fixed score gained when having two keys of the same dungeon and the lower is processed after the higher

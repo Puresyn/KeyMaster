@@ -271,6 +271,11 @@ end
 function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     -- ((totaltime - runTime)/(totaltime * maxModifier)) * 5 = bonusScore
     -- Subtract 5 if overtime
+    
+    if (keyLevel < 2) then
+        return 0
+    end
+
     if currentSeasonMaps == nil then
         currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
     end
