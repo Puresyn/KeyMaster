@@ -36,6 +36,17 @@ function PartyFrameMapping:ResetTallyFramePositioning()
     end
 end
 
+local function getNumberPerferenceValue(number)
+    local result = 0
+    if KeyMaster_DB.addonConfig.showRatingFloat then
+        result = KeyMaster:RoundSingleDecimal(number)
+    else
+        result = KeyMaster:RoundWholeNumber(number)
+    end
+
+    return result
+end
+
 -- fades all text data on unit frames for dungeons that do not have a keystone in the party
 local function fadeNonKeystoneData()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
@@ -327,7 +338,7 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
         end
         
         local mapTallyFrame = _G["KM_MapTallyScore"..keyData.ownedKeyId]
-        mapTallyFrame:SetText(KeyMaster:RoundToOneDecimal(totalKeyRatingChange))
+        mapTallyFrame:SetText(getNumberPerferenceValue(totalKeyRatingChange))
     end
 end
 

@@ -6,7 +6,8 @@ PATCH NOTES:
 Key Master Beta release v0.0.95-beta
 --------------------------------------------------
 - Added decimal preferences to score calculator
-- resets score calculator when opening the player tab again
+- added decimal preference to party tally data on party panel
+- resets score calculator when opening the player panel again
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta
