@@ -17,6 +17,12 @@ local Colors = {
         b = 0,
         hex = "ff5a00"
     },
+    color_THEMEGOLD = {
+        r = 0.69,
+        g = 0.612,
+        b = 0.376,
+        hex = "b09c60"
+    },
     themeFontColorYellow = {
         r = 1,
         g = 0.854,

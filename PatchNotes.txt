@@ -10,6 +10,9 @@ Key Master Beta release v0.0.94-beta
 - Fixed score gained when having two keys of the same dungeon and the lower is processed after the higher
 - Changed displayed data for players from base score to rating and added decimal point rounding to a single digit
 - Fixed dungeon rating calculations to be more accurate since they use rating vs score now
+- Added configuration screen which allows additional options
+- Updated the About screen to be more consistent with the rest of the addon
+- Added further localization
 
 --------------------------------------------------
 Key Master Beta release v0.0.93-beta

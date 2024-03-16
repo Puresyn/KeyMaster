@@ -139,7 +139,8 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     local defaults = {
         addonConfig = {
             showErrors = false,
-            showDebugging = false
+            showDebugging = false,
+            showRatingFloat = false
         }
     }
 
@@ -174,14 +175,14 @@ end
 function KeyMaster:ToggleDebug()
     KeyMaster_DB.addonConfig.showDebugging = not KeyMaster_DB.addonConfig.showDebugging
     local status = KeyMaster_DB.addonConfig.showDebugging
-    if (status) then status = "on." else status = "off." end
+    if (status) then status = KeyMasterLocals.ENABLED.."." else status = KeyMasterLocals.DISABLED.."." end
     KeyMaster:Print(KeyMasterLocals.DEBUGMESSAGES .. " " .. status)
 end
 
 function KeyMaster:ToggleErrors()
     KeyMaster_DB.addonConfig.showErrors = not KeyMaster_DB.addonConfig.showErrors
     local status = KeyMaster_DB.addonConfig.showErrors
-    if (status) then status = "on." else status = "off." end
+    if (status) then status = KeyMasterLocals.ENABLED.."." else status = KeyMasterLocals.DISABLED.."." end
     KeyMaster:Print(KeyMasterLocals.ERRORMESSAGES.. " " .. status)
 end
 

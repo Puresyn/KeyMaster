@@ -30,6 +30,7 @@ Core\UI\PartyFrameMapping.lua
 Core\UI\HeaderFrameMapping.lua
 Core\Coms.lua
 Core\UI\InfoFrame.lua
+Core\UI\ConfigFrame.lua
 Core\UI\PlayerFrame.lua
 Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua

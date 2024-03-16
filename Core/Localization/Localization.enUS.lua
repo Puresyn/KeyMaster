@@ -17,15 +17,19 @@ L.BUILDRELEASE = "release"
 L.BUILDBETA = "beta"
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Welcome back"
+L.ON = "on"
+L.OFF = "off"
+L.ENABLED = "enabled"
+L.DISABLED = "disabled"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "This Week..."
 L.YOURRATING = "Your Rating"
 L.TYRANNICAL = "Tyrannical"
 L.FORTIFIED = "Fortified"
-L.ERRORMESSAGES = "Error messages"
-L.ERRORMESSAGESNOTIFY = "Notify: Error messages are on."
-L.DEBUGMESSAGES = "Debug messages"
-L.DEBUGMESSAGESNOTIFY = "Notify: Debug messages are on."
+L.ERRORMESSAGES = "Error messages are"
+L.ERRORMESSAGESNOTIFY = "Notify: Error messages are enabled."
+L.DEBUGMESSAGES = "Debug messages are"
+L.DEBUGMESSAGESNOTIFY = "Notify: Debug messages are disabled."
 L.COMMANDERROR1 = "Invalid command"
 L.COMMANDERROR2 = "Enter"
 L.COMMANDERROR3 = "for commands"
@@ -78,7 +82,16 @@ L.TABPARTY = "Party"
 L.TABABOUT = "About"
 L.TABCONFIG = "Configuration"
 
+L.CONFIGURATIONFRAME = {}
+L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Display Settings", text = "Display Settings"}
+L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Toggle Rating Float", text = "Show rating decimals."}
+L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnostic Settings", text = "Diagnostic Settings."}
+L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Display Errors", text = "Display error messages."}
+L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Display Debug", text = "Display debugging messages."}
+L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Advanced Diagnostics", text="Note: These are for diagnostic purposes only. They may flood your chat box if enabled!"}
 
--- DO NOT EDIT
-SLASH_KeyMaster1 = L.COMMANDLINE["/km"].name
-SLASH_KeyMaster2 = L.COMMANDLINE["/keymaster"].name
+L.ABOUTFRAME = {}
+L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}
+L.ABOUTFRAME["AboutAuthors"] = { name = "Authors", text = "Authors"}
+L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Special Thanks", text = "Special Thanks"}
+L.ABOUTFRAME["AboutContributors"] = { name = "Contributors", text = "Contributors"}

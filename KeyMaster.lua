@@ -22,18 +22,19 @@ KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEA
 --------------------------------
 -- Slash Commands and command menu
 --------------------------------
+-- DO NOT EDIT
+SLASH_KeyMaster1 = KeyMasterLocals.COMMANDLINE["/km"].name
+SLASH_KeyMaster2 = KeyMasterLocals.COMMANDLINE["/keymaster"].name
+--------------
+
 KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
-    [KeyMasterLocals.COMMANDLINE['Debug'].name] = KeyMaster.ToggleDebug,
-    [KeyMasterLocals.COMMANDLINE["Errors"].name] = KeyMaster.ToggleErrors,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         print("=====================")
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
-        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Errors"].name.."|r"..KeyMasterLocals.COMMANDLINE["Errors"].text)
-        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Debug"].name.."|r"..KeyMasterLocals.COMMANDLINE["Debug"].text)
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
         print("=====================")
     end,
