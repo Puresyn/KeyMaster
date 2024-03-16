@@ -70,7 +70,7 @@ L.PLAYERFRAME["Gain"] = { name = "Gain", text = "Potential rating gain."}
 L.PLAYERFRAME["New"] = { name = "New", text = "Your rating after completing this key at a +1."}
 L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calculate potential rating gains."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gane", text = "your base rating gain prediction."}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gain", text = "your base rating gain prediction."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
