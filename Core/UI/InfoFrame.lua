@@ -7,6 +7,7 @@ function InfoFrame:CreateInfoFrame(parentFrame)
 
     local mtb = 4 -- margin top/bottom
     local mlr = 4 -- margin left/right
+    local indent = 8 -- copy indent
     local infoFrame = CreateFrame("Frame", "KM_InfoTab_Frame",parentFrame)
     infoFrame:SetPoint("CENTER", parentFrame, "CENTER", 0, 0)
     infoFrame:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
@@ -88,12 +89,26 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     aboutGeneral.title:SetPoint("TOPLEFT", aboutGeneral, "TOPLEFT", 4, -4)
     aboutGeneral.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutGeneral"].name)
 
+    local generalText = [[(c) 2024 - Released under the GNU General Public License
+        
+Key Master is an addon developed for World of Warcraft that assists in gathering and displaying detailed information about you and your parties “live” (if they also have Key Master) data relating to Mythic Plus Instances.
+
+This addon was conceived with the idea that it was too laborious to make well-informed decisions regarding “Key Running”; either for yourself, or a “push team”.
+    
+While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, tell your friends!]]
+    aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    aboutGeneral.text:SetPoint("TOPLEFT", aboutGeneral.title, "BOTTOMLEFT", 8, -4)
+    aboutGeneral.text:SetJustifyH("LEFT")
+    aboutGeneral.text:SetJustifyV("TOP")
+    aboutGeneral.text:SetSize(aboutGeneral:GetWidth()-(indent*2)-mlr, aboutGeneral:GetHeight()-aboutGeneral.title:GetHeight()-25)
+    aboutGeneral.text:SetText(generalText)
+
     local Hline = KeyMaster:CreateHLine(aboutGeneral:GetWidth()+8, aboutGeneral, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
     aboutGeneral.texture = aboutGeneral:CreateTexture(nil, "BACKGROUND", nil, 0)
     aboutGeneral.texture:SetAllPoints(aboutGeneral)
-    aboutGeneral.texture:SetColorTexture(0, 0, 0, 1)
+    aboutGeneral.texture:SetColorTexture(0, 0, 0, 0.3)
 
     aboutGeneral.textureHighlight = aboutGeneral:CreateTexture(nil, "BACKGROUND", nil, 1)
     aboutGeneral.textureHighlight:SetSize(aboutGeneral:GetWidth(), aboutGeneral:GetHeight()/6)
@@ -105,11 +120,20 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     -- About - Authors
     local aboutAuthors = CreateFrame("Frame", nil, infoFrame)
     aboutAuthors:SetPoint("TOPLEFT", aboutGeneral, "TOPRIGHT", 4, 0)
-    aboutAuthors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/3-mtb))
+    aboutAuthors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/4-mtb))
     aboutAuthors.title = aboutAuthors:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutAuthors.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutAuthors.title:SetPoint("TOPLEFT", aboutAuthors, "TOPLEFT", 4, -4)
     aboutAuthors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutAuthors"].name)
+
+    local strylorColor, shantisocColor
+    _, _, _, strylorColor = Theme:GetThemeColor("color_ROGUE")
+    _, _, _, shantisocColor = Theme:GetThemeColor("color_MONK")
+    local authorsText = "|cff"..strylorColor.."Strylor|r-Proudmoore\n|cff"..shantisocColor.."Shantisoc|r-Proudmoore"
+    aboutAuthors.text = aboutAuthors:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    aboutAuthors.text:SetPoint("TOPLEFT", aboutAuthors.title, "BOTTOMLEFT", 8, -4)
+    aboutAuthors.text:SetSize(aboutAuthors:GetWidth()-indent-mlr, aboutAuthors:GetHeight()-aboutAuthors.title:GetHeight()-25)
+    aboutAuthors.text:SetText(authorsText)
 
     local Hline = KeyMaster:CreateHLine(aboutAuthors:GetWidth()+8, aboutAuthors, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
@@ -128,11 +152,17 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     -- About - Contributors
     local aboutContributors = CreateFrame("Frame", nil, infoFrame)
     aboutContributors:SetPoint("TOPLEFT", aboutAuthors, "BOTTOMLEFT", 0, -4)
-    aboutContributors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/3-mtb))
+    aboutContributors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/2-mtb))
     aboutContributors.title = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutContributors.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
+
+    local textContributors = "Rex\nIthoro\nXanat\nDoc\nSunnie\nCharlie\nFaethor\nTanzen\nOmgtotem"
+    aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
+    aboutContributors.text:SetSize(aboutContributors:GetWidth()-indent-mlr, aboutContributors:GetHeight()-aboutContributors.title:GetHeight()-25)
+    aboutContributors.text:SetText(textContributors)
 
     local Hline = KeyMaster:CreateHLine(aboutContributors:GetWidth()+8, aboutContributors, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
@@ -148,14 +178,20 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     aboutContributors.textureHighlight:SetAlpha(highlightAlpha)
     aboutContributors.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
 
-    -- About - Special THanks
+    -- About - Special Thanks
     local aboutSpecialThanks = CreateFrame("Frame", nil, infoFrame)
     aboutSpecialThanks:SetPoint("TOPLEFT", aboutContributors, "BOTTOMLEFT", 0, -4)
-    aboutSpecialThanks:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/3-mtb))
+    aboutSpecialThanks:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/4-mtb))
     aboutSpecialThanks.title = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutSpecialThanks.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutSpecialThanks.title:SetPoint("TOPLEFT", aboutSpecialThanks, "TOPLEFT", 4, -4)
     aboutSpecialThanks.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutSpecialThanks"].name)
+
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore"
+    aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
+    aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)
+    aboutSpecialThanks.text:SetText(textSpecialThanks)
 
     local Hline = KeyMaster:CreateHLine(aboutSpecialThanks:GetWidth()+8, aboutSpecialThanks, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
