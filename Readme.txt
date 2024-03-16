@@ -1,7 +1,7 @@
 Key Master AddOn for World of Warcraft
 (c) 2024 – Released under the GNU General Public License
 
-Join the conversation helping us improve Key Master!
+Join the conversation helping us improve Key Master!  (Not yet public)
 Visit https://github.com/Puresyn/KeyMaster/discussions/18
 
 Initialization:
@@ -20,12 +20,6 @@ While there are many future features in-mind for Key Master to expand its
 usefulness, how far it may go and when that will happen is largely dependent on
 its user base. So, if you find Key Master useful, tell your friends!
 
-Diagnostics:
-If you are experiencing difficulties with Key Master not working properly, you
-may use [/km errors] or or [/km debug] to obtain diagnostic feedback from Key
-Master. Please note that debug mode is very verbose and may render in-game chat
-difficult to navigate.
-
-Repository:
+Repository: (Not yet public)
 For full source code, bug submission, bug tracking, and other source related
 issues. Please visit the GitHub repository at - https://github.com/Puresyn/KeyMaster
