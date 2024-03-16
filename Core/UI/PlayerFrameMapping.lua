@@ -17,6 +17,17 @@ local function setVaultStatusIcon(vaultRowFrame, isCompleted)
     end
 end
 
+local function getNumberPerferenceValue(number)
+    local result = 0
+    if KeyMaster_DB.addonConfig.showRatingFloat then
+        result = KeyMaster:RoundSingleDecimal(number)
+    else
+        result = KeyMaster:RoundWholeNumber(number)
+    end
+
+    return result
+end
+
 function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     local scoreFrame = _G["KM_ScoreCalcScores"]
     if scoreFrame == nil then
@@ -38,7 +49,7 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     if (weeklyAffix == "Tyrannical") then
         if ratingChange > tyranRating then
             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
-            scoreFrame.ratingGain:SetText(newTotal - currentOverallRating)
+            scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
             totalKeyRatingChange = newTotal - currentOverallRating
         else
             scoreFrame.ratingGain:SetText("0")
@@ -46,7 +57,7 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     else
         if ratingChange > fortRating then
             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
-            scoreFrame.ratingGain:SetText(newTotal - currentOverallRating)
+            scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
             totalKeyRatingChange = newTotal - currentOverallRating
         else
             scoreFrame.ratingGain:SetText("0")
@@ -54,7 +65,7 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     end
     
     local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
-    
+    newOverall = getNumberPerferenceValue(newOverall)
     scoreFrame.newRating:SetText(newOverall)
     
     scoreFrame.keyLevel:SetText(keyLevel.." "..weeklyAffix)
@@ -105,11 +116,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         else
             tyrannicalRating = tyrannicalRating * 0.5
         end
-        if KeyMaster_DB.addonConfig.showRatingFloat then
-            tyrannicalRating = KeyMaster:RoundSingleDecimal(tyrannicalRating)
-        else
-            tyrannicalRating = KeyMaster:RoundWholeNumber(tyrannicalRating)
-        end
+        tyrannicalRating = getNumberPerferenceValue(tyrannicalRating)        
         playerMapDataFrame.tyrannicalScore:SetText(tyrannicalRating or defaultString)        
                 
         -- Tyrannical Run Time
@@ -133,11 +140,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         else
             fortifiedRating = fortifiedRating * 0.5
         end
-        if KeyMaster_DB.addonConfig.showRatingFloat then
-            fortifiedRating = KeyMaster:RoundSingleDecimal(fortifiedRating)
-        else
-            fortifiedRating = KeyMaster:RoundWholeNumber(fortifiedRating)
-        end
+        fortifiedRating = getNumberPerferenceValue(fortifiedRating)
         playerMapDataFrame.fortifiedScore:SetText(fortifiedRating or defaultString)
         
         -- Fortified Run Time
@@ -146,11 +149,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
 
         -- Overall Dungeon Score
         local mapOverallRating = fortifiedRating + tyrannicalRating
-        if KeyMaster_DB.addonConfig.showRatingFloat then
-            mapOverallRating = KeyMaster:RoundSingleDecimal(mapOverallRating)
-        else
-            mapOverallRating = KeyMaster:RoundWholeNumber(mapOverallRating)
-        end
+        mapOverallRating = getNumberPerferenceValue(mapOverallRating)
         playerMapDataFrame.overallScore:SetText(mapOverallRating or defaultString)
     end
 

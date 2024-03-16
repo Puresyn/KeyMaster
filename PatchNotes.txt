@@ -3,6 +3,12 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master Beta release v0.0.95-beta
+--------------------------------------------------
+- Added decimal preferences to score calculator
+- resets score calculator when opening the player tab again
+
+--------------------------------------------------
 Key Master Beta release v0.0.94-beta
 --------------------------------------------------
 !! This patch IS NOT backwards compatible! !!

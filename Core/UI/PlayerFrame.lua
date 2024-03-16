@@ -190,6 +190,10 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame:SetScript("OnShow", function(self)
         PlayerFrameMapping:RefreshData(false)
         updateWeeklyAffixTheme()
+        local scoreCalcScores = _G["KM_ScoreCalcScores"]
+        local scoreCalcDirection = _G["KM_ScoreCalcDirection"]
+        scoreCalcDirection:Show()
+        scoreCalcScores:Hide()
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
