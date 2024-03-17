@@ -11,6 +11,7 @@ Key Master Beta release v0.0.95-beta
 - added lazy loading into open raid communications to get rating and keystone information for players without Key Master
 - added decimal preference to personal gain row on party panel
 - added no key master icon to party frame for players without the addon
+- added minimap icon and remembering window positioning when open/closing
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta
