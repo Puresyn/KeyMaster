@@ -236,13 +236,6 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
     PlayerClassText:SetPoint("TOPLEFT", _G["KM_PlayerName"..playerNumber], "BOTTOMLEFT", 0, 0)
 
     -- Player does not have the addon
-    --[[ local NoAddonText = dataFrame:CreateFontString("KM_NoAddon"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    local font, fontSize, flags = NoAddonText:GetFont()
-    NoAddonText:SetTextColor(0.6, 0.6, 0.6, 1)
-    NoAddonText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 10, 4)
-    NoAddonText:SetText(KM_ADDON_NAME.." "..KeyMasterLocals.PARTYFRAME["NoAddon"].text)
-    NoAddonText:Hide() ]]
-
     local noAddonIcon = dataFrame:CreateTexture("KM_NoAddon"..playerNumber, "OVERLAY")
     noAddonIcon:SetSize(32, 32)
     noAddonIcon:SetPoint("LEFT", dataFrame, "LEFT", 160, 0)

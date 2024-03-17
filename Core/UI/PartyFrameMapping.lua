@@ -316,7 +316,8 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                     if (currentWeeklyAffix == "Tyrannical") then
                         if ratingChange > tyranRating then
                             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(newTotal - currentOverallRating)
+                            local diff = newTotal - currentOverallRating
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
                             totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
                         else
                             _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
@@ -324,7 +325,8 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                     else
                         if ratingChange > fortRating then
                             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(newTotal - currentOverallRating)
+                            local diff = newTotal - currentOverallRating
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(diff)
                             totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
                         else
                             _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")

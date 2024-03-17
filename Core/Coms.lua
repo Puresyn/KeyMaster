@@ -212,6 +212,6 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     end
 
     if (prefix == "KM3") then
-        processKM3Data(data, distribution, sender)
+        processKM3Data(payload, distribution, sender)
     end
 end

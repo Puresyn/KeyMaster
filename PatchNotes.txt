@@ -9,6 +9,8 @@ Key Master Beta release v0.0.95-beta
 - added decimal preference to party tally data on party panel
 - resets score calculator when opening the player panel again
 - added lazy loading into open raid communications to get rating and keystone information for players without Key Master
+- added decimal preference to personal gain row on party panel
+- added no key master icon to party frame for players without the addon
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta
