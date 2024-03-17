@@ -15,6 +15,7 @@ Key Master Beta release v0.0.95-beta
 - Replaced text with icon on the party frame for players without Key Master
 - Added minimap icon
 - Fixed Key Master icon showing up as a "?" in the in-game AddOn List. Now shows correct icon.
+- The Key Master window's position is now saved between logins/reloads.
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta
