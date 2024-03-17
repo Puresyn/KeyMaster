@@ -13,6 +13,7 @@ local Coms = KeyMaster.Coms
 local UnitData = KeyMaster.UnitData
 local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
+local CharacterInfo = KeyMaster.CharacterInfo
 
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
@@ -23,11 +24,13 @@ local LibSerialize = LibStub("LibSerialize")
 local LibDeflate = LibStub("LibDeflate")
 local comPrefix = "KM2"
 local comPrefix2 = "KM3"
+local comPrefixOpenRaid = "LRS"
 
 -- Notify Successful Registration (DEBUG)
 function MyAddon:OnEnable()
     self:RegisterComm(comPrefix)
     self:RegisterComm(comPrefix2)
+    self:RegisterComm(comPrefixOpenRaid)
 end
 
 -- Serialize communication data:
@@ -54,14 +57,7 @@ function MyAddon:TransmitRequest(requestData)
     self:SendCommMessage(comPrefix2, encoded, "PARTY", nil)
 end
 
-local function processKM3Data(data, distribution, sender)    
-    if data.requestType == "playerData" then
-        -- send player data to party members
-        local playerData = UnitData:GetUnitDataByUnitId("player")
-        MyAddon:Transmit(playerData)
-        KeyMaster:_DebugMsg("processKM3Data", "Coms", "Request replied with player data...")
-    end   
-end
+
 
 local function checkVersion(data)
     -- VersionCompare returns:
@@ -92,41 +88,130 @@ local function checkVersion(data)
     end
 end
 
--- Deserialize communication data:
--- Returns nil if something went wrong.
-function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
+-- LRS Data
+local function processOpenRaidData(payload, sender)
+    local LibDeflate = LibStub:GetLibrary("LibDeflate")
+    local dataCompressed = LibDeflate:DecodeForWoWAddonChannel(payload)
+    local openRaidData = LibDeflate:DecompressDeflate(dataCompressed)
+    local dataTypePrefix = openRaidData:match("^.")
+    if dataTypePrefix == "K" then
+        --convert to table
+        local dataAsTable = {strsplit(",", openRaidData)}
+
+        --remove the first index (prefix)
+        tremove(dataAsTable, 1)
+
+        local isDirty = false -- has the data changed?
+        local senderData = UnitData:GetUnitDataByName(sender)
+        if senderData == nil then
+            local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+            for _,unitId in pairs(partyMembers) do
+                if UnitName(unitId) == sender then
+                    senderData = CharacterInfo:GetUnitInfo(unitId)
+                    senderData.ownedKeyId = tonumber(dataAsTable[3])
+                    senderData.ownedKeyLevel = tonumber(dataAsTable[1])
+                    senderData.mythicPlusRating = tonumber(dataAsTable[5])
+                    isDirty = true
+
+                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received data from OpenRaid for "..sender)
+                    UnitData:SetUnitData(senderData)
+                    break
+                end
+            end
+        else
+            -- Only process openRaid data if they also don't have KeyMaster
+            if senderData.hasAddon == false then
+                senderData.ownedKeyId = tonumber(dataAsTable[3])
+                senderData.ownedKeyLevel = tonumber(dataAsTable[1])
+                senderData.mythicPlusRating = tonumber(dataAsTable[5])
+                isDirty = true
+
+                KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received data from OpenRaid for "..sender)
+                UnitData:SetUnitData(senderData)
+            end
+        end
+        
+        -- Only update UI if party tab is open
+        local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
+        if isDirty == true and partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+            PartyFrameMapping:UpdateSingleUnitData(senderData.GUID)
+            PartyFrameMapping:UpdateKeystoneHighlights()
+            PartyFrameMapping:CalculateTotalRatingGainPotential() 
+        end        
+    end
+    return
+end
+
+-- KM3 Data
+local function processKM3Data(payload, distribution, sender)    
     local decoded = LibDeflate:DecodeForWoWAddonChannel(payload)
     if not decoded then return end
     local decompressed = LibDeflate:DecompressDeflate(decoded)
     if not decompressed then return end
     local success, data = LibSerialize:Deserialize(decompressed)
     if not success then
-        KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Failed to deserialize data from "..sender)
-        return
-    end
-    if (sender == UnitName("player")) then return end
-    
-    if (data == nil) then
-        KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received nil data from "..sender)
+        KeyMaster:_DebugMsg("processKM3Data", "Coms", "Failed to deserialize data from "..sender)
         return
     end    
-    --do something with data
-    if (prefix ~= "KM2" and prefix ~= "KM3") then return end   
+    if (data == nil) then
+        KeyMaster:_DebugMsg("processKM3Data", "Coms", "Received nil data from "..sender)
+        return
+    end
+
+    if data.requestType == "playerData" then
+        -- send player data to party members
+        local playerData = UnitData:GetUnitDataByUnitId("player")
+        MyAddon:Transmit(playerData)
+        KeyMaster:_DebugMsg("processKM3Data", "Coms", "Request replied with player data...")
+    end   
+end
+
+-- KM2 Data
+local function processKM2Data(payload, sender)
+    local decoded = LibDeflate:DecodeForWoWAddonChannel(payload)
+    if not decoded then return end
+    local decompressed = LibDeflate:DecompressDeflate(decoded)
+    if not decompressed then return end
+    local success, data = LibSerialize:Deserialize(decompressed)
+    if not success then
+        KeyMaster:_DebugMsg("processKM2Data", "Coms", "Failed to deserialize data from "..sender)
+        return
+    end    
+    if (data == nil) then
+        KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received nil data from "..sender)
+        return
+    end
+
+    KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received data from "..sender)
+    data.hasAddon = true
+    UnitData:SetUnitData(data)
+
+    -- Only update UI if party tab is open
+    local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
+    if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+        PartyFrameMapping:UpdateSingleUnitData(data.GUID)
+        PartyFrameMapping:UpdateKeystoneHighlights()
+        PartyFrameMapping:CalculateTotalRatingGainPotential() 
+    end
+
+    checkVersion(data)    
+end
+
+-- Deserialize communication data:
+-- Returns nil if something went wrong.
+function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
+    if (sender == UnitName("player")) then return end
+    
+    -- intercept open raid lib keys for client QOL.
+    if (prefix == "LRS" and distribution == "PARTY") then
+        processOpenRaidData(payload, sender)
+    end
+
+    if (prefix == "KM2") then
+        processKM2Data(payload, sender)
+    end
+
     if (prefix == "KM3") then
         processKM3Data(data, distribution, sender)
-    elseif (prefix == "KM2") then
-        KeyMaster:_DebugMsg("OnCommReceived", "Coms", "Received data from "..sender)
-        data.hasAddon = true
-        UnitData:SetUnitData(data)
-
-        -- Only update UI if party tab is open
-        local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-        if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
-            PartyFrameMapping:UpdateSingleUnitData(data.GUID)
-            PartyFrameMapping:UpdateKeystoneHighlights()
-            PartyFrameMapping:CalculateTotalRatingGainPotential() 
-        end
-
-        checkVersion(data)
     end
 end

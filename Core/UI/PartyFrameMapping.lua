@@ -306,7 +306,7 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
             local unitGuid = UnitGUID(unitid)
             if (unitGuid ~= nil) then
                 local playerData = KeyMaster.UnitData:GetUnitDataByGUID(unitGuid)
-                if playerData ~= nil then
+                if playerData ~= nil and playerData.DungeonRuns ~= nil then
                     --print("Checking rating gain for "..playerData.name.." on key "..keyData.ownedKeyId.." level "..keyData.ownedKeyLevel..".")
                     local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
                     local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Rating
