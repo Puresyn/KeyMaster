@@ -203,7 +203,7 @@ function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     if (sender == UnitName("player")) then return end
     
     -- intercept open raid lib keys for client QOL.
-    if (prefix == "LRS" and distribution == "PARTY") then
+    if (prefix == "LRS" and (distribution == "PARTY" or distribution == "INSTANCE_CHAT")) then
         processOpenRaidData(payload, sender)
     end
 

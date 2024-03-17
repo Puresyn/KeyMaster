@@ -5,7 +5,7 @@ Join the conversation helping us improve Key Master!  (Not yet public)
 Visit https://github.com/Puresyn/KeyMaster/discussions/18
 
 Initialization:
-Use /km or a keybind available in game keybindings to toggle the main window.
+Use /km, set up a keybind (available in game keybindings), or click the minimap button to toggle the main window.
 Use /km help for command line options.
 
 About:
