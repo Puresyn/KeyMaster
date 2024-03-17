@@ -7,13 +7,14 @@ Key Master Beta release v0.0.95-beta
 --------------------------------------------------
 - Added decimal preferences to score calculator
 - Added decimal preference to party tally data on party panel
-- Reset score calculator when opening the player panel again
-- Added lazy loading of rating and keystone information for players without Key Master by
-  listening and intecepting Open Raid party communications -- if/when available; it
-  needs additional testing!
+- Reset score calculator when re-opening the player panel
+- Added QOL querying of keystone and rating information for party members without Key Master
+  installed from the commonly used Open Raid library
+  (if they have another addon with openRaid installed: i.e. Details, etc.).
 - Added decimal preference to personal gain row on party panel
-- Replaced text with icon on the party frame for players without Key Master
-- Added minimap icon
+- Replaced "Key Master Not Detected!" text with an icon on the party frame for
+  players without Key Master installed.
+- Added a minimap icon
 - Fixed Key Master icon showing up as a "?" in the in-game AddOn List. Now shows correct icon.
 - The Key Master window's position is now saved between logins/reloads.
 
