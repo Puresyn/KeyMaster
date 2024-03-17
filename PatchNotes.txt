@@ -19,6 +19,7 @@ Key Master Beta release v0.0.95-beta
 - Added a minimap icon
 - Fixed Key Master icon showing up as a "?" in the in-game AddOn List. Now shows correct icon.
 - The Key Master window's position is now saved between logins/reloads.
+- Updated the Key Master main "Theme" color to Key Master Gold.
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta

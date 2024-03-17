@@ -3,7 +3,7 @@
 ## X-Min-Interface: 100205
 
 ## Version: 0.0.95
-## Title: |cffff5a00KeyMaster|r
+## Title: |cffb09c60KeyMaster|r
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## DefaultState: enabled

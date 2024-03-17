@@ -6,16 +6,16 @@ Theme.style = "KeyMaster-Interface-Clean"
 
 local Colors = {
     default = { 
-        r = 1, 
-		g = 0.353,
-		b = 0,
-		hex = "ff5a00"
+        r = 0.69,
+        g = 0.612,
+        b = 0.376,
+        hex = "b09c60"
 	},
     themeFontColorMain = {
-        r = 1,
-        g = 0.353,
-        b = 0,
-        hex = "ff5a00"
+        r = 0.69,
+        g = 0.612,
+        b = 0.376,
+        hex = "b09c60"
     },
     color_THEMEGOLD = {
         r = 0.69,
