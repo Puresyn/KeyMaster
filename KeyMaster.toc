@@ -9,7 +9,7 @@
 ## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB
 
-## X-IconTexture: Interface/AddOns/KeyMaster/KM-Icon
+## IconTexture: Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32
 
 ## X-License: GNU GPL V3
 
@@ -17,8 +17,6 @@
 ## X-Embeds: Ace3
 ## X-Curse-Project-ID: 985862
 ## X-GitHub: github.com/Puresyn/KeyMaster
-
-## X-Credits: Rexidan, Xanat, Ithoro, Doc, and many others for alpha testing and feedback. The Last Pull-Proudmoore (guild)
 
 Embeds.xml
 Core\Localization\Localization.enUS.lua

@@ -137,7 +137,6 @@ function KeyMaster:_DebugMsg(funcName, fileName, ...)
     end
 end
 
-
 -- This function gets run when the PLAYER_LOGIN event fires:
 function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     -- This table defines the addon's default settings:
@@ -145,7 +144,11 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
         addonConfig = {
             showErrors = false,
             showDebugging = false,
-            showRatingFloat = false
+            showRatingFloat = false,
+            miniMapButtonPos = {
+                ["minimapPos"] = 206,
+	            ["hide"] = false
+            }
         }
     }
 

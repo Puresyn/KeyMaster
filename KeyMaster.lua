@@ -93,22 +93,6 @@ function KMWindowBindingToggle()
     KeyMaster.MainInterface.Toggle()
 end
 
-local miniButton = LibStub("LibDataBroker-1.1"):NewDataObject("KeyMaster", 
-    {
-        type = "data source",    
-        text = "Key Master",    
-        icon = "Interface\\Addons\\KeyMaster\\Assets\\Images\\KM-Icon-256",    
-        OnClick = function(self, btn)    
-            KeyMaster.MainInterface.Toggle()   
-        end,    
-        OnTooltipShow = function(tooltip)    
-            if not tooltip or not tooltip.AddLine then return end    
-            tooltip:AddLine("Key Master")    
-        end,    
-    })
-local icon = LibStub("LibDBIcon-1.0", true)
-icon:Register("KeyMaster", miniButton, KeyMaster_DB)
-
 -- formats strings for end-user display in the chat box
 function KeyMaster:Print(...)
     local hex = select(4, Theme:GetThemeColor("default"))

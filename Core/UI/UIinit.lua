@@ -5,8 +5,38 @@ local ConfigFrame = KeyMaster.ConfigFrame
 local InfoFrame = KeyMaster.InfoFrame
 local PlayerFrame = KeyMaster.PlayerFrame
 local PartyFrame = KeyMaster.PartyFrame
+local Theme = KeyMaster.Theme
+
+-- Minimap Icon
+local function MiniMapIconInit()
+  local _, _, _, c1 = Theme:GetThemeColor("color_TAUPE")
+  local _, _, _, c2 = Theme:GetThemeColor("themeFontColorGreen1")
+  local _, _, _, c3 = Theme:GetThemeColor("themeFontColorMain")
+  local miniButton = LibStub("LibDataBroker-1.1"):NewDataObject("KeyMaster", 
+      {
+          type = "launcher",    
+          text = KeyMasterLocals.ADDONNAME,    
+          icon = "Interface/Addons/KeyMaster/Assets/Images/KM-Icon-round",    
+          OnClick = function(self, btn)    
+              KeyMaster.MainInterface.Toggle()   
+          end,    
+          OnTooltipShow = function(tooltip)    
+              if not tooltip or not tooltip.AddLine then return end    
+              tooltip:AddLine("|cff"..c3..KeyMasterLocals.ADDONNAME.."|r")
+              tooltip:AddLine("\n")
+              tooltip:AddLine("|cff"..c1..KeyMasterLocals.CLICK.."|r |cff"..c2..KeyMasterLocals.TOOPEN.."|r")
+              tooltip:AddLine("|cff"..c1..KeyMasterLocals.CLICKDRAG.."|r |cff"..c2..KeyMasterLocals.TOREPOSITION.."|r")
+          end,    
+      })
+  local icon = LibStub("LibDBIcon-1.0", true)
+  local miniMapPos = 135 --KeyMaster:GetConfigSetting("minimapPos")
+  icon:Register("KeyMaster", miniButton, KeyMaster_DB.addonConfig.miniMapButtonPos)
+end
 
 function MainInterface:Initialize()
+  -- Initialize the Mini Map icon
+  MiniMapIconInit()
+
   -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
 
   -- Main Parent Frame
