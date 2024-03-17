@@ -148,6 +148,11 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
             miniMapButtonPos = {
                 ["minimapPos"] = 206,
 	            ["hide"] = false
+            },
+            interfaceFramePos = {
+                ["xOfs"] = 0,
+                ["yOfs"] = 0,
+                ["relativePoint"] = "CENTER"
             }
         }
     }

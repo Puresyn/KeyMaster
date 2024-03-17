@@ -2,10 +2,16 @@ local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 
 function MainInterface:CreateMainFrame()
+    local yOfs = KeyMaster_DB.addonConfig.interfaceFramePos.yOfs
+    local xOfs = KeyMaster_DB.addonConfig.interfaceFramePos.xOfs
+    local relativePoint = KeyMaster_DB.addonConfig.interfaceFramePos.relativePoint
+    if (yOfs == nil) then yOfs = 0 end
+    if (xOfs == nil) then xOfs = 0 end
+    if (relativePoint == nil) then relativePoint = "CENTER" end
     local mainFrame = CreateFrame("Frame", "KeyMaster_MainFrame", UIParent, "MainFrameTemplate");
     mainFrame:SetClampedToScreen( true )
     mainFrame:ClearAllPoints(); -- Fixes SetPoint bug thus far.
-    mainFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0)
+    mainFrame:SetPoint(relativePoint, "UIParent", relativePoint, xOfs, yOfs)
     mainFrame:SetBackdrop({bgFile="", 
         edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
         tile = false, 

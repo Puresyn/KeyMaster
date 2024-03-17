@@ -55,6 +55,10 @@
 					</OnMouseDown>
 					<OnMouseUp>
 						local parent = self:GetParent()
+						local _, _, relativePoint, xOfs, yOfs = parent:GetPoint()
+						KeyMaster_DB.addonConfig.interfaceFramePos.xOfs = xOfs
+						KeyMaster_DB.addonConfig.interfaceFramePos.yOfs = yOfs
+						KeyMaster_DB.addonConfig.interfaceFramePos.relativePoint = relativePoint
 						parent:StopMovingOrSizing()
 					</OnMouseUp>
 				</Scripts>
