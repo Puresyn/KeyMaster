@@ -8,7 +8,7 @@ local CONST_COMM_KEYSTONE_DATA_PREFIX = "K"
 local CONST_COMM_KEYSTONE_DATAREQUEST_PREFIX = "J"
 
 local CONST_COMM_SENDTO_PARTY = "0x1"
---local CONST_COMM_SENDTO_RAID = "0x2"
+local CONST_COMM_SENDTO_RAID = "0x2"
 local CONST_COMM_SENDTO_GUILD = "0x4"
 
 KM_OpenRaidStub = LibStub("AceAddon-3.0"):NewAddon("KM_OpenRaidStub", "AceComm-3.0")
@@ -22,11 +22,11 @@ function KM_OpenRaidStub:TransmitOpenRaidRequest(requestData, distribution)
         KeyMaster:_DebugMsg("TransmitOPenRaidRequest", "LibOpenRaidStub", "Invalid data request type.")
         return
     end
-    KeyMaster:_DebugMsg("TransmitOPenRaidRequest", "LibOpenRaidStub", "Transmitting openRaid key request...")
+    KeyMaster:_DebugMsg("TransmitOPenRaidRequest", "LibOpenRaidStub", "Transmitting openRaid key request to "..distribution.."...")
     self:SendCommMessage(comPrefixOpenRaid, requestData, distribution, nil)
 end
 
-function KM_OpenRaidStub:OnCommReceived ()
+function KM_OpenRaidStub:OnCommReceived()
 end
 
 function openRaidStub:SendCommData(data, flags, bIgnoreQueue)
@@ -42,11 +42,12 @@ function openRaidStub:SendCommData(data, flags, bIgnoreQueue)
             end
         end
 
-        if (bit.band(flags, CONST_COMM_SENDTO_GUILD)) then --send to guild
-            if (IsInGuild()) then
-                KM_OpenRaidStub:TransmitOpenRaidRequest(dataEncoded, "GUILD")
-            end
-        end
+        --send to guild
+        -- if (bit.band(flags, CONST_COMM_SENDTO_GUILD)) then
+        --     if (IsInGuild()) then
+        --         KM_OpenRaidStub:TransmitOpenRaidRequest(dataEncoded, "GUILD")
+        --     end
+        -- end
     else
         if (IsInGroup() and not IsInRaid()) then --in party only
             local channel = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY"

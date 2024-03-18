@@ -8,7 +8,7 @@ local PartyFrame = KeyMaster.PartyFrame
 local Theme = KeyMaster.Theme
 
 -- Minimap Icon
-local function MiniMapIconInit()
+local function createMiniMapIcon()
   local _, _, _, c1 = Theme:GetThemeColor("color_TAUPE")
   local _, _, _, c2 = Theme:GetThemeColor("themeFontColorGreen1")
   local _, _, _, c3 = Theme:GetThemeColor("themeFontColorMain")
@@ -29,20 +29,17 @@ local function MiniMapIconInit()
           end,    
       })
   local icon = LibStub("LibDBIcon-1.0", true)
-  local miniMapPos = 135 --KeyMaster:GetConfigSetting("minimapPos")
   icon:Register("KeyMaster", miniButton, KeyMaster_DB.addonConfig.miniMapButtonPos)
 end
 
 function MainInterface:Initialize()
-  -- Initialize the Mini Map icon
-  MiniMapIconInit()
-
   -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
 
   -- Main Parent Frame
   local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()    
   local addonIcon = _G["KeyMaster_Icon"] or MainInterface:CreateAddonIcon(mainFrame)
-    
+  createMiniMapIcon()
+
   -- Main Header
   local headerRegion = HeaderFrame:Initialize(mainFrame)
 

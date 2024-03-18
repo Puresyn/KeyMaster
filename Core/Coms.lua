@@ -42,6 +42,9 @@ function MyAddon:Transmit(data)
     
     KeyMaster:_DebugMsg("Transmit", "Coms", "transmitting data ...")
     self:SendCommMessage(comPrefix, encoded, "PARTY", nil)
+
+    -- Send request for open data to party members
+    KeyMaster.openRaidStub:RequestKeystoneDataFromParty()
 end
 
 -- sends request to party members to transmit their data
@@ -100,6 +103,14 @@ local function processOpenRaidData(payload, sender)
 
         --remove the first index (prefix)
         tremove(dataAsTable, 1)
+        -- dataAsTable DATA LOOKS LIKE THIS:
+        -- [1] Key Level
+        -- [2] MapID
+        -- [3] ChallengeMapID
+        -- [4] ClassID
+        -- [5] Rating
+        -- [6] MythicPlusMapID
+        -- FROM: https://github.com/Tercioo/Open-Raid-Library/blob/2f1eb2a0acf415cae93a36c081fddd30cd0872ec/LibOpenRaid.lua#L2674
 
         local isDirty = false -- has the data changed?
         local senderData = UnitData:GetUnitDataByName(sender)
