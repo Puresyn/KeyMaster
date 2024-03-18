@@ -5,17 +5,16 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master Beta release v0.0.95-beta
 --------------------------------------------------
-- Added decimal preferences to score calculator
-- Added decimal preference to party tally data on party panel
+- Added decimal preferences to several locations: score calculator, tally data,
+  and personal gain row.
 - Reset score calculator when re-opening the player panel
 - Added QOL querying of keystone and overall rating information for party members without
   Key Master installed from the commonly used Open Raid library (if they have another
   addon with openRaid installed: i.e. Details, etc.). This is not always dependable or
   guaranteed to be accurate, but it's the best alternative for non-addon party member 
   information; at least, for the time being.
-- Added decimal preference to personal gain row on party panel
 - Replaced "Key Master Not Detected!" text with an icon on the party frame for
-  players without Key Master installed.
+  party members without Key Master installed.
 - Fixed Key Master icon showing up as a "?" in the in-game AddOn List. Now shows correct icon.
 - The Key Master window's position is now saved between logins/reloads.
 - Updated the Key Master main "Theme" color to Key Master Gold.
