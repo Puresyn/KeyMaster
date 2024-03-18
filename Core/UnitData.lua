@@ -9,25 +9,28 @@ local unitInformation = {}
 -- Parameter: unitGUID = Unique Player GUID value.
 -- Returns: unitId e.g.; party1, party2, party3, party4
 function UnitData:GetUnitId(unitGUID)
-    local player = UnitGUID("player")
-    local p1 = UnitGUID("party1")
-    local p2 = UnitGUID("party2")
-    local p3 = UnitGUID("party3")
-    local p4 = UnitGUID("party4")
-
-    if (unitGUID == player) then
-        return "player"
-    elseif(unitGUID == p1) then
-        return "party1"
-    elseif(unitGUID == p2) then
-        return "party2"
-    elseif(unitGUID == p3) then
-        return "party3"
-    elseif(unitGUID == p4) then
-        return "party4"
-    else
-        return nil
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    for _,unitId in pairs(partyMembers) do
+        if unitGUID == UnitGUID(unitId) then
+            return unitId
+        end
     end
+    return nil
+end
+
+local function getUnitRealm(unitGUID)
+    local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+    for _,unitId in pairs(partyMembers) do
+        if unitGUID == UnitGUID(unitId) then
+            local name, realm = UnitName(unitId)
+            if realm == nil then
+                return GetRealmName()
+            else
+                return realm
+            end
+        end
+    end
+    KeyMaster:_ErrorMsg("getUnitRealm", "UnitData", "Cannot find unit for GUID: "..unitGUID)
 end
 
 function UnitData:SetUnitData(unitData)
@@ -37,13 +40,20 @@ function UnitData:SetUnitData(unitData)
         return
     end
     unitData.unitId = unitId -- set unitId for this client
+    
+    -- adds backward compatiability from before v0.0.95beta
+    if unitData.realm == nil then
+        unitData.realm = getUnitRealm(unitData.GUID)
+    end
+    
+    -- STORE DATA IN MEMORY! duh?
     unitInformation[unitData.GUID] = unitData
 
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
 end
 
-function UnitData:SetUnitDataUnitPosition(name, newUnitId)
-    local unitData = UnitData:GetUnitDataByName(name)
+function UnitData:SetUnitDataUnitPosition(name, realm, newUnitId)
+    local unitData = UnitData:GetUnitDataByName(name, realm)
     if unitData == nil then
         KeyMaster:_ErrorMsg("SetUnitDataUnitPostion", "UnitDat", "Cannot update position for "..name.." because a unit cannot be found by that name.")
         return
@@ -67,12 +77,18 @@ function UnitData:GetUnitDataByGUID(playerGUID)
     return unitInformation[playerGUID]
 end
 
-function UnitData:GetUnitDataByName(name)
+function UnitData:GetUnitDataByName(name, realm)
     for guid, tableData in pairs(unitInformation) do
-        if (tableData.name == name) then
-           return unitInformation[guid]
+        if (tableData.name == name and tableData.realm == realm) then
+            return unitInformation[guid]
        end
    end
+   KeyMaster:_DebugMsg("GetUnitDataByName", "UnitData", "Cannot find unit by name "..name.." and realm "..realm)
+   return nil
+end
+
+function UnitData:GetAllUnitData()
+    return unitInformation
 end
 
 function UnitData:DeleteUnitDataByUnitId(unitId)

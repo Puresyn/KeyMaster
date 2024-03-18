@@ -112,21 +112,39 @@ local function processOpenRaidData(payload, sender)
         -- [6] MythicPlusMapID
         -- FROM: https://github.com/Tercioo/Open-Raid-Library/blob/2f1eb2a0acf415cae93a36c081fddd30cd0872ec/LibOpenRaid.lua#L2674
 
+        -- added for cross-realm support
+        local senderName
+        local senderRealm
+        local _, strLocation = string.find(sender, "-")
+        if strLocation ~= nil then
+            senderName = string.sub(sender, 1, strLocation - 1)
+            senderRealm = string.sub(sender, strLocation+1, string.len(sender))
+        else
+            senderName = sender
+            senderRealm = GetRealmName()
+        end
+        
         local isDirty = false -- has the data changed?
-        local senderData = UnitData:GetUnitDataByName(sender)
+        local senderData = UnitData:GetUnitDataByName(senderName, senderRealm)
         if senderData == nil then
-            local partyMembers = {"player", "party1", "party2", "party3", "party4"}
+            local partyMembers = {"party1", "party2", "party3", "party4"}
             for _,unitId in pairs(partyMembers) do
-                if UnitName(unitId) == sender then
+                local currentUnitName, currentUnitRealm = UnitName(unitId)
+                if (currentUnitRealm == nil) then
+                    currentUnitRealm = GetRealmName()
+                end
+                
+                -- compares party member (in unitId) information with sender information
+                if currentUnitName == senderName and currentUnitRealm == senderRealm then
                     senderData = CharacterInfo:GetUnitInfo(unitId)
+                    senderData.realm = currentUnitRealm 
                     senderData.ownedKeyId = tonumber(dataAsTable[3])
                     senderData.ownedKeyLevel = tonumber(dataAsTable[1])
                     senderData.mythicPlusRating = tonumber(dataAsTable[5])
                     isDirty = true
 
-                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received data from OpenRaid for "..sender)
+                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
                     UnitData:SetUnitData(senderData)
-                    break
                 end
             end
         else
@@ -137,7 +155,7 @@ local function processOpenRaidData(payload, sender)
                 senderData.mythicPlusRating = tonumber(dataAsTable[5])
                 isDirty = true
 
-                KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received data from OpenRaid for "..sender)
+                KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
                 UnitData:SetUnitData(senderData)
             end
         end

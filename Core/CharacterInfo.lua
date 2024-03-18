@@ -140,7 +140,8 @@ function CharacterInfo:GetUnitInfo(unitId)
     local unitData = {}
     unitData.GUID = UnitGUID(unitId)
     unitData.name = UnitName(unitId)
-    unitData.unidId = unitId
+    unitData.realm = ""
+    unitData.unitId = unitId
     unitData.hasAddon = false
 
     return unitData
@@ -151,6 +152,7 @@ function CharacterInfo:GetMyCharacterInfo()
     local keyId, _, keyLevel = CharacterInfo:GetOwnedKey()
     myCharacterInfo.GUID = UnitGUID("player")
     myCharacterInfo.name = UnitName("player")
+    myCharacterInfo.realm = GetRealmName()
     myCharacterInfo.ownedKeyId = keyId
     myCharacterInfo.ownedKeyLevel = keyLevel
     myCharacterInfo.DungeonRuns = {}
