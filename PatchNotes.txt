@@ -25,6 +25,7 @@ Key Master Beta release v0.0.95-beta
   season is (i.e. Dragonflight Season 3) -but is not available from the API-, we've replaced the
   overall season number in the main header with the current expansion name. (no season info) to
   reduce confusion.
+- Added additional back-end functionality for upcoming language localization.
 
 --------------------------------------------------
 Key Master Beta release v0.0.94-beta

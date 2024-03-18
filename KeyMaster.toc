@@ -20,6 +20,7 @@
 
 Embeds.xml
 Core\Localization\Localization.enUS.lua
+Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua
 Core\UnitData.lua

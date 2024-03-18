@@ -1,5 +1,5 @@
-KeyMasterLocals = {}
-local L = KeyMasterLocals
+KM_Localization_enUS = {}
+local L = KM_Localization_enUS
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
