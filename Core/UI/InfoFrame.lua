@@ -91,16 +91,19 @@ function InfoFrame:CreateInfoFrame(parentFrame)
 
     local generalText = [[(c) 2024 - Released under the GNU General Public License
         
-Key Master is an addon developed for World of Warcraft that assists in gathering and displaying detailed information about you and your parties “live” (if they also have Key Master) data relating to Mythic Plus Instances.
+Key Master is an addon developed for World of Warcraft players who are actively involved in Mythic Plus content. The goal of the addon is to provide a single location to display detailed Mythic Plus content information about you and/or your party.
 
-This addon was conceived with the idea that it was too laborious to make well-informed decisions regarding “Key Running”; either for yourself, or a “push team”.
+This addon was conceived with the idea that it was too laborious to make informed decisions regarding “Key Running”; either for yourself, or a “push team”.
     
-While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, tell your friends!]]
+While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, please tell your friends!
+
+Visit us at:
+https://www.curseforge.com/wow/addons/key-master]]
     aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutGeneral.text:SetPoint("TOPLEFT", aboutGeneral.title, "BOTTOMLEFT", 8, -4)
     aboutGeneral.text:SetJustifyH("LEFT")
     aboutGeneral.text:SetJustifyV("TOP")
-    aboutGeneral.text:SetSize(aboutGeneral:GetWidth()-(indent*2)-mlr, aboutGeneral:GetHeight()-aboutGeneral.title:GetHeight()-25)
+    aboutGeneral.text:SetSize(aboutGeneral:GetWidth()-(indent*3)-mlr, aboutGeneral:GetHeight()-aboutGeneral.title:GetHeight()-25)
     aboutGeneral.text:SetText(generalText)
 
     local Hline = KeyMaster:CreateHLine(aboutGeneral:GetWidth()+8, aboutGeneral, "TOP", 0, 0)
@@ -187,7 +190,7 @@ While there are many future features in-mind for Key Master to expand its useful
     aboutSpecialThanks.title:SetPoint("TOPLEFT", aboutSpecialThanks, "TOPLEFT", 4, -4)
     aboutSpecialThanks.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutSpecialThanks"].name)
 
-    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore"
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\nReddit: r/CompetitiveWoW"
     aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
     aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)

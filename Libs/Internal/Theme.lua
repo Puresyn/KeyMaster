@@ -6,22 +6,22 @@ Theme.style = "KeyMaster-Interface-Clean"
 
 local Colors = {
     default = { 
-        r = 0.69,
-        g = 0.612,
-        b = 0.376,
-        hex = "b09c60"
+        r = 0.776,
+        g = 0.686,
+        b = 0.384,
+        hex = "c6af62"
 	},
     themeFontColorMain = {
-        r = 0.69,
-        g = 0.612,
-        b = 0.376,
-        hex = "b09c60"
+        r = 0.776,
+        g = 0.686,
+        b = 0.384,
+        hex = "c6af62"
     },
     color_THEMEGOLD = {
-        r = 0.69,
-        g = 0.612,
-        b = 0.376,
-        hex = "b09c60"
+        r = 0.776,
+        g = 0.686,
+        b = 0.384,
+        hex = "c6af62"
     },
     themeFontColorYellow = {
         r = 1,
