@@ -125,6 +125,27 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
         end
     end)
 
+    -- Display Minimap Icon Checkbox/Button
+    displaySetting.showMMB = CreateFrame("CheckButton", "KM_DiplayMinimapCheckBox", displaySetting, "ChatConfigCheckButtonTemplate")
+    displaySetting.showMMB:SetPoint("TOPLEFT", displaySetting.showFloat, "BOTTOMLEFT", 0, 0)
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    displaySetting.showMMB.Text:SetFont(Path, 12, Flags)
+    displaySetting.showMMB.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    displaySetting.showMMB.Text:SetPoint("LEFT", 24, 0)
+    displaySetting.showMMB.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["ShowMiniMapButton"].text)
+    if (KeyMaster_DB.addonConfig.miniMapButtonPos.hide == false) then
+        displaySetting.showMMB:SetChecked(true)
+    end
+    displaySetting.showMMB:HookScript("OnClick", function()
+        if (displaySetting.showMMB:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.miniMapButtonPos.hide = false
+            _G["LibDBIcon10_KeyMaster"]:Show()
+        else
+            KeyMaster_DB.addonConfig.miniMapButtonPos.hide = true
+            _G["LibDBIcon10_KeyMaster"]:Hide()
+        end
+    end)
+
     local diagnosticSettings = CreateFrame("Frame", nil, conFrame)
     diagnosticSettings:SetPoint("TOPLEFT", displaySetting, "TOPRIGHT", 4, 0)
     diagnosticSettings:SetSize((conFrame:GetWidth()-mlr)/3, settingsPanelBaseHeight/4)
@@ -182,7 +203,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
 
     -- Display Debug Checkbox/Button
     diagnosticSettings.showDebug = CreateFrame("CheckButton", "KM_DiplayFloatCheckBox", diagnosticSettings, "ChatConfigCheckButtonTemplate")
-    diagnosticSettings.showDebug:SetPoint("TOPLEFT", diagnosticSettings.showErrors, "BOTTOMLEFT", 0, -4)
+    diagnosticSettings.showDebug:SetPoint("TOPLEFT", diagnosticSettings.showErrors, "BOTTOMLEFT", 0, 0)
     local Path, _, Flags = conFrameHeader.title:GetFont()
     diagnosticSettings.showDebug.Text:SetFont(Path, 12, Flags)
     diagnosticSettings.showDebug.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
