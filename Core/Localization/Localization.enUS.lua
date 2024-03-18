@@ -12,6 +12,19 @@ L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
 
+L.XPAC = {}
+L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
+L.XPAC[1] = { enum = "LE_EXPANSION_BURNING_CRUSADE", desc = "The Burning Crusade" }
+L.XPAC[2] = { enum = "LE_EXPANSION_WRATH_OF_THE_LICH_KING", desc = "Wrath of the Lich King" }
+L.XPAC[3] = { enum = "LE_EXPANSION_CATACLYSM", desc = "Cataclysm" }
+L.XPAC[4] = { enum = "LE_EXPANSION_MISTS_OF_PANDARIA", desc = "Mists of Pandaria" }
+L.XPAC[5] = { enum = "E_EXPANSION_WARLORDS_OF_DRAENOR", desc = "Warlords of Draenor" }
+L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "Legion" }
+L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "Battle for Azeroth" }
+L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "Shadowlands" }
+L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
+L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "The War Within" } -- enum will need updated when available
+
 L.ADDONNAME = "Key Master"
 L.BUILDRELEASE = "release"
 L.BUILDBETA = "beta"

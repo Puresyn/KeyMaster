@@ -181,15 +181,16 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
     headerContent.logo:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     headerContent.logo:SetTexCoord(20/1024, 353/1024, 970/1024, 1010/1024)
 
-    -- Season ID
-    local seasonNum = DungeonTools:GetCurrentSeason()
-    if (seasonNum ~= nil and seasonNum > 0) then
-        headerContent.SeasonInformation = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-        --[[ local Path, _, Flags = headerContent.SeasonInformation:GetFont()
-        headerContent.SeasonInformation:SetFont(Path, 60, Flags) ]]
-        headerContent.SeasonInformation:SetPoint("BOTTOMLEFT", headerContent.logo, "TOPLEFT", 10, -2)
-        headerContent.SeasonInformation:SetAlpha(0.3)
-        headerContent.SeasonInformation:SetText(KeyMasterLocals.SEASON.." "..seasonNum)
+    local xpacNum = GetServerExpansionLevel()
+    local xpacDesc
+    if (xpacNum ~= nil) then -- check the expansion number was returned
+        xpacDesc = KeyMasterLocals.XPAC[xpacNum].desc
+    end
+    if (xpacDesc ~= nil) then -- if no desciption found, skip this
+        headerContent.xpacInformation = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+        headerContent.xpacInformation:SetPoint("BOTTOMLEFT", headerContent.logo, "TOPLEFT", 10, -2)
+        headerContent.xpacInformation:SetAlpha(0.3)
+        headerContent.xpacInformation:SetText(xpacDesc)
     end
 
     local displayVersion
