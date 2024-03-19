@@ -1,19 +1,39 @@
 ## Interface: 100205
-## Version: v0.0.1-beta
-## Title: |cffff5a00KeyMaster|r
-## Notes: Mythic Dungeon KeystoneMaster
-## Author: Strylor-Proudmoore
-## LoadManagers: AddonLoader
-## X-LoadOn-Slash: /km, /keymaster
-## DefaultState: disabled
+## X-Max-Interface: 100205
+## X-Min-Interface: 100205
+
+## Version: 0.0.95
+## Title: |cffb09c60KeyMaster|r
+## Notes: Mythic Plus Keystone Information and Collaboration Tool
+## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
+## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB
 
-Localization.enUS.lua
+## IconTexture: Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32
 
-Lib/LibSerialize.lua
-KMConfig.lua
-KMComs.lua
-KMData.lua
-KMUI.lua
-KM_UI.xml
-KMInit.lua
+## X-License: GNU GPL V3
+
+## X-ReleaseDate: "2024-3-16"
+## X-Embeds: Ace3
+## X-Curse-Project-ID: 985862
+## X-GitHub: github.com/Puresyn/KeyMaster
+
+Embeds.xml
+Core\Localization\Localization.enUS.lua
+Core\Localization\Localization.lua
+Core\CharacterInfo.lua
+Core\UI\MainInterface.lua
+Core\UnitData.lua
+Core\UI\PlayerFrameMapping.lua
+Core\UI\PartyFrameMapping.lua
+Core\UI\HeaderFrameMapping.lua
+Core\Coms.lua
+Core\UI\InfoFrame.lua
+Core\UI\ConfigFrame.lua
+Core\UI\PlayerFrame.lua
+Core\UI\MainFrameTemplate.xml
+Core\UI\MainFrame.lua
+Core\UI\HeaderFrame.lua
+Core\UI\PartyFrame.lua
+Core\UI\UIinit.lua
+KeyMaster.lua

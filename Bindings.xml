@@ -1,5 +1,5 @@
 <Bindings>
-  <Binding name="Toggle the main window." description="Show or hide the keymaster main window." header="KEYMASTER" category="|cffff5a00Key Master|r">
+  <Binding name="Toggle the main window." description="Show or hide the keymaster main window." header="KEYMASTER" category="|cffb09c60Key Master|r">
 	KMWindowBindingToggle()
   </Binding>
 </Bindings>
