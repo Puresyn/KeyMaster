@@ -3,6 +3,11 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master Beta release v0.0.96-beta
+--------------------------------------------------
+- Fixed grammatical errors
+
+--------------------------------------------------
 Key Master Beta release v0.0.95-beta
 --------------------------------------------------
 - Added decimal preferences to several locations: score calculator, tally data,
@@ -23,7 +28,7 @@ Key Master Beta release v0.0.95-beta
 - Changed the season display in the main header to reflect the current expansion season
   instead of the WoW lifetime season.
 - Added additional back-end functionality for upcoming language localization.
-- Cleaned up some cross-server compatability concerns - Key Master "should" now work no differently
+- Cleaned up some cross-server compatibility concerns - Key Master "should" now work no differently
   between same server and cross-server parties.
 
 --------------------------------------------------
