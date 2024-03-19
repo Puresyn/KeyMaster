@@ -16,7 +16,8 @@ location to display detailed Mythic Plus content information about you and/or yo
 
 While there are many future features in-mind for Key Master to expand its
 usefulness, how far it may go and when that will happen is largely dependent on
-its user base. So, if you find Key Master useful, tell your friends!
+its user base. So, if you find Key Master useful, make sure to give us feeedback
+and tell your friends!
 
 Repository: (Not yet public)
 For full source code, bug submission, bug tracking, and other source related

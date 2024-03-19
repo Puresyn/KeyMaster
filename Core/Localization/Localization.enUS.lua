@@ -25,6 +25,12 @@ L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "Shadowlands" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
 L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "The War Within" } -- enum will need updated when available
 
+L.MPLUSSEASON = {}
+L.MPLUSSEASON[11] = { name = "Season 3" }
+L.MPLUSSEASON[12] = { name = "Season 4" }
+L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
+L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 13 to be TWW S2
+
 L.ADDONNAME = "Key Master"
 L.BUILDRELEASE = "release"
 L.BUILDBETA = "beta"

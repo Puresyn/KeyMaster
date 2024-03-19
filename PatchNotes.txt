@@ -20,10 +20,8 @@ Key Master Beta release v0.0.95-beta
 - Updated the Key Master main "Theme" color to Key Master Gold.
 - Added a minimap icon
 - Added minimap icon show/hide option to configuration screen.
-- Because the current overall WoW season number is not marketed (i.e. Season 11) and the expansion
-  season is (i.e. Dragonflight Season 3) -but is not available from the API-, we've replaced the
-  overall season number in the main header with the current expansion name. (no season info) to
-  reduce confusion.
+- Changed the season display in the main header to reflect the current expansion season
+  instead of the WoW lifetime season.
 - Added additional back-end functionality for upcoming language localization.
 - Cleaned up some cross-server compatability concerns - Key Master "should" now work no differently
   between same server and cross-server parties.
