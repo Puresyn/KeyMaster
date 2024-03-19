@@ -1,8 +1,8 @@
-## Interface: 100205
-## X-Max-Interface: 100205
+## Interface: 100206
+## X-Max-Interface: 100206
 ## X-Min-Interface: 100205
 
-## Version: 0.0.95
+## Version: 0.0.96
 ## Title: |cffb09c60KeyMaster|r
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
@@ -11,6 +11,7 @@
 
 ## IconTexture: Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32
 
+## X-IconTexture: Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32
 ## X-License: GNU GPL V3
 
 ## X-ReleaseDate: "2024-3-16"
