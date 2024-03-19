@@ -6,6 +6,8 @@ PATCH NOTES:
 Key Master Beta release v0.0.96-beta
 --------------------------------------------------
 - Fixed grammatical errors
+- Update interface version 100206 for 10.2.6
+- Set up a Discord server for Key Master https://discord.gg/bbMaUpfgn8
 
 --------------------------------------------------
 Key Master Beta release v0.0.95-beta
