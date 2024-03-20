@@ -1,7 +1,7 @@
-KM_Localization_enUS = {}
-local L = KM_Localization_enUS
+KM_Localization_ruRU = {}
+local L = KM_Localization_ruRU
 
--- Localization file for "enUS": English (America)
+-- Localization file for "ruRU": Russian (Russia)
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }

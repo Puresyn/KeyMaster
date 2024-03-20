@@ -1,7 +1,7 @@
-KM_Localization_enUS = {}
-local L = KM_Localization_enUS
+KM_Localization_bwON = {}
+local L = KM_Localization_bwON
 
--- Localization file for "enUS": English (America)
+-- Localization file for "bwON": Bwonsamdi (Jamaican [enUS]) - for the memes!
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }

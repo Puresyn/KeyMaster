@@ -1,7 +1,7 @@
-KM_Localization_enUS = {}
-local L = KM_Localization_enUS
+KM_Localization_zhTW = {}
+local L = KM_Localization_zhTW
 
--- Localization file for "enUS": English (America)
+-- Localization file for "zhTW": Chinese (Taiwan) (traditional) implemented LTR left-to-right in WoW
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
