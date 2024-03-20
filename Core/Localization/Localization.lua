@@ -21,7 +21,7 @@ local _, KeyMaster = ...
 KeyMasterLocals = {}
 --function KeyMaster:LoadLocalization(langPref)
     --local langPref = KeyMaster_DB.addonConfig["languagePreference"]
-    if (langPref ~= nil ) then print("Loaded from config: "..langPref) end
+    --if (langPref ~= nil ) then print("Loaded from config: "..langPref) end
     if (langPref == nil or langPref == "") then
         langPref = GetLocale()
         print("Loaded from locale: "..langPref)
