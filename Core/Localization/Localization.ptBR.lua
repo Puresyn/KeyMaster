@@ -1,5 +1,5 @@
-KM_Localization_enUS = {}
-local L = KM_Localization_enUS
+KM_Localization_ptBR = {}
+local L = KM_Localization_ptBR
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
@@ -29,7 +29,7 @@ L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "Season 3" }
 L.MPLUSSEASON[12] = { name = "Season 4" }
 L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
-L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 14 to be TWW S2
+L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 13 to be TWW S2
 
 L.ADDONNAME = "Key Master"
 L.BUILDRELEASE = "release"
