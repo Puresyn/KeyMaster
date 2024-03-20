@@ -24,7 +24,7 @@ KeyMasterLocals = {}
     --if (langPref ~= nil ) then print("Loaded from config: "..langPref) end
     if (langPref == nil or langPref == "") then
         langPref = GetLocale()
-        print("Loaded from locale: "..langPref)
+        --print("Loaded from locale: "..langPref)
     end
 
     if (langPref == "frFR") then
