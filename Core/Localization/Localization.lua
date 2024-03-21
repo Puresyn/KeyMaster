@@ -26,7 +26,7 @@ KeyMasterLocals = {}
         langPref = GetLocale()
         --print("Loaded from locale: "..langPref)
     end
-    print(langPref)
+    --print(langPref)
     if (langPref == "frFR") then
         -- Localization.frFR.lua
         KeyMasterLocals = KM_Localization_frFR
@@ -62,5 +62,10 @@ KeyMasterLocals = {}
         KeyMasterLocals = KM_Localization_enUS
     end
 --end
+
+local TYRANNICALID = 9
+local FORTIFIEDID = 10
+KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICALID)
+KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIEDID)
 
 -- KeyMaster:LoadLocalization(KeyMaster_DB.addonConfig.languagePreference)

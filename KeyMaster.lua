@@ -51,7 +51,7 @@ local function HandleSlashCommands(str)
  
     -- /km
     if (#str == 0) then
-        KeyMaster.Commands.show()
+        KeyMaster.Commands[KeyMasterLocals.COMMANDLINE["Show"].name]()
         return
     end
 

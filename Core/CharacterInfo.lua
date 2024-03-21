@@ -80,9 +80,9 @@ local function fetchCharacterMythicPlusData(mapId, retryCount)
 end
 
 function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
-    if (weeklyAffix ~= "Tyrannical" and weeklyAffix ~= "Fortified") then
+    if (weeklyAffix ~= KeyMasterLocals.TYRANNICAL and weeklyAffix ~= KeyMasterLocals.FORTIFIED) then
        KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo", "Incorrect weeklyAffix value provided.")
-       return nil   
+       return nil
     end
     
     local emptyData = {
@@ -108,11 +108,21 @@ function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
     -- So on a tyrannical week mapScore[1] is for Tyrannical information and mapScore[2] is for Fortified information
     -- on a fortified week mapScore[1] is for Fortified information and mapScore[2] is for Tyrannical information
     if mapScore[1].name == weeklyAffix then
+        if mapScore[1].name == KeyMasterLocals.FORTIFIED then
+            mapScore[1].name = "Fortified"
+        else
+            mapScore[1].name = "Tyrannical"
+        end
         return mapScore[1]
     else
         if mapScore[2] == nil then
             return emptyData
         else
+            if mapScore[2].name == KeyMasterLocals.FORTIFIED then
+                mapScore[2].name = "Fortified"
+            else
+                mapScore[2].name = "Tyrannical"
+            end
             return mapScore[2]
         end
     end
@@ -170,7 +180,7 @@ function CharacterInfo:GetMyCharacterInfo()
         keyRun["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)
 
         -- Tyrannical Key Score
-        local tyrannicalScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Tyrannical")
+        local tyrannicalScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, KeyMasterLocals.TYRANNICAL)
         local dungeonDetails = {
             ["Rating"] = DungeonTools:CalculateRating(mapid, tyrannicalScoreInfo.level, tyrannicalScoreInfo.durationSec),
             ["Level"] = tyrannicalScoreInfo.level,
@@ -180,7 +190,7 @@ function CharacterInfo:GetMyCharacterInfo()
         keyRun["Tyrannical"] = dungeonDetails
         
         -- Fortified Key Score
-        local fortifiedScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, "Fortified")
+        local fortifiedScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, KeyMasterLocals.FORTIFIED)
         local dungeonDetails = {
             ["Rating"] = DungeonTools:CalculateRating(mapid, fortifiedScoreInfo.level, fortifiedScoreInfo.durationSec),
             ["Level"] = fortifiedScoreInfo.level,
@@ -193,5 +203,6 @@ function CharacterInfo:GetMyCharacterInfo()
     end
 
     KeyMaster:_DebugMsg("GetMyCharacterInfo", "CharacterInfo", "Character data fetched.")
+    KeyMaster:TPrint(myCharacterInfo)
     return myCharacterInfo
 end
