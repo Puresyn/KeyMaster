@@ -2,11 +2,15 @@ KM_Localization_esES = {}
 local L = KM_Localization_esES
 
 -- Localization file for "esES": Spanish (Spain)
+-- Translated by: Google Translate
 
-L.LANGUAGE = "Spanish (ES)"
+-- ¿Problema de traducción? ¡Ayúdanos a corregirlo! Visita: https://discord.gg/bbMaUpfgn8
+
+L.LANGUAGE = "Español (ES)"
+L.TRANSLATOR = "Google Translate"
 
 L.MAPNAMES = {}
-L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
+L.MAPNAMES[9001] = { name = "Desconocido", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
 L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
@@ -30,95 +34,95 @@ L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
 L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "The War Within" } -- enum will need updated when available
 
 L.MPLUSSEASON = {}
-L.MPLUSSEASON[11] = { name = "Season 3" }
-L.MPLUSSEASON[12] = { name = "Season 4" }
-L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
-L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 14 to be TWW S2
+L.MPLUSSEASON[11] = { name = "Temporada 3" }
+L.MPLUSSEASON[12] = { name = "Temporada 4" }
+L.MPLUSSEASON[13] = { name = "Temporada 1" } -- expecting season 13 to be TWW S1
+L.MPLUSSEASON[14] = { name = "Temporada 2" } -- expecting season 14 to be TWW S2
 
-L.ADDONNAME = "Key Master"
-L.BUILDRELEASE = "release"
-L.BUILDBETA = "beta"
-L.DISPLAYVERSION = "v"
-L.WELCOMEMESSAGE = "Welcome back"
-L.ON = "on"
-L.OFF = "off"
-L.ENABLED = "enabled"
-L.DISABLED = "disabled"
-L.CLICK = "Click"
-L.CLICKDRAG = "Click + drag"
-L.TOOPEN = "to open"
-L.TOREPOSITION = "to reposition"
+L.ADDONNAME = "Key Master" -- do not translate
+L.BUILDRELEASE = "release" -- do not translate
+L.BUILDBETA = "beta" -- do not translate
+L.DISPLAYVERSION = "v" -- do not translate
+L.WELCOMEMESSAGE = "Bienvenido de nuevo"
+L.ON = "en"
+L.OFF = "apagado"
+L.ENABLED = "activado"
+L.DISABLED = "desactivado"
+L.CLICK = "Hacer clic"
+L.CLICKDRAG = "Hacer clic + arrastrar"
+L.TOOPEN = "abrir"
+L.TOREPOSITION = "reposicionar"
 L.EXCLIMATIONPOINT = "!"
-L.THISWEEKSAFFIXES = "This Week..."
-L.YOURRATING = "Your Rating"
-L.ERRORMESSAGES = "Error messages are"
-L.ERRORMESSAGESNOTIFY = "Notify: Error messages are enabled."
-L.DEBUGMESSAGES = "Debug messages are"
-L.DEBUGMESSAGESNOTIFY = "Notify: Debug messages are enabled."
-L.COMMANDERROR1 = "Invalid command"
-L.COMMANDERROR2 = "Enter"
-L.COMMANDERROR3 = "for commands"
-L.YOURCURRENTKEY = "YOUR KEY"
-L.ADDONOUTOFDATE = "Your Key Master addon is out of date!"
-L.INSTANCETIMER = "Instance Information"
-L.VAULTINFORMATION = "M+ Vault Progression"
-L.TIMELIMIT = "Time Limit"
-L.SEASON = "Season"
+L.THISWEEKSAFFIXES = "Esta semana..."
+L.YOURRATING = "Tu clasificación"
+L.ERRORMESSAGES = "Los mensajes de error son"
+L.ERRORMESSAGESNOTIFY = "Notificar: Los mensajes de error están habilitados."
+L.DEBUGMESSAGES = "Los mensajes de depuración son"
+L.DEBUGMESSAGESNOTIFY = "Notificar: los mensajes de depuración están habilitados."
+L.COMMANDERROR1 = "Comando invalido"
+L.COMMANDERROR2 = "Entrar"
+L.COMMANDERROR3 = "para comandos"
+L.YOURCURRENTKEY = "TU LLAVE"
+L.ADDONOUTOFDATE = "¡Tu complemento Key Master está desactualizado!"
+L.INSTANCETIMER = "Información de instancia"
+L.VAULTINFORMATION = "Progresión de bóveda M+"
+L.TIMELIMIT = "Límite de tiempo"
+L.SEASON = "Temporada"
 
 L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
-L.COMMANDLINE["Show"] = { name = "show", text = " - show/hide the main window."}
-L.COMMANDLINE["Help"] = { name = "help", text = " - shows this help menu."}
-L.COMMANDLINE["Errors"] = { name = "errors", text = " - toggle error messages."}
-L.COMMANDLINE["Debug"] = { name = "debug", text = " - toggle debug messages."}
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
+L.COMMANDLINE["Show"] = { name = "mostrar", text = " - mostrar u ocultar la ventana principal."}
+L.COMMANDLINE["Help"] = { name = "ayuda", text = " - muestra este menú de ayuda."}
+L.COMMANDLINE["Errors"] = { name = "errores", text = " - alternar mensajes de error."}
+L.COMMANDLINE["Debug"] = { name = "depurar", text = " - alternar mensajes de depuración."}
 
 L.TOOLTIPS = {}
-L.TOOLTIPS["MythicRating"] = { name = "Mythic Rating", text = "This is the chacacter's current Mythic Plus rating." }
-L.TOOLTIPS["OverallScore"] = { name = "Overall Score", text = "The ovrall score is a combination of both Tyrannical and Fortified run scores for a map. (With lots of math involved)"}
-L.TOOLTIPS["TeamRatingGain"] = { name = "Estimated Party Rating Gain", text = "This is an estimation that Key Master does internally. This number represents your current party\'s total minimum Rating gain potential for successfully completing the given party key. It may not be 100% accurate and is only here for estimation purposes."}
+L.TOOLTIPS["MythicRating"] = { name = "Calificación mítica", text = "Esta es la calificación Mythic Plus actual del personaje." }
+L.TOOLTIPS["OverallScore"] = { name = "Puntuación general", text = "La puntuación general es una combinación de las puntuaciones de carrera tiránica y fortificada de un mapa. (Con muchas matemáticas involucradas)"}
+L.TOOLTIPS["TeamRatingGain"] = { name = "Ganancia del partido", text = "Esta es una estimación que Key Master hace internamente. Este número representa el potencial mínimo total de ganancia de calificación de su grupo actual para completar con éxito la clave de grupo dada. Puede que no sea 100% exacto y solo está aquí con fines de estimación."}
 
 L.PARTYFRAME = {}
-L.PARTYFRAME["PartyInformation"] = { name = "Party Information", text = "Party Information"}
-L.PARTYFRAME["OverallRating"] = { name = "Current Overall", text = "Current Overall" }
-L.PARTYFRAME["PartyPointGain"] = { name = "Party Point Gain", text = "Party Point Gain"}
-L.PARTYFRAME["Level"] = { name = "Level", text = "Level" }
-L.PARTYFRAME["Weekly"] = { name = "Weekly", text = "Weekly"}
-L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
-L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
-L.PARTYFRAME["TeamRatingGain"] = { name = "Party Gain Potential", text = "Estimated Party Rating Gain"}
-L.PARTYFRAME["MemberPointsGain"] = { name = "Gain Potential", text = "Estimated personal point gain for available key(s) at +1 completion."}
-L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
+L.PARTYFRAME["PartyInformation"] = { name = "Información del grupo", text = "Información del grupo"}
+L.PARTYFRAME["OverallRating"] = { name = "General actual", text = "General actual" }
+L.PARTYFRAME["PartyPointGain"] = { name = "Ganancia grupal", text = "Ganancia grupal"}
+L.PARTYFRAME["Level"] = { name = "Nivel", text = "Nivel" }
+L.PARTYFRAME["Weekly"] = { name = "Semanalmente", text = "Semanalmente"}
+L.PARTYFRAME["NoAddon"] = { name = "No se detectó ningún complemento", text = "¡no detectado!"}
+L.PARTYFRAME["PlayerOffline"] = { name = "Jugador sin conexión", text = "El jugador está desconectado."}
+L.PARTYFRAME["TeamRatingGain"] = { name = "Potencial de ganancia grupal", text = "Ganancia estimada de calificación grupal"}
+L.PARTYFRAME["MemberPointsGain"] = { name = "Ganar potencial", text = "Ganancia de puntos personales estimada para las claves disponibles al completar +1."}
+L.PARTYFRAME["NoKey"] = { name = "No hay llave", text = "No hay llave"}
 
 L.PLAYERFRAME = {}
-L.PLAYERFRAME["KeyLevel"] = { name = "Key Level", text = "Key level to be calculated."}
-L.PLAYERFRAME["Gain"] = { name = "Gain", text = "Potential rating gain."}
-L.PLAYERFRAME["New"] = { name = "New", text = "Your rating after completing this key at a +1."}
-L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calculate potential rating gains."}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gain", text = "your base rating gain prediction."}
+L.PLAYERFRAME["KeyLevel"] = { name = "Nivel clave", text = "Nivel clave a calcular."}
+L.PLAYERFRAME["Gain"] = { name = "Ganar", text = "Posible ganancia de calificación."}
+L.PLAYERFRAME["New"] = { name = "Nuevo", text = "Tu calificación después de completar esta clave en un +1."}
+L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora", text = "Calcule las posibles ganancias de calificación."}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Nivel clave", text = "Introduzca un nivel clave para ver"}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gain", text = "Ganancia de calificación base"}
 
 L.CHARACTERINFO = {}
-L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
-L.CHARACTERINFO["KeyInVault"] = { name = "Key in Vault", text = "In Vault"}
-L.CHARACTERINFO["AskMerchant"] = { name = "Ask Key Merchant", text = "Key Merchant"}
+L.CHARACTERINFO["NoKeyFound"] = { name = "No hay llave", text = "No hay llave"}
+L.CHARACTERINFO["KeyInVault"] = { name = "Clave en la bóveda", text = "Clave en la bóveda"}
+L.CHARACTERINFO["AskMerchant"] = { name = "Pregunta al comerciante clave", text = "Pregunta al comerciante clave"}
 
-L.TABPLAYER = "Player"
-L.TABPARTY = "Party"
-L.TABABOUT = "About"
-L.TABCONFIG = "Configuration"
+L.TABPLAYER = "Jugador"
+L.TABPARTY = "Grupo"
+L.TABABOUT = "Acerca de"
+L.TABCONFIG = "Configuración"
 
 L.CONFIGURATIONFRAME = {}
-L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Display Settings", text = "Display Settings"}
-L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Toggle Rating Float", text = "Show rating decimals."}
-L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Show Minimap Button", text = "Show minimap button."}
-L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnostic Settings", text = "Diagnostic Settings."}
-L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Display Errors", text = "Display error messages."}
-L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Display Debug", text = "Display debugging messages."}
-L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Advanced Diagnostics", text="Note: These are for diagnostic purposes only. They may flood your chat box if enabled!"}
+L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Configuración de pantalla", text = "Configuración de pantalla"}
+L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Alternar clasificación flotante", text = "Mostrar decimales de calificación."}
+L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Botón Mostrar minimapa", text = "Mostrar botón de minimapa."}
+L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Configuración de diagnóstico", text = "Configuración de diagnóstico"}
+L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Errores de visualización", text = "Errores de visualización"}
+L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Mostrar depuración", text = "Mostrar mensajes de depuración."}
+L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnóstico avanzado", text="Nota: Estos son sólo para fines de diagnóstico. ¡Pueden inundar tu cuadro de chat si están habilitados!"}
 
 L.ABOUTFRAME = {}
-L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}
-L.ABOUTFRAME["AboutAuthors"] = { name = "Authors", text = "Authors"}
-L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Special Thanks", text = "Special Thanks"}
-L.ABOUTFRAME["AboutContributors"] = { name = "Contributors", text = "Contributors"}
+L.ABOUTFRAME["AboutGeneral"] = { name = "Información maestra clave", text = "Key Master Information"}
+L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
+L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Gracias especiales", text = "Gracias especiales"}
+L.ABOUTFRAME["AboutContributors"] = { name = "Colaboradores", text = "Colaboradores"}

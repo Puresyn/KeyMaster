@@ -15,57 +15,54 @@ local _, KeyMaster = ...
 "esES": Spanish (Spain)
 "esMX": Spanish (Mexico)
 "ptBR": Portuguese (Brazil)
-"bwON": Bwonsamdi (Jamaican [enUS]) - YES PLEASE! This needs to happen!
+
+We are actively seeking volunteer translators and proof readers for the following languages:
+-French (France)
+-German (Germany)
+-Italian (Italy)
+-Chinese (China) (simplified) implemented LTR
+-Chinese (Taiwan) (traditional) implemented LTR
+-Russian (Russia)
+-Spanish (Spain)
+-Spanish (Mexico)
+Please visit our Discord (https://discord.gg/bbMaUpfgn8) and let one of the Admins know if you are interested!
+(Must be fluent in English (US), WoW lingo, the desired region language, and be active/responsive on Discord.)
+
 ]]
 
 KeyMasterLocals = {}
---function KeyMaster:LoadLocalization(langPref)
-    local langPref --= KeyMaster_DB.addonConfig["languagePreference"]
-    --if (langPref ~= nil ) then print("Loaded from config: "..langPref) end
-    if (langPref == nil or langPref == "") then
-        langPref = GetLocale()
-        --print("Loaded from locale: "..langPref)
-    end
-    --print(langPref)
-    if (langPref == "frFR") then
-        -- Localization.frFR.lua
-        KeyMasterLocals = KM_Localization_frFR
-    elseif (langPref == "deDE") then
-        -- Localization.deDE.lua
-        KeyMasterLocals = KM_Localization_deDE
-    elseif (langPref == "itIT") then
-        -- Localization.itIT.lua
-        KeyMasterLocals = KM_Localization_itIT
-    elseif (langPref == "zhCN") then
-        -- Localization.zhCN.lua
-        KeyMasterLocals = KM_Localization_zhCN
-    elseif (langPref == "zhTW") then
-        -- Localization.zhTW.lua
-        KeyMasterLocals = KM_Localization_zhTW
-    elseif (langPref == "ruRU") then
-        -- Localization.ruRU.lua
-        KeyMasterLocals = KM_Localization_ruRU
-    elseif (langPref == "esES") then
-        -- Localization.esES.lua
-        KeyMasterLocals = KM_Localization_esES
-    elseif (langPref == "esMX") then
-        -- Localization.esMX.lua
-        KeyMasterLocals = KM_Localization_esMX
-    elseif (langPref == "ptBR") then
-        -- Localization.ptBR.lua
-        KeyMasterLocals = KM_Localization_ptBR
-    elseif (langPref == "bwON") then
-        -- Localization.bwON.lua
-        KeyMasterLocals = KM_Localization_bwON
-    else -- Default
-        -- Localization.enUS.lua
-        KeyMasterLocals = KM_Localization_enUS
-    end
---end
 
-local TYRANNICALID = 9
-local FORTIFIEDID = 10
-KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICALID)
-KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIEDID)
+local langPref = GetLocale()
+if(langPref == "enUS") then
+    -- Localization.enUS.lua
+    KeyMasterLocals = KM_Localization_enUS
+elseif (langPref == "frFR") then
+    -- Localization.frFR.lua
+    KeyMasterLocals = KM_Localization_frFR
+elseif (langPref == "deDE") then
+    -- Localization.deDE.lua
+    KeyMasterLocals = KM_Localization_deDE
+elseif (langPref == "itIT") then
+    -- Localization.itIT.lua
+    KeyMasterLocals = KM_Localization_itIT
+elseif (langPref == "ruRU") then
+    -- Localization.ruRU.lua
+    KeyMasterLocals = KM_Localization_ruRU
+elseif (langPref == "esES") then
+    -- Localization.esES.lua
+    KeyMasterLocals = KM_Localization_esES
+elseif (langPref == "esMX") then
+    -- Localization.esMX.lua
+    KeyMasterLocals = KM_Localization_esMX
+elseif (langPref == "ptBR") then
+    -- Localization.ptBR.lua
+    KeyMasterLocals = KM_Localization_ptBR
+else -- Default
+    -- Localization.enUS.lua
+    KeyMasterLocals = KM_Localization_enUS
+end
 
--- KeyMaster:LoadLocalization(KeyMaster_DB.addonConfig.languagePreference)
+local TYRANNICAL_ID = 9
+local FORTIFIED_ID = 10
+KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICAL_ID)
+KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIED_ID)

@@ -2,8 +2,12 @@ KM_Localization_ptBR = {}
 local L = KM_Localization_ptBR
 
 -- Localization file for "ptBR": Portuguese (Brazil)
+-- Traduzido por: Cyph
+
+-- Problema de tradução? Ajude-nos a corrigi-lo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Português (BR)"
+L.TRANSLATOR = "Cyph"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Desconhecido", abbr = "???" }
@@ -33,12 +37,12 @@ L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "Temporada 3" }
 L.MPLUSSEASON[12] = { name = "Temporada 4" }
 L.MPLUSSEASON[13] = { name = "Temporada 1" } -- expecting season 13 to be TWW S1
-L.MPLUSSEASON[14] = { name = "Temporada 2" } -- expecting season 13 to be TWW S2
+L.MPLUSSEASON[14] = { name = "Temporada 2" } -- expecting season 14 to be TWW S2
 
-L.ADDONNAME = "Key Master"
-L.BUILDRELEASE = "release"
-L.BUILDBETA = "beta"
-L.DISPLAYVERSION = "v"
+L.ADDONNAME = "Key Master" -- do not translate
+L.BUILDRELEASE = "release" -- do not translate
+L.BUILDBETA = "beta" -- do not translate
+L.DISPLAYVERSION = "v" -- do not translate
 L.WELCOMEMESSAGE = "Bem vindo"
 L.ON = "on"
 L.OFF = "off"
@@ -51,8 +55,6 @@ L.TOREPOSITION = "para reposicionar"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "Essa Semana..."
 L.YOURRATING = "Sua Pontuação"
---L.TYRANNICAL = "Tirânica" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
---L.FORTIFIED = "Fortificada" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
 L.ERRORMESSAGES = "Mensagem de Erro"
 L.ERRORMESSAGESNOTIFY = "Notificação: Mensagens de erro habilitadas."
 L.DEBUGMESSAGES = "Mensagem de Debug"
@@ -68,8 +70,8 @@ L.TIMELIMIT = "Limite de Tempo"
 L.SEASON = "Temporada"
 
 L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
 L.COMMANDLINE["Show"] = { name = "Mostrar", text = " - mostra/esconde a tela principal."}
 L.COMMANDLINE["Help"] = { name = "ajuda", text = " - exibe esse menu de ajuda."}
 L.COMMANDLINE["Errors"] = { name = "erros", text = " - ativa mensagens de erro."}
@@ -96,8 +98,8 @@ L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Nível da chave", text = "Nível da chave à ser calculado."}
 L.PLAYERFRAME["Gain"] = { name = "Ganho", text = "Potencial de pontuação ganha."}
 L.PLAYERFRAME["New"] = { name = "Novo", text = "Sua pontuação após completar essa chave +1."}
-L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora de pontuação", text = "Calcula o ganho potencial de pontuação."}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "Insira o nível da chave", text = "Insira o nível da chave para ver"}
+L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora", text = "Calcula o ganho potencial de pontuação."}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Nível-chave", text = "Insira o nível da chave para ver"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Ganho base de pontuação", text = "previsão base de ganho de pontuação."}
 
 L.CHARACTERINFO = {}

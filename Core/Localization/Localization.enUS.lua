@@ -2,8 +2,12 @@ KM_Localization_enUS = {}
 local L = KM_Localization_enUS
 
 -- Localization file for "enUS": English (America)
+-- Translated by: Key Master
+
+-- Translation issue? Assist us in correcting it! Visit: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "English (US)"
+L.TRANSLATOR = "Key Master"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
@@ -35,10 +39,10 @@ L.MPLUSSEASON[12] = { name = "Season 4" }
 L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 14 to be TWW S2
 
-L.ADDONNAME = "Key Master"
-L.BUILDRELEASE = "release"
-L.BUILDBETA = "beta"
-L.DISPLAYVERSION = "v"
+L.ADDONNAME = "Key Master" -- do not translate
+L.BUILDRELEASE = "release" -- do not translate
+L.BUILDBETA = "beta" -- do not translate
+L.DISPLAYVERSION = "v" -- do not translate
 L.WELCOMEMESSAGE = "Welcome back"
 L.ON = "on"
 L.OFF = "off"
@@ -66,8 +70,8 @@ L.TIMELIMIT = "Time Limit"
 L.SEASON = "Season"
 
 L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
 L.COMMANDLINE["Show"] = { name = "show", text = " - show/hide the main window."}
 L.COMMANDLINE["Help"] = { name = "help", text = " - shows this help menu."}
 L.COMMANDLINE["Errors"] = { name = "errors", text = " - toggle error messages."}
