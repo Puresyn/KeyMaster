@@ -3,14 +3,14 @@ local L = KM_Localization_ptBR
 
 -- Localization file for "ptBR": Portuguese (Brazil)
 
-L.LANGUAGE = "Portuguese"
+L.LANGUAGE = "Português (BR)"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Desconhecido", abbr = "???" }
 L.MAPNAMES[463] = { name = "Despertar do Infinito: Ruína de Galakrond", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Despertar do Infinito: Ascensão de Murozond", abbr = "RISE"}
 L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Mansão Capelo", abbr = "WCM" }
+L.MAPNAMES[248] = { name = "Mansão Capelo", abbr = "WM" }
 L.MAPNAMES[199] = { name = "Castelo Corvo Negro", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Bosque Corenegro", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "Floretérnia", abbr = "EB" }
@@ -42,8 +42,8 @@ L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Bem vindo"
 L.ON = "on"
 L.OFF = "off"
-L.ENABLED = "ativado"
-L.DISABLED = "desativado"
+L.ENABLED = "ativada"
+L.DISABLED = "desativada"
 L.CLICK = "Click"
 L.CLICKDRAG = "Click e arraste"
 L.TOOPEN = "para abrir"
@@ -51,11 +51,11 @@ L.TOREPOSITION = "para reposicionar"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "Essa Semana..."
 L.YOURRATING = "Sua Pontuação"
-L.TYRANNICAL = "Tirânica"
-L.FORTIFIED = "Fortificada"
-L.ERRORMESSAGES = "Mensagens de erro são"
+L.TYRANNICAL = "Tirânica" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
+L.FORTIFIED = "Fortificada" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
+L.ERRORMESSAGES = "Mensagem de Erro"
 L.ERRORMESSAGESNOTIFY = "Notificação: Mensagens de erro habilitadas."
-L.DEBUGMESSAGES = "Mensagens de Debug são"
+L.DEBUGMESSAGES = "Mensagem de Debug"
 L.DEBUGMESSAGESNOTIFY = "Notificação: Mensagens de debug estão habilitadas"
 L.COMMANDERROR1 = "Comando invalido"
 L.COMMANDERROR2 = "Insira"
@@ -90,6 +90,7 @@ L.PARTYFRAME["NoAddon"] = { name = "Addon não detectado", text = "não detectad
 L.PARTYFRAME["PlayerOffline"] = { name = "Jogador Offline", text = "Jogador offline."}
 L.PARTYFRAME["TeamRatingGain"] = { name = "Potencial de ganho do grupo", text = "Ganho estimado do grupo"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Potencial de ganho", text = "Estimativa pessoal de ganho de pontos para as chaves disponíveis na conclusão +1."}
+L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Nível da chave", text = "Nível da chave à ser calculado."}
@@ -111,7 +112,7 @@ L.TABCONFIG = "Configuração"
 
 L.CONFIGURATIONFRAME = {}
 L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Configurações de Exibição", text = "Configurações de Exibição"}
-L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Ativar Pontuação em Decimal", text = "Exibir Decimais na Pontuação."}
+L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Ativar Pontuação em Decimal", text = "Exibir Decimais."}
 L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Exibir botão no minimapa", text = "Exibir botão no minimapa."}
 L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Configurações de Diagnóstico", text = "Configurações de Diagnóstico."}
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Exibir erros", text = "Exibir mensagens de erro."}

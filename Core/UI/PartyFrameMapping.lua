@@ -189,7 +189,7 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     if (not playerData.ownedKeyLevel or playerData.ownedKeyLevel == 0) then
         keyInfoFrame:SetText("")
         if (playerData.hasAddon == true) then
-            keyInfoFrame:SetText("No Key")
+            keyInfoFrame:SetText(KeyMasterLocals.PARTYFRAME["NoKey"].name)
         end
     else 
         local ownedKeyLevel = "("..playerData.ownedKeyLevel..") "

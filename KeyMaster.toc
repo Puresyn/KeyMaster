@@ -20,7 +20,6 @@
 ## X-GitHub: github.com/Puresyn/KeyMaster
 
 Embeds.xml
-Core\Localization\Localization.enUS.lua
 Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua

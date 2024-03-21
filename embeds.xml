@@ -39,6 +39,9 @@
 	<!-- <Include file='Libs\External\oUF\oUF.xml'/> -->
 	<!-- <Include file='Libs\External\oUF_Plugins\oUF_Plugins.xml'/> -->
 
+	<Script file='Core\Localization\Localization.enUS.lua'/>
+	<Script file='Core\Localization\Localization.ptBR.lua'/>
+
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>

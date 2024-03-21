@@ -26,7 +26,7 @@ KeyMasterLocals = {}
         langPref = GetLocale()
         --print("Loaded from locale: "..langPref)
     end
-
+    print(langPref)
     if (langPref == "frFR") then
         -- Localization.frFR.lua
         KeyMasterLocals = KM_Localization_frFR

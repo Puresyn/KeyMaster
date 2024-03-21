@@ -3,14 +3,14 @@ local L = KM_Localization_deDE
 
 -- Localization file for "deDE": German (Germany)
 
-L.LANGUAGE = "German"
+L.LANGUAGE = "German (DE)"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
 L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WCM" }
+L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WM" }
 L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
@@ -51,8 +51,8 @@ L.TOREPOSITION = "to reposition"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "This Week..."
 L.YOURRATING = "Your Rating"
-L.TYRANNICAL = "Tyrannical"
-L.FORTIFIED = "Fortified"
+L.TYRANNICAL = "Tyrannical" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
+L.FORTIFIED = "Fortified" -- CRITICAL that this is spelled EXACTLY as Blizzard spells it!
 L.ERRORMESSAGES = "Error messages are"
 L.ERRORMESSAGESNOTIFY = "Notify: Error messages are enabled."
 L.DEBUGMESSAGES = "Debug messages are"
@@ -90,6 +90,7 @@ L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
 L.PARTYFRAME["TeamRatingGain"] = { name = "Party Gain Potential", text = "Estimated Party Rating Gain"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Gain Potential", text = "Estimated personal point gain for available key(s) at +1 completion."}
+L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Key Level", text = "Key level to be calculated."}
