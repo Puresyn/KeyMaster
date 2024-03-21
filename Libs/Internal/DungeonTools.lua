@@ -133,7 +133,7 @@ end
 -- conversion from mapid to abbreviation
 function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
     local a = KeyMasterLocals.MAPNAMES[mapId].abbr
-    if (not a) then a = KeyMasterLocalsL.PARTYFRAME["NoKey"].name end
+    if (not a) then a = KeyMasterLocals.PARTYFRAME["NoKey"].name end
     return a
 end
 

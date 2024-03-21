@@ -90,7 +90,7 @@ L.PARTYFRAME["NoAddon"] = { name = "No Addon Detected", text = "not detected!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Player Offline", text = "Player is offline."}
 L.PARTYFRAME["TeamRatingGain"] = { name = "Party Gain Potential", text = "Estimated Party Rating Gain"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Gain Potential", text = "Estimated personal point gain for available key(s) at +1 completion."}
-L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
+L.PARTYFRAME["NoKey"] = { name = "No Key", text = "No Key"}
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Key Level", text = "Key level to be calculated."}
