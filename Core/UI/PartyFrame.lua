@@ -168,15 +168,15 @@ function PartyFrame:SetPartyWeeklyDataTheme()
 
     local tyranFont = CreateFont("tempFont1")
     local fortFont = CreateFont("tempFont2")
-    tyranFont:SetFontObject(DungeonTools:GetWeekFont("Tyrannical"))
-    fortFont:SetFontObject(DungeonTools:GetWeekFont("Fortified"))
+    tyranFont:SetFontObject(DungeonTools:GetWeekFont(KeyMasterLocals.TYRANNICAL))
+    fortFont:SetFontObject(DungeonTools:GetWeekFont(KeyMasterLocals.FORTIFIED))
     local tfPath, tfSize, tfFlags = tyranFont:GetFont()
     local ffPath, ffSize, ffFlags = fortFont:GetFont()
 
     local tyrannicalRGB = {}
-    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor("Tyrannical")
+    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor(KeyMasterLocals.TYRANNICAL)
     local fortifiedRGB = {}
-    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor("Fortified")
+    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor(KeyMasterLocals.FORTIFIED)
 
     for i=1, 5, 1 do
         local tyranTitleFontString = _G["KM_TyranTitle"..i]

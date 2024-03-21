@@ -153,28 +153,16 @@ local function updateWeeklyAffixTheme()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
 
     local baseFrame = _G["KM_PlayerFrameMapInfoHeader"]
-    if weeklyAffix == "Tyrannical" then
+    if weeklyAffix == KeyMasterLocals.TYRANNICAL then
         baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
-        -- baseFrame.fortText:SetAlpha(0.5)
-
-        -- for mapId, _ in pairs(mapTable) do
-        --     local playerMapDataFrame = _G["KM_PlayerFrame_Data"..mapId]
-        --     playerMapDataFrame.tyrannicalLevel:SetTextColor(cw.r, cw.g, cw.b, 1)
-        --     playerMapDataFrame.fortifiedLevel:SetTextColor(ow.r, ow.g, ow.b, 1)
-        --     playerMapDataFrame.fortifiedLevel:SetAlpha(0.5)
-        -- end
-    else
+    elseif weeklyAffix == KeyMasterLocals.FORTIFIED then
         baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
-        -- baseFrame.tyranText:SetAlpha(0.5)
-
-        -- for mapId, _ in pairs(mapTable) do
-        --     local playerMapDataFrame = _G["KM_PlayerFrame_Data"..mapId]
-        --     playerMapDataFrame.fortifiedLevel:SetTextColor(cw.r, cw.g, cw.b, 1)
-        --     playerMapDataFrame.tyrannicalLevel:SetTextColor(ow.r, ow.g, ow.b, 1)
-        --     playerMapDataFrame.tyrannicalLevel:SetAlpha(0.5)
-        -- end
+    else
+        baseFrame.fortText:SetTextColor(1, 1, 1, 1)
+        baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
+        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "No match for weekly affix found.")
     end
 end
 

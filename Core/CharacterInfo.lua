@@ -203,6 +203,5 @@ function CharacterInfo:GetMyCharacterInfo()
     end
 
     KeyMaster:_DebugMsg("GetMyCharacterInfo", "CharacterInfo", "Character data fetched.")
-    KeyMaster:TPrint(myCharacterInfo)
     return myCharacterInfo
 end
