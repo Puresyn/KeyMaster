@@ -5,6 +5,9 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta
 --------------------------------------------------
+- Fixed incorrect highlights in party frame due to localization issues
+- Converted weekly affix data to english so keep consistency in transported data
+
 
 --------------------------------------------------
 Key Master Beta release v0.0.96-beta
