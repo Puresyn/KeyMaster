@@ -798,13 +798,15 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
         self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
         
         local keyLevel = tonumber(self:GetText())
-        local mapId = selectedMapId -- set from row click
+        if keyLevel ~= nil then
+            local mapId = selectedMapId -- set from row click
         
-        PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
-        
+            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+            
+            scoreCalcDirection:Hide()
+            scoreCalcScores:Show()
+        end        
         self:SetText("") -- Empties the box, duh! ;)
-        scoreCalcDirection:Hide()
-        scoreCalcScores:Show()
     end)
     
     scoreCalc.keyLevelTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
