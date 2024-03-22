@@ -86,7 +86,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     -- Display Settings
     local displaySetting = CreateFrame("Frame", nil, conFrame)
     displaySetting:SetPoint("TOPLEFT", conFrameHeader, "BOTTOMLEFT", 0, -4)
-    displaySetting:SetSize((conFrame:GetWidth()-mlr)/4, settingsPanelBaseHeight/4)
+    displaySetting:SetSize((conFrame:GetWidth()-mlr)/3, settingsPanelBaseHeight/4)
     displaySetting.title = displaySetting:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     displaySetting.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     displaySetting.title:SetPoint("TOPLEFT", displaySetting, "TOPLEFT", 4, -4)

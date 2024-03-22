@@ -39,8 +39,10 @@
 	<!-- <Include file='Libs\External\oUF\oUF.xml'/> -->
 	<!-- <Include file='Libs\External\oUF_Plugins\oUF_Plugins.xml'/> -->
 
-	<Script file='Core\Localization\Localization.enUS.lua'/>
-	<Script file='Core\Localization\Localization.ptBR.lua'/>
+	<Include file='Core\Localization\Languages.xml'/>
+
+
+	<Include file="Core\UI\DropDownMenuTemplate.xml"/>
 
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
@@ -49,4 +51,5 @@
 	<Script file='Libs\Internal\EventHooks.lua'/>
 	<Script file='Libs\Internal\WeeklyRewards.lua'/>
 	<Script file='Libs\Internal\LibOpenRaidStub.lua'/>
+	
 </Ui>

@@ -63,7 +63,7 @@ end
 function HeaderFrame:CreatePlayerInfoBox(parentFrame)
     local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
     headerPlayerInfoBox:SetSize(198, 80)
-    headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 10)
+    headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 6)
 
     return headerPlayerInfoBox
 
@@ -100,7 +100,7 @@ function HeaderFrame:CreateAffixFrames(parentFrame)
         
         -- Affix Name
         local affixNameFrame = CreateFrame("Frame", nil, temp_frame)
-        affixNameFrame:SetSize(60, 15)
+        affixNameFrame:SetSize(50, 15)
         affixNameFrame:SetPoint("BOTTOMLEFT", temp_frame, "BOTTOMLEFT")
         local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
         local path, _, flags = myText:GetFont()
@@ -212,6 +212,15 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
     VersionText:SetJustifyV("TOP")
     VersionText:SetText(displayVersion)
     VersionText:SetAlpha(0.6)
+
+    local Localization = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    Localization:SetPoint("TOPRIGHT",  headerContent, "TOPRIGHT", -18, -3)
+    local path, _, flags = VersionText:GetFont()
+    Localization:SetFont(path, 9, flags)
+    Localization:SetJustifyH("RIGHT")
+    Localization:SetJustifyV("TOP")
+    Localization:SetText(KeyMasterLocals.LANGUAGE)
+    Localization:SetAlpha(0.2)
     
     return headerContent
 end
