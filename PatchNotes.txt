@@ -7,7 +7,7 @@ Key Master Beta release v0.0.97-beta
 --------------------------------------------------
 - Fixed incorrect highlights in party frame due to localization issues
 - Converted weekly affix data to english so keep consistency in transported data
-
+- Fixed missing dependency on LibDbIcon-1.0.  Would cause KM to break when no other loaded addon was using the library.
 
 --------------------------------------------------
 Key Master Beta release v0.0.96-beta
