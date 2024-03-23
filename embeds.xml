@@ -29,6 +29,7 @@
 	<Script file='Libs\External\LibCustomGlow-1.0\LibCustomGlow-1.0.lua'/>
 	<Script file='Libs\External\LibActionButton-1.0\LibActionButton-1.0.lua'/>
 	<Script file='Libs\External\LibDataBroker-1.1\LibDataBroker-1.1.lua'/>
+	<Include file='Libs\External\LibDBIcon-1.0\lib.xml'/>
 	<!-- <Script file='Libs\External\LibDualSpec-1.0\LibDualSpec-1.0.lua'/> -->
 	<!-- <Script file='Libs\External\LibElvUIPlugin-1.0\LibElvUIPlugin-1.0.lua'/> -->
 	<Script file='Libs\External\LibSimpleSticky\LibSimpleSticky.lua'/>
