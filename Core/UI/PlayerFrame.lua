@@ -756,47 +756,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     local Hline = KeyMaster:CreateHLine(scoreCalc:GetWidth()+8, scoreCalc, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
-    
-    -- Weekly Affix selector for calculator
-    local defaultCalcAffix
-    local weeklyLocalAffix = DungeonTools:GetWeeklyAffix()
-    if(weeklyLocalAffix == KeyMasterLocals.TYRANNICAL) then
-        defaultCalcAffix = "Tyrannical"
-    else
-        defaultCalcAffix = "Fortified"
-    end
-
-    -- //// Move to mappings?
-    local playerMapCalcMenu
-    local playerMapCalcMenu_Opts = {
-        ['name']='affixSelect',
-        ['parent']=scoreCalc,
-        ['title']='',
-        ['items']= { KeyMasterLocals.FORTIFIED , KeyMasterLocals.TYRANNICAL },
-        ['defaultVal']=weeklyLocalAffix,
-        ['changeFunc']=function(dropdown_frame, dropdown_val)
-            -- Custom logic goes here, when you change your dropdown option.
-            if(dropdown_val == KeyMasterLocals.FORTIFIED) then
-                print(dropdown_val.." - Calcuate Fortified.") -- todo: DEBUG - DELETE ME
-            elseif (dropdown_val == KeyMasterLocals.TYRANNICAL) then
-                print(dropdown_val.." - Calcuate Tyrannical.") -- todo: DEBUG - DELETE ME
-            end
-        end
-    }
-    --///
-
-    playerMapCalcMenu = KeyMaster:createDropdown(playerMapCalcMenu_Opts)
-    playerMapCalcMenu:SetPoint("TOPLEFT", scoreCalc, "TOPLEFT", -14, -20);
-    UIDropDownMenu_SetSelectedValue(playerMapCalcMenu, weeklyLocalAffix, weeklyLocalAffix)
-
-    print(UIDropDownMenu_GetSelectedValue(playerMapCalcMenu)) -- todo: DEBUG - DELETE ME
-    
-  --[[   playerMapCalcMenu:SetBackdrop({bgFile="", 
-        edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
-        tile = false, 
-        tileSize = 0, 
-        edgeSize = 16, 
-        insets = {left = 4, right = 4, top = 4, bottom = 4}}) ]]
 
     scoreCalc.DetailsTitleDesc = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     scoreCalc.DetailsTitleDesc:SetPoint("TOPLEFT", scoreCalc, "TOPLEFT", 4, -4)

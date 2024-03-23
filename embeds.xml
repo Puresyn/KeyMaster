@@ -42,9 +42,6 @@
 
 	<Include file='Core\Localization\Languages.xml'/>
 
-
-	<Include file="Core\UI\DropDownMenuTemplate.xml"/>
-
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>
