@@ -66,6 +66,15 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, weeklyAffix)
     local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
     newOverall = getNumberPerferenceValue(newOverall)
     scoreFrame.newRating:SetText(newOverall)
+
+    if weeklyAffix == "Tyrannical" then
+        weeklyAffix = KeyMasterLocals.TYRANNICAL
+    elseif weeklyAffix == "Fortified" then
+        weeklyAffix = KeyMasterLocals.FORTIFIED
+    else
+        weeklyAffix = "Tyrannical"
+        KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to determine weeklyAffix. Defaulting to Tyrannical.")
+    end
     
     scoreFrame.keyLevel:SetText(keyLevel.." "..weeklyAffix)
 end
