@@ -153,12 +153,22 @@ local function updateWeeklyAffixTheme()
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
 
     local baseFrame = _G["KM_PlayerFrameMapInfoHeader"]
+    local tyrannicalSelector = _G["TyrannicalSelector"]
+    local fortifiedSelector = _G["FortifiedSelector"]
+
     if weeklyAffix == KeyMasterLocals.TYRANNICAL then
         baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
+        
+        tyrannicalSelector:SetChecked(true)
+        fortifiedSelector:SetChecked(false)
+    
     elseif weeklyAffix == KeyMasterLocals.FORTIFIED then
         baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
+
+        tyrannicalSelector:SetChecked(false)
+        fortifiedSelector:SetChecked(true)
     else
         baseFrame.fortText:SetTextColor(1, 1, 1, 1)
         baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
@@ -727,13 +737,24 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
         
         local keyLevel = tonumber(self:GetText())
         if keyLevel ~= nil then
+            local tyrannicalSelector = _G["TyrannicalSelector"]
+            local fortifiedSelector = _G["FortifiedSelector"]
+            local selectedWeeklyAffix = nil
+            if fortifiedSelector:GetChecked() == true then
+                selectedWeeklyAffix = "Fortified"
+            elseif tyrannicalSelector:GetChecked() == true then
+                selectedWeeklyAffix = "Tyrannical"
+            else
+                KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to find ScoreCalcScores frame.")
+                selectedWeeklyAffix = DungeonTools:GetWeeklyAffix()
+            end
             local mapId = selectedMapId -- set from row click
-        
-            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+            
+            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, selectedWeeklyAffix)
             
             scoreCalcDirection:Hide()
             scoreCalcScores:Show()
-        end        
+        end
         self:SetText("") -- Empties the box, duh! ;)
     end)
     
@@ -765,11 +786,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
             tyrannicalSelector:SetChecked(true)
         end
     end
-
-    -- default state --------------------
-    tyrannicalSelector:SetChecked(false)
-    fortifiedSelector:SetChecked(true)
-    -------------------------------------
 
     tyrannicalSelector:SetPoint("TOPLEFT", affixSelectorFrame, "TOPLEFT")
     tyrannicalSelector:SetScript("PostClick", selectTyrannical)

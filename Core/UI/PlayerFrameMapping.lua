@@ -28,7 +28,7 @@ local function getNumberPerferenceValue(number)
     return result
 end
 
-function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, weeklyAffix)
     local scoreFrame = _G["KM_ScoreCalcScores"]
     if scoreFrame == nil then
         KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to find ScoreCalcScores frame.")
@@ -37,7 +37,6 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
 
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local dungeonTimeLimit = mapTable[mapId].timeLimit
-    local weeklyAffix = DungeonTools:GetWeeklyAffix()
     local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
     local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
