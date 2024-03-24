@@ -165,7 +165,10 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     -- Spec & Class
     local unitClassSpec
     local unitClass, _ = UnitClass(unitId)
-    local unitSpecialization = CharacterInfo:GetPlayerSpecialization(unitId)
+    local unitSpecialization 
+    if (GetLocale() == "enUS") then -- Filter on enUS because many other languages seems to have length issues in the current layout
+        unitSpecialization = CharacterInfo:GetPlayerSpecialization(unitId)
+    end
     if unitSpecialization ~= nil then
         unitClassSpec = unitSpecialization.." "..unitClass
     else

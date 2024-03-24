@@ -41,7 +41,8 @@
 	<!-- <Include file='Libs\External\oUF_Plugins\oUF_Plugins.xml'/> -->
 
 	<Include file='Core\Localization\Languages.xml'/>
-
+	
+	<Script file='Libs\Internal\KMFactory.lua'/>
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>

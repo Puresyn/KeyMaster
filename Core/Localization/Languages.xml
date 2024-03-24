@@ -1,10 +1,10 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
     <Script file='Core\Localization\Localization.enUS.lua'/>
-	<Script file='Core\Localization\Localization.ptBR.lua'/>
-    <Script file='Core\Localization\Localization.frFR.lua'/>
+    <Script file='Core\Localization\Localization.ptBR.lua'/>
+<!--<Script file='Core\Localization\Localization.frFR.lua'/>
     <Script file='Core\Localization\Localization.deDE.lua'/>
     <Script file='Core\Localization\Localization.esES.lua'/>
     <Script file='Core\Localization\Localization.esMX.lua'/>
-    <Script file='Core\Localization\Localization.itIT.lua'/>
+    <Script file='Core\Localization\Localization.itIT.lua'/> -->
     <Script file='Core\Localization\Localization.ruRU.lua'/>
 </Ui>

@@ -25,6 +25,7 @@ We are actively seeking volunteer translators and proof readers for the followin
 -Russian (Russia)
 -Spanish (Spain)
 -Spanish (Mexico)
+-Portuguese (Brazil)
 Please visit our Discord (https://discord.gg/bbMaUpfgn8) and let one of the Admins know if you are interested!
 (Must be fluent in English (US), WoW lingo, the desired region language, and be active/responsive on Discord.)
 
@@ -36,7 +37,7 @@ local langPref = GetLocale()
 if(langPref == "enUS") then
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS
-elseif (langPref == "frFR") then
+--[[ elseif (langPref == "frFR") then
     -- Localization.frFR.lua
     KeyMasterLocals = KM_Localization_frFR
 elseif (langPref == "deDE") then
@@ -44,16 +45,16 @@ elseif (langPref == "deDE") then
     KeyMasterLocals = KM_Localization_deDE
 elseif (langPref == "itIT") then
     -- Localization.itIT.lua
-    KeyMasterLocals = KM_Localization_itIT
+    KeyMasterLocals = KM_Localization_itIT ]]
 elseif (langPref == "ruRU") then
     -- Localization.ruRU.lua
     KeyMasterLocals = KM_Localization_ruRU
-elseif (langPref == "esES") then
+--[[ elseif (langPref == "esES") then
     -- Localization.esES.lua
     KeyMasterLocals = KM_Localization_esES
 elseif (langPref == "esMX") then
     -- Localization.esMX.lua
-    KeyMasterLocals = KM_Localization_esMX
+    KeyMasterLocals = KM_Localization_esMX ]]
 elseif (langPref == "ptBR") then
     -- Localization.ptBR.lua
     KeyMasterLocals = KM_Localization_ptBR
@@ -66,3 +67,5 @@ local TYRANNICAL_ID = 9
 local FORTIFIED_ID = 10
 KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICAL_ID)
 KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIED_ID)
+KeyMasterLocals.BUILDRELEASE = "release" -- must remain in ENGLISH - DO NOT TRANSLATE
+KeyMasterLocals.BUILDBETA = "beta" -- must remain in ENGLISH - DO NOT TRANSLATE

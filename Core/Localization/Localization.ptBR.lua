@@ -40,9 +40,7 @@ L.MPLUSSEASON[13] = { name = "Temporada 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "Temporada 2" } -- expecting season 14 to be TWW S2
 
 L.ADDONNAME = "Key Master" -- do not translate
-L.BUILDRELEASE = "release" -- do not translate
-L.BUILDBETA = "beta" -- do not translate
-L.DISPLAYVERSION = "v" -- do not translate
+L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Bem vindo"
 L.ON = "on"
 L.OFF = "off"
