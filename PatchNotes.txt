@@ -5,9 +5,14 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta
 --------------------------------------------------
-- Fixed incorrect highlights in party frame due to localization issues
-- Converted weekly affix data to english so keep consistency in transported data
-- Fixed missing dependency on LibDbIcon-1.0.  Would cause KM to break when no other loaded addon was using the library.
+- Corrected an issue where party members using a different language client would
+  receive incorrect data from others.
+- Fixed incorrect highlights in party frame that could occur from localization
+- Standardized weekly affix data for consistency in data transport
+- Fixed missing dependency that caused a mini-map icon issue.
+- Added weekly affix selection to the rating calculator.
+- Added localization support for Português (ptBR) - (Thanks Cyph!)
+- Added localization support for Русский (ruRU) - (Thanks Hollicsh!)
 
 --------------------------------------------------
 Key Master Beta release v0.0.96-beta
