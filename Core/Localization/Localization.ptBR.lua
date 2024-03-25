@@ -11,6 +11,7 @@ L.TRANSLATOR = "Cyph" -- Translator display name
 
 L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Ferramenta de informação e colaboração sobre chaves Mítica +"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Desconhecido", abbr = "???" }

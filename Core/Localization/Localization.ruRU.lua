@@ -11,6 +11,7 @@ L.TRANSLATOR = "Hollicsh" -- Translator display name
 
 L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Отображение подробной информации о контенте М+"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }

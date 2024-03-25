@@ -10,7 +10,8 @@ L.LANGUAGE = "正體中文 (TW)"
 L.TRANSLATOR = "三皈依" -- Translator display name
 
 L.TOCNOTES = {}
-L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
+L.TOCNOTES["ADDONDESC"] = "傳奇+鑰石資訊以及協同工具"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "未知", abbr = "???" }

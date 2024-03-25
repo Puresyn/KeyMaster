@@ -205,7 +205,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerNameLarge:SetPoint("BOTTOMLEFT", playerFrame, "BOTTOMLEFT", -4, -8)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     playerFrame.playerNameLarge:SetText("|cff"..hexColor..UnitName("player").."|r")
-    playerFrame.playerNameLarge:SetAlpha(0.04)
+    playerFrame.playerNameLarge:SetAlpha(0.06)
     playerFrame.playerNameLarge:SetJustifyH("LEFT")
 
     -- Player Specialization and Class
