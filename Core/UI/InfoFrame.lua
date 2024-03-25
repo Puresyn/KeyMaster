@@ -91,21 +91,32 @@ function InfoFrame:CreateInfoFrame(parentFrame)
 
     local generalText = [[(c) 2024 - Released under the GNU General Public License
         
-Key Master is an addon developed for World of Warcraft players who are actively involved in Mythic Plus content. The goal of the addon is to provide a single location to display detailed Mythic Plus content information about you and/or your party.
-
-This addon was conceived with the idea that it was too laborious to make informed decisions regarding “Key Running”; either for yourself, or a “push team”.
+    Key Master is an addon developed for World of Warcraft players who are actively involved in Mythic Plus content. The goal of the addon is to provide a single location to display detailed Mythic Plus content information about you and/or your party.
     
-While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, please tell your friends!
+    While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, please tell your friends!
 
 Visit us at:
 https://www.curseforge.com/wow/addons/key-master
-https://discord.gg/bbMaUpfgn8]]
-    aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+https://discord.gg/bbMaUpfgn8
+
+    We are actively seeking volunteer translators and proof readers to help represent their countries for the following languages:
+
+-French (France)
+-German (Germany)
+-Italian (Italy)
+-Chinese (China) (simplified) implemented LTR
+-Chinese (Taiwan) (traditional) implemented LTR
+-Russian (Russia)
+-Spanish (Spain)
+-Spanish (Mexico)
+-Portuguese (Brazil)]]
+    aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutGeneral.text:SetPoint("TOPLEFT", aboutGeneral.title, "BOTTOMLEFT", 8, -4)
     aboutGeneral.text:SetJustifyH("LEFT")
     aboutGeneral.text:SetJustifyV("TOP")
     aboutGeneral.text:SetSize(aboutGeneral:GetWidth()-(indent*3)-mlr, aboutGeneral:GetHeight()-aboutGeneral.title:GetHeight()-25)
     aboutGeneral.text:SetText(generalText)
+    aboutGeneral.text:CanWordWrap(true)
 
     local Hline = KeyMaster:CreateHLine(aboutGeneral:GetWidth()+8, aboutGeneral, "TOP", 0, 0)
     Hline:SetAlpha(0.5)

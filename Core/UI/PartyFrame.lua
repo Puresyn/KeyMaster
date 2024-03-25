@@ -67,7 +67,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     -- Dungeon Header Icon Frame
     local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
     temp_frame:SetSize(iconSizex, iconSizey)
-    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 12)
+    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10) -- 10, 24
 
     local backgroundHighlight = CreateFrame("Frame", "KM_MapHeaderHighlight"..mapId, temp_frame)
     backgroundHighlight:SetFrameLevel(temp_frame:GetFrameLevel()-1)
@@ -76,7 +76,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     backgroundHighlight.texture = backgroundHighlight:CreateTexture()
     backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
     local highlightColor = {}
-    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON                                                                                                      ")
     backgroundHighlight.texture:SetColorTexture(highlightColor.r,highlightColor.g,highlightColor.b, 1)
     backgroundHighlight:Hide()
 
@@ -158,7 +158,9 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     keyText:SetFont(Path, 12, Flags)
     keyText:SetPoint("TOPLEFT", 3, -3)
     keyText:SetJustifyH("LEFT")
-    keyText:SetTextColor(1, 1, 1)
+    local groupKeyColor = {}
+    groupKeyColor.r, groupKeyColor.g, groupKeyColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    keyText:SetTextColor(groupKeyColor.r, groupKeyColor.g, groupKeyColor.b, 1)
 end
 
 -- Set the font and color of the party frames map data.
@@ -495,7 +497,7 @@ function PartyFrame:CreatePartyRowsFrame(parentFrame)
     local gfm = 4 -- group frame margin
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
-    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 430)
+    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 440)
     temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -108)
     timeSinceLastUpdate = 0
     

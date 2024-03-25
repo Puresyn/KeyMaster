@@ -526,9 +526,9 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
             local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.overallScore:GetPoint()
             mapHeaderFrame.divider1:SetPoint("CENTER", mapHeaderFrame, "CENTER", xOfs, 0)
             point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.tyrannicalLevel:GetPoint()
-            mapHeaderFrame.tyranText:SetPoint("CENTER",  mapHeaderFrame.divider1, relativePoint, xOfs, 0)
+            mapHeaderFrame.tyranText:SetPoint("RIGHT",  mapHeaderFrame.divider1, relativePoint, xOfs, 0)
             point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.fortifiedLevel:GetPoint()
-            mapHeaderFrame.fortText:SetPoint("CENTER", mapHeaderFrame.divider1, relativePoint, xOfs, 0)
+            mapHeaderFrame.fortText:SetPoint("LEFT", mapHeaderFrame.divider1, relativePoint, xOfs, 0)
             doOnce = 1
         end
         prevFrame = mapFrame
