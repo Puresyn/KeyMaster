@@ -5,6 +5,7 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master Beta release v0.0.98-beta
 --------------------------------------------------
+- Fixed party frame map icon underline color.
 
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta

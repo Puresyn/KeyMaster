@@ -76,7 +76,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     backgroundHighlight.texture = backgroundHighlight:CreateTexture()
     backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
     local highlightColor = {}
-    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON                                                                                                      ")
+    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON")
     backgroundHighlight.texture:SetColorTexture(highlightColor.r,highlightColor.g,highlightColor.b, 1)
     backgroundHighlight:Hide()
 
