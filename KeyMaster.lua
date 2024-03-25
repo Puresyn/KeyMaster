@@ -16,7 +16,7 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '0.0.96'
+KM_AUTOVERSION = '0.0.97'
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -51,7 +51,7 @@ local function HandleSlashCommands(str)
  
     -- /km
     if (#str == 0) then
-        KeyMaster.Commands.show()
+        KeyMaster.Commands[KeyMasterLocals.COMMANDLINE["Show"].name]()
         return
     end
 

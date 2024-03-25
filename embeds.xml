@@ -29,6 +29,7 @@
 	<Script file='Libs\External\LibCustomGlow-1.0\LibCustomGlow-1.0.lua'/>
 	<Script file='Libs\External\LibActionButton-1.0\LibActionButton-1.0.lua'/>
 	<Script file='Libs\External\LibDataBroker-1.1\LibDataBroker-1.1.lua'/>
+	<Include file='Libs\External\LibDBIcon-1.0\lib.xml'/>
 	<!-- <Script file='Libs\External\LibDualSpec-1.0\LibDualSpec-1.0.lua'/> -->
 	<!-- <Script file='Libs\External\LibElvUIPlugin-1.0\LibElvUIPlugin-1.0.lua'/> -->
 	<Script file='Libs\External\LibSimpleSticky\LibSimpleSticky.lua'/>
@@ -39,6 +40,9 @@
 	<!-- <Include file='Libs\External\oUF\oUF.xml'/> -->
 	<!-- <Include file='Libs\External\oUF_Plugins\oUF_Plugins.xml'/> -->
 
+	<Include file='Core\Localization\Languages.xml'/>
+	
+	<Script file='Libs\Internal\KMFactory.lua'/>
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>
@@ -46,4 +50,5 @@
 	<Script file='Libs\Internal\EventHooks.lua'/>
 	<Script file='Libs\Internal\WeeklyRewards.lua'/>
 	<Script file='Libs\Internal\LibOpenRaidStub.lua'/>
+	
 </Ui>

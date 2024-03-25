@@ -9,7 +9,7 @@ local maxModifier = 0.4
 -- Challenge Dungeon Instance Abbreviations.
 -- Must be manually maintained.
 --------------------------------
-local instanceAbbrTable = {
+--[[ local instanceAbbrTable = {
     [463] = "FALL",     -- Dawn of the Infinite: Galakrond's Fall
     [464] = "RISE",     -- Dawn of the Infinite: Murozond's Rise
     [244] = "AD",       -- Atal'Dazar
@@ -22,7 +22,7 @@ local instanceAbbrTable = {
 
 function DungeonTools:instanceAbbrs()
     return instanceAbbrTable
-end
+end ]]
 
 --------------------------------
 -- Dungeon Portal spell IDs
@@ -132,8 +132,8 @@ end
 
 -- conversion from mapid to abbreviation
 function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
-    local a = instanceAbbrTable[mapId]
-    if (not a) then a = "No Key" end
+    local a = KeyMasterLocals.MAPNAMES[mapId].abbr
+    if (not a) then a = KeyMasterLocals.PARTYFRAME["NoKey"].name end
     return a
 end
 

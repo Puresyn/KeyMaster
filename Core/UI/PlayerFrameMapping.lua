@@ -28,7 +28,7 @@ local function getNumberPerferenceValue(number)
     return result
 end
 
-function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, weeklyAffix)
     local scoreFrame = _G["KM_ScoreCalcScores"]
     if scoreFrame == nil then
         KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to find ScoreCalcScores frame.")
@@ -37,7 +37,6 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
 
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local dungeonTimeLimit = mapTable[mapId].timeLimit
-    local weeklyAffix = DungeonTools:GetWeeklyAffix()
     local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
     local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
@@ -67,6 +66,15 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
     newOverall = getNumberPerferenceValue(newOverall)
     scoreFrame.newRating:SetText(newOverall)
+
+    if weeklyAffix == "Tyrannical" then
+        weeklyAffix = KeyMasterLocals.TYRANNICAL
+    elseif weeklyAffix == "Fortified" then
+        weeklyAffix = KeyMasterLocals.FORTIFIED
+    else
+        weeklyAffix = "Tyrannical"
+        KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to determine weeklyAffix. Defaulting to Tyrannical.")
+    end
     
     scoreFrame.keyLevel:SetText(keyLevel.." "..weeklyAffix)
 end

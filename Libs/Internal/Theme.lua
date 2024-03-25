@@ -227,6 +227,24 @@ local Colors = {
         g = 0,
         b = 1,
         hex = "ff00ff"
+    },
+    color_REDDIT = {
+        r = 1,
+        g = 0.282,
+        b = 0.086,
+        hex = "ff4816"
+    },
+    color_TWITCH = {
+        r = 0.392,
+        g = 0.255,
+        b = 0.647,
+        hex = "6441a5"
+    },
+    color_PARTYCHAT = {
+        r = 0.667,
+        g = 0.667,
+        b = 1,
+        hex = "aaaaff"
     }
 }
 

@@ -153,8 +153,7 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
                 ["xOfs"] = 0,
                 ["yOfs"] = 0,
                 ["relativePoint"] = "CENTER"
-            },
-            languagePreference = GetLocale()
+            }
         }
     }
 

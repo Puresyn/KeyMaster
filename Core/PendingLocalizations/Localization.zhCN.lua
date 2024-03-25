@@ -1,13 +1,13 @@
-KM_Localization_enUS = {}
-local L = KM_Localization_enUS
+KM_Localization_zhCN = {}
+local L = KM_Localization_zhCN
 
--- Localization file for "enUS": English (America)
--- Translated by: Key Master
+-- Localization file for "zhCN": Chinese (China) (simplified) implemented LTR left-to-right in WoW
+-- Translated by:
 
 -- Translation issue? Assist us in correcting it! Visit: https://discord.gg/bbMaUpfgn8
 
-L.LANGUAGE = "English (US)"
-L.TRANSLATOR = "Key Master"
+L.LANGUAGE = "Chinese (CN)"
+L.TRANSLATOR = "" -- Translator display name
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }

@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master Beta release v0.0.97-beta
+--------------------------------------------------
+- Added weekly affix selection to the rating calculator.
+- Corrected an issue where party members using a different language client would
+  receive incorrect data from others.
+- Fixed incorrect highlights in party frame that could occur from localization
+- Standardized weekly affix data for consistency in data transport
+- Fixed missing dependency that caused a mini-map icon issue.
+- Modified party frame layout to be more consistent with the rest of the addon.
+- Added localization support for Português (ptBR) - (Thanks Cyph!)
+- Added localization support for Русский (ruRU) - (Thanks Hollicsh!)
+
+--------------------------------------------------
 Key Master Beta release v0.0.96-beta
 --------------------------------------------------
 - Fixed grammatical errors

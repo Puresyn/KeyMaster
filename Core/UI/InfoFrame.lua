@@ -38,7 +38,7 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
     infoFrameHeader.titleBG:SetTextColor(headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, 1)
     infoFrameHeader.titleBG:SetText(KeyMasterLocals.TABABOUT)
-    infoFrameHeader.titleBG:SetAlpha(0.08)
+    infoFrameHeader.titleBG:SetAlpha(0.04)
     infoFrameHeader.titleBG:SetJustifyH("LEFT")
 
     -- Page Header Title
@@ -91,20 +91,32 @@ function InfoFrame:CreateInfoFrame(parentFrame)
 
     local generalText = [[(c) 2024 - Released under the GNU General Public License
         
-Key Master is an addon developed for World of Warcraft players who are actively involved in Mythic Plus content. The goal of the addon is to provide a single location to display detailed Mythic Plus content information about you and/or your party.
-
-This addon was conceived with the idea that it was too laborious to make informed decisions regarding “Key Running”; either for yourself, or a “push team”.
+    Key Master is an addon developed for World of Warcraft players who are actively involved in Mythic Plus content. The goal of the addon is to provide a single location to display detailed Mythic Plus content information about you and/or your party.
     
-While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, please tell your friends!
+    While there are many future features in-mind for Key Master to expand its usefulness, how far it may go and when that will happen is largely dependent on its user base. So, if you find Key Master useful, please tell your friends!
 
 Visit us at:
-https://www.curseforge.com/wow/addons/key-master]]
-    aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+https://www.curseforge.com/wow/addons/key-master
+https://discord.gg/bbMaUpfgn8
+
+    We are actively seeking volunteer translators and proof readers to help represent their countries for the following languages:
+
+-French (France)
+-German (Germany)
+-Italian (Italy)
+-Chinese (China) (simplified) implemented LTR
+-Chinese (Taiwan) (traditional) implemented LTR
+-Russian (Russia)
+-Spanish (Spain)
+-Spanish (Mexico)
+-Portuguese (Brazil)]]
+    aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutGeneral.text:SetPoint("TOPLEFT", aboutGeneral.title, "BOTTOMLEFT", 8, -4)
     aboutGeneral.text:SetJustifyH("LEFT")
     aboutGeneral.text:SetJustifyV("TOP")
     aboutGeneral.text:SetSize(aboutGeneral:GetWidth()-(indent*3)-mlr, aboutGeneral:GetHeight()-aboutGeneral.title:GetHeight()-25)
     aboutGeneral.text:SetText(generalText)
+    aboutGeneral.text:CanWordWrap(true)
 
     local Hline = KeyMaster:CreateHLine(aboutGeneral:GetWidth()+8, aboutGeneral, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
@@ -123,7 +135,7 @@ https://www.curseforge.com/wow/addons/key-master]]
     -- About - Authors
     local aboutAuthors = CreateFrame("Frame", nil, infoFrame)
     aboutAuthors:SetPoint("TOPLEFT", aboutGeneral, "TOPRIGHT", 4, 0)
-    aboutAuthors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/4-mtb))
+    aboutAuthors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight*0.25-mtb))
     aboutAuthors.title = aboutAuthors:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutAuthors.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutAuthors.title:SetPoint("TOPLEFT", aboutAuthors, "TOPLEFT", 4, -4)
@@ -155,13 +167,13 @@ https://www.curseforge.com/wow/addons/key-master]]
     -- About - Contributors
     local aboutContributors = CreateFrame("Frame", nil, infoFrame)
     aboutContributors:SetPoint("TOPLEFT", aboutAuthors, "BOTTOMLEFT", 0, -4)
-    aboutContributors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/2-mtb))
+    aboutContributors:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight*0.375-mtb))
     aboutContributors.title = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutContributors.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
 
-    local textContributors = "Rex\nIthoro\nXanat\nDoc\nSunnie\nCharlie\nFaethor\nTanzen\nOmgtotem"
+    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\nCyph (Português), Hollicsh (Русский)"
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
     aboutContributors.text:SetSize(aboutContributors:GetWidth()-indent-mlr, aboutContributors:GetHeight()-aboutContributors.title:GetHeight()-25)
@@ -184,13 +196,16 @@ https://www.curseforge.com/wow/addons/key-master]]
     -- About - Special Thanks
     local aboutSpecialThanks = CreateFrame("Frame", nil, infoFrame)
     aboutSpecialThanks:SetPoint("TOPLEFT", aboutContributors, "BOTTOMLEFT", 0, -4)
-    aboutSpecialThanks:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight/4-mtb))
+    aboutSpecialThanks:SetSize((((infoFrame:GetWidth()-mlr)/4)*1.75)-mlr, (aboutPanelBaseHeight*0.375-mtb))
     aboutSpecialThanks.title = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     aboutSpecialThanks.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     aboutSpecialThanks.title:SetPoint("TOPLEFT", aboutSpecialThanks, "TOPLEFT", 4, -4)
     aboutSpecialThanks.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutSpecialThanks"].name)
 
-    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\nReddit: r/CompetitiveWoW"
+    local redditColor, twitchColor
+    _, _, _, redditColor = Theme:GetThemeColor("color_REDDIT")
+    _, _, _, twitchColor = Theme:GetThemeColor("color_TWITCH")
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\n|cff"..twitchColor.."Twitch|r Ellesmere_Gaming\n\n|cff"..redditColor.."Reddit|r r/CompetitiveWoW"
     aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
     aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)

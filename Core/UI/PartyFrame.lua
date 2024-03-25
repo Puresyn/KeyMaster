@@ -67,7 +67,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     -- Dungeon Header Icon Frame
     local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
     temp_frame:SetSize(iconSizex, iconSizey)
-    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10)
+    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10) -- 10, 24
 
     local backgroundHighlight = CreateFrame("Frame", "KM_MapHeaderHighlight"..mapId, temp_frame)
     backgroundHighlight:SetFrameLevel(temp_frame:GetFrameLevel()-1)
@@ -76,7 +76,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     backgroundHighlight.texture = backgroundHighlight:CreateTexture()
     backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
     local highlightColor = {}
-    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON                                                                                                      ")
     backgroundHighlight.texture:SetColorTexture(highlightColor.r,highlightColor.g,highlightColor.b, 1)
     backgroundHighlight:Hide()
 
@@ -158,7 +158,9 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     keyText:SetFont(Path, 12, Flags)
     keyText:SetPoint("TOPLEFT", 3, -3)
     keyText:SetJustifyH("LEFT")
-    keyText:SetTextColor(1, 1, 1)
+    local groupKeyColor = {}
+    groupKeyColor.r, groupKeyColor.g, groupKeyColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    keyText:SetTextColor(groupKeyColor.r, groupKeyColor.g, groupKeyColor.b, 1)
 end
 
 -- Set the font and color of the party frames map data.
@@ -168,15 +170,15 @@ function PartyFrame:SetPartyWeeklyDataTheme()
 
     local tyranFont = CreateFont("tempFont1")
     local fortFont = CreateFont("tempFont2")
-    tyranFont:SetFontObject(DungeonTools:GetWeekFont("Tyrannical"))
-    fortFont:SetFontObject(DungeonTools:GetWeekFont("Fortified"))
+    tyranFont:SetFontObject(DungeonTools:GetWeekFont(KeyMasterLocals.TYRANNICAL))
+    fortFont:SetFontObject(DungeonTools:GetWeekFont(KeyMasterLocals.FORTIFIED))
     local tfPath, tfSize, tfFlags = tyranFont:GetFont()
     local ffPath, ffSize, ffFlags = fortFont:GetFont()
 
     local tyrannicalRGB = {}
-    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor("Tyrannical")
+    tyrannicalRGB.r, tyrannicalRGB.g, tyrannicalRGB.b = DungeonTools:GetWeekColor(KeyMasterLocals.TYRANNICAL)
     local fortifiedRGB = {}
-    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor("Fortified")
+    fortifiedRGB.r, fortifiedRGB.g, fortifiedRGB.b = DungeonTools:GetWeekColor(KeyMasterLocals.FORTIFIED)
 
     for i=1, 5, 1 do
         local tyranTitleFontString = _G["KM_TyranTitle"..i]
@@ -478,7 +480,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
 
     local tallyDescTextBox = CreateFrame("Frame", "KM_TallyDesc", lastPointsFrame)
     tallyDescTextBox:SetPoint("RIGHT", lastPointsFrame, "LEFT", -4, 0)
-    tallyDescTextBox:SetSize(180, partyTallyFrame:GetHeight())
+    tallyDescTextBox:SetSize(240, partyTallyFrame:GetHeight())
     tallyDescTextBox.text = tallyDescTextBox:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tallyDescTextBox.text:SetAllPoints(tallyDescTextBox)
     tallyDescTextBox.text:SetJustifyH("RIGHT")
@@ -492,24 +494,25 @@ function PartyFrame:CreatePartyRowsFrame(parentFrame)
         return 
     end
 
-    local gfm = 10 -- group frame margin
+    local gfm = 4 -- group frame margin
 
     local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
-    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 400)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -70)
+    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 440)
+    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -108)
     timeSinceLastUpdate = 0
     
-    local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    --[[ local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 20, Flags)
     txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
     txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText(KeyMasterLocals.PARTYFRAME["PartyInformation"].name..":")
+    txtPlaceHolder:SetText(KeyMasterLocals.PARTYFRAME["PartyInformation"].name..":") ]]
 
     return temp_frame
 end
 
 function PartyFrame:CreatePartyFrame(parentFrame)
+
     local partyScreen = CreateFrame("Frame", "KeyMaster_PartyScreen", parentFrame);
     partyScreen:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     partyScreen:SetAllPoints(true)
@@ -526,9 +529,53 @@ function PartyFrame:CreatePartyFrame(parentFrame)
         -- reprocess party1-4 units
         KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
     end)
+
     partyScreen:Hide()
 
     return partyScreen
+end
+
+function PartyFrame:CreatePartyHeader(parentFrame)
+     -- Header Frame
+     local partyFrameHeader = CreateFrame("Frame", "KM_PartyHeader_Frame", parentFrame)
+     partyFrameHeader:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 4, -8)
+     partyFrameHeader:SetSize(parentFrame:GetWidth()-8, 100)
+     partyFrameHeader.texture = partyFrameHeader:CreateTexture(nil, "BACKGROUND", nil, 0)
+     partyFrameHeader.texture:SetAllPoints(partyFrameHeader)
+     partyFrameHeader.texture:SetColorTexture(0, 0, 0, 1)
+ 
+     partyFrameHeader.textureHighlight = partyFrameHeader:CreateTexture(nil, "BACKGROUND", nil)
+     partyFrameHeader.textureHighlight:SetSize(partyFrameHeader:GetWidth(), partyFrameHeader:GetHeight())
+     partyFrameHeader.textureHighlight:SetPoint("LEFT", partyFrameHeader, "LEFT", 0, 0)
+     partyFrameHeader.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+     local headerColor = {}
+     headerColor.r, headerColor.g, headerColor.b, _ = Theme:GetThemeColor("color_COMMON")
+     partyFrameHeader.textureHighlight:SetVertexColor(headerColor.r, headerColor.g, headerColor.b, 1)
+ 
+     -- Page Header Title Large Background
+     partyFrameHeader.titleBG = partyFrameHeader:CreateFontString(nil, "ARTWORK", "KeyMasterFontBig")
+     local Path, _, Flags = partyFrameHeader.titleBG:GetFont()
+     partyFrameHeader.titleBG:SetFont(Path, 120, Flags)
+     partyFrameHeader.titleBG:SetSize(partyFrameHeader:GetWidth(), partyFrameHeader:GetHeight())
+     partyFrameHeader.titleBG:SetPoint("BOTTOMLEFT", partyFrameHeader, "BOTTOMLEFT", -4, -8)
+     local headerBGTextColor = {}
+     headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
+     partyFrameHeader.titleBG:SetTextColor(headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, 1)
+     partyFrameHeader.titleBG:SetText(KeyMasterLocals.TABPARTY)
+     partyFrameHeader.titleBG:SetAlpha(0.04)
+     partyFrameHeader.titleBG:SetJustifyH("LEFT")
+ 
+     -- Page Header Title
+     partyFrameHeader.title = partyFrameHeader:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+     partyFrameHeader.title:SetPoint("BOTTOMLEFT", partyFrameHeader, "BOTTOMLEFT", 4, 4)
+     local Path, _, Flags = partyFrameHeader.title:GetFont()
+     partyFrameHeader.title:SetFont(Path, 40, Flags)
+     local headerTextColor = {}
+     headerTextColor.r, headerTextColor.g, headerTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
+     partyFrameHeader.title:SetTextColor(headerTextColor.r, headerTextColor.g, headerTextColor.b, 1)
+     partyFrameHeader.title:SetText(KeyMasterLocals.TABPARTY)
+
+     return partyFrameHeader
 end
 
 -- Creates the entire party frame and its sub-frames
@@ -537,6 +584,7 @@ function PartyFrame:Initialize(parentFrame)
     
     -- Party Tab    
     local partyContent = _G["KeyMaster_PartyScreen"] or PartyFrame:CreatePartyFrame(parentFrame);
+    local partyHeader = _G["KM_PartyHeader_Frame"] or PartyFrame:CreatePartyHeader(partyContent)
     local partyRowsFrame = _G["KeyMaster_Frame_Party"] or PartyFrame:CreatePartyRowsFrame(partyContent)
 
     -- create player row frame
