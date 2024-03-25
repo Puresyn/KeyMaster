@@ -2,7 +2,7 @@
 ## X-Max-Interface: 100206
 ## X-Min-Interface: 100205
 
-## Version: 0.0.97
+## Version: 0.0.98
 ## Title: |cffb09c60KeyMaster|r
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Notes-ptBR: Ferramenta de informação e colaboração sobre chaves Mítica +

@@ -16,7 +16,7 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '0.0.97'
+KM_AUTOVERSION = '0.0.98'
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------

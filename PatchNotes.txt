@@ -3,6 +3,10 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master Beta release v0.0.98-beta
+--------------------------------------------------
+
+--------------------------------------------------
 Key Master Beta release v0.0.97-beta
 --------------------------------------------------
 - Added weekly affix selection to the rating calculator.
