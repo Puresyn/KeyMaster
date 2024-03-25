@@ -239,6 +239,12 @@ local Colors = {
         g = 0.255,
         b = 0.647,
         hex = "6441a5"
+    },
+    color_PARTYCHAT = {
+        r = 0.667,
+        g = 0.667,
+        b = 1,
+        hex = "aaaaff"
     }
 }
 

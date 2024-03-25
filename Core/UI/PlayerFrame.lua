@@ -205,7 +205,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerNameLarge:SetPoint("BOTTOMLEFT", playerFrame, "BOTTOMLEFT", -4, -8)
     local hexColor = CharacterInfo:GetMyClassColor("player")
     playerFrame.playerNameLarge:SetText("|cff"..hexColor..UnitName("player").."|r")
-    playerFrame.playerNameLarge:SetAlpha(0.08)
+    playerFrame.playerNameLarge:SetAlpha(0.04)
     playerFrame.playerNameLarge:SetJustifyH("LEFT")
 
     -- Player Specialization and Class
@@ -678,7 +678,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local scoreCalcDirection = CreateFrame("Frame", "KM_ScoreCalcDirection", scoreCalc)
     scoreCalcDirection:SetAllPoints(scoreCalc)
     scoreCalcDirection.text = scoreCalcDirection:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    scoreCalcDirection.text:SetPoint("CENTER", scoreCalc, "CENTER", 0, -12)
+    scoreCalcDirection.text:SetPoint("CENTER", scoreCalc, "CENTER", 0, -20)
     scoreCalcDirection.text:SetSize(scoreCalcDirection:GetWidth()-8, scoreCalcDirection:GetHeight()-8)
     local dirColor = {}
     dirColor.r, dirColor.g, dirColor.b, _ = Theme:GetThemeColor("color_POOR")
@@ -820,29 +820,29 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalcScores.newRatingTitle:SetJustifyH("CENTER")
     scoreCalcScores.newRatingTitle:SetText(KeyMasterLocals.PLAYERFRAME.New.name)
 
-    -- Divider
-    local divider = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
-    divider:SetPoint("TOP", scoreCalcScores, "BOTTOM", 0, -4)
-    divider:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.17)-4)
+    -- Divider box
+    local divider = CreateFrame("Frame", nil, detailsFrame)
+    divider:SetPoint("TOP", scoreCalc, "BOTTOM", 0, -4)
+    divider:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.02)-4)
     
     divider.texture = divider:CreateTexture(nil, "BACKGROUND", nil, 0)
     divider.texture:SetAllPoints(divider)
     divider.texture:SetSize(divider:GetWidth(), divider:GetHeight())
-    divider.texture:SetColorTexture(0,0,0,1)
+    divider.texture:SetColorTexture(1, 1, 1, 0.1)
 
-    divider.textureHighlight = divider:CreateTexture(nil, "BACKGROUND", nil, 1)
+    --[[ divider.textureHighlight = divider:CreateTexture(nil, "BACKGROUND", nil, 1)
     divider.textureHighlight:SetSize(divider:GetWidth(), 64)
     divider.textureHighlight:SetPoint("BOTTOMLEFT", divider, "BOTTOMLEFT", 0, 0)
     divider.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
     divider.textureHighlight:SetAlpha(highlightAlpha)
-    divider.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+    divider.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha) ]]
 
     local Hline = KeyMaster:CreateHLine(divider:GetWidth()+8, divider, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
-    vaultDetails:SetPoint("BOTTOM", detailsFrame, "BOTTOM", 0, 0)
+    vaultDetails:SetPoint("TOP", divider, "BOTTOM", 0, -4)
     vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
 
     vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -872,6 +872,26 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
     vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -60, -10)
     vaultDetails.divider1:SetAlpha(0.3)
+
+     -- Empty Box
+     local ebox = CreateFrame("Frame", nil, detailsFrame)
+     ebox:SetPoint("TOP", vaultDetails, "BOTTOM", 0, -4)
+     ebox:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.15)-4)
+     
+     ebox.texture = ebox:CreateTexture(nil, "BACKGROUND", nil, 0)
+     ebox.texture:SetAllPoints(ebox)
+     ebox.texture:SetSize(ebox:GetWidth(), ebox:GetHeight())
+     ebox.texture:SetColorTexture(0,0,0,1)
+ 
+     ebox.textureHighlight = ebox:CreateTexture(nil, "BACKGROUND", nil, 1)
+     ebox.textureHighlight:SetSize(ebox:GetWidth(), 64)
+     ebox.textureHighlight:SetPoint("BOTTOMLEFT", ebox, "BOTTOMLEFT", 0, 0)
+     ebox.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+     ebox.textureHighlight:SetAlpha(highlightAlpha)
+     ebox.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+ 
+     local Hline = KeyMaster:CreateHLine(ebox:GetWidth()+8, ebox, "TOP", 0, 0)
+     Hline:SetAlpha(0.5)
 
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()

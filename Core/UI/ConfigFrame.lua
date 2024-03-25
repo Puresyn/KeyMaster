@@ -37,7 +37,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
     conFrameHeader.titleBG:SetTextColor(headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, 1)
     conFrameHeader.titleBG:SetText(KeyMasterLocals.TABCONFIG)
-    conFrameHeader.titleBG:SetAlpha(0.08)
+    conFrameHeader.titleBG:SetAlpha(0.04)
     conFrameHeader.titleBG:SetJustifyH("LEFT")
 
     -- Page Header Title

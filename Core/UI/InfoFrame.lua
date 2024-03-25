@@ -38,7 +38,7 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
     infoFrameHeader.titleBG:SetTextColor(headerBGTextColor.r, headerBGTextColor.g, headerBGTextColor.b, 1)
     infoFrameHeader.titleBG:SetText(KeyMasterLocals.TABABOUT)
-    infoFrameHeader.titleBG:SetAlpha(0.08)
+    infoFrameHeader.titleBG:SetAlpha(0.04)
     infoFrameHeader.titleBG:SetJustifyH("LEFT")
 
     -- Page Header Title
