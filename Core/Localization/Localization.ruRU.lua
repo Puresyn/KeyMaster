@@ -14,7 +14,7 @@ L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
 L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WCM" }
+L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WM" }
 L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
@@ -37,7 +37,7 @@ L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "3 сезон" }
 L.MPLUSSEASON[12] = { name = "4 сезон" }
 L.MPLUSSEASON[13] = { name = "1 сезон" } -- ожидая, что 13 сезон будет TWW S1
-L.MPLUSSEASON[14] = { name = "2 сезон" } -- ожидая, что 13 сезон будет TWW S1
+L.MPLUSSEASON[14] = { name = "2 сезон" } -- ожидая, что 14 сезон будет TWW S2
 
 L.ADDONNAME = "Key Master" -- Не нужно переводить
 L.DISPLAYVERSION = "вер. " -- перевёл, потому что на русском языке так будет лучше
