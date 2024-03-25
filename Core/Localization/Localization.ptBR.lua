@@ -7,7 +7,10 @@ local L = KM_Localization_ptBR
 -- Problema de tradução? Ajude-nos a corrigi-lo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Português (BR)"
-L.TRANSLATOR = "Cyph"
+L.TRANSLATOR = "Cyph" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Ferramenta de informação e colaboração sobre chaves Mítica +"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Desconhecido", abbr = "???" }

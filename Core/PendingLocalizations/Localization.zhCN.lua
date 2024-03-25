@@ -9,6 +9,9 @@ local L = KM_Localization_zhCN
 L.LANGUAGE = "Chinese (CN)"
 L.TRANSLATOR = "" -- Translator display name
 
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
+
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}

@@ -7,7 +7,10 @@ local L = KM_Localization_ruRU
 -- Проблема с переводом? Помогите нам исправить это! Посетите: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Русский (RU)"
-L.TRANSLATOR = "Hollicsh"
+L.TRANSLATOR = "Hollicsh" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Отображение подробной информации о контенте М+"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }

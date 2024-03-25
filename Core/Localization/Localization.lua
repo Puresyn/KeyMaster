@@ -58,6 +58,9 @@ elseif (langPref == "esMX") then
 elseif (langPref == "ptBR") then
     -- Localization.ptBR.lua
     KeyMasterLocals = KM_Localization_ptBR
+elseif (langPref == "zhTW") then
+    -- Localization.zhTW.lua
+    KeyMasterLocals = KM_Localization_zhTW
 else -- Default
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS

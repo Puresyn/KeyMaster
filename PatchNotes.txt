@@ -6,6 +6,7 @@ PATCH NOTES:
 Key Master Beta release v0.0.98-beta
 --------------------------------------------------
 - Fixed party frame map icon underline color.
+- Added localization support for 正體中文 (TW) - (Thanks 三皈依!)
 
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta

@@ -7,7 +7,10 @@ local L = KM_Localization_itIT
 -- Problema di traduzione? Aiutaci a correggerlo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Italiano (IT)"
-L.TRANSLATOR = "Google Traduttore"
+L.TRANSLATOR = "Google Traduttore" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Sconosciuto", abbr = "???" }

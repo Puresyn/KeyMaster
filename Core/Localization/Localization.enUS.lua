@@ -7,7 +7,10 @@ local L = KM_Localization_enUS
 -- Translation issue? Assist us in correcting it! Visit: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "English (US)"
-L.TRANSLATOR = "Key Master"
+L.TRANSLATOR = "Key Master" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
 
 L.MAPNAMES = {}
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
