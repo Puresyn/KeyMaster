@@ -14,6 +14,7 @@ L.TOCNOTES["ADDONDESC"] = "傳奇+鑰石資訊以及協同工具"
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
+-- DF S3
 L.MAPNAMES[9001] = { name = "未知", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "殞落"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "崛起"}
@@ -23,6 +24,15 @@ L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "玄鴉" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "暗心" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "永茂" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "海潮" }
+--DF S4
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
+L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }

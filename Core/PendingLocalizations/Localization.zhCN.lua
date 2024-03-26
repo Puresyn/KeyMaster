@@ -13,6 +13,7 @@ L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
 
 L.MAPNAMES = {}
+-- DF S3
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
@@ -22,6 +23,15 @@ L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+--DF S4
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
+L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

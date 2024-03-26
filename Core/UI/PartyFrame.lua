@@ -287,7 +287,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
             temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+        temp_Frame:SetSize((parentFrame:GetWidth() / 12.5), parentFrame:GetHeight())
 
         if (not bolColHighlight) then
             temp_Frame.texture = temp_Frame:CreateTexture()
@@ -453,7 +453,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
             temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12), partyTallyFrame:GetHeight())
+        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12.5), partyTallyFrame:GetHeight())
 
         temp_Frame.bgTexture = temp_Frame:CreateTexture()
         temp_Frame.bgTexture:SetSize(temp_Frame:GetWidth(), temp_Frame:GetHeight())
