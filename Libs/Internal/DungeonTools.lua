@@ -36,7 +36,15 @@ local portalSpellIds = {
     [199] = 424153,     -- Black Rook Hold
     [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
     [456] = 424142,     -- Throne of Tides
-    [168] = 159901      -- The Everbloom
+    [168] = 159901,     -- The Everbloom
+    [399] = 393256,     -- Ruby Life Pools
+    [400] = 393262,     -- The Nokhud Offensive
+    [401] = 393279,     -- The Azure Vault
+    [402] = 393273,     -- Algeth'ar Academy
+    [403] = 393222,      -- Legacy of Tyr
+    [404] = 393276,     -- Neltharus
+    [405] = 393267,     -- Brackenhide Hollow
+    [406] = 393283      -- Halls of Infusion
 
 }
 
