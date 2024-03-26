@@ -231,7 +231,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     -- Player's Name
     local PlayerNameText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    PlayerNameText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 10, -3)
+    PlayerNameText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 18, -3)
 
     -- Player class
     local PlayerClassText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
@@ -255,7 +255,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     -- Player's Owned Key
     local OwnedKeyText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    OwnedKeyText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
+    OwnedKeyText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 18, 4)
 
     -- Player Rating
     local OverallRatingText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
@@ -401,17 +401,18 @@ function PartyFrame:CreatePartyMemberFrame(unitId, parentFrame)
     temp_frame:SetPoint("CENTER", temp_RowFrame, "LEFT", 0, 0)
 
     local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
-    img1:SetHeight(temp_RowFrame:GetHeight()-12)
-    img1:SetWidth(temp_RowFrame:GetHeight()-12)
+    img1:SetHeight(temp_RowFrame:GetHeight()-30)
+    img1:SetWidth(temp_RowFrame:GetHeight()-30)
     img1:ClearAllPoints()
     img1:SetPoint("CENTER", temp_frame, "CENTER", 0, 0)
 
     -- the ring around the portrait
-    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
-    img2:SetHeight(temp_RowFrame:GetHeight()+8)
-    img2:SetWidth(temp_RowFrame:GetHeight()+8)
-    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_frame2",false)
+    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "ARTWORK")
+    img2:SetHeight(temp_RowFrame:GetHeight()+5)
+    img2:SetWidth(temp_RowFrame:GetHeight()+5)
+    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Interface-Clean",false)
     img2:ClearAllPoints()
+    img2:SetTexCoord(916/1024, 1, 100/1024, 206/1024)
     img2:SetPoint("CENTER", img1, "CENTER", 0, 0)
 
     KeyMaster:CreateHLine(temp_RowFrame:GetWidth()+8, temp_RowFrame, "TOP", 0, 0)
