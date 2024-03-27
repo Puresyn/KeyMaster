@@ -336,9 +336,16 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
         bonusRating  = bonusRating - 5
     end
     
-    -- Untimed keys over 20 use the base score of a 20.
-    if(keyLevel > 20 and runTime > dungeonTimeLimit) then
-        keyLevel = 20
+    -- Untimed keys over 20 use the base score of a 20. - DF S3
+    -- Making assumptions about DF Season 4 where 10 is the base instead of 20 -- DF S4
+    local mPlusSeason = DungeonTools:GetCurrentSeason()
+    local base = 20 -- DF S3
+    if mPlusSeason >= 12 then
+        base = 10 -- DF S4
+    end
+
+    if(keyLevel > base and runTime > dungeonTimeLimit) then
+        keyLevel = base
     end
     return getBaseScore(keyLevel) + bonusRating
 end
