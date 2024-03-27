@@ -401,8 +401,8 @@ function PartyFrame:CreatePartyMemberFrame(unitId, parentFrame)
     temp_frame:SetPoint("CENTER", temp_RowFrame, "LEFT", 0, 0)
 
     local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
-    img1:SetHeight(temp_RowFrame:GetHeight()-30)
-    img1:SetWidth(temp_RowFrame:GetHeight()-30)
+    img1:SetHeight(temp_RowFrame:GetHeight()-26)
+    img1:SetWidth(temp_RowFrame:GetHeight()-26)
     img1:ClearAllPoints()
     img1:SetPoint("CENTER", temp_frame, "CENTER", 0, 0)
 
