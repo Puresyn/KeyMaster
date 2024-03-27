@@ -140,4 +140,4 @@ L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Особая благодарно
 L.ABOUTFRAME["AboutContributors"] = { name = "Участники", text = "Участники"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга 4-го сезона Dragonflight всё ещё проверяются."}

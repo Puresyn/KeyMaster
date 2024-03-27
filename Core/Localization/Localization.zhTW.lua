@@ -140,4 +140,4 @@ L.ABOUTFRAME["AboutSpecialThanks"] = { name = "特別感謝", text = "特別感�
 L.ABOUTFRAME["AboutContributors"] = { name = "貢獻者", text = "貢獻者"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}
