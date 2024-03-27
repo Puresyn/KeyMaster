@@ -25,14 +25,14 @@ L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "暗心" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "永茂" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "海潮" }
 --DF S4
-L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
-L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
-L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
-L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
-L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
-L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
-L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
-L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "晶紅" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "蒼藍" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "諾庫德" }
+L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "學院" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "奧達曼" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "奈堡" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "蕨皮" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "灌注" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }
