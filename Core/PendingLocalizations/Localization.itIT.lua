@@ -11,6 +11,7 @@ L.TRANSLATOR = "Google Traduttore" -- Translator display name
 
 L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
 -- DF S3
@@ -137,3 +138,6 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Informazione", text = "Key M
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autori", text = "Autori"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Ringraziamenti speciali", text = "Ringraziamenti speciali"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contributori", text = "Contributori"}
+
+L.SYSTEMMESSAGE = {}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}

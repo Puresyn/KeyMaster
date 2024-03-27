@@ -67,8 +67,6 @@ L.TOREPOSITION = "- переместить значок"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "На этой неделе..."
 L.YOURRATING = "Ваш рейтинг"
-L.TYRANNICAL = "Тиранический"
-L.FORTIFIED = "Укрепленный"
 L.ERRORMESSAGES = "Сообщения об ошибках"
 L.ERRORMESSAGESNOTIFY = "Уведомление: сообщения об ошибках включены."
 L.DEBUGMESSAGES = "Отладочные сообщения"
@@ -140,3 +138,6 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Информация Key Master", text 
 L.ABOUTFRAME["AboutAuthors"] = { name = "Авторы", text = "Авторы"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Особая благодарность", text = "Особая благодарность"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Участники", text = "Участники"}
+
+L.SYSTEMMESSAGE = {}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
