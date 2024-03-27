@@ -3,10 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master Beta release v0.0.98-beta
+Key Master v1.0.0
 --------------------------------------------------
+- Verified Dragonflight Season 4 support!
+- Several UI enhancements.
+- There are some changes to the rating system for Dragonflight Season 4. We have added
+  preliminary calculations that should account for these changes. Due to the somewhat
+  complex and obscure nature of the rating system, there is a notice at the top of the
+  addon that will display until we are confident it is accurate. Please visit our Discord
+  https://discord.gg/bbMaUpfgn8 or GitHub https://github.com/Puresyn/KeyMaster
+  to report or check the status on any new or ongoing corrections.
+- Adjusted party frame data columns to leave more room for player name and class information.
 - Fixed party frame map icon underline color.
-- Added localization for [Chinese (traditional)] 正體中文 (zhTW) - (Thanks 三皈依!)
+- Added localization for [Chinese (traditional)] 正體中文 (zhTW) - (Thanks BN3388 / 三皈依!)
 
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta

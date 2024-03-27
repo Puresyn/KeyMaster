@@ -12,7 +12,8 @@ Use /km help for command line options.
 About:
 Key Master is an addon developed for World of Warcraft players who are actively
 involved in Mythic Plus content.  The goal of the addon is to provide a single
-location to display detailed Mythic Plus content information about you and/or your party.
+location to display the otherwise scattered detailed Mythic Plus information about
+you and/or your party members.
 
 While there are many future features in-mind for Key Master to expand its
 usefulness, how far it may go and when that will happen is largely dependent on
