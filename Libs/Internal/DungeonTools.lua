@@ -243,6 +243,31 @@ function DungeonTools:GetChestTimers(mapId)
 end
 
 local function getBaseScore(level)
+
+    -- Break points -- Making some base calculation assumptions about the DF S4 rating system.
+    -- These will need verified
+    local breakPoints = {}
+
+    -- breakPoints[seasonNum[breakppoint]]
+    breakPoints = {
+        [1] = { 5, 10 }, -- falback
+        [11] = { 7, 14 }, -- DF S3
+        [12] = { 5, 10 }, -- DF S4
+        [13] = { 5, 10 }, -- TWW S1
+        [14] = { 5, 10 } -- TWW S2
+    }
+
+    local mPlusSeason = DungeonTools:GetCurrentSeason()
+
+    local lvlBreak1, lvlBreak2
+    if (breakPoints[mPlusSeason]) then
+        lvlBreak1 = breakPoints[mPlusSeason][1]
+        lvlBreak2 = breakPoints[mPlusSeason][2]
+    else
+        lvlBreak1 = breakPoints[1][1]
+        lvlBreak2 = breakPoints[1][2]
+    end
+
     -- Every completed key has a bonus of 20 rating
     local baseRating = 20
 
@@ -261,15 +286,16 @@ local function getBaseScore(level)
     end
 
     -- Every affix added is worth 10 rating
-    -- Currently affixes are added at key level 2, 7 and 14
+    -- S3 Currently affixes are added at key level 2, 7 and 14
+    -- S4 Currently affixes are added at key level 2, 5 and 10
     local affixScore = 0
     if level >= 2 then
         affixScore = affixScore + 10
     end
-    if level >= 7 then
+    if level >= lvlBreak1 then
         affixScore = affixScore + 10
     end
-    if level >= 14 then
+    if level >= lvlBreak2 then
         affixScore = affixScore + 10
     end
 
