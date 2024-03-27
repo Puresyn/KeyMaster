@@ -85,7 +85,7 @@ function HeaderFrame:SystemMessage(parentframe)
     sysMessage:SetHeight(sysMessage.text:GetHeight()+8)
     sysMessage.boxBackground:SetSize(sysMessage:GetWidth()-2, sysMessage:GetHeight()-2)
 
-    if (DungeonTools:GetCurrentSeason() == 11) then
+    if (DungeonTools:GetCurrentSeason() == 12) then
         sysMessage:Show()
     else
         sysMessage:Hide()
