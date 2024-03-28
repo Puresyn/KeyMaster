@@ -6,12 +6,12 @@ PATCH NOTES:
 Key Master v1.0.0
 --------------------------------------------------
 - Fixed forward compatibility issue where party members with versions older than
-  v0.0.94 could cuase errors in clients with newer versions. It will now ignore those
+  v0.0.94 could cause errors in clients with newer versions. It will now ignore those
   users until they update to 0.0.94b or higher.
 - Verified Dragonflight Season 4 compatibility
 - Several UI enhancements.
 - There are some changes to the rating system for Dragonflight Season 4. We have added
-  preliminary calculation chnages that will account for some changes but not all. Due to the somewhat
+  preliminary calculation changes that will account for some changes but not all. Due to the somewhat
   complex and obscure nature of the rating system, there is a notice at the top of the
   addon that will display until we are confident that all DF S4 rating calculations are correctly
   displayed. Please visit our Discord https://discord.gg/bbMaUpfgn8 or GitHub 
