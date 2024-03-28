@@ -18,7 +18,7 @@ Key Master v1.0.0
   https://github.com/Puresyn/KeyMaster to report or check the status on any new or ongoing corrections.
 - Adjusted party frame data columns to leave more room for player name and class information.
 - Fixed party frame map icon underline color.
-- Added localization for [Chinese (traditional)] 正體中文 (zhTW) - (Thanks BN3388 / 三皈依!)
+- Added localization for [Chinese (traditional)] 正體中文 (zhTW) - (Thanks BNS3388 / 三皈依!)
 
 --------------------------------------------------
 Key Master Beta release v0.0.97-beta
