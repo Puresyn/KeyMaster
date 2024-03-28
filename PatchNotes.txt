@@ -5,14 +5,17 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.0.0
 --------------------------------------------------
-- Verified Dragonflight Season 4 support!
+- Fixed forward compatibility issue where party members with versions older than
+  v0.0.94 could cuase errors in clients with newer versions. It will now ignore those
+  users until they update to 0.0.94b or higher.
+- Verified Dragonflight Season 4 compatibility
 - Several UI enhancements.
 - There are some changes to the rating system for Dragonflight Season 4. We have added
-  preliminary calculations that should account for these changes. Due to the somewhat
+  preliminary calculation chnages that will account for some changes but not all. Due to the somewhat
   complex and obscure nature of the rating system, there is a notice at the top of the
-  addon that will display until we are confident it is accurate. Please visit our Discord
-  https://discord.gg/bbMaUpfgn8 or GitHub https://github.com/Puresyn/KeyMaster
-  to report or check the status on any new or ongoing corrections.
+  addon that will display until we are confident that all DF S4 rating calculations are correctly
+  displayed. Please visit our Discord https://discord.gg/bbMaUpfgn8 or GitHub 
+  https://github.com/Puresyn/KeyMaster to report or check the status on any new or ongoing corrections.
 - Adjusted party frame data columns to leave more room for player name and class information.
 - Fixed party frame map icon underline color.
 - Added localization for [Chinese (traditional)] 正體中文 (zhTW) - (Thanks BN3388 / 三皈依!)
