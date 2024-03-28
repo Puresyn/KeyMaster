@@ -211,7 +211,19 @@ local function processKM2Data(payload, sender)
         return
     end
 
-    KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received data from "..sender)
+    -- backwards/forwards compatability checks.
+    -- curently ignores version older than 0.0.94b as previous versions break forwards compatability
+    local buildVersion = data.buildVersion
+    local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+    major1 = tonumber(major1)
+    minor1 = tonumber(minor1)
+    patch1 = tonumber(patch1)
+    if (major1 == 0 and minor1 == 0 and patch1 < 94) then
+        KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
+        return
+    end
+
+    KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received data from "..sender.." using KM version v"..buildVersion)
     data.hasAddon = true
     UnitData:SetUnitData(data)
 
@@ -220,8 +232,9 @@ local function processKM2Data(payload, sender)
     if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
         PartyFrameMapping:UpdateSingleUnitData(data.GUID)
         PartyFrameMapping:UpdateKeystoneHighlights()
-        PartyFrameMapping:CalculateTotalRatingGainPotential() 
+        PartyFrameMapping:CalculateTotalRatingGainPotential()
     end
+
 
     checkVersion(data)    
 end
