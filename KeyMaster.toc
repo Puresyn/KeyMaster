@@ -6,7 +6,7 @@
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
-## Title-zhTW: |cffb09c60Key Master|r [|cffe6b080"鑰石大師|r]
+## Title-zhTW: |cffb09c60Key Master|r [|cffe6b080鑰石大師|r]
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Notes-ptBR: Ferramenta de informação e colaboração sobre chaves Mítica +
 ## Notes-ruRU: Отображение подробной информации о контенте М+

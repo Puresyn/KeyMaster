@@ -11,7 +11,7 @@ L.TRANSLATOR = "三皈依" -- Translator display name
 
 L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "傳奇+鑰石資訊以及協同工具"
-L.TOCNOTES["ADDONNAME"] = "Key Master"
+L.TOCNOTES["ADDONNAME"] = "鑰石大師"
 
 L.MAPNAMES = {}
 -- DF S3
