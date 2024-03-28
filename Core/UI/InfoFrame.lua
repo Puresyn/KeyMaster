@@ -105,11 +105,8 @@ https://discord.gg/bbMaUpfgn8
 -German (Germany)
 -Italian (Italy)
 -Chinese (China) (simplified) implemented LTR
--Chinese (Taiwan) (traditional) implemented LTR
--Russian (Russia)
 -Spanish (Spain)
--Spanish (Mexico)
--Portuguese (Brazil)]]
+-Spanish (Mexico)]]
     aboutGeneral.text = aboutGeneral:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutGeneral.text:SetPoint("TOPLEFT", aboutGeneral.title, "BOTTOMLEFT", 8, -4)
     aboutGeneral.text:SetJustifyH("LEFT")
@@ -173,7 +170,7 @@ https://discord.gg/bbMaUpfgn8
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
 
-    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\nCyph (Português), Hollicsh (Русский)"
+    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\n|cffA3E7FCTranslators|r\nCyph, Hollicsh, bns3388"
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
     aboutContributors.text:SetSize(aboutContributors:GetWidth()-indent-mlr, aboutContributors:GetHeight()-aboutContributors.title:GetHeight()-25)

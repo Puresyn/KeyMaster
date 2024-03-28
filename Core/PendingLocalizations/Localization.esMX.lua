@@ -7,9 +7,14 @@ local L = KM_Localization_esMX
 -- ¿Problema de traducción? ¡Ayúdanos a corregirlo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Español (ES)"
-L.TRANSLATOR = "Google Translate"
+L.TRANSLATOR = "Google Translate" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
+-- DF S3
 L.MAPNAMES[9001] = { name = "Desconocido", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
@@ -19,6 +24,15 @@ L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+--DF S4
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
+L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -124,3 +138,6 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Información maestra clave", text = "Ke
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Gracias especiales", text = "Gracias especiales"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Colaboradores", text = "Colaboradores"}
+
+L.SYSTEMMESSAGE = {}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}

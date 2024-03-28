@@ -41,23 +41,58 @@ function HeaderFrame:CreateHeaderRegion(parentFrame)
     return headerRegion
 end
 
+--------------------------------
+-- Out Of Date Notification
+--------------------------------
 function HeaderFrame:AddonVersionNotify(parentframe)
     local addonOudatedFrame = CreateFrame("FRAME", "KM_AddonOutdated", parentframe)
-    addonOudatedFrame:SetSize(252, 32)
+    addonOudatedFrame:SetHeight(32)
     addonOudatedFrame:SetPoint("BOTTOMRIGHT", parentframe, "TOPRIGHT", -2, 4)
     addonOudatedFrame.border = addonOudatedFrame:CreateTexture(nil, "BACKGROUND")
     addonOudatedFrame.border:SetAllPoints(addonOudatedFrame)
     addonOudatedFrame.border:SetColorTexture(1,0,0,1)
     addonOudatedFrame.boxBackground = addonOudatedFrame:CreateTexture(nil, "ARTWORK")
-    addonOudatedFrame.boxBackground:SetSize(addonOudatedFrame:GetWidth()-2, addonOudatedFrame:GetHeight()-2)
     addonOudatedFrame.boxBackground:SetPoint("CENTER", addonOudatedFrame, "CENTER")
     addonOudatedFrame.boxBackground:SetColorTexture(0,0,0,1)
     addonOudatedFrame.text = addonOudatedFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     addonOudatedFrame.text:SetPoint("CENTER", addonOudatedFrame, "CENTER")
-    addonOudatedFrame.text:SetSize(addonOudatedFrame:GetWidth()-8, addonOudatedFrame:GetHeight()-8)
     addonOudatedFrame.text:SetTextColor(1,1,0,1)
     addonOudatedFrame.text:SetText(KeyMasterLocals.ADDONOUTOFDATE)
+    addonOudatedFrame:SetWidth(addonOudatedFrame.text:GetWidth()+8)
+    addonOudatedFrame.boxBackground:SetSize(addonOudatedFrame:GetWidth()-2, addonOudatedFrame:GetHeight()-2)
     addonOudatedFrame:Hide()
+end
+
+--------------------------------
+-- System Message
+--------------------------------
+function HeaderFrame:SystemMessage(parentframe)
+    local sysMessage = CreateFrame("Frame", "KM_SystemMessage", parentframe)
+    sysMessage:SetWidth(300)
+    sysMessage:SetPoint("BOTTOMLEFT", parentframe, "TOPLEFT", 2, 4)
+    sysMessage.border = sysMessage:CreateTexture(nil, "BACKGROUND")
+    sysMessage.border:SetAllPoints(sysMessage)
+    sysMessage.border:SetColorTexture(1,0,0,1)
+    sysMessage.boxBackground = sysMessage:CreateTexture(nil, "ARTWORK")
+    
+    sysMessage.boxBackground:SetPoint("CENTER", sysMessage, "CENTER")
+    sysMessage.boxBackground:SetColorTexture(0,0,0,1)
+    sysMessage.text = sysMessage:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    sysMessage.text:SetPoint("CENTER", sysMessage, "CENTER")
+    sysMessage.text:SetTextColor(1,1,0,1)
+    sysMessage.text:SetText(KeyMasterLocals.SYSTEMMESSAGE["NOTICE"].text)
+    sysMessage.text:SetWidth(sysMessage:GetWidth()-8)
+    sysMessage:SetHeight(sysMessage.text:GetHeight()+8)
+    sysMessage.boxBackground:SetSize(sysMessage:GetWidth()-2, sysMessage:GetHeight()-2)
+
+    if (DungeonTools:GetCurrentSeason() == 12) then
+        sysMessage:Show()
+    else
+        sysMessage:Hide()
+    end
+    --sysMessage.text:SetSize(400, 100)
+
+    return sysMessage
 end
 
 function HeaderFrame:CreatePlayerInfoBox(parentFrame)
@@ -233,6 +268,9 @@ function HeaderFrame:Initialize(parentFrame)
     local headerInfoBox = _G["KeyMaster_PlayerInfobox"] or HeaderFrame:CreatePlayerInfoBox(headerContent)
     local headerAffixFrame = HeaderFrame:CreateAffixFrames(headerInfoBox)
     local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
+
+    -- System Message
+    local sysMessage = _G["KM_SystemMessage"] or HeaderFrame:SystemMessage(parentFrame)
     
     return headerRegion
 end

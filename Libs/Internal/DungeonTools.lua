@@ -36,7 +36,15 @@ local portalSpellIds = {
     [199] = 424153,     -- Black Rook Hold
     [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
     [456] = 424142,     -- Throne of Tides
-    [168] = 159901      -- The Everbloom
+    [168] = 159901,     -- The Everbloom
+    [399] = 393256,     -- Ruby Life Pools
+    [400] = 393262,     -- The Nokhud Offensive
+    [401] = 393279,     -- The Azure Vault
+    [402] = 393273,     -- Algeth'ar Academy
+    [403] = 393222,      -- Legacy of Tyr
+    [404] = 393276,     -- Neltharus
+    [405] = 393267,     -- Brackenhide Hollow
+    [406] = 393283      -- Halls of Infusion
 
 }
 
@@ -132,8 +140,12 @@ end
 
 -- conversion from mapid to abbreviation
 function DungeonTools:GetDungeonNameAbbr(mapId --[[int]])
-    local a = KeyMasterLocals.MAPNAMES[mapId].abbr
-    if (not a) then a = KeyMasterLocals.PARTYFRAME["NoKey"].name end
+    local a
+    if KeyMasterLocals.MAPNAMES[mapId] then
+        a = KeyMasterLocals.MAPNAMES[mapId].abbr
+    else
+        a = KeyMasterLocals.MAPNAMES[9001].abbr
+    end
     return a
 end
 
@@ -231,6 +243,31 @@ function DungeonTools:GetChestTimers(mapId)
 end
 
 local function getBaseScore(level)
+
+    -- Break points -- Making some base calculation assumptions about the DF S4 rating system.
+    -- These will need verified
+    local breakPoints = {}
+
+    -- breakPoints[seasonNum[breakppoint]]
+    breakPoints = {
+        [1] = { 5, 10 }, -- falback
+        [11] = { 7, 14 }, -- DF S3
+        [12] = { 5, 10 }, -- DF S4
+        [13] = { 5, 10 }, -- TWW S1
+        [14] = { 5, 10 } -- TWW S2
+    }
+
+    local mPlusSeason = DungeonTools:GetCurrentSeason()
+
+    local lvlBreak1, lvlBreak2
+    if (breakPoints[mPlusSeason]) then
+        lvlBreak1 = breakPoints[mPlusSeason][1]
+        lvlBreak2 = breakPoints[mPlusSeason][2]
+    else
+        lvlBreak1 = breakPoints[1][1]
+        lvlBreak2 = breakPoints[1][2]
+    end
+
     -- Every completed key has a bonus of 20 rating
     local baseRating = 20
 
@@ -249,15 +286,16 @@ local function getBaseScore(level)
     end
 
     -- Every affix added is worth 10 rating
-    -- Currently affixes are added at key level 2, 7 and 14
+    -- S3 Currently affixes are added at key level 2, 7 and 14
+    -- S4 Currently affixes are added at key level 2, 5 and 10
     local affixScore = 0
     if level >= 2 then
         affixScore = affixScore + 10
     end
-    if level >= 7 then
+    if level >= lvlBreak1 then
         affixScore = affixScore + 10
     end
-    if level >= 14 then
+    if level >= lvlBreak2 then
         affixScore = affixScore + 10
     end
 
@@ -298,9 +336,16 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
         bonusRating  = bonusRating - 5
     end
     
-    -- Untimed keys over 20 use the base score of a 20.
-    if(keyLevel > 20 and runTime > dungeonTimeLimit) then
-        keyLevel = 20
+    -- Untimed keys over 20 use the base score of a 20. - DF S3
+    -- Making assumptions about DF Season 4 where 10 is the base instead of 20 -- DF S4
+    local mPlusSeason = DungeonTools:GetCurrentSeason()
+    local base = 20 -- DF S3
+    if mPlusSeason >= 12 then
+        base = 10 -- DF S4
+    end
+
+    if(keyLevel > base and runTime > dungeonTimeLimit) then
+        keyLevel = base
     end
     return getBaseScore(keyLevel) + bonusRating
 end

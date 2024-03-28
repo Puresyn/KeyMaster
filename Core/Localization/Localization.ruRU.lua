@@ -7,18 +7,32 @@ local L = KM_Localization_ruRU
 -- Проблема с переводом? Помогите нам исправить это! Посетите: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Русский (RU)"
-L.TRANSLATOR = "Hollicsh"
+L.TRANSLATOR = "Hollicsh" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Отображение подробной информации о контенте М+"
+L.TOCNOTES["ADDONNAME"] = "Мастер ключей"
 
 L.MAPNAMES = {}
+-- DF S3
 L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }
-L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
-L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
-L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WM" }
-L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
-L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
-L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
-L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond's Fall", abbr = "ПГ"}
+L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond's Rise", abbr = "ПД"}
+L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "АД" }
+L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "УЭ" }
+L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "КЧЛ" }
+L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "ЧАЩА" }
+L.MAPNAMES[168] = { name = "The Everbloom", abbr = "ВЦ" }
+L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "ТРОН" }
+--DF S4
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "РоЖ" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "ЛХ" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "НкН" }
+L.MAPNAMES[402] = { name = "Algeth'ar Academy", abbr = "АА" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "УЛЬД" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "НЕЛТ" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "ЛБ" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "ЧН" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -53,8 +67,6 @@ L.TOREPOSITION = "- переместить значок"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "На этой неделе..."
 L.YOURRATING = "Ваш рейтинг"
-L.TYRANNICAL = "Тиранический"
-L.FORTIFIED = "Укрепленный"
 L.ERRORMESSAGES = "Сообщения об ошибках"
 L.ERRORMESSAGESNOTIFY = "Уведомление: сообщения об ошибках включены."
 L.DEBUGMESSAGES = "Отладочные сообщения"
@@ -126,3 +138,6 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Информация Key Master", text 
 L.ABOUTFRAME["AboutAuthors"] = { name = "Авторы", text = "Авторы"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Особая благодарность", text = "Особая благодарность"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Участники", text = "Участники"}
+
+L.SYSTEMMESSAGE = {}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга 4-го сезона Dragonflight всё ещё проверяются."}

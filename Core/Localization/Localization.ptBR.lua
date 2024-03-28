@@ -7,9 +7,14 @@ local L = KM_Localization_ptBR
 -- Problema de tradução? Ajude-nos a corrigi-lo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Português (BR)"
-L.TRANSLATOR = "Cyph"
+L.TRANSLATOR = "Cyph" -- Translator display name
+
+L.TOCNOTES = {}
+L.TOCNOTES["ADDONDESC"] = "Ferramenta de informação e colaboração sobre chaves Mítica +"
+L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {}
+-- DF S3
 L.MAPNAMES[9001] = { name = "Desconhecido", abbr = "???" }
 L.MAPNAMES[463] = { name = "Despertar do Infinito: Ruína de Galakrond", abbr = "FALL"}
 L.MAPNAMES[464] = { name = "Despertar do Infinito: Ascensão de Murozond", abbr = "RISE"}
@@ -19,6 +24,15 @@ L.MAPNAMES[199] = { name = "Castelo Corvo Negro", abbr = "BRH" }
 L.MAPNAMES[198] = { name = "Bosque Corenegro", abbr = "DHT" }
 L.MAPNAMES[168] = { name = "Floretérnia", abbr = "EB" }
 L.MAPNAMES[456] = { name = "Trono das Marés", abbr = "TotT" }
+--DF S4
+L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
+L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
+L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
+L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
+L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
+L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
+L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Clássico" }
@@ -124,3 +138,6 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Informações Key Master", text = "Info
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Agradecimentos Especiais", text = "Agradecimentos Especiais"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contribuidores", text = "Contribuidores"}
+
+L.SYSTEMMESSAGE = {}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Importante: Os cálculos para a 4a temporada de Dragonflight ainda estão sendo verificados."}

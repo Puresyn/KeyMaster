@@ -76,7 +76,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     backgroundHighlight.texture = backgroundHighlight:CreateTexture()
     backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
     local highlightColor = {}
-    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON                                                                                                      ")
+    highlightColor.r, highlightColor.g,highlightColor.b, _ = Theme:GetThemeColor("color_COMMON")
     backgroundHighlight.texture:SetColorTexture(highlightColor.r,highlightColor.g,highlightColor.b, 1)
     backgroundHighlight:Hide()
 
@@ -231,7 +231,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     -- Player's Name
     local PlayerNameText = dataFrame:CreateFontString("KM_PlayerName"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    PlayerNameText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 10, -3)
+    PlayerNameText:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 18, -3)
 
     -- Player class
     local PlayerClassText = dataFrame:CreateFontString("KM_Player"..playerNumber.."Class", "OVERLAY", "KeyMasterFontSmall")
@@ -255,7 +255,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     -- Player's Owned Key
     local OwnedKeyText = dataFrame:CreateFontString("KM_OwnedKeyInfo"..playerNumber, "OVERLAY", "KeyMasterFontBig")
-    OwnedKeyText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 8, 4)
+    OwnedKeyText:SetPoint("BOTTOMLEFT", dataFrame, "BOTTOMLEFT", 18, 4)
 
     -- Player Rating
     local OverallRatingText = dataFrame:CreateFontString("KM_Player"..playerNumber.."OverallRating", "OVERLAY", "KeyMasterFontBig")
@@ -287,7 +287,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
             temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+        temp_Frame:SetSize((parentFrame:GetWidth() / 12.5), parentFrame:GetHeight())
 
         if (not bolColHighlight) then
             temp_Frame.texture = temp_Frame:CreateTexture()
@@ -401,17 +401,18 @@ function PartyFrame:CreatePartyMemberFrame(unitId, parentFrame)
     temp_frame:SetPoint("CENTER", temp_RowFrame, "LEFT", 0, 0)
 
     local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
-    img1:SetHeight(temp_RowFrame:GetHeight()-12)
-    img1:SetWidth(temp_RowFrame:GetHeight()-12)
+    img1:SetHeight(temp_RowFrame:GetHeight()-26)
+    img1:SetWidth(temp_RowFrame:GetHeight()-26)
     img1:ClearAllPoints()
     img1:SetPoint("CENTER", temp_frame, "CENTER", 0, 0)
 
     -- the ring around the portrait
-    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "OVERLAY")
-    img2:SetHeight(temp_RowFrame:GetHeight()+8)
-    img2:SetWidth(temp_RowFrame:GetHeight()+8)
-    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portrait_frame2",false)
+    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "ARTWORK")
+    img2:SetHeight(temp_RowFrame:GetHeight()+5)
+    img2:SetWidth(temp_RowFrame:GetHeight()+5)
+    img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Interface-Clean",false)
     img2:ClearAllPoints()
+    img2:SetTexCoord(916/1024, 1, 100/1024, 206/1024)
     img2:SetPoint("CENTER", img1, "CENTER", 0, 0)
 
     KeyMaster:CreateHLine(temp_RowFrame:GetWidth()+8, temp_RowFrame, "TOP", 0, 0)
@@ -452,7 +453,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
             temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12), partyTallyFrame:GetHeight())
+        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12.5), partyTallyFrame:GetHeight())
 
         temp_Frame.bgTexture = temp_Frame:CreateTexture()
         temp_Frame.bgTexture:SetSize(temp_Frame:GetWidth(), temp_Frame:GetHeight())
