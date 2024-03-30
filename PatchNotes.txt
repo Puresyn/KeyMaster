@@ -3,6 +3,10 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.0.1
+--------------------------------------------------
+
+--------------------------------------------------
 Key Master v1.0.0
 --------------------------------------------------
 - Fixed forward compatibility issue where party members with versions older than
