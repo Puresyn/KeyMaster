@@ -214,18 +214,90 @@ function DungeonTools:GetWeeklyAffix()
     return weeklyAffix[1].name
 end
 
+-- Season to season rating constants with a fallback to the last known season.
+-- Works as long as the calculation algorithm doesn’t' change.
+local doOnce = 0
+---@return table - table of currentseason constants for rating calculations
+local function getRatingCalcValues()
+    local seasonCalcValues = {
+        [11] = { -- DF S3
+            baseRating = 20, -- Base score for dungeon completion
+            firstAffixLevel = 2, -- lowest M+ Key possible
+            fistAffixValue = 10, -- Value of the first affix
+            secondAffixLevel = 7, -- Key level the second affix is added
+            secondAffixValue = 10, -- Value of the second affix
+            thirdAffixLevel = 14, -- Key level the third affix is added
+            thirdAffixValue = 10, -- Value of the thrid affix
+            thresholdLevel = 10, -- Threshold after which the value of the key changes due to level
+            preThresholdValue = 5, -- Value of the pre-threshold levels
+            postThresholdValue = 7, -- Value of the post threshold levels
+            untimedBaseLevel = 20, -- The level after which untimed keys have no additional value
+            twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
+            threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
+            bonusTimerRating = 5 -- Bonus/Penalty for timers
+        },
+        [12] = { -- DF S4 --- THESE ARE GUESSTIMATES AS OF KM v1.0.1!!!!!! ------
+            baseRating = 80, -- Base score for dungeon completion
+            firstAffixLevel = 2, -- lowest M+ Key possible
+            fistAffixValue = 10, -- Value of the first affix
+            secondAffixLevel = 5, -- Key level the second affix is added
+            secondAffixValue = 10, -- Value of the second affix
+            thirdAffixLevel = 10, -- Key level the third affix is added
+            thirdAffixValue = 10, -- Value of the thrid affix
+            thresholdLevel = 5, -- Threshold after which the value of the key changes due to level
+            preThresholdValue = 7, -- Value of the pre-threshold levels
+            postThresholdValue = 7, -- Value of the post threshold levels
+            untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
+            twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
+            threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
+            bonusTimerRating = 5 -- Bonus/Penalty for timers
+        }
+    }
+
+    local mPlusSeason = DungeonTools:GetCurrentSeason()
+
+    -- If curent season # doesn't exist, find the last season numerically and use that.
+    if (not seasonCalcValues[mPlusSeason]) then
+        -- Set fallback data to last known season.
+        local fallbackID = 0
+        for k in pairs(seasonCalcValues) do
+            if k > fallbackID then
+                fallbackID = k
+            end
+        end
+        
+        if doOnce == 0 then -- stops debug spam
+            KeyMaster:_DebugMsg("getRatingCalcValues","DungeonTools","Could not locate calc data on season "..tostring(mPlusSeason)..". Using season "..tostring(fallbackID).." values.")
+            doOnce = 1
+        end
+        mPlusSeason = fallbackID
+    end
+
+    local seasonVars = seasonCalcValues[mPlusSeason]
+
+    return seasonVars
+
+end
+
 -- Calculates the dungeon runs performance based on its timer thresholds. 
 ---@param dungeonID integer - the id of the dungeon
 ---@param timeCompleted integer - the runs time in seconds
 ---@return string - string of the performance i.e. + or +++
 function DungeonTools:CalculateChest(dungeonID, timeCompleted)
+
+    local seasonVars = getRatingCalcValues()
+    if (not seasonVars) then
+        KeyMaster:_ErrorMsg("CalculateChest","DungeonTools","Run time level values could not be loaded.")
+        return ""
+    end
+
     if timeCompleted == nil or timeCompleted == 0 then return "" end
     if currentSeasonMaps == nil then
         currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
     end
     local timeLimit = currentSeasonMaps[dungeonID].timeLimit
-    if(timeCompleted <= (timeLimit * 0.6)) then return "+++" end
-    if(timeCompleted <= (timeLimit * 0.8)) then return "++" end
+    if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
+    if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
     if(timeCompleted <= timeLimit) then return "+" end
     return ""
 end
@@ -234,71 +306,62 @@ function DungeonTools:GetChestTimers(mapId)
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local timeLimit = mapTable[mapId].timeLimit
 
+    local seasonVars = getRatingCalcValues()
+    if (not seasonVars) then
+        KeyMaster:_ErrorMsg("GetChestTimers","DungeonTools","Run time level values could not be loaded.")
+        return
+    end
+
     local chestTimers = {
-        ["3chest"] = timeLimit * 0.6,
-        ["2chest"] = timeLimit * 0.8,
+        ["3chest"] = timeLimit * seasonVars.threeChestSpeed,
+        ["2chest"] = timeLimit * seasonVars.twoChestSpeed,
         ["1chest"] = timeLimit
     }
     return chestTimers
 end
 
+---@param level integer - level of mythic plus key to calculate
+---@return integer - (Base rating + afffix score)
 local function getBaseScore(level)
 
-    -- Break points -- Making some base calculation assumptions about the DF S4 rating system.
-    -- These will need verified
-    local breakPoints = {}
-
-    -- breakPoints[seasonNum[breakppoint]]
-    breakPoints = {
-        [1] = { 5, 10 }, -- falback
-        [11] = { 7, 14 }, -- DF S3
-        [12] = { 5, 10 }, -- DF S4
-        [13] = { 5, 10 }, -- TWW S1
-        [14] = { 5, 10 } -- TWW S2
-    }
-
-    local mPlusSeason = DungeonTools:GetCurrentSeason()
-
-    local lvlBreak1, lvlBreak2
-    if (breakPoints[mPlusSeason]) then
-        lvlBreak1 = breakPoints[mPlusSeason][1]
-        lvlBreak2 = breakPoints[mPlusSeason][2]
-    else
-        lvlBreak1 = breakPoints[1][1]
-        lvlBreak2 = breakPoints[1][2]
+    local seasonVars = getRatingCalcValues()
+    if (not seasonVars) then
+        KeyMaster:_ErrorMsg("getBaseScore","DungeonTools","Season reating calculation values could not be loaded.")
+        return 0
     end
 
-    -- Every completed key has a bonus of 20 rating
-    local baseRating = 20
+    -- Every completed key has a bonus of X rating
+    local baseRating = seasonVars.baseRating
 
-    -- First 10 levels are worth 5 rating per level
+    -- First X levels are worth X rating per level
     local firstRating = 0
-    if level >= 10 then
-        firstRating = 10 * 5
+    if level >= seasonVars.thresholdLevel then
+        firstRating = seasonVars.thresholdLevel * seasonVars.preThresholdValue
     else
-        firstRating = level * 5
+        firstRating = level * seasonVars.preThresholdValue
     end
 
-    -- Every level after 10 is worth 7 rating per level
+    -- Every level after X is worth X rating per level
     local secondRating = 0
-    if level > 10 then
-        secondRating = (level - 10) * 7
+    if level > seasonVars.thresholdLevel then
+        secondRating = (level - seasonVars.thresholdLevel) * seasonVars.postThresholdValue
     end
 
-    -- Every affix added is worth 10 rating
-    -- S3 Currently affixes are added at key level 2, 7 and 14
-    -- S4 Currently affixes are added at key level 2, 5 and 10
+    -- Every affix added is worth X rating
+    -- S3 Affixes are added at key level 2, 7 and 14
+    -- S4 Affixes are added at key level 2, 5 and 10
     local affixScore = 0
-    if level >= 2 then
-        affixScore = affixScore + 10
+    if level >= seasonVars.firstAffixLevel then
+        affixScore = affixScore + seasonVars.fistAffixValue
     end
-    if level >= lvlBreak1 then
-        affixScore = affixScore + 10
+    if level >= seasonVars.secondAffixLevel then
+        affixScore = affixScore +  seasonVars.secondAffixValue
     end
-    if level >= lvlBreak2 then
-        affixScore = affixScore + 10
+    if level >= seasonVars.thirdAffixLevel then
+        affixScore = affixScore + seasonVars.thirdAffixValue
     end
 
+    --print("Base: For level "..level.." is "..tostring(baseRating + firstRating + secondRating + affixScore).." ")
     return baseRating + firstRating + secondRating + affixScore
 end
 
@@ -309,8 +372,14 @@ end
 function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     -- ((totaltime - runTime)/(totaltime * maxModifier)) * 5 = bonusScore
     -- Subtract 5 if overtime
+
+    local seasonVars = getRatingCalcValues()
+    if (not seasonVars) then
+        KeyMaster:_ErrorMsg("CalculateRating","DungeonTools","Season reating calculation values could not be loaded.")
+        return 0
+    end
     
-    if (keyLevel < 2) then
+    if (keyLevel < seasonVars.firstAffixLevel) then
         return 0
     end
 
@@ -328,21 +397,16 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     local numerator = dungeonTimeLimit - runTime
     local denominator = dungeonTimeLimit * maxModifier
     local quotient = numerator/denominator    
-    if(quotient >= 1) then bonusRating = 5
-    elseif(quotient <= -1) then bonusRating = -5
-    else bonusRating = quotient * 5 end
+    if(quotient >= 1) then bonusRating = seasonVars.bonusTimerRating
+    elseif(quotient <= -1) then bonusRating = -seasonVars.bonusTimerRating
+    else bonusRating = quotient * seasonVars.bonusTimerRating end
 
     if(runTime > dungeonTimeLimit) then
-        bonusRating  = bonusRating - 5
+        bonusRating  = bonusRating - seasonVars.bonusTimerRating
     end
     
     -- Untimed keys over 20 use the base score of a 20. - DF S3
-    -- Making assumptions about DF Season 4 where 10 is the base instead of 20 -- DF S4
-    local mPlusSeason = DungeonTools:GetCurrentSeason()
-    local base = 20 -- DF S3
-    if mPlusSeason >= 12 then
-        base = 10 -- DF S4
-    end
+    local base = seasonVars.untimedBaseLevel
 
     if(keyLevel > base and runTime > dungeonTimeLimit) then
         keyLevel = base
