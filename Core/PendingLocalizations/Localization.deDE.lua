@@ -93,7 +93,7 @@ L.COMMANDLINE["Debug"] = { name = "Debug", text = " - Debug-Meldungen umschalten
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Mythisch-Wertung", text = "Dies ist die aktuelle Mythisch Plus Wertung des Charakters." }
 L.TOOLTIPS["OverallScore"] = { name = "Gesamtwertung", text = "Die Gesamtwertung ist eine Kombination aus Tyrannisch- und Verstärkt Wertungen für einen Dungeon. (Beinhaltet viel Mathematik!)"}
-L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", text = "Dies ist eine Schätzung, die Key Master intern durchführt. Diese Zahl stellt das gesamte mindeste Potential zur Wertungssteigerung Ihrer aktuellen Gruppe für den erfolgreichen Abschluss des angegebenen Schlüsselsteins dar. Es ist möglicherweise nicht 100 % akurat und dient nur zu Schätzungszwecken."}
+L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", text = "Dies ist eine Schätzung, die Key Master intern durchführt. Diese Zahl stellt das gesamte mindeste Potential zur Wertungssteigerung deiner aktuellen Gruppe für den erfolgreichen Abschluss des angegebenen Schlüsselsteins dar. Es ist möglicherweise nicht 100 % akurat und dient nur zu Schätzungszwecken."}
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Gruppeninformationen", text = "Gruppeninformationen"}
