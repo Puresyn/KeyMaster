@@ -98,27 +98,27 @@ L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", t
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Gruppeninformationen", text = "Gruppeninformationen"}
 L.PARTYFRAME["OverallRating"] = { name = "Aktuelle Gesamtwertung", text = "Aktuelle Gesamtwertung" }
-L.PARTYFRAME["PartyPointGain"] = { name = "Gruppenpunktsteigerung", text = "Gruppenpunktsteigerung"}
+L.PARTYFRAME["PartyPointGain"] = { name = "Gruppenwertungssteigerung", text = "Gruppenwertungssteigerung"}
 L.PARTYFRAME["Level"] = { name = "Stufe", text = "Stufe" }
 L.PARTYFRAME["Weekly"] = { name = "Wöchentlich", text = "Wöchentlich"}
 L.PARTYFRAME["NoAddon"] = { name = "Kein Add-on erkannt", text = "nicht erkannt!"}
 L.PARTYFRAME["PlayerOffline"] = { name = "Spieler offline", text = "Spieler offline."}
-L.PARTYFRAME["TeamRatingGain"] = { name = "Party-Steigerungspotenzial", text = "Geschätzte Gruppenwertungssteigerung"}
+L.PARTYFRAME["TeamRatingGain"] = { name = "Gruppensteigerungspotenzial", text = "Geschätzte Gruppenwertungssteigerung"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Steigerungspotenzial", text = "Geschätzte persönlicher Wertungssteigerung für verfügbare Schlüssel bei +1 Abschluss."}
 L.PARTYFRAME["NoKey"] = { name = "Kein Schlüsselstein", text = "Kein Schlüsselstein"}
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Schlüsselsteinstufe", text = "Zu berechnendes Schlüsselsteinniveau."}
 L.PLAYERFRAME["Gain"] = { name = "Steigerung", text = "Mögliche Wertungssteigerung."}
-L.PLAYERFRAME["New"] = { name = "Neu", text = "Ihre Wertung nach Abschluss dieses Schlüsselsteins liegt bei +1."}
-L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechnen Sie potenzielle Wertungssteigerungen."}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "Geben Sie die Schlüsselsteinstufe ein", text = "Geben Sie eine Schlüsselsteinstufe ein, um sie anzuzeigen"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "Ihre Vorhersage zur Basiswertungssteigerung."}
+L.PLAYERFRAME["New"] = { name = "Neu", text = "Deine Wertung nach Abschluss dieses Schlüsselsteins liegt bei +1."}
+L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne potenzielle Wertungssteigerungen."}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um sie anzuzeigen"}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "Deine Vorhersage zur Basiswertungssteigerung."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden"}
 L.CHARACTERINFO["KeyInVault"] = { name = "Schlüsselstein im Bankschließfach", text = "Im Bankschließfach"}
-L.CHARACTERINFO["AskMerchant"] = { name = "Fragen Sie den Schlüsselsteinhändler", text = "Schlüsselsteinhändler"}
+L.CHARACTERINFO["AskMerchant"] = { name = "Frag den Schlüsselsteinhändler", text = "Schlüsselsteinhändler"}
 
 L.TABPLAYER = "Spieler"
 L.TABPARTY = "Gruppe"
@@ -127,15 +127,15 @@ L.TABCONFIG = "Einstellungen" -- Translates to "Settings" but is more common in 
 
 L.CONFIGURATIONFRAME = {}
 L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Anzeigeeinstellungen", text = "Anzeigeeinstellungen"}
-L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Wertungsdezimalstellen umschalten", text = "Bewertungsdezimalstellen anzeigen."}
+L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Wertungsdezimale umschalten", text = "Wertungsdezimalstellen anzeigen."}
 L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Schaltfläche „Minikarte anzeigen“.", text = "Schaltfläche „Minikarte anzeigen“."}
 L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnoseeinstellungen", text = "Diagnoseeinstellungen."}
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeigen", text = "Fehlermeldungen anzeigen."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen."}
-L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnose", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, können sie Ihre Chatbox überfluten!"}
+L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnoseinformationen", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, könnten sie deine Chatbox überfluten!"}
 
 L.ABOUTFRAME = {}
-L.ABOUTFRAME["AboutGeneral"] = { name = "Generelle Informationen", text = "Generelle Informationen"}
+L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
