@@ -202,7 +202,7 @@ https://discord.gg/bbMaUpfgn8
     local redditColor, twitchColor
     _, _, _, redditColor = Theme:GetThemeColor("color_REDDIT")
     _, _, _, twitchColor = Theme:GetThemeColor("color_TWITCH")
-    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\n|cff"..twitchColor.."Twitch|r Ellesmere_Gaming\n\n|cff"..redditColor.."Reddit|r r/CompetitiveWoW"
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\n|cff"..twitchColor.."Twitch|r Ellesmere_Gaming"
     aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
     aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)

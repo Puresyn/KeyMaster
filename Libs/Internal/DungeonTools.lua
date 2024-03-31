@@ -237,14 +237,14 @@ local function getRatingCalcValues()
             bonusTimerRating = 5 -- Bonus/Penalty for timers
         },
         [12] = { -- DF S4 --- THESE ARE GUESSTIMATES AS OF KM v1.0.1!!!!!! ------
-            baseRating = 80, -- Base score for dungeon completion
+            baseRating = 70, -- Base score for dungeon completion
             firstAffixLevel = 2, -- lowest M+ Key possible
             fistAffixValue = 10, -- Value of the first affix
             secondAffixLevel = 5, -- Key level the second affix is added
             secondAffixValue = 10, -- Value of the second affix
             thirdAffixLevel = 10, -- Key level the third affix is added
             thirdAffixValue = 10, -- Value of the thrid affix
-            thresholdLevel = 5, -- Threshold after which the value of the key changes due to level
+            thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
             preThresholdValue = 7, -- Value of the pre-threshold levels
             postThresholdValue = 7, -- Value of the post threshold levels
             untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
