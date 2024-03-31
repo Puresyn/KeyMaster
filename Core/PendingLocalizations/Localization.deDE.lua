@@ -86,7 +86,7 @@ L.COMMANDLINE = {}
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
 L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
 L.COMMANDLINE["Show"] = { name = "anzeigen", text = " - Hauptfenster ein- oder ausblenden."}
-L.COMMANDLINE["Help"] = { name = "helfen", text = " - zeigt dieses Hilfemenü."}
+L.COMMANDLINE["Help"] = { name = "hilfe", text = " - zeigt dieses Hilfemenü."}
 L.COMMANDLINE["Errors"] = { name = "Fehler", text = " - Fehlermeldungen umschalten."}
 L.COMMANDLINE["Debug"] = { name = "Debug", text = " - Debug-Meldungen umschalten."}
 
