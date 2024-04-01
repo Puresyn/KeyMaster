@@ -7,7 +7,7 @@ Key Master v1.0.1
 --------------------------------------------------
 - Updated season 4 rating calculations.
 - Corrected 正體中文 (zhTW) localization typo.
-- Added localization for Deutsch (DE)
+- Added localization for Deutsch (DE) - (Thanks Feedy88 and Rumorix!)
 
 --------------------------------------------------
 Key Master v1.0.0
