@@ -39,11 +39,11 @@ if(langPref == "enUS") then
     KeyMasterLocals = KM_Localization_enUS
 --[[ elseif (langPref == "frFR") then
     -- Localization.frFR.lua
-    KeyMasterLocals = KM_Localization_frFR
+    KeyMasterLocals = KM_Localization_frFR ]]
 elseif (langPref == "deDE") then
     -- Localization.deDE.lua
     KeyMasterLocals = KM_Localization_deDE
-elseif (langPref == "itIT") then
+--[[ elseif (langPref == "itIT") then
     -- Localization.itIT.lua
     KeyMasterLocals = KM_Localization_itIT ]]
 elseif (langPref == "ruRU") then

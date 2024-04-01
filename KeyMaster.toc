@@ -10,6 +10,7 @@
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Notes-ptBR: Ferramenta de informação e colaboração sobre chaves Mítica +
 ## Notes-ruRU: Отображение подробной информации о контенте М+
+## Notes-deDE: Mythic Plus Schlüsselstein Informations- und Kollaborationstool
 ## Notes-zhTW: 傳奇+鑰石資訊以及協同工具
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## DefaultState: enabled

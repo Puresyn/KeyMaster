@@ -102,7 +102,6 @@ https://discord.gg/bbMaUpfgn8
     We are actively seeking volunteer translators and proof readers to help represent their countries for the following languages:
 
 -French (France)
--German (Germany)
 -Italian (Italy)
 -Chinese (China) (simplified) implemented LTR
 -Spanish (Spain)
@@ -170,7 +169,7 @@ https://discord.gg/bbMaUpfgn8
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
 
-    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\n|cffA3E7FCTranslators|r\nCyph, Hollicsh, bns3388"
+    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\n|cffA3E7FCTranslators|r\nCyph, Hollicsh, bns3388, Feedy88, Rumorix"
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
     aboutContributors.text:SetSize(aboutContributors:GetWidth()-indent-mlr, aboutContributors:GetHeight()-aboutContributors.title:GetHeight()-25)

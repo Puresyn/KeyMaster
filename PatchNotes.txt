@@ -5,6 +5,9 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.0.1
 --------------------------------------------------
+- Updated season 4 rating calculations.
+- Corrected 正體中文 (zhTW) localization typo.
+- Added localization for Deutsch (DE)
 
 --------------------------------------------------
 Key Master v1.0.0

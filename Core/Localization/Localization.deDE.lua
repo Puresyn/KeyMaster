@@ -2,12 +2,12 @@ KM_Localization_deDE = {}
 local L = KM_Localization_deDE
 
 -- Localization file for "deDE": German (Germany)
--- Übersetzt von: Google Translate
+-- Übersetzt von: Google Translate + some human beeings
 
 -- Übersetzungsproblem? Helfen Sie uns bei der Korrektur! Besuchen: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Deutsch (DE)"
-L.TRANSLATOR = "Feedy88" -- Translator display name
+L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur)" -- Translator display name
 
 L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Schlüsselstein Informations- und Kollaborationstool"
@@ -17,8 +17,8 @@ L.MAPNAMES = {}
 -- DF S3
 -- Disclaimer: Abbrevations for S3 and S4 are mostly guesses and seems accurate to me as native German. Should be proof-red.
 L.MAPNAMES[9001] = { name = "Unbekannt", abbr = "???" }
-L.MAPNAMES[463] = { name = "Dämmerung des Ewigen: Galakronds Sturz", abbr = "STURZ"}
-L.MAPNAMES[464] = { name = "Dämmerung des Ewigen: Murozonds Erhebung", abbr = "ERHEBUNG"}
+L.MAPNAMES[463] = { name = "Dämmerung des Ewigen: Galakronds Sturz", abbr = "GS"}
+L.MAPNAMES[464] = { name = "Dämmerung des Ewigen: Murozonds Erhebung", abbr = "ME"}
 L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
 L.MAPNAMES[248] = { name = "Das Kronsteiganwesen", abbr = "KSA" }
 L.MAPNAMES[199] = { name = "Die Rabenwehr", abbr = "RW" }
@@ -28,7 +28,7 @@ L.MAPNAMES[456] = { name = "Thron der Gezeiten", abbr = "TDG" }
 --DF S4
 L.MAPNAMES[399] = { name = "Rubinlebensbecken", abbr = "RLB" }
 L.MAPNAMES[401] = { name = "Das Azurblaue Grwölbe", abbr = "AG" }
-L.MAPNAMES[400] = { name = "Der Angriff der Nokhud", abbr = "ADN" }
+L.MAPNAMES[400] = { name = "Der Angriff der Nokhud", abbr = "ADN" } --ggf. nur Nokhud?
 L.MAPNAMES[402] = { name = "Akademie von Algeth\'ar", abbr = "AA" }
 L.MAPNAMES[403] = { name = "Uldaman: Vermächtnis von Tyr", abbr = "ULD" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
@@ -75,7 +75,7 @@ L.DEBUGMESSAGESNOTIFY = "Benachrichtigen: Debug-Meldungen sind aktiviert."
 L.COMMANDERROR1 = "Ungültiger Befehl"
 L.COMMANDERROR2 = "Eingeben"
 L.COMMANDERROR3 = "für Befehle"
-L.YOURCURRENTKEY = "DEIN SCHLÜSSELSTEIN"
+L.YOURCURRENTKEY = "DEIN KEY"
 L.ADDONOUTOFDATE = "Dein Key Master-Addon ist veraltet!"
 L.INSTANCETIMER = "Instanzinformationen"
 L.VAULTINFORMATION = "M+ Schatzkammer-Fortschritt"
@@ -93,7 +93,7 @@ L.COMMANDLINE["Debug"] = { name = "Debug", text = " - Debug-Meldungen umschalten
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Mythisch-Wertung", text = "Dies ist die aktuelle Mythisch Plus Wertung des Charakters." }
 L.TOOLTIPS["OverallScore"] = { name = "Gesamtwertung", text = "Die Gesamtwertung ist eine Kombination aus Tyrannisch- und Verstärkt Wertungen für einen Dungeon. (Beinhaltet viel Mathematik!)"}
-L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", text = "Dies ist eine Schätzung, die Key Master intern durchführt. Diese Zahl stellt das gesamte mindeste Potential zur Wertungssteigerung deiner aktuellen Gruppe für den erfolgreichen Abschluss des angegebenen Schlüsselsteins dar. Es ist möglicherweise nicht 100 % akurat und dient nur zu Schätzungszwecken."}
+L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", text = "Dies ist eine Schätzung, die Key Master intern durchführt. Diese Zahl stellt das gesamte mindeste Potential zur Wertungssteigerung deiner aktuellen Gruppe für den erfolgreichen Abschluss des angegebenen Schlüsselsteins dar. Es ist möglicherweise nicht 100 % akurat und dient nur zur Abschätzung."} -- just changed it a bit - habe das ein wenig anders übersetzt
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Gruppeninformationen", text = "Gruppeninformationen"}
@@ -142,4 +142,4 @@ L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"
 -- If you want to add a tranlation for "Translators", it's "Übersetzer"
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated
