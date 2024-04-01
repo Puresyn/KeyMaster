@@ -13,9 +13,8 @@ L.TOCNOTES = {}
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Schlüsselstein Informations- und Kollaborationstool"
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
-L.MAPNAMES = {}
+L.MAPNAMES = {} -- Disclaimer: Abbrevations for S3 and S4 are mostly guesses and seems accurate to me as native German. Should be proof-red.
 -- DF S3
--- Disclaimer: Abbrevations for S3 and S4 are mostly guesses and seems accurate to me as native German. Should be proof-red.
 L.MAPNAMES[9001] = { name = "Unbekannt", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dämmerung des Ewigen: Galakronds Sturz", abbr = "GS"}
 L.MAPNAMES[464] = { name = "Dämmerung des Ewigen: Murozonds Erhebung", abbr = "ME"}
@@ -112,8 +111,8 @@ L.PLAYERFRAME["KeyLevel"] = { name = "Schlüsselsteinstufe", text = "Zu berechne
 L.PLAYERFRAME["Gain"] = { name = "Steigerung", text = "Mögliche Wertungssteigerung."}
 L.PLAYERFRAME["New"] = { name = "Neu", text = "Deine Wertung nach Abschluss dieses Schlüsselsteins liegt bei +1."}
 L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne potenzielle Wertungssteigerungen."}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um sie anzuzeigen"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "Deine Vorhersage zur Basiswertungssteigerung."}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um eine Abschätzung"}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "der Basiswertungssteigerung zu sehen."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden"}
@@ -123,23 +122,22 @@ L.CHARACTERINFO["AskMerchant"] = { name = "Frag den Schlüsselsteinhändler", te
 L.TABPLAYER = "Spieler"
 L.TABPARTY = "Gruppe"
 L.TABABOUT = "Über"
-L.TABCONFIG = "Einstellungen" -- Translates to "Settings" but is more common in German. Config Tranlates to "Konfiguration" if this is preferred.
+L.TABCONFIG = "Konfiguration" -- Translates to "Settings" but is more common in German. Config Tranlates to "Konfiguration" if this is preferred.
 
 L.CONFIGURATIONFRAME = {}
 L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Anzeigeeinstellungen", text = "Anzeigeeinstellungen"}
 L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Wertungsdezimale umschalten", text = "Wertungsdezimalstellen anzeigen."}
-L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Schaltfläche „Minikarte anzeigen“.", text = "Schaltfläche „Minikarte anzeigen“."}
+L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Schaltfläche „Minikarte anzeigen“.", text = "Schaltfläche an der „Minikarte\" anzeigen."}
 L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnoseeinstellungen", text = "Diagnoseeinstellungen."}
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeigen", text = "Fehlermeldungen anzeigen."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnoseinformationen", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, könnten sie deine Chatbox überfluten!"}
 
-L.ABOUTFRAME = {}
+L.ABOUTFRAME = {} -- If you want to add a tranlation for "Translators", it's "Übersetzer"
 L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
--- If you want to add a tranlation for "Translators", it's "Übersetzer"
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated
