@@ -2,18 +2,24 @@ KM_Localization_deDE = {}
 local L = KM_Localization_deDE
 
 -- Localization file for "deDE": German (Germany)
--- Übersetzt von: Google Translate + some human beeings
+-- Übersetzt von: Feedy88 + Rumorix (Korrektur)
+
+--[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
+    overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
+    than the English version. If that is not possible, development adjustments may need made.
+    If you are not comfortable setting up your own local testing to check for these issues, make sure you let a dev know
+    so they can go over a screen-share with you.]]--
 
 -- Übersetzungsproblem? Helfen Sie uns bei der Korrektur! Besuchen: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Deutsch (DE)"
 L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur)" -- Translator display name
 
-L.TOCNOTES = {}
+L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Schlüsselstein Informations- und Kollaborationstool"
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
-L.MAPNAMES = {} -- Disclaimer: Abbrevations for S3 and S4 are mostly guesses and seems accurate to me as native German. Should be proof-red.
+L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Unbekannt", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dämmerung des Ewigen: Galakronds Sturz", abbr = "GS"}
@@ -53,7 +59,6 @@ L.MPLUSSEASON[12] = { name = "Saison 4" }
 L.MPLUSSEASON[13] = { name = "Saison 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "Saison 2" } -- expecting season 14 to be TWW S2
 
-L.ADDONNAME = "Key Master" -- do not translate
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Willkommen zurück"
 L.ON = "an"
@@ -81,9 +86,9 @@ L.VAULTINFORMATION = "M+ Schatzkammer-Fortschritt"
 L.TIMELIMIT = "Zeitlimit"
 L.SEASON = "Saison"
 
-L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
+L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
 L.COMMANDLINE["Show"] = { name = "anzeigen", text = " - Hauptfenster ein- oder ausblenden."}
 L.COMMANDLINE["Help"] = { name = "hilfe", text = " - zeigt dieses Hilfemenü."}
 L.COMMANDLINE["Errors"] = { name = "Fehler", text = " - Fehlermeldungen umschalten."}
@@ -96,7 +101,7 @@ L.TOOLTIPS["TeamRatingGain"] = { name = "Erwartete Wertsteigerung der Gruppe", t
 
 L.PARTYFRAME = {}
 L.PARTYFRAME["PartyInformation"] = { name = "Gruppeninformationen", text = "Gruppeninformationen"}
-L.PARTYFRAME["OverallRating"] = { name = "Aktuelle Gesamtwertung", text = "Aktuelle Gesamtwertung" }
+L.PARTYFRAME["OverallRating"] = { name = "Gesamtwertung", text = "Gesamtwertung" }
 L.PARTYFRAME["PartyPointGain"] = { name = "Gruppenwertungssteigerung", text = "Gruppenwertungssteigerung"}
 L.PARTYFRAME["Level"] = { name = "Stufe", text = "Stufe" }
 L.PARTYFRAME["Weekly"] = { name = "Wöchentlich", text = "Wöchentlich"}
@@ -122,7 +127,7 @@ L.CHARACTERINFO["AskMerchant"] = { name = "Frag den Schlüsselsteinhändler", te
 L.TABPLAYER = "Spieler"
 L.TABPARTY = "Gruppe"
 L.TABABOUT = "Über"
-L.TABCONFIG = "Konfiguration" -- Translates to "Settings" but is more common in German. Config Tranlates to "Konfiguration" if this is preferred.
+L.TABCONFIG = "Konfiguration"
 
 L.CONFIGURATIONFRAME = {}
 L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Anzeigeeinstellungen", text = "Anzeigeeinstellungen"}
@@ -133,11 +138,12 @@ L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeige
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnoseinformationen", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, könnten sie deine Chatbox überfluten!"}
 
-L.ABOUTFRAME = {} -- If you want to add a tranlation for "Translators", it's "Übersetzer"
+L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
+L.ABOUTFRAME["Translators"] = { text = "Übersetzer" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated

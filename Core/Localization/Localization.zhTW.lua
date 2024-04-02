@@ -4,16 +4,22 @@ local L = KM_Localization_zhTW
 -- Localization file for "zhTW": 正體中文 (Taiwan)
 -- Translated by: 三皈依
 
+--[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
+    overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
+    than the English version. If that is not possible, development adjustments may need made.
+    If you are not comfortable setting up your own local testing to check for these issues, make sure you let a dev know
+    so they can go over a screen-share with you.]]--
+
 -- Translation issue? Assist us in correcting it! Visit: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "正體中文 (TW)"
 L.TRANSLATOR = "三皈依" -- Translator display name
 
-L.TOCNOTES = {}
+L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "傳奇+鑰石資訊以及協同工具"
 L.TOCNOTES["ADDONNAME"] = "鑰石大師"
 
-L.MAPNAMES = {}
+L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
 -- DF S3
 L.MAPNAMES[9001] = { name = "未知", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "殞落"}
@@ -53,7 +59,6 @@ L.MPLUSSEASON[12] = { name = "第4賽季" }
 L.MPLUSSEASON[13] = { name = "第1賽季" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "第2賽季" } -- expecting season 14 to be TWW S2
 
-L.ADDONNAME = "Key Master" -- do not translate
 L.DISPLAYVERSION = "版本"
 L.WELCOMEMESSAGE = "歡迎回來"
 L.ON = "開"
@@ -81,9 +86,9 @@ L.VAULTINFORMATION = "傳奇+ 寶庫進度"
 L.TIMELIMIT = "時間限制"
 L.SEASON = "賽季"
 
-L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
+L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
 L.COMMANDLINE["Show"] = { name = "show", text = " - 顯示/隱藏主視窗。"}
 L.COMMANDLINE["Help"] = { name = "help", text = " - 顯示幫助選單。"}
 L.COMMANDLINE["Errors"] = { name = "errors", text = " - 切換錯誤訊息。"}
@@ -138,6 +143,7 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master 資訊", text = "Key Master 
 L.ABOUTFRAME["AboutAuthors"] = { name = "作者", text = "作者"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "特別感謝", text = "特別感謝"}
 L.ABOUTFRAME["AboutContributors"] = { name = "貢獻者", text = "貢獻者"}
+L.ABOUTFRAME["Translators"] = { text = "Translators" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}

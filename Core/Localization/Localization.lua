@@ -72,3 +72,4 @@ KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICAL_ID)
 KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIED_ID)
 KeyMasterLocals.BUILDRELEASE = "release" -- must remain in ENGLISH - DO NOT TRANSLATE
 KeyMasterLocals.BUILDBETA = "beta" -- must remain in ENGLISH - DO NOT TRANSLATE
+KeyMasterLocals.ADDONNAME = "Key Master" -- do not translate
