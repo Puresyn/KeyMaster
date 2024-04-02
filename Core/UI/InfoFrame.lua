@@ -102,7 +102,6 @@ https://discord.gg/bbMaUpfgn8
     We are actively seeking volunteer translators and proof readers to help represent their countries for the following languages:
 
 -French (France)
--German (Germany)
 -Italian (Italy)
 -Chinese (China) (simplified) implemented LTR
 -Spanish (Spain)
@@ -170,7 +169,10 @@ https://discord.gg/bbMaUpfgn8
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
 
-    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem\n\n|cffA3E7FCTranslators|r\nCyph, Hollicsh, bns3388"
+    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu\n\n"
+    textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
+    textContributors = textContributors .. "Cyph, Hollicsh, bns3388, Feedy88, Rumorix"
+
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
     aboutContributors.text:SetSize(aboutContributors:GetWidth()-indent-mlr, aboutContributors:GetHeight()-aboutContributors.title:GetHeight()-25)
@@ -202,7 +204,7 @@ https://discord.gg/bbMaUpfgn8
     local redditColor, twitchColor
     _, _, _, redditColor = Theme:GetThemeColor("color_REDDIT")
     _, _, _, twitchColor = Theme:GetThemeColor("color_TWITCH")
-    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\n|cff"..twitchColor.."Twitch|r Ellesmere_Gaming\n\n|cff"..redditColor.."Reddit|r r/CompetitiveWoW"
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n\n|cff"..twitchColor.."Twitch|r Ellesmere_Gaming"
     aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
     aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)

@@ -4,16 +4,22 @@ local L = KM_Localization_ruRU
 -- Localization file for "ruRU": Russian (Russia)
 -- Translated by: Hollicsh
 
+--[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
+    overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
+    than the English version. If that is not possible, development adjustments may need made.
+    If you are not comfortable setting up your own local testing to check for these issues, make sure you let a dev know
+    so they can go over a screen-share with you.]]--
+
 -- Проблема с переводом? Помогите нам исправить это! Посетите: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Русский (RU)"
 L.TRANSLATOR = "Hollicsh" -- Translator display name
 
-L.TOCNOTES = {}
+L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "Отображение подробной информации о контенте М+"
 L.TOCNOTES["ADDONNAME"] = "Мастер ключей"
 
-L.MAPNAMES = {}
+L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond's Fall", abbr = "ПГ"}
@@ -53,7 +59,6 @@ L.MPLUSSEASON[12] = { name = "4 сезон" }
 L.MPLUSSEASON[13] = { name = "1 сезон" } -- ожидая, что 13 сезон будет TWW S1
 L.MPLUSSEASON[14] = { name = "2 сезон" } -- ожидая, что 14 сезон будет TWW S2
 
-L.ADDONNAME = "Key Master" -- Не нужно переводить
 L.DISPLAYVERSION = "вер. " -- перевёл, потому что на русском языке так будет лучше
 L.WELCOMEMESSAGE = "Добро пожаловать"
 L.ON = "вкл."
@@ -81,9 +86,9 @@ L.VAULTINFORMATION = "Прогресс Хранилища М+"
 L.TIMELIMIT = "Лимит времени"
 L.SEASON = "сезон"
 
-L.COMMANDLINE = {}
-L.COMMANDLINE["/km"] = { name = "/km", text = "/km"} -- Do not translate
-L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"} -- Do not translate
+L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
+L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
+L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
 L.COMMANDLINE["Show"] = { name = "показать", text = " - показать/скрыть главное окно."}
 L.COMMANDLINE["Help"] = { name = "помощь", text = " - показать меню помощи."}
 L.COMMANDLINE["Errors"] = { name = "ошибки", text = " - включить/отключить сообщения об ошибках."}
@@ -138,6 +143,7 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Информация Key Master", text 
 L.ABOUTFRAME["AboutAuthors"] = { name = "Авторы", text = "Авторы"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Особая благодарность", text = "Особая благодарность"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Участники", text = "Участники"}
+L.ABOUTFRAME["Translators"] = { text = "Переводчики" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга 4-го сезона Dragonflight всё ещё проверяются."}

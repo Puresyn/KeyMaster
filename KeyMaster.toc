@@ -2,14 +2,15 @@
 ## X-Max-Interface: 100206
 ## X-Min-Interface: 100205
 
-## Version: 1.0.0
+## Version: 1.0.1
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
-## Title-zhTW: |cffb09c60Key Master|r [|cffe6b080"鑰石大師|r]
+## Title-zhTW: |cffb09c60Key Master|r [|cffe6b080鑰石大師|r]
 ## Notes: Mythic Plus Keystone Information and Collaboration Tool
 ## Notes-ptBR: Ferramenta de informação e colaboração sobre chaves Mítica +
 ## Notes-ruRU: Отображение подробной информации о контенте М+
+## Notes-deDE: Mythic Plus Schlüsselstein Informations- und Kollaborationstool
 ## Notes-zhTW: 傳奇+鑰石資訊以及協同工具
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## DefaultState: enabled
