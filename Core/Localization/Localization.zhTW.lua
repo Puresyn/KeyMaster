@@ -143,7 +143,7 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master 資訊", text = "Key Master 
 L.ABOUTFRAME["AboutAuthors"] = { name = "作者", text = "作者"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "特別感謝", text = "特別感謝"}
 L.ABOUTFRAME["AboutContributors"] = { name = "貢獻者", text = "貢獻者"}
-L.ABOUTFRAME["Translators"] = { text = "Translators" }
+L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}
