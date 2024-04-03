@@ -143,7 +143,7 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Informações Key Master", text = "Info
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Agradecimentos Especiais", text = "Agradecimentos Especiais"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contribuidores", text = "Contribuidores"}
-L.ABOUTFRAME["Translators"] = { text = "Translators" }
+L.ABOUTFRAME["Translators"] = { text = "Tradutores" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Importante: Os cálculos para a 4a temporada de Dragonflight ainda estão sendo verificados."}
