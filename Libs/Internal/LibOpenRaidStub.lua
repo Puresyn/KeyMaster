@@ -50,6 +50,12 @@ function openRaidStub:SendCommData(data, flags, bIgnoreQueue)
         -- end
     else
         if (IsInGroup() and not IsInRaid()) then --in party only
+                local channel
+            if IsInGroup(LE_PARTY_CATEGORY_HOME)  then
+                channel = "PARTY"
+            else
+                return
+            end
             local channel = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY"
             KM_OpenRaidStub:TransmitOpenRaidRequest(dataEncoded, channel)
         end
