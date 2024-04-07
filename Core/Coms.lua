@@ -143,8 +143,10 @@ local function processOpenRaidData(payload, sender)
                     senderData.mythicPlusRating = tonumber(dataAsTable[5])
                     isDirty = true
 
-                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
-                    UnitData:SetUnitData(senderData)
+                    if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
+                        KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
+                        UnitData:SetUnitData(senderData)
+                    end
                 end
             end
         else
@@ -155,8 +157,10 @@ local function processOpenRaidData(payload, sender)
                 senderData.mythicPlusRating = tonumber(dataAsTable[5])
                 isDirty = true
 
-                KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
-                UnitData:SetUnitData(senderData)
+                if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
+                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
+                    UnitData:SetUnitData(senderData)
+                end
             end
         end
         
