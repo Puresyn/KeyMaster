@@ -1,3 +1,9 @@
+--------------------------------
+-- PartyFrame.lua
+-- Handles Party tab interface
+-- and interactions.
+--------------------------------
+
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 local DungeonTools = KeyMaster.DungeonTools
@@ -138,11 +144,11 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
         local pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
         pButton:SetAttribute("type", "spell")
         pButton:SetAttribute("spell", portalSpellName)
-        pButton:RegisterForClicks("LeftButtonDown")
+        pButton:RegisterForClicks("AnyDown")
         pButton:SetWidth(pButton:GetParent():GetWidth())
         pButton:SetHeight(pButton:GetParent():GetWidth())
         pButton:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
-        pButton:SetScript("OnMouseUp", portalButton_buttonevent)
+        pButton:SetScript("OnMouseDown", portalButton_buttonevent)
         pButton:SetScript("OnEnter", portalButton_mouseover)
         pButton:SetScript("OnLeave", portalButton_mouseoout)
 
