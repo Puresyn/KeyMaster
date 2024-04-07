@@ -12,9 +12,7 @@ local function portalButton_buttonevent(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
     local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
     if (dur < 2) then
-        if _G["KeyMaster_MainFrame"]:IsShown() then 
-            MainInterface:Toggle()
-        end
+        MainInterface:Toggle()
     end
 end
 
