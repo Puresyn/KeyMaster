@@ -228,11 +228,15 @@ local function processKM2Data(payload, sender)
         KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
         return
     end
+    checkVersion(data)
+
+    -- if we're in an instance party we don't want to process other people's data or make ui changes
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then return end
 
     KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received data from "..sender.." using KM version v"..buildVersion)
     data.hasAddon = true
     UnitData:SetUnitData(data)
-
+    
     -- Only update UI if party tab is open
     local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
     if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
@@ -240,9 +244,6 @@ local function processKM2Data(payload, sender)
         PartyFrameMapping:UpdateKeystoneHighlights()
         PartyFrameMapping:CalculateTotalRatingGainPotential()
     end
-
-
-    checkVersion(data)    
 end
 
 -- Deserialize communication data:
