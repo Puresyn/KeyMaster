@@ -371,6 +371,13 @@ function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
 end
 
 function PartyFrameMapping:UpdatePartyFrameData()
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+        PartyFrameMapping:HideAllPartyFrame()  
+        PartyFrameMapping:ResetTallyFramePositioning()        
+        -- Show explination frame
+        return
+    end
+
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
@@ -382,5 +389,5 @@ function PartyFrameMapping:UpdatePartyFrameData()
     end
     PartyFrameMapping:UpdateKeystoneHighlights()
     PartyFrameMapping:CalculateTotalRatingGainPotential()    
-    PartyFrameMapping:ResetTallyFramePositioning()
+    PartyFrameMapping:ResetTallyFramePositioning()    
 end
