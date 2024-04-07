@@ -36,6 +36,7 @@ end
 -- Serialize communication data:
 -- Can communitcate over whatever default channels are avaialable via hidden Addons subchannel.
 function MyAddon:Transmit(data)
+    if not IsInGroup(LE_PARTY_CATEGORY_HOME) then return end -- Make sure you have a home party (local) group 
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
@@ -49,6 +50,7 @@ end
 
 -- sends request to party members to transmit their data
 function MyAddon:TransmitRequest(requestData)
+    if not IsInGroup(LE_PARTY_CATEGORY_HOME) then return end -- Make sure you have a home party (local) group 
     if requestData == nil or requestData.requestType == nil then 
         KeyMaster:_DebugMsg("TransmitRequest", "Coms", "Received invalid data request type.")
         return
