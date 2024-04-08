@@ -50,6 +50,32 @@ local function portalButton_mouseoout(self, event, ...)
     cdFrame:SetCooldown(0 ,0)
 end
 
+-- Party frame notification when party info isn't displayed
+function PartyFrame:noPartyInfoNotification(parent)
+    local noPartyInfo = CreateFrame("Frame", "KM_NoPartyInfo", parent)
+    noPartyInfo:SetSize(parent:GetWidth()-4, parent:GetHeight()-4)
+    noPartyInfo:SetPoint("CENTER", parent, "CENTER")
+    noPartyInfo:SetFrameLevel(parent:GetFrameLevel()+1)
+    noPartyInfo.text = noPartyInfo:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    noPartyInfo.text:SetText(KeyMasterLocals.PARTYFRAME["NoPartyInfo"].text)
+    noPartyInfo.text:SetPoint("CENTER", noPartyInfo, "CENTER", 60, -90)
+    noPartyInfo.text:SetWidth(parent:GetWidth()*0.55)
+    noPartyInfo.text:SetJustifyV("CENTER")
+    noPartyInfo.text:SetJustifyH("LEFT")
+    local msgColor = {}
+    msgColor.r, msgColor.g, msgColor.b, _ = Theme:GetThemeColor("color_POOR")
+    noPartyInfo.text:SetTextColor(msgColor.r, msgColor.g, msgColor.b, 1)
+    noPartyInfo.icon = noPartyInfo:CreateTexture()
+    noPartyInfo.icon:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\KeyMaster-Interface-Clean")
+    noPartyInfo.icon:SetTexCoord(916/1024, 1, 216/1024, 322/1024)
+    noPartyInfo.icon:SetPoint("RIGHT", noPartyInfo.text, "LEFT", -8, 0)
+    noPartyInfo.icon:SetSize(80, 80)
+    noPartyInfo.icon:SetAlpha(0.1)
+    noPartyInfo:Hide()
+
+    return noPartyInfo
+end
+
 local function createPartyDungeonHeader(anchorFrame, mapId)
     if not anchorFrame and mapId then 
         KeyMaster:_ErrorMsg("createPartyDungeonHeader", "PartyFrame", "No valid parameters passed.")

@@ -51,6 +51,7 @@ function MainInterface:Initialize()
 
   -- Party Tab Content
   local partyTabContent = PartyFrame:Initialize(contentRegion)
+  local partyNotification = _G["KM_NoPartyInfo"] or PartyFrame:noPartyInfoNotification(partyTabContent)
 
   -- Config Tab
   local configContent = _G["KM_Configuration_Frame"] or ConfigFrame:CreateConfigFrame(contentRegion)
