@@ -3,6 +3,10 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.0.3
+--------------------------------------------------
+
+--------------------------------------------------
 Key Master v1.0.2
 --------------------------------------------------
 Updates:
@@ -15,7 +19,7 @@ Updates:
 Fixes:
 - Fixed GitHub issue #30 - When joining an LFR, LFG, or follower dungeon you would see many
   "You are not in a party" messages in chat.
-- Fixed rare case were party member data would vanish after briefly being displayed.
+- Fixed rare case when party member data would vanish after briefly being displayed.
 
 Open Items:
 - Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.
