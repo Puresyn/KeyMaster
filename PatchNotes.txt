@@ -10,7 +10,7 @@ Updates:
   Looking for Group (LFG), Battle Ground, Arena, or Follower dungeon, party member information
   is no longer displayed in the party tab for that party. This does not apply to custom
   (user created) groups or normal party members outside of your instance group.
-- Added notification when party information is not dispayed.
+- Added notification when party information is not displayed.
 
 Fixes:
 - Fixed GitHub issue #30 - When joining an LFR, LFG, or follower dungeon you would see many
