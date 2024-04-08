@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Spieler offline", text = "Spieler offl
 L.PARTYFRAME["TeamRatingGain"] = { name = "Gruppensteigerungspotenzial", text = "Geschätzte Gruppenwertungssteigerung"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Steigerungspotenzial", text = "Geschätzte persönlicher Wertungssteigerung für verfügbare Schlüssel bei +1 Abschluss."}
 L.PARTYFRAME["NoKey"] = { name = "Kein Schlüsselstein", text = "Kein Schlüsselstein"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "Informationen über Gruppenmitglieder sind in Matchmaking-Gruppen nicht verfügbar. (Dungeonbrowser, Schlachtzugsbrowser, etc.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Schlüsselsteinstufe", text = "Zu berechnendes Schlüsselsteinniveau."}

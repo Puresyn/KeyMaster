@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Игрок оффлайн", text = "И
 L.PARTYFRAME["TeamRatingGain"] = { name = "Потенциальный групповой прирост", text = "Потенциальный прирост группового рейтинга"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Вероятность прироста", text = "Предполагаемый прирост личных очков за доступные ключи при завершении их на +1"}
 L.PARTYFRAME["NoKey"] = { name = "Нет ключа", text = "Нет ключа"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "Информация о членах группы недоступна в группах подбора игроков. (Поиск подземелий, Поиск рейдов и т.д.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Уровень ключа", text = "Уровень ключа, подлежащий расчету"}

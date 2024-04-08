@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "玩家離線", text = "玩家已離線
 L.PARTYFRAME["TeamRatingGain"] = { name = "隊伍收益預估", text = "預估隊伍評分收益"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "收益預估", text = "預估個人分數收益，當完成 +1 的可用鑰石時。"}
 L.PARTYFRAME["NoKey"] = { name = "無鑰石", text = "無鑰石"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "隊伍成員資訊在配對隊伍中不可用。 (地城搜尋器, 團隊搜尋器, 等等。)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "鑰石層級", text = "要計算的鑰石層級。"}

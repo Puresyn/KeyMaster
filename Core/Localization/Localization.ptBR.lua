@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Jogador Offline", text = "Jogador offl
 L.PARTYFRAME["TeamRatingGain"] = { name = "Potencial de ganho do grupo", text = "Ganho estimado do grupo"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Potencial de ganho", text = "Estimativa pessoal de ganho de pontos para as chaves disponíveis na conclusão +1."}
 L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "Informação dos jogadores da equipe indisponível em formador de grupo. (Localizador de Masmorras, Localizador de Raides, etc.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Nível da chave", text = "Nível da chave à ser calculado."}

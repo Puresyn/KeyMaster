@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Joueur hors ligne", text = "Le joueur 
 L.PARTYFRAME["TeamRatingGain"] = { name = "Potentiel de gain de groupe", text = "Gain estimé de note de groupe"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Gagner du potentiel", text = "Gain de points personnels estimé pour les clés disponibles à l'achèvement de +1."}
 L.PARTYFRAME["NoKey"] = { name = "Pas de clé", text = "Pas de clé"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "Party member information unavailable in matchmaking groups. (Dungeon Finder, Raid Finder, etc.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Niveau clé", text = "Niveau clé à calculer."}
