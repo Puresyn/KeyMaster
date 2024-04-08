@@ -15,7 +15,7 @@ local partyFrameLookup = {
 }
 
 function PartyFrameMapping:ShowPartyRow(unitId)
-    _G[partyFrameLookup[unitId]]:Show()    
+    _G[partyFrameLookup[unitId]]:Show()
 end
 
 function PartyFrameMapping:HidePartyRow(unitId)
@@ -369,6 +369,15 @@ function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
 end
 
 function PartyFrameMapping:UpdatePartyFrameData()
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+        PartyFrameMapping:HideAllPartyFrame()  
+        PartyFrameMapping:ResetTallyFramePositioning()
+        if _G["KM_NoPartyInfo"] then _G["KM_NoPartyInfo"]:Show() end
+        -- Show explination frame
+        return
+    end
+
+    if _G["KM_NoPartyInfo"] then _G["KM_NoPartyInfo"]:Hide() end   
     local partyMembers = {"player", "party1", "party2", "party3", "party4"}
     for _,unitId in pairs(partyMembers) do
         local unitGuid = UnitGUID(unitId)
@@ -380,5 +389,5 @@ function PartyFrameMapping:UpdatePartyFrameData()
     end
     PartyFrameMapping:UpdateKeystoneHighlights()
     PartyFrameMapping:CalculateTotalRatingGainPotential()    
-    PartyFrameMapping:ResetTallyFramePositioning()
+    PartyFrameMapping:ResetTallyFramePositioning()    
 end

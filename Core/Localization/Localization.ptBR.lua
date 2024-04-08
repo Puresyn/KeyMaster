@@ -110,6 +110,7 @@ L.PARTYFRAME["PlayerOffline"] = { name = "Jogador Offline", text = "Jogador offl
 L.PARTYFRAME["TeamRatingGain"] = { name = "Potencial de ganho do grupo", text = "Ganho estimado do grupo"}
 L.PARTYFRAME["MemberPointsGain"] = { name = "Potencial de ganho", text = "Estimativa pessoal de ganho de pontos para as chaves disponíveis na conclusão +1."}
 L.PARTYFRAME["NoKey"] = { name = "Nenhuma chave", text = "Nenhuma chave"}
+L.PARTYFRAME["NoPartyInfo"] = { text = "Informação dos jogadores da equipe indisponível em formador de grupo. (Localizador de Masmorras, Localizador de Raides, etc.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Nível da chave", text = "Nível da chave à ser calculado."}
@@ -143,7 +144,7 @@ L.ABOUTFRAME["AboutGeneral"] = { name = "Informações Key Master", text = "Info
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Agradecimentos Especiais", text = "Agradecimentos Especiais"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contribuidores", text = "Contribuidores"}
-L.ABOUTFRAME["Translators"] = { text = "Translators" }
+L.ABOUTFRAME["Translators"] = { text = "Tradutores" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Importante: Os cálculos para a 4a temporada de Dragonflight ainda estão sendo verificados."}

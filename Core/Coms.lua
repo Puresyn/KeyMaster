@@ -36,6 +36,7 @@ end
 -- Serialize communication data:
 -- Can communitcate over whatever default channels are avaialable via hidden Addons subchannel.
 function MyAddon:Transmit(data)
+    if not IsInGroup(LE_PARTY_CATEGORY_HOME) then return end -- Make sure you have a home party (local) group 
     local serialized = LibSerialize:Serialize(data)
     local compressed = LibDeflate:CompressDeflate(serialized)
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
@@ -49,6 +50,7 @@ end
 
 -- sends request to party members to transmit their data
 function MyAddon:TransmitRequest(requestData)
+    if not IsInGroup(LE_PARTY_CATEGORY_HOME) then return end -- Make sure you have a home party (local) group 
     if requestData == nil or requestData.requestType == nil then 
         KeyMaster:_DebugMsg("TransmitRequest", "Coms", "Received invalid data request type.")
         return
@@ -143,8 +145,10 @@ local function processOpenRaidData(payload, sender)
                     senderData.mythicPlusRating = tonumber(dataAsTable[5])
                     isDirty = true
 
-                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
-                    UnitData:SetUnitData(senderData)
+                    if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
+                        KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
+                        UnitData:SetUnitData(senderData)
+                    end
                 end
             end
         else
@@ -155,8 +159,10 @@ local function processOpenRaidData(payload, sender)
                 senderData.mythicPlusRating = tonumber(dataAsTable[5])
                 isDirty = true
 
-                KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
-                UnitData:SetUnitData(senderData)
+                if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
+                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
+                    UnitData:SetUnitData(senderData)
+                end
             end
         end
         
@@ -222,11 +228,15 @@ local function processKM2Data(payload, sender)
         KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
         return
     end
+    checkVersion(data)
+
+    -- if we're in an instance party we don't want to process other people's data or make ui changes
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then return end
 
     KeyMaster:_DebugMsg("processKM2Data", "Coms", "Received data from "..sender.." using KM version v"..buildVersion)
     data.hasAddon = true
     UnitData:SetUnitData(data)
-
+    
     -- Only update UI if party tab is open
     local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
     if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
@@ -234,9 +244,6 @@ local function processKM2Data(payload, sender)
         PartyFrameMapping:UpdateKeystoneHighlights()
         PartyFrameMapping:CalculateTotalRatingGainPotential()
     end
-
-
-    checkVersion(data)    
 end
 
 -- Deserialize communication data:

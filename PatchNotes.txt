@@ -3,6 +3,28 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.0.2
+--------------------------------------------------
+Updates:
+- When you are a party member of the matchmaking group system: Looking for Raid (LFR),
+  Looking for Group (LFG), Battle Ground, Arena, or Follower dungeon, party member information
+  is no longer displayed in the party tab for that party. This does not apply to custom
+  (user created) groups or normal party members outside of your instance group.
+- Added notification when party information is not displayed.
+
+Fixes:
+- Fixed GitHub issue #30 - When joining an LFR, LFG, or follower dungeon you would see many
+  "You are not in a party" messages in chat.
+- Fixed rare case were party member data would vanish after briefly being displayed.
+
+Open Items:
+- Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.
+- Reported: Dungeon portals buttons not casting the portal spell when the spell is available (known/off CD) and clicked.
+
+  If you experience any of these open item unicorns, please report them with as much detail as possible in the
+  Key Master Issues GitHub. https://github.com/Puresyn/KeyMaster/issues
+
+--------------------------------------------------
 Key Master v1.0.1
 --------------------------------------------------
 - Updated season 4 rating calculations.
