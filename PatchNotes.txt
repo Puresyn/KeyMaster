@@ -5,7 +5,17 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.0.3
 --------------------------------------------------
+Updates:
 
+Fixes:
+
+Open Items:
+- Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.
+- Reported: Dungeon portals buttons not casting the portal spell when the spell is available (known/off CD) and clicked.
+
+  If you experience any of these open item unicorns, please report them with as much detail as possible in the
+  Key Master Issues GitHub. https://github.com/Puresyn/KeyMaster/issues
+  
 --------------------------------------------------
 Key Master v1.0.2
 --------------------------------------------------
