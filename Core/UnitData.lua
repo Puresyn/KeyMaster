@@ -33,6 +33,25 @@ local function getUnitRealm(unitGUID)
     KeyMaster:_ErrorMsg("getUnitRealm", "UnitData", "Cannot find unit for GUID: "..unitGUID)
 end
 
+local function setUnitSaveData(unitData)
+    -- Save character information to file
+    if KeyMaster_C_DB[unitData.GUID] then -- Only updates/saves existing PLAYER characters.
+        local LibSerialize = LibStub("LibSerialize")
+        local LibDeflate = LibStub("LibDeflate")
+
+        -- pull out a couple details for better perfomrance.
+        KeyMaster_C_DB[unitData.GUID].rating = unitData.mythicPlusRating
+        KeyMaster_C_DB[unitData.GUID].keyId = unitData.ownedKeyId
+        KeyMaster_C_DB[unitData.GUID].keyLevel = unitData.ownedKeyLevel
+
+        -- Serialize, compress and encode Unit Data for Saved Variables
+        local serialized = LibSerialize:Serialize(unitData)
+        local compressed = LibDeflate:CompressDeflate(serialized)
+        local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
+        KeyMaster_C_DB[unitData.GUID].data = encoded
+    end
+end
+
 function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
@@ -48,6 +67,9 @@ function UnitData:SetUnitData(unitData)
     
     -- STORE DATA IN MEMORY! duh?
     unitInformation[unitData.GUID] = unitData
+
+    -- Store/Update Unit Data in Saveved Variables
+    setUnitSaveData(unitData)
 
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
 end
