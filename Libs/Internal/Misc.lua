@@ -137,10 +137,44 @@ function KeyMaster:_DebugMsg(funcName, fileName, ...)
     end
 end
 
+local function cleanCharSavedData(data)
+    for k, v in pairs(data) do
+        if v.season then
+            if v.season < DungeonTools:GetCurrentSeason() then
+                data[k] = nil
+            end
+        end
+    end
+    return data
+end
+
 -- This function gets run when the PLAYER_LOGIN event fires:
 function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
-    -- This table defines the addon's default settings:
-    local defaults = {
+
+    -- This function copies values from one table into another:
+        local function copyDefaults(src, dst)
+            -- If no source (defaults) is specified, return an empty table:
+            if type(src) ~= "table" then return {} end
+            -- If no target (saved variable) is specified, create a new table:
+            if type(dst) ~= "table" then dst = { } end
+            -- Loop through the source (defaults):
+            for k, v in pairs(src) do
+                -- If the value is a sub-table:
+                if type(v) == "table" then
+                    -- Recursively call the function:
+                    dst[k] = copyDefaults(v, dst[k])
+                -- Or if the default value type doesn't match the existing value type:
+                elseif type(v) ~= type(dst[k]) then
+                    -- Overwrite the existing value with the default one:
+                    dst[k] = v
+                end
+            end
+            -- Return the destination table:
+            return dst
+        end
+
+    -- This table defines the addon's default congiuration settings:
+    local configDefaults = {
         addonConfig = {
             showErrors = false,
             showDebugging = false,
@@ -157,31 +191,36 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
         }
     }
 
-    -- This function copies values from one table into another:
-    local function copyDefaults(src, dst)
-        -- If no source (defaults) is specified, return an empty table:
-        if type(src) ~= "table" then return {} end
-        -- If no target (saved variable) is specified, create a new table:
-        if type(dst) ~= "table" then dst = { } end
-        -- Loop through the source (defaults):
-        for k, v in pairs(src) do
-            -- If the value is a sub-table:
-            if type(v) == "table" then
-                -- Recursively call the function:
-                dst[k] = copyDefaults(v, dst[k])
-            -- Or if the default value type doesn't match the existing value type:
-            elseif type(v) ~= type(dst[k]) then
-                -- Overwrite the existing value with the default one:
-                dst[k] = v
-            end
-        end
-        -- Return the destination table:
-        return dst
+    -- This table defines the players default character information IF max level
+    local charDefaults = {}
+    if GetMaxPlayerLevel() == UnitLevel("PLAYER") then
+        local playerGUID = UnitGUID("PLAYER")
+        --local currentRating = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER").currentSeasonScore
+        if currentRating == nil then currentRating = 0 end
+
+        charDefaults = {
+            [""..playerGUID..""] = {
+                owned = true,                              -- flag if this character is owned by client (future use)
+                name = UnitName("PLAYER"),                  -- character's name
+                realm = GetRealmName(),                     -- character's realm
+                rating = 0,                                 -- set default rating to 0
+                season = DungeonTools:GetCurrentSeason(),   -- Get current season for later cleanup
+                class = UnitClass("PLAYER"),                -- Players class name
+                data = nil,                                 -- character data placeholder (for reference)
+                keyId = nil,
+                keyLevel = nil,
+                teams = {                                   -- teams table (for later use)
+                    team1 = nil
+                }
+            }
+        }
     end
 
     -- Copy the values from the defaults table into the saved variables table
     -- if it exists, and assign the result to the saved variable:
-    KeyMaster_DB = copyDefaults(defaults, KeyMaster_DB)
+    KeyMaster_DB = copyDefaults(configDefaults, KeyMaster_DB)
+    if KeyMaster_C_DB ~= nil then KeyMaster_C_DB = cleanCharSavedData(KeyMaster_C_DB) end -- clean old data
+    KeyMaster_C_DB = copyDefaults(charDefaults, KeyMaster_C_DB)
 
 end
 
