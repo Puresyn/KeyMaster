@@ -200,7 +200,7 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
         charDefaults = {
             [""..playerGUID..""] = {
-                owned = true,                              -- flag if this character is owned by client (future use)
+                client = true,                              -- flag if this character is owned by client (future use)
                 name = UnitName("PLAYER"),                  -- character's name
                 realm = GetRealmName(),                     -- character's realm
                 rating = 0,                                 -- set default rating to 0
