@@ -137,15 +137,47 @@ function KeyMaster:_DebugMsg(funcName, fileName, ...)
     end
 end
 
-local function cleanCharSavedData(data)
+--local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
+function KeyMaster:CleanCharSavedData(data)
+     if not data then
+        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
+        return
+    end
     for k, v in pairs(data) do
-        if v.season then
-            if v.season < DungeonTools:GetCurrentSeason() then
-                data[k] = nil
+
+        -- long-winded season check/set becuase the API can be slow
+        local apiCheck = DungeonTools:GetCurrentSeason()
+        if v.season  then  
+             -- make sure api is available before we mess with data.
+            if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
+                if v.season < apiCheck then
+                    table.remove(data, k)
+                    return data
+                else
+                    v.season = apiCheck
+                end
+            end
+        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
+            v.season = apiCheck
+        end
+
+        if v.level then -- nil check
+            if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
+                table.remove(data, k)
+                return data
             end
         end
+        if v.expire then -- nil check
+            if v.expire < GetServerTime() then -- remove key data if expired
+                data[k].keyLevel = 0
+                data[k].keyId = 0
+                data[k].expire = KeyMaster:WeeklyResetTime()
+            end
+        else
+            data[k].expire = KeyMaster:WeeklyResetTime()
+        end
     end
-    return data
+    return data 
 end
 
 -- This function gets run when the PLAYER_LOGIN event fires:
@@ -193,10 +225,12 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
     -- This table defines the players default character information IF max level
     local charDefaults = {}
-    if GetMaxPlayerLevel() == UnitLevel("PLAYER") then
+    if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
+        
         local playerGUID = UnitGUID("PLAYER")
         --local currentRating = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER").currentSeasonScore
-        if currentRating == nil then currentRating = 0 end
+        --if currentRating == nil then currentRating = 0 end
+        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
 
         charDefaults = {
             [""..playerGUID..""] = {
@@ -204,23 +238,30 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
                 name = UnitName("PLAYER"),                  -- character's name
                 realm = GetRealmName(),                     -- character's realm
                 rating = 0,                                 -- set default rating to 0
-                season = DungeonTools:GetCurrentSeason(),   -- Get current season for later cleanup
-                class = UnitClass("PLAYER"),                -- Players class name
+                season = nil,                               -- season placeholder (slow API)
+                class = baseClassId,                        -- Players class id #
                 data = nil,                                 -- character data placeholder (for reference)
                 keyId = nil,
                 keyLevel = nil,
+                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
+                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
+                level = UnitLevel("PLAYER"),                -- level reference for cleanup
+                vault = nil,                                -- vault information
                 teams = {                                   -- teams table (for later use)
                     team1 = nil
                 }
             }
         }
+
     end
 
     -- Copy the values from the defaults table into the saved variables table
-    -- if it exists, and assign the result to the saved variable:
+    -- if data doesn't exist and assign the result to the global variable:
     KeyMaster_DB = copyDefaults(configDefaults, KeyMaster_DB)
-    if KeyMaster_C_DB ~= nil then KeyMaster_C_DB = cleanCharSavedData(KeyMaster_C_DB) end -- clean old data
     KeyMaster_C_DB = copyDefaults(charDefaults, KeyMaster_C_DB)
+
+    -- clean data
+    KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)
 
 end
 
