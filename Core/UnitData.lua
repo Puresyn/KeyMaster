@@ -39,16 +39,22 @@ local function setUnitSaveData(unitData)
         local LibSerialize = LibStub("LibSerialize")
         local LibDeflate = LibStub("LibDeflate")
 
-        -- pull out a couple details for better perfomrance.
+        -- pull out/set a couple details for better performance.
         KeyMaster_C_DB[unitData.GUID].rating = unitData.mythicPlusRating
         KeyMaster_C_DB[unitData.GUID].keyId = unitData.ownedKeyId
         KeyMaster_C_DB[unitData.GUID].keyLevel = unitData.ownedKeyLevel
+        --KeyMaster_C_DB[unitData.GUID].timestamp = GetServerTime()
+        KeyMaster_C_DB[unitData.GUID].vault = nil -- todo: Set Vault Data
 
         -- Serialize, compress and encode Unit Data for Saved Variables
         local serialized = LibSerialize:Serialize(unitData)
         local compressed = LibDeflate:CompressDeflate(serialized)
         local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
         KeyMaster_C_DB[unitData.GUID].data = encoded
+    end
+    -- clean all data every data-update because first run or two can be api-tempermental.
+    if unitData.GUID == UnitGUID("PLAYER") then -- make sure it's only the client so not to spam cleanup (more than it already does).
+        KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)
     end
 end
 
@@ -65,7 +71,7 @@ function UnitData:SetUnitData(unitData)
         unitData.realm = getUnitRealm(unitData.GUID)
     end
     
-    -- STORE DATA IN MEMORY! duh?
+    -- STORE DATA IN MEMORY
     unitInformation[unitData.GUID] = unitData
 
     -- Store/Update Unit Data in Saveved Variables
