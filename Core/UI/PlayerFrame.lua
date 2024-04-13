@@ -240,6 +240,20 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     return playerFrame
 end
 
+local function toggleCharactersFrame(self)
+    local charactersFrame = _G["KM_CharacterSelectFrame"]
+    if charactersFrame then
+        if charactersFrame:IsShown() then
+            charactersFrame:Hide()
+            self:SetText("< Characters")
+        else
+            charactersFrame:Show()
+            self:SetText("Characters >")
+        end
+    end
+end
+
+
 local keyLevelOffsetx = 75
 local keyLevelOffsety = 2
 local affixScoreOffsetx = 135
@@ -298,6 +312,14 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_FortTitle", "OVERLAY", "KeyMasterFontBig")
     mapHeaderFrame.fortText:SetJustifyH("LEFT")
     mapHeaderFrame.fortText:SetText(KeyMasterLocals.FORTIFIED)
+
+    if KeyMaster:GetTableLength(KeyMaster_C_DB) > 0 then
+        local charactersButton = CreateFrame("Button", "KM_CharactersButton", mapHeaderFrame, "UIPanelButtonTemplate")
+        charactersButton:SetText("< Characters")
+        charactersButton:SetSize(charactersButton:GetTextWidth()+12, charactersButton:GetTextHeight()+8)
+        charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 4, 0)
+        charactersButton:SetScript("OnClick", toggleCharactersFrame)
+    end
 
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapCount = KeyMaster:GetTableLength(seasonMaps)
