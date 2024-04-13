@@ -48,6 +48,7 @@ function MainInterface:Initialize()
 
   -- Player Tab Content
   local playerTabContent = PlayerFrame:Initialize(contentRegion)
+  local characterSelect = _G["KM_CharacterSelectFrame"] or PlayerFrame:CreateCharacterSelectFrame(playerTabContent)
 
   -- Party Tab Content
   local partyTabContent = PartyFrame:Initialize(contentRegion)
