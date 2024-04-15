@@ -208,9 +208,11 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     -- This table defines the addon's default congiuration settings:
     local configDefaults = {
         addonConfig = {
+            version = tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS,
             showErrors = false,
             showDebugging = false,
             showRatingFloat = false,
+            splashViewed = false,
             miniMapButtonPos = {
                 ["minimapPos"] = 206,
 	            ["hide"] = false
@@ -259,6 +261,12 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     -- if data doesn't exist and assign the result to the global variable:
     KeyMaster_DB = copyDefaults(configDefaults, KeyMaster_DB)
     KeyMaster_C_DB = copyDefaults(charDefaults, KeyMaster_C_DB)
+    
+    -- splash screen set/check
+    if KeyMaster_DB.addonConfig.version ~=  (tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS) then
+        KeyMaster_DB.addonConfig.splashViewed = false
+        KeyMaster_DB.addonConfig.version =  tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS
+    end
 
     -- clean data
     KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)

@@ -6,6 +6,7 @@ local InfoFrame = KeyMaster.InfoFrame
 local PlayerFrame = KeyMaster.PlayerFrame
 local PartyFrame = KeyMaster.PartyFrame
 local Theme = KeyMaster.Theme
+local WhatsNew = KeyMaster.WhatsNew
 
 -- Minimap Icon
 local function createMiniMapIcon()
@@ -34,6 +35,11 @@ end
 
 function MainInterface:Initialize()
   -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
+
+  -- show what's new (once per version)
+  if KeyMaster_DB.addonConfig.splashViewed == false or KeyMaster_DB.addonConfig.splashViewed == nil then
+    local whatsNew = _G["KM_WhatsNewFrame"] or WhatsNew:Init()
+  end
 
   -- Main Parent Frame
   local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()    
