@@ -138,6 +138,8 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "診斷設定", text = "�
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "顯示錯誤", text = "顯示錯誤訊息。"}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "顯示偵錯", text = "顯示偵錯訊息。"}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "進階診斷", text="注意: 這些僅用於診斷目的。 如果啟用，他們可能會洗您的聊天視窗！"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master 資訊", text = "Key Master 資訊"}

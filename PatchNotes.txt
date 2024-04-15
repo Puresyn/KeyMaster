@@ -6,11 +6,12 @@ PATCH NOTES:
 Key Master v1.1.0
 --------------------------------------------------
 Updates:
-- Added alternate characters to player frame. These are filtered by server, maxium level, and then sorted mythic plus rating.
+- Added alternate characters to player frame. These are filtered by maxium level and then sorted mythic plus rating.
 - Added "What's New" splash screen to display recent news, updates, and patch notes.
 
 Fixes:
-- none
+- Removed empty quotation marks in specialization on the player page header when a player does not have a
+  current active specialization.
 
 Open Items:
 - Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.

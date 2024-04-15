@@ -31,17 +31,17 @@ local function setWhatsNewContent(parent)
                 <p>Key Master now shows your alternate max level characters on the player page! See below for details</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>]]..textBullet..[[Added alternate characters to player frame. These are filtered by server, maxium level, and then sorted by mythic plus rating.</p>
+                <p>]]..textBullet..[[Added alternate characters to player frame. These are filtered by maxium level and then sorted by mythic plus rating.</p>
                 <p>]]..textBullet..[[Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>- none</p>
+                <p>]]..textBullet..[[Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
                 <p>]]..textBullet..[[None</p>
                 <br/>
                 <p>If you experience any bugs with Key Master, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
-                <p>]|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r</p>
+                <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r</p>
             </body>
         </html>
         ]]

@@ -138,6 +138,8 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Paramètres de diagnostic
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Erreurs d'affichage", text = "Afficher les messages d'erreur."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Afficher le débogage", text = "Afficher les messages de débogage."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnostic avancé", text="Remarque : ces informations sont uniquement destinées à des fins de diagnostic. Ils peuvent inonder votre boîte de discussion s’ils sont activés !"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}

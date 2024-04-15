@@ -138,6 +138,8 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Настройки диа
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Отображение ошибок", text = "Отображать сообщения об ошибках"}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Отображение отладки", text = "Отображать сообщения отладки"}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Расширенная диагностика", text="Примечание: Это предназначено только для диагностических целей. Это может заспамить Ваш чат, если он включен!"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Информация Key Master", text = "Информация Key Master"}

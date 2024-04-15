@@ -213,6 +213,9 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
             showDebugging = false,
             showRatingFloat = false,
             splashViewed = false,
+            characterFilters = {
+                serverFilter = false
+            },
             miniMapButtonPos = {
                 ["minimapPos"] = 206,
 	            ["hide"] = false
@@ -233,6 +236,16 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
         --local currentRating = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER").currentSeasonScore
         --if currentRating == nil then currentRating = 0 end
         local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
+
+        --[[ -- apparently if you PK this table by anything but default int [1 thru inf] you can never sort it directly...
+        local charId
+        for k in pairs(KeyMaster_C_DB) do
+            local guid = KeyMaster_C_DB[k]["guid"]
+            if guid == playerGUID then
+                charId = k
+            end
+        end
+        if not charId then charId = KeyMaster:GetTableLength(KeyMaster_C_DB)+1 end ]]
 
         charDefaults = {
             [""..playerGUID..""] = {

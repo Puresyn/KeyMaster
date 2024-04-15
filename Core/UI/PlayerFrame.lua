@@ -215,7 +215,8 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.playerDetails:SetSize(200, Size)
     local currentSpec = GetSpecialization()
     local currentSpecName = currentSpec and select(2, GetSpecializationInfo(currentSpec)) or "None"
-    playerFrame.playerDetails:SetText("\'"..currentSpecName.."\'".." "..UnitClass("player"))
+    if currentSpecName ~= "" then currentSpecName = "\'"..currentSpecName.."\'" end
+    playerFrame.playerDetails:SetText(currentSpecName.." "..UnitClass("player"))
     playerFrame.playerDetails:SetJustifyH("RIGHT")
 
     -- Player Rating

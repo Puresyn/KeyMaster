@@ -166,6 +166,58 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
         end
     end)
 
+    -- commented out for future use:
+    --[[ -- Character Filter Settings
+    local charactersSetting = CreateFrame("Frame", nil, conFrame)
+    charactersSetting:SetPoint("TOPLEFT", displaySetting, "TOPRIGHT", 4, 0)
+    charactersSetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/3)
+    charactersSetting.title = charactersSetting:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    charactersSetting.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
+    charactersSetting.title:SetPoint("TOPLEFT", charactersSetting, "TOPLEFT", 4, -4)
+    charactersSetting.title:SetText(KeyMasterLocals.CONFIGURATIONFRAME["CharacterSettings"].name)
+
+    local Hline = KeyMaster:CreateHLine(charactersSetting:GetWidth()+8, charactersSetting, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    charactersSetting.texture = charactersSetting:CreateTexture(nil, "BACKGROUND", nil, 0)
+    charactersSetting.texture:SetAllPoints(charactersSetting)
+    charactersSetting.texture:SetColorTexture(0, 0, 0, 1)
+
+    charactersSetting.textureHighlight = charactersSetting:CreateTexture(nil, "BACKGROUND", nil, 1)
+    charactersSetting.textureHighlight:SetSize(charactersSetting:GetWidth(), charactersSetting:GetHeight())
+    charactersSetting.textureHighlight:SetPoint("LEFT", charactersSetting, "LEFT", 0, 0)
+    charactersSetting.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    charactersSetting.textureHighlight:SetAlpha(highlightAlpha)
+    charactersSetting.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    -- Filter Server Checkbox/Button
+    local serverFilterFrame = CreateFrame("Frame", nil, charactersSetting)
+    serverFilterFrame:SetPoint("TOPLEFT", charactersSetting.title, "BOTTOMLEFT", 0, 0)
+    serverFilterFrame:SetWidth(charactersSetting:GetWidth()-8)
+    
+    charactersSetting.filterServer = CreateFrame("CheckButton", "KM_DiplayFloatCheckBox", serverFilterFrame, "ChatConfigCheckButtonTemplate")
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    charactersSetting.filterServer.Text:SetFont(Path, 12, Flags)
+    charactersSetting.filterServer.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    charactersSetting.filterServer.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["FilterByServer"].text)
+    charactersSetting.filterServer.Text:SetWidth(serverFilterFrame:GetWidth()- charactersSetting.filterServer:GetWidth())
+
+    serverFilterFrame:SetHeight(charactersSetting.filterServer.Text:GetHeight()+12)
+
+    charactersSetting.filterServer:SetPoint("BOTTOMLEFT",serverFilterFrame, "BOTTOMLEFT", 0, 0)
+    charactersSetting.filterServer.Text:SetPoint("BOTTOMLEFT", charactersSetting.filterServer, "BOTTOMRIGHT", 0, 6)
+
+    if (KeyMaster_DB.addonConfig.characterFilters.serverFilter) then
+        charactersSetting.filterServer:SetChecked(KeyMaster_DB.addonConfig.characterFilters.serverFilter)
+    end
+    charactersSetting.filterServer:HookScript("OnClick", function()
+        if (charactersSetting.filterServer:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.characterFilters.serverFilter = true
+        else
+            KeyMaster_DB.addonConfig.characterFilters.serverFilter = false
+        end
+    end) ]]
+
     -- Diagnostic Settings
     local diagnosticSettings = CreateFrame("Frame", nil, conFrame)
     diagnosticSettings:SetPoint("TOPLEFT", displaySetting, "TOPRIGHT", 4, 0)

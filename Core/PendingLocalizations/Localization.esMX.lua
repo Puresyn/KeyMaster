@@ -138,6 +138,8 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Configuración de diagnó
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Errores de visualización", text = "Errores de visualización"}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Mostrar depuración", text = "Mostrar mensajes de depuración."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnóstico avanzado", text="Nota: Estos son sólo para fines de diagnóstico. ¡Pueden inundar tu cuadro de chat si están habilitados!"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Información maestra clave", text = "Key Master Information"}

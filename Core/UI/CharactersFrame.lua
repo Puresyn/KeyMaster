@@ -23,6 +23,14 @@ local function setDefaultColor(row)
     row.textureHighlight:SetVertexColor(color.r, color.g, color.b, 1)
 end
 
+function PlayerFrame:CharacterListRefresh()
+    print("todo: Refresh Character List.")
+end
+
+function PlayerFrame:CharacterListSelected(guid)
+    print("todo: Refresh Player frame for guid: "..guid)
+end
+
 local function setRowActive(row)
     local activeColor = {}
     row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Title-BG1")
@@ -35,13 +43,14 @@ local function characterRow_OnRowClick(self)
     if self:GetAttribute('active') == true then return end
     local prevRow, prevCharacter
     prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
-    --prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
+    prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
     if prevCharacter ~= self:GetAttribute("GUID") then
         if prevRow then
             prevRow:SetAttribute("active", false)
             prevRow.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight")
             setDefaultColor(prevRow)
         end
+        PlayerFrame:CharacterListSelected(self:GetAttribute("GUID"))
         self:SetAttribute("active", true)
         setRowActive(self)
 
@@ -69,41 +78,44 @@ local function createScrollFrame(parent)
     -- Credit: https://www.wowinterface.com/forums/showthread.php?t=45982
     local frameHolder;
  
-    local self = frameHolder or CreateFrame("Frame", nil, parent); -- re-size this to whatever size you wish your ScrollFrame to be, at this point
+    local self = frameHolder or CreateFrame("Frame", nil, parent)
     self:SetFrameLevel(parent:GetFrameLevel()+1)
     self:SetSize(parent:GetWidth()-8, parent:GetHeight()-12)
     self:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 4, 6)
     
     self.scrollframe = self.scrollframe or CreateFrame("ScrollFrame", "KM_CharacterScrollFrame", self, "UIPanelScrollFrameTemplate");
     
-    self.scrollchild = self.scrollchild or CreateFrame("Frame", "KM_CharacterList"); -- not sure what happens if you do, but to be safe, don't parent this yet (or do anything with it)
+    self.scrollchild = self.scrollchild or CreateFrame("Frame", "KM_CharacterList")
     
     local scrollbarName = self.scrollframe:GetName()
-    self.scrollbar = _G[scrollbarName.."ScrollBar"];
-    self.scrollupbutton = _G[scrollbarName.."ScrollBarScrollUpButton"];
-    self.scrolldownbutton = _G[scrollbarName.."ScrollBarScrollDownButton"];
+    self.scrollbar = _G[scrollbarName.."ScrollBar"]
+    self.scrollupbutton = _G[scrollbarName.."ScrollBarScrollUpButton"]
+    self.scrolldownbutton = _G[scrollbarName.."ScrollBarScrollDownButton"]
 
     self.scrollbar.background = self.scrollbar:CreateTexture()
     self.scrollbar.background:SetPoint("CENTER", self.scrollbar, "CENTER", -1, 0)
     self.scrollbar.background:SetSize(self.scrollbar:GetWidth()+3, parent:GetHeight() - 8)
     self.scrollbar.background:SetColorTexture(0,0,0,0.3)
     
-    self.scrollupbutton:ClearAllPoints();
-    self.scrollupbutton:SetPoint("TOPRIGHT", self.scrollframe, "TOPRIGHT", -2, -2);
+    self.scrollupbutton:ClearAllPoints()
+    self.scrollupbutton:SetPoint("TOPRIGHT", self.scrollframe, "TOPRIGHT", -2, -2)
     
-    self.scrolldownbutton:ClearAllPoints();
-    self.scrolldownbutton:SetPoint("BOTTOMRIGHT", self.scrollframe, "BOTTOMRIGHT", -2, 2);
+    self.scrolldownbutton:ClearAllPoints()
+    self.scrolldownbutton:SetPoint("BOTTOMRIGHT", self.scrollframe, "BOTTOMRIGHT", -2, 2)
     
-    self.scrollbar:ClearAllPoints();
-    self.scrollbar:SetPoint("TOP", self.scrollupbutton, "BOTTOM", 0, -2);
-    self.scrollbar:SetPoint("BOTTOM", self.scrolldownbutton, "TOP", 0, 2);
-    self.scrollframe:SetScrollChild(self.scrollchild);
+    self.scrollbar:ClearAllPoints()
+    self.scrollbar:SetPoint("TOP", self.scrollupbutton, "BOTTOM", 0, -2)
+    self.scrollbar:SetPoint("BOTTOM", self.scrolldownbutton, "TOP", 0, 2)
     
-    self.scrollframe:SetAllPoints(self);
+    self.scrollframe:SetScrollChild(self.scrollchild)
+    self.scrollframe:SetAllPoints(self)
     
     self.scrollchild:SetWidth(self.scrollframe:GetWidth())
-    --[[ self.moduleoptions = self.moduleoptions or CreateFrame("Frame", nil, self.scrollchild);
-    self.moduleoptions:SetAllPoints(self.scrollchild); ]]
+
+    self.scrollframe:SetScript("OnShow",  function() PlayerFrame:CharacterListRefresh() end)
+
+    return self
+
 end
 
 local cRowCount = 0
@@ -267,43 +279,60 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
             local filteredTable = {}
             for cGUID, v in pairs(KeyMaster_C_DB) do
                 if KeyMaster_C_DB[cGUID].realm == realmName then
-                    table.insert(filteredTable, v)
+                    filteredTable[cGUID] = v
                 end
             end
             return filteredTable
         end      
 
-        local function charSort(sortTable, filter)
-            local sortTable = sortTable
+        local function charSort(sortTable, sort)
+            --local sortTable = sortTable
+            local tempTable = {}
             local sortedTable = {}
 
             -- always sort by rating
             for k, v in KeyMaster:spairs(sortTable, function(t, a, b)
-                return t[b][filter] < t[a][filter]
+                return t[b][sort] < t[a][sort]
             end) do
-                table.insert(sortedTable, v)
+                -- have to build a sorted table this way becuase the PK is how Lua orders it.. :(
+                table.insert(sortedTable, {[k] = v})
             end
+
             return sortedTable
         end
 
-        local sortTable = charServerFilter()
-        local characterTable = charSort(sortTable, FS_RATING)
-        if characterTable[currentPlayerGUID] ~= nil then -- set active player to the top row if has data
-            currentRow = createCharacterRow(currentPlayerGUID, characterTable[currentPlayerGUID])
-            currentRow:SetAttribute("active", true) -- set as currently selected
-            characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow) -- track selected character row
-            characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID) -- track selected character GUID
-            setRowActive(currentRow)
-        end
-        for playerGUID in pairs(characterTable) do
-            if playerGUID ~= currentPlayerGUID then -- skip active character. We already took care of that row.
-                currentRow = createCharacterRow(playerGUID, characterTable[playerGUID])
-                currentRow:SetAttribute("active", false) -- set as not currently selected
-                -- uncomment to test multiple rows
-                --[[ createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID])
-                createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID]) ]]
+        -- this mess is difficult to navigate and debug because of the rigid way LUA handles table sorting.. :(
+        local sortTable = KeyMaster_C_DB
+        if KeyMaster_DB.addonConfig.characterFilters.serverFilter then
+            if KeyMaster_DB.addonConfig.characterFilters.serverFilter == true then
+                sortTable = charServerFilter()
             end
         end
+        local characterTable = charSort(sortTable, FS_RATING)
+        for k, v in pairs(characterTable) do
+            for k2 in pairs(v) do
+                if characterTable[k][currentPlayerGUID] ~= nil then -- set active player to the top row if has data
+                    currentRow = createCharacterRow(currentPlayerGUID, characterTable[k][currentPlayerGUID])
+                    currentRow:SetAttribute("active", true) -- set as currently selected
+                    characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow) -- track selected character row
+                    characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID) -- track selected character GUID
+                    setRowActive(currentRow)
+                else
+                    currentRow = createCharacterRow(k2, characterTable[k][k2])
+                    currentRow:SetAttribute("active", false) -- set as not currently selected
+                end
+            end
+        end
+        --[[ for k, v in pairs(characterTable) do
+            --print(playerGUID)
+            if characterTable[k][1] ~= currentPlayerGUID then -- skip active character. We already took care of that row.
+                currentRow = createCharacterRow(characterTable[k][1], characterTable[k][1])
+                currentRow:SetAttribute("active", false) -- set as not currently selected
+                -- uncomment to test multiple rows
+                createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID])
+                createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID])
+            end
+        end ]]
         KeyMaster.characterList = characterTable
     end
 
