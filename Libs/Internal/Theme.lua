@@ -254,6 +254,7 @@ function Theme:GetThemeColor(colorName)
 	    return c.r, c.g, c.b, c.hex
     else
         c = Colors["color_BADCOLORNAME"]
+        if not colorName then colorName = "nil" end
         KeyMaster:_ErrorMsg("GetThemeColor", "Theme", "Theme color \""..colorName.."\" was not found.")
         return c.r, c.g, c.b, c.hex
     end
