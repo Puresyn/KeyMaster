@@ -3,11 +3,14 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.0.3
+Key Master v1.1.0
 --------------------------------------------------
 Updates:
+- Added alternate characters to player frame. These are filtered by server, maxium level, and then sorted mythic plus rating.
+- Added "What's New" splash screen to display recent news, updates, and patch notes.
 
 Fixes:
+- none
 
 Open Items:
 - Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.
