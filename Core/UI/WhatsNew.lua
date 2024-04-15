@@ -4,7 +4,6 @@ KeyMaster.WhatsNew = WhatsNew
 local Theme = KeyMaster.Theme
 
 local function setWhatsNewContent(parent)
-    --local whatsNewContent = CreateFrame("SimpleHTML", "KM_HTMLFrame", parent)
     local whatsNewContent = parent
     whatsNewContent.fontFace = whatsNewContent:CreateFontString(nil, "Overlay", "KeyMasterFontBig")
     local Path, _, Flags =  whatsNewContent.fontFace:GetFont()
@@ -19,9 +18,6 @@ local function setWhatsNewContent(parent)
     local aColor = select(4, Theme:GetThemeColor("color_MAGE"))
     local bulletColor = select(4, Theme:GetThemeColor("themeFontColorGreen1"))
     local textBullet = "|cff"..bulletColor.."-|r "
-    --[[ whatsNewContent:SetFont('h1', fontBig)
-    whatsNewContent:SetFont('h2', KeyMasterFontSmall)
-    whatsNewContent:SetFont('p', KeyMasterFontNormal) ]]
     local markupText = [[
         <html>
             <body>
@@ -49,8 +45,6 @@ local function setWhatsNewContent(parent)
             </body>
         </html>
         ]]
-    --whatsNewContent:SetPoint("TOPLEFT", parent, "TOPLEFT")
-    --whatsNewContent:SetWidth(parent:GetWidth()-30)
     whatsNewContent:SetText(markupText)
     return whatsNewContent
 end
@@ -59,43 +53,35 @@ local function createScrollFrame(parent)
     -- Credit: https://www.wowinterface.com/forums/showthread.php?t=45982
     local frameHolder
  
-    local self = frameHolder or CreateFrame("Frame", nil, parent); -- re-size this to whatever size you wish your ScrollFrame to be, at this point
-    local scrollFrameHeight = parent:GetHeight()-6 -- -parent.TitleContainer:GetHeight()-6
+    local self = frameHolder or CreateFrame("Frame", nil, parent)
+    local scrollFrameHeight = parent:GetHeight()-6
     self:SetFrameLevel(parent:GetFrameLevel()-1)
     self:SetSize(parent:GetWidth()-24, scrollFrameHeight)
     self:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", 0, 3)
     
-    self.scrollframe = self.scrollframe or CreateFrame("ScrollFrame", "KM_WhatsNewScrollFrame", self, "UIPanelScrollFrameTemplate");
+    self.scrollframe = self.scrollframe or CreateFrame("ScrollFrame", "KM_WhatsNewScrollFrame", self, "UIPanelScrollFrameTemplate")
     
-    self.scrollchild = self.scrollchild or CreateFrame("SimpleHTML", "KM_WhatsNewContent"); -- not sure what happens if you do, but to be safe, don't parent this yet (or do anything with it)
+    self.scrollchild = self.scrollchild or CreateFrame("SimpleHTML", "KM_WhatsNewContent")
     
     local scrollbarName = self.scrollframe:GetName()
-    self.scrollbar = _G[scrollbarName.."ScrollBar"];
-    self.scrollupbutton = _G[scrollbarName.."ScrollBarScrollUpButton"];
-    self.scrolldownbutton = _G[scrollbarName.."ScrollBarScrollDownButton"];
-
-    --[[ self.scrollbar.background = self.scrollbar:CreateTexture()
-    self.scrollbar.background:SetPoint("CENTER", self.scrollbar, "CENTER", 0, 0)
-    self.scrollbar.background:SetSize(self.scrollbar:GetWidth()+3, parent:GetHeight() - 8)
-    self.scrollbar.background:SetColorTexture(0,0,0,0.3) ]]
+    self.scrollbar = _G[scrollbarName.."ScrollBar"]
+    self.scrollupbutton = _G[scrollbarName.."ScrollBarScrollUpButton"]
+    self.scrolldownbutton = _G[scrollbarName.."ScrollBarScrollDownButton"]
     
-    self.scrollupbutton:ClearAllPoints();
-    self.scrollupbutton:SetPoint("TOPRIGHT", self.scrollframe, "TOPRIGHT", -2, -18);
+    self.scrollupbutton:ClearAllPoints()
+    self.scrollupbutton:SetPoint("TOPRIGHT", self.scrollframe, "TOPRIGHT", -2, -18)
     
-    self.scrolldownbutton:ClearAllPoints();
-    self.scrolldownbutton:SetPoint("BOTTOMRIGHT", self.scrollframe, "BOTTOMRIGHT", -2, 0);
+    self.scrolldownbutton:ClearAllPoints()
+    self.scrolldownbutton:SetPoint("BOTTOMRIGHT", self.scrollframe, "BOTTOMRIGHT", -2, 0)
     
-    self.scrollbar:ClearAllPoints();
-    self.scrollbar:SetPoint("TOP", self.scrollupbutton, "BOTTOM", 0, 2);
-    self.scrollbar:SetPoint("BOTTOM", self.scrolldownbutton, "TOP", 0, -2);
-    self.scrollframe:SetScrollChild(self.scrollchild);
+    self.scrollbar:ClearAllPoints()
+    self.scrollbar:SetPoint("TOP", self.scrollupbutton, "BOTTOM", 0, 2)
+    self.scrollbar:SetPoint("BOTTOM", self.scrolldownbutton, "TOP", 0, -2)
+    self.scrollframe:SetScrollChild(self.scrollchild)
     
     self.scrollframe:SetAllPoints(self);
     
     self.scrollchild:SetWidth(self.scrollframe:GetWidth()-18)
-    
-    --[[ self.moduleoptions = self.moduleoptions or CreateFrame("Frame", nil, self.scrollchild);
-    self.moduleoptions:SetAllPoints(self.scrollchild); ]]
 
     return self
 end
@@ -106,10 +92,9 @@ end
 
 function WhatsNew:Init()
     local noticeFrame = CreateFrame("Frame", "KM_WhatsNewFrame", UIParent, "WhatsNewTemplate")
-    -- original mainframe XML template was not designed to be reused, so, this is a temp fix.
-    noticeFrame:SetScript("OnLoad", nil)
+    --[[ noticeFrame:SetScript("OnLoad", nil)
     noticeFrame:SetScript("OnShow", nil)
-    noticeFrame:SetScript("OnHide", nil)
+    noticeFrame:SetScript("OnHide", nil) ]]
     noticeFrame:ClearAllPoints()
     noticeFrame:SetPoint("CENTER")
     
@@ -144,7 +129,6 @@ function WhatsNew:Init()
     noticeFrame.dragFrame:SetSize(noticeFrame:GetWidth()-20, noticeFrame:GetHeight()) -- 22
     noticeFrame.dragFrame:SetPoint("TOPLEFT", noticeFrame, "TOPLEFT")
     noticeFrame.dragFrame:SetScript("OnMouseDown", function()
-        --local parent = self:GetParent()
             if noticeFrame:IsMovable() then
                 noticeFrame:StartMoving()
             end
