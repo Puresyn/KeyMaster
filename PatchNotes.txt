@@ -3,7 +3,7 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.1.0
+Key Master v1.1.1
 --------------------------------------------------
 Updates:
 - Added alternate characters to player frame. These are filtered by maxium level and then sorted mythic plus rating.
