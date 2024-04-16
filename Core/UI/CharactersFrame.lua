@@ -12,6 +12,7 @@ local UnitData = KeyMaster.UnitData
 local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local PartyFrame = KeyMaster.PartyFrame
 local PlayerFrame = KeyMaster.PlayerFrame
+local UnitData = KeyMaster.UnitData
 
 local function setDefaultColor(row)
     local defColor = {}
@@ -24,11 +25,12 @@ local function setDefaultColor(row)
 end
 
 function PlayerFrame:CharacterListRefresh()
-    print("todo: Refresh Character List.")
+    -- moved to UnitData (may need moved back?)
 end
 
 function PlayerFrame:CharacterListSelected(guid)
-    print("todo: Refresh Player frame for guid: "..guid)
+   local text = "todo: Set Player frame data to "..KeyMaster_C_DB[guid].name.. "-"..KeyMaster_C_DB[guid].realm
+   KeyMaster:Print(text)
 end
 
 local function setRowActive(row)
@@ -118,6 +120,24 @@ local function createScrollFrame(parent)
 
 end
 
+local function getKeyText(cData)
+    local keyText
+    if cData.keyId > 0 and cData.keyLevel > 0 then
+        if not KeyMasterLocals.MAPNAMES[cData.keyId] then
+            cData.keyId = 9001 -- unknown keyId
+        end
+        keyText = "("..tostring(cData.keyLevel)..") "..KeyMasterLocals.MAPNAMES[cData.keyId].abbr
+    end
+    return keyText
+end
+
+-- Access data holders via _G["KM_CharacterRow_"..characterGUID]:GetAttribute([attribute])
+-- perform displayed data updates via object type actions.
+-- *i.e. _G["KM_CharacterRow_"..characterGUID]:GetAttribute("keyText"):SetText("(15) DHT")*
+-- GUID = (Frame Attribute) *text*
+-- row = (Frame Object) *table*
+-- overallScore = (FontString Object) *pointer*
+-- keyText (FontString Object) *pointer*
 local cRowCount = 0
 local prevRowAnchor
 local function createCharacterRow(characterGUID, cData)
@@ -147,6 +167,7 @@ local function createCharacterRow(characterGUID, cData)
         characterRow:SetFrameLevel(parent:GetFrameLevel()+1)
         prevRowAnchor = characterRow
     end
+    characterRow:SetAttribute("row", characterRow)
 
     local Hline = KeyMaster:CreateHLine(characterRow:GetWidth()+8, characterRow, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
@@ -186,7 +207,7 @@ local function createCharacterRow(characterGUID, cData)
     characterRow.realmName:SetJustifyH("LEFT")
     characterRow.realmName:SetText(cData.realm)
     local realmColor = {}
-    realmColor.r, realmColor.g, realmColor.b, _ = Theme:GetThemeColor("color_DARKGREY")
+    realmColor.r, realmColor.g, realmColor.b, _ = Theme:GetThemeColor("color_POOR")
     characterRow.realmName:SetTextColor(realmColor.r, realmColor.g, realmColor.b, 1)
 
     characterRow.overallScore = characterRow:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
@@ -198,6 +219,7 @@ local function createCharacterRow(characterGUID, cData)
     OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
     characterRow.overallScore:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1)
     characterRow.overallScore:SetText(cData.rating)
+    characterRow:SetAttribute("overallScore", characterRow.overallScore)
 
     characterRow.key = characterRow:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     characterRow.key:SetPoint("BOTTOMRIGHT", characterRow, "BOTTOMRIGHT", 0, 4)
@@ -207,14 +229,9 @@ local function createCharacterRow(characterGUID, cData)
     --[[ local OverallColor = {}
     OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
     characterRow.key:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1) ]]
-    local keyText = "" -- KeyMasterLocals.PARTYFRAME["NoKey"].text
-    if cData.keyId > 0 and cData.keyLevel > 0 then
-        if not KeyMasterLocals.MAPNAMES[cData.keyId] then
-            cData.keyId = 9001 -- unknown keyId
-        end
-        keyText = "("..tostring(cData.keyLevel)..") "..KeyMasterLocals.MAPNAMES[cData.keyId].abbr
-    end
+    local keyText = getKeyText(cData) or ""
     characterRow.key:SetText(keyText)
+    characterRow:SetAttribute("keyText", characterRow.key)
 
     characterRow:SetScript("OnMouseUp", characterRow_OnRowClick)
     characterRow:SetScript("OnEnter", characterRow_onmouseover)
@@ -339,3 +356,30 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     characterSelectFrame:Hide()
     return characterSelectFrame
 end
+
+--[[ function PlayerFrame:UpdateListCharacter(playerGUID)
+    if not playerGUID then return end
+
+    local unitData = UnitData:GetUnitDataByGUID(playerGUID)
+    if not unitData then return end
+
+    local ratingObj, keyTextObj, keyText
+    local keyInfo = {}
+    local characterFrame = _G["KM_CharacterRow_"..playerGUID]:GetAttribute("row") or false
+    if not characterFrame or not type(characterFrame == "table") then return end
+    ratingObj = characterFrame:GetAttribute("overallRating")
+    if ratingObj then
+        ratingObj:SetText(tostring(UnitData.overallRating))
+    end
+    keyTextObj = characterFrame:GetAttribute("keyText")
+    if unitData.keyLevel > 0 then
+        keyInfo.keyLevel = unitData.keyLevel
+        keyInfo.keyId = unitData.keyId
+        keyText = getKeyText(keyInfo)
+    else
+        keyText = ""
+    end
+    if keyTextObj and keyText then
+        keyTextObj:SetText(keyText)
+    end
+end ]]
