@@ -7,6 +7,7 @@ Key Master v1.1.1
 --------------------------------------------------
 Updates:
 - Added alternate characters to player frame. These are filtered by maxium level and then sorted mythic plus rating.
+- Added character list filter options to configuration frame.
 - Added "What's New" splash screen to display recent news, updates, and patch notes.
 
 Fixes:

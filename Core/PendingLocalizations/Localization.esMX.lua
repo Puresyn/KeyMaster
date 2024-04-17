@@ -139,7 +139,9 @@ L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Errores de visualizaci�
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Mostrar depuración", text = "Mostrar mensajes de depuración."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnóstico avanzado", text="Nota: Estos son sólo para fines de diagnóstico. ¡Pueden inundar tu cuadro de chat si están habilitados!"}
 L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Información maestra clave", text = "Key Master Information"}

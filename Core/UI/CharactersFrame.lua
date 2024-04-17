@@ -24,25 +24,23 @@ local function setDefaultColor(row)
     row.textureHighlight:SetVertexColor(color.r, color.g, color.b, 1)
 end
 
-function PlayerFrame:CharacterListRefresh()
-    -- moved to UnitData (may need moved back?)
-end
-
 function PlayerFrame:CharacterListSelected(guid)
    local text = "todo: Set Player frame data to "..KeyMaster_C_DB[guid].name.. "-"..KeyMaster_C_DB[guid].realm
    KeyMaster:Print(text)
+   --PlayerFrame:UpdateCharacterList()
 end
 
 local function setRowActive(row)
     local activeColor = {}
     row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Title-BG1")
     --row:SetAttribute("highlight", row.textureHighlight)
-    activeColor.r, activeColor.g, activeColor.b, _ = Theme:GetThemeColor("themeFontColorMain")
-    row.textureHighlight:SetVertexColor(activeColor.r, activeColor.g, activeColor.b, 1)
+    --activeColor.r, activeColor.g, activeColor.b, _ = Theme:GetThemeColor("themeFontColorMain")
+    --row.textureHighlight:SetVertexColor(activeColor.r, activeColor.g, activeColor.b, 1)
+    setDefaultColor(row)
 end
 
 local function characterRow_OnRowClick(self)
-    if self:GetAttribute('active') == true then return end
+    if self:GetAttribute('active') == true then return end -- already the selected character
     local prevRow, prevCharacter
     prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
     prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
@@ -114,7 +112,7 @@ local function createScrollFrame(parent)
     
     self.scrollchild:SetWidth(self.scrollframe:GetWidth())
 
-    self.scrollframe:SetScript("OnShow",  function() PlayerFrame:CharacterListRefresh() end)
+    self.scrollframe:SetScript("OnShow",  function() PlayerFrame:UpdateCharacterList() end)
 
     return self
 
@@ -139,7 +137,8 @@ end
 -- overallScore = (FontString Object) *pointer*
 -- keyText (FontString Object) *pointer*
 local cRowCount = 0
-local prevRowAnchor
+local mlr = 4 -- margin left/rigth
+local mtb = 4 -- margin top/bottom
 local function createCharacterRow(characterGUID, cData)
     local parent = _G["KM_CharacterList"]
     if not parent or not cData then 
@@ -147,10 +146,8 @@ local function createCharacterRow(characterGUID, cData)
         return
     end
 
-    local mlr = 4 -- margin left/rigth
-    local mtb = 4 -- margin top/bottom
     local sbw = 20 -- scroll bar width
-    local rWidth = parent:GetWidth() - sbw - mlr
+    local rWidth = parent:GetWidth() - sbw
     local rHeight = 50
     parent:SetHeight(parent:GetHeight() + rHeight + (mtb*2))
 
@@ -158,15 +155,14 @@ local function createCharacterRow(characterGUID, cData)
     local characterRow = CreateFrame("Frame", "KM_CharacterRow_"..characterGUID, parent)
     characterRow:SetAttribute("GUID", characterGUID)
     characterRow:SetSize(rWidth-mlr, rHeight)
-    if prevRowAnchor == nil then
+    --[[ if prevRowAnchor == nil then
         characterRow:SetPoint("TOPLEFT", parent, "TOPLEFT", mlr, -mtb)
-        characterRow:SetFrameLevel(parent:GetFrameLevel()+1)
         prevRowAnchor = characterRow
     else
         characterRow:SetPoint("TOP", prevRowAnchor, "BOTTOM", 0, -mtb)
-        characterRow:SetFrameLevel(parent:GetFrameLevel()+1)
         prevRowAnchor = characterRow
-    end
+    end ]]
+    characterRow:SetFrameLevel(parent:GetFrameLevel()+1)
     characterRow:SetAttribute("row", characterRow)
 
     local Hline = KeyMaster:CreateHLine(characterRow:GetWidth()+8, characterRow, "TOP", 0, 0)
@@ -240,6 +236,120 @@ local function createCharacterRow(characterGUID, cData)
     return characterRow
 end
 
+local function charServerFilter(table)
+    local realmName = GetRealmName()
+    if not realmName then 
+        KeyMaster:_ErrorMsg("charServerFilter","CharactersFrame","API did not repond with realm name.")
+        return
+    end
+    local filteredTable = {}
+    for cGUID, v in pairs(table) do
+        if table[cGUID].realm == realmName then
+            filteredTable[cGUID] = v
+        end
+    end
+    return filteredTable
+end
+
+local function charRatingFilter(table)
+    local filteredTable = {}
+    for cGUID, v in pairs(table) do
+        if table[cGUID].rating and table[cGUID].rating > 0 then
+            filteredTable[cGUID] = v
+        end
+    end
+    return filteredTable
+end
+
+local function charKeyFilter(table)
+    local filteredTable = {}
+    for cGUID, v in pairs(table) do
+        if table[cGUID].keyLevel and table[cGUID].keyLevel > 0 then
+            filteredTable[cGUID] = v
+        end
+    end
+    return filteredTable
+end
+
+local function charSort(sortTable, sort)
+    --local sortTable = sortTable
+    local tempTable = {}
+    local sortedTable = {}
+
+    -- always sort by rating
+    for k, v in KeyMaster:spairs(sortTable, function(t, a, b)
+        return t[b][sort] < t[a][sort]
+    end) do
+        -- have to build a sorted table this way becuase the PK is how Lua orders it.. :(
+        table.insert(sortedTable, {[k] = v})
+    end
+
+    return sortedTable
+end
+
+function PlayerFrame:GenerateCharacterList(characterSelectFrame)
+    local currentPlayerGUID = UnitGUID("PLAYER")
+    if KeyMaster:GetTableLength(KeyMaster_C_DB) ~= 0 then
+        local prevRowAnchor, currentRow
+
+        -- constant options for future use
+        local FS_REALM = "realm"
+        local FS_RATING = "rating"
+        local FS_NAME = "name"
+
+        local sortTable = KeyMaster_C_DB
+        if KeyMaster_DB.addonConfig.characterFilters.serverFilter then
+            if KeyMaster_DB.addonConfig.characterFilters.serverFilter == true then
+                sortTable = charServerFilter(sortTable)
+            end
+        end
+
+        if KeyMaster_DB.addonConfig.characterFilters.filterNoRating then
+            if KeyMaster_DB.addonConfig.characterFilters.filterNoRating == true then
+                sortTable = charRatingFilter(sortTable)
+            end
+        end
+
+        if KeyMaster_DB.addonConfig.characterFilters.filterNoKey then
+            if KeyMaster_DB.addonConfig.characterFilters.filterNoKey == true then
+                sortTable = charKeyFilter(sortTable)
+            end
+        end
+
+        -- this mess is difficult to navigate and debug because of the rigid way LUA handles table sorting.. :(
+        local characterTable = charSort(sortTable, FS_RATING)
+        for k, v in pairs(characterTable) do
+            for k2 in pairs(v) do
+                if characterTable[k][currentPlayerGUID] ~= nil then -- set active player to the top row if has data
+                    currentRow = _G["KM_CharacterRow_"..currentPlayerGUID] or createCharacterRow(currentPlayerGUID, characterTable[k][currentPlayerGUID])
+                    currentRow:SetAttribute("active", true) -- set as currently selected
+                    if not characterSelectFrame:GetAttribute("selectedCharacterRow") then -- if updating list, skip this
+                        characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow)
+                        characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID)
+                        setRowActive(currentRow)
+                    else
+                        currentRow:SetAttribute("active", false)
+                    end
+                else
+                    currentRow = _G["KM_CharacterRow_"..k2] or createCharacterRow(k2, characterTable[k][k2])
+                    currentRow:SetAttribute("active", false) -- set as not currently selected
+                    --setRowInactive(currentRow)
+                end
+
+                if prevRowAnchor == nil then
+                    currentRow:SetPoint("TOPLEFT", characterSelectFrame, "TOPLEFT", mlr, -mtb)
+                else
+                    currentRow:SetPoint("TOP", prevRowAnchor, "BOTTOM", 0, -mtb)
+                end
+                currentRow:Show()
+                prevRowAnchor = currentRow
+            end
+        end
+        
+        KeyMaster.characterList = characterTable
+    end
+end
+
 function PlayerFrame:CreateCharacterSelectFrame(parent)
     local frameWidth = 175
     local characterSelectFrame = CreateFrame("Frame", "KM_CharacterSelectFrame", parent, "BackdropTemplate")
@@ -265,96 +375,30 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     characterSelectFrame.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     characterSelectFrame.bgTexture:SetTexCoord(bgHOffset/1024, (bgWidth+bgHOffset)/1024, 175/1024, bgHeight/1024)
 
-   --[[  characterSelectFrame.closeBtn = CreateFrame("Button", "CloseButton", mainFrame, "UIPanelCloseButton")
-    characterSelectFrame.closeBtn:SetPoint("TOPRIGHT")
-    characterSelectFrame.closeBtn:SetSize(20, 20)
-    characterSelectFrame.closeBtn:SetNormalFontObject("GameFontNormalLarge")
-    characterSelectFrame.closeBtn:SetHighlightFontObject("GameFontHighlightLarge") ]]
-    --characterSelectFrame:Hide()
-
     createScrollFrame(characterSelectFrame)
 
---[[     local function highestRating(ratingLhs, ratingRhs) -- sort by rating, highest on top
-        print(ratingLhs["rating"])
-        return KeyMaster_C_DB[ratingLhs].rating < KeyMaster_C_DB[ratingLhs].rating
-    end ]]
-
-    local currentPlayerGUID = UnitGUID("PLAYER")
-    if KeyMaster:GetTableLength(KeyMaster_C_DB) ~= 0 then
-        local currentRow
-
-        local FS_REALM = "realm"
-        local FS_RATING = "rating"
-        local FS_NAME = "name"
-
-        local function charServerFilter()
-            local realmName = GetRealmName()
-            if not realmName then 
-                KeyMaster:_ErrorMsg("charServerFilter","CharactersFrame","API did not repond with realm name.")
-                return
-            end
-            local filteredTable = {}
-            for cGUID, v in pairs(KeyMaster_C_DB) do
-                if KeyMaster_C_DB[cGUID].realm == realmName then
-                    filteredTable[cGUID] = v
-                end
-            end
-            return filteredTable
-        end      
-
-        local function charSort(sortTable, sort)
-            --local sortTable = sortTable
-            local tempTable = {}
-            local sortedTable = {}
-
-            -- always sort by rating
-            for k, v in KeyMaster:spairs(sortTable, function(t, a, b)
-                return t[b][sort] < t[a][sort]
-            end) do
-                -- have to build a sorted table this way becuase the PK is how Lua orders it.. :(
-                table.insert(sortedTable, {[k] = v})
-            end
-
-            return sortedTable
-        end
-
-        -- this mess is difficult to navigate and debug because of the rigid way LUA handles table sorting.. :(
-        local sortTable = KeyMaster_C_DB
-        if KeyMaster_DB.addonConfig.characterFilters.serverFilter then
-            if KeyMaster_DB.addonConfig.characterFilters.serverFilter == true then
-                sortTable = charServerFilter()
-            end
-        end
-        local characterTable = charSort(sortTable, FS_RATING)
-        for k, v in pairs(characterTable) do
-            for k2 in pairs(v) do
-                if characterTable[k][currentPlayerGUID] ~= nil then -- set active player to the top row if has data
-                    currentRow = createCharacterRow(currentPlayerGUID, characterTable[k][currentPlayerGUID])
-                    currentRow:SetAttribute("active", true) -- set as currently selected
-                    characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow) -- track selected character row
-                    characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID) -- track selected character GUID
-                    setRowActive(currentRow)
-                else
-                    currentRow = createCharacterRow(k2, characterTable[k][k2])
-                    currentRow:SetAttribute("active", false) -- set as not currently selected
-                end
-            end
-        end
-        --[[ for k, v in pairs(characterTable) do
-            --print(playerGUID)
-            if characterTable[k][1] ~= currentPlayerGUID then -- skip active character. We already took care of that row.
-                currentRow = createCharacterRow(characterTable[k][1], characterTable[k][1])
-                currentRow:SetAttribute("active", false) -- set as not currently selected
-                -- uncomment to test multiple rows
-                createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID])
-                createCharacterRow(playerGUID, KeyMaster_C_DB[playerGUID])
-            end
-        end ]]
-        KeyMaster.characterList = characterTable
-    end
+    PlayerFrame:GenerateCharacterList(characterSelectFrame)
 
     characterSelectFrame:Hide()
     return characterSelectFrame
+end
+
+function PlayerFrame:UpdateCharacterList()
+    if not _G["KM_CharacterSelectFrame"] or not KeyMaster.characterList then return end -- can't run this yet. (race condition)
+
+    local allCharacters = KeyMaster_C_DB
+    -- locate any character list row frames that we generated but no longer want to display
+    for k in pairs(allCharacters) do
+        local rowFrame = _G["KM_CharacterRow_"..k]
+        if rowFrame then -- frame exists for this character
+            rowFrame:ClearAllPoints()
+            rowFrame:Hide() 
+        end
+    end
+
+    -- update UI with the updated character list (resort, etc)
+    PlayerFrame:GenerateCharacterList(_G["KM_CharacterSelectFrame"])
+    --print("Character list updated.")
 end
 
 --[[ function PlayerFrame:UpdateListCharacter(playerGUID)

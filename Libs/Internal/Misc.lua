@@ -214,7 +214,9 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
             showRatingFloat = false,
             splashViewed = false,
             characterFilters = {
-                serverFilter = false
+                serverFilter = false,
+                filterNoRating = false,
+                filterNoKey = false
             },
             miniMapButtonPos = {
                 ["minimapPos"] = 206,

@@ -139,7 +139,9 @@ L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Erreurs d'affichage", t
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Afficher le débogage", text = "Afficher les messages de débogage."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnostic avancé", text="Remarque : ces informations sont uniquement destinées à des fins de diagnostic. Ils peuvent inonder votre boîte de discussion s’ils sont activés !"}
 L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Display current server only." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}

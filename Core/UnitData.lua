@@ -2,7 +2,6 @@ local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
-local PlayerFrame = KeyMaster.PlayerFrame
 
 local unitInformation = {}
 
@@ -49,7 +48,7 @@ function UnitData:UpdateListCharacter(playerGUID)
 
     if not playerGUID then return end
 
-    if not _G["KM_CharacterRow_"..playerGUID] then return end
+    if not _G["KM_CharacterRow_"..playerGUID] then return end -- nothing to update so exit out.
 
     local unitData = UnitData:GetUnitDataByGUID(playerGUID)
     if not unitData then return end
@@ -72,6 +71,15 @@ function UnitData:UpdateListCharacter(playerGUID)
     end
     if keyTextObj and keyText then
         keyTextObj:SetText(keyText)
+    end
+
+    -- only need to do this when the panel is currently visible. Otherwise
+    -- the action of showing/hiding the character select frame does this.
+    if  _G["KM_CharacterSelectFrame"]  then -- nil check for any unknown states.
+        if _G["KM_CharacterSelectFrame"]:IsShown() then
+            local PlayerFrame = KeyMaster.PlayerFrame
+            PlayerFrame:UpdateCharacterList() -- player frame counterpart - script laoding order.
+        end
     end
 end
 

@@ -32,6 +32,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <p>]]..textBullet..[[Added alternate characters to player frame. These are filtered by maxium level and then sorted by mythic plus rating.</p>
+                <p>]]..textBullet..[[Added character list filter options to configuration frame.</p>
                 <p>]]..textBullet..[[Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
