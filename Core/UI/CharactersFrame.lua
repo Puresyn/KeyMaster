@@ -13,6 +13,8 @@ local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local PartyFrame = KeyMaster.PartyFrame
 local PlayerFrame = KeyMaster.PlayerFrame
 local UnitData = KeyMaster.UnitData
+local CharacterData = KeyMaster.CharacterData
+local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 
 local function setDefaultColor(row)
     local defColor = {}
@@ -22,12 +24,6 @@ local function setDefaultColor(row)
     color.g = defColor[2]
     color.b = defColor[3]
     row.textureHighlight:SetVertexColor(color.r, color.g, color.b, 1)
-end
-
-function PlayerFrame:CharacterListSelected(guid)
-   local text = "todo: Set Player frame data to "..KeyMaster_C_DB[guid].name.. "-"..KeyMaster_C_DB[guid].realm
-   KeyMaster:Print(text)
-   --PlayerFrame:UpdateCharacterList()
 end
 
 local function setRowActive(row)
@@ -41,16 +37,19 @@ end
 
 local function characterRow_OnRowClick(self)
     if self:GetAttribute('active') == true then return end -- already the selected character
-    local prevRow, prevCharacter
-    prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
-    prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
+    
+    -- Store selected character
+    CharacterData:SetSelectedCharacterGUID(self:GetAttribute("GUID"))
+    PlayerFrameMapping:RefreshData(false)
+    
+    local prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
+    local prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
     if prevCharacter ~= self:GetAttribute("GUID") then
         if prevRow then
             prevRow:SetAttribute("active", false)
             prevRow.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight")
             setDefaultColor(prevRow)
         end
-        PlayerFrame:CharacterListSelected(self:GetAttribute("GUID"))
         self:SetAttribute("active", true)
         setRowActive(self)
 
@@ -323,6 +322,7 @@ function PlayerFrame:GenerateCharacterList(characterSelectFrame)
                 if characterTable[k][currentPlayerGUID] ~= nil then -- set active player to the top row if has data
                     currentRow = _G["KM_CharacterRow_"..currentPlayerGUID] or createCharacterRow(currentPlayerGUID, characterTable[k][currentPlayerGUID])
                     currentRow:SetAttribute("active", true) -- set as currently selected
+                    CharacterData:SetSelectedCharacterGUID(currentPlayerGUID)
                     if not characterSelectFrame:GetAttribute("selectedCharacterRow") then -- if updating list, skip this
                         characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow)
                         characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID)

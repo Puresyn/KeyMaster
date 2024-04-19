@@ -41,8 +41,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
-                KeyMaster.PlayerFrameMapping:RefreshData(true)
-                KeyMaster.HeaderFrameMapping:RefreshData(true)
+                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
             end
 
             -- Transmit unit data to party members with addon
@@ -64,8 +64,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
-                KeyMaster.PlayerFrameMapping:RefreshData(true)
-                KeyMaster.HeaderFrameMapping:RefreshData(true)
+                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
             end
                     
             -- Transmit unit data to party members with addon

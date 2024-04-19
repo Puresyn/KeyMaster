@@ -263,7 +263,7 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
                 expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
                 timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
                 level = UnitLevel("PLAYER"),                -- level reference for cleanup
-                vault = nil,                                -- vault information
+                vault = {},                                -- vault information
                 teams = {                                   -- teams table (for later use)
                     team1 = nil
                 }

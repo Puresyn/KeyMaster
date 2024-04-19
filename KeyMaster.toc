@@ -30,6 +30,7 @@ Embeds.xml
 Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua
+Core\CharacterData.lua
 Core\UnitData.lua
 Core\UI\PlayerFrameMapping.lua
 Core\UI\PartyFrameMapping.lua

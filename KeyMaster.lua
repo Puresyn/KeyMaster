@@ -223,6 +223,17 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
 
         -- creates the UI but only when bliz data is avaiable from C_MythicPlus
         intializeUIWithRetries()
+
+        C_Timer.After(5, 
+            function() 
+                local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+                if rewards then
+                    if KeyMaster_C_DB[UnitGUID("player")] then
+                        KeyMaster_C_DB[UnitGUID("player")].vault = rewards
+                    end
+                end
+            end
+        )
     end
     if isReload then
         local inGroup = UnitInRaid("player") or IsInGroup()

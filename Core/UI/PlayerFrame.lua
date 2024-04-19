@@ -6,6 +6,7 @@ local Theme = KeyMaster.Theme
 local DungeonTools = KeyMaster.DungeonTools
 local MainInterface = KeyMaster.MainInterface
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
+local CharacterData = KeyMaster.CharacterData
 
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
@@ -151,10 +152,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame:SetScript("OnShow", function(self)
         PlayerFrameMapping:RefreshData(false)
         updateWeeklyAffixTheme()
-        local scoreCalcScores = _G["KM_ScoreCalcScores"]
-        local scoreCalcDirection = _G["KM_ScoreCalcDirection"]
-        scoreCalcDirection:Show()
-        scoreCalcScores:Hide()
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
@@ -173,7 +170,7 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
         self:RefreshCamera() 
     end)
 
-    local playerFrameHighlight = CreateFrame("Frame", nil ,playerFrame)
+    local playerFrameHighlight = CreateFrame("Frame", "KM_PlayerFrameHighlight" ,playerFrame)
     playerFrameHighlight:SetFrameLevel(modelFrame:GetFrameLevel()+1)
     playerFrameHighlight:SetPoint("TOPLEFT")
     playerFrameHighlight:SetSize(playerFrame:GetWidth(), playerFrame:GetHeight())
@@ -181,8 +178,8 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrameHighlight.textureHighlight:SetSize(playerFrame:GetWidth(), playerFrame:GetHeight())
     playerFrameHighlight.textureHighlight:SetPoint("LEFT", playerFrame, "LEFT", 0, 0)
     playerFrameHighlight.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-    local unitClassForColor
-    _, unitClassForColor, _ = UnitClass("player")
+    
+    local _, unitClassForColor, _ = UnitClass("player")
     local classRGB = {}  
     classRGB.r, classRGB.g, classRGB.b, _ = GetClassColor(unitClassForColor)
     playerFrameHighlight.textureHighlight:SetVertexColor(classRGB.r, classRGB.g, classRGB.b, 1)
@@ -246,6 +243,11 @@ local function toggleCharactersFrame(self)
     if charactersFrame then
         if charactersFrame:IsShown() then
             charactersFrame:Hide()
+            
+            CharacterData:SetSelectedCharacterGUID(UnitGUID("player"))
+            PlayerFrameMapping:RefreshData(false)
+            -- TODO: set active here
+            
             self:SetText("< Characters")
         else
             charactersFrame:Show()

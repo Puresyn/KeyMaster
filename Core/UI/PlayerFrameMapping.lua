@@ -4,6 +4,7 @@ local CharacterInfo = KeyMaster.CharacterInfo
 local DungeonTools = KeyMaster.DungeonTools
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local Theme = KeyMaster.Theme
+local CharacterData = KeyMaster.CharacterData
 
 local defaultString = 0
 
@@ -37,7 +38,15 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, weeklyAffix)
 
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     local dungeonTimeLimit = mapTable[mapId].timeLimit
-    local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+
+    local selectedCharacterGUID = CharacterData:GetSelectedCharacterGUID()
+    if selectedCharacterGUID == nil then
+        selectedCharacterGUID = UnitGUID("player")
+    end
+    local playerData = CharacterData:GetCharacterDataByGUID(selectedCharacterGUID)
+    if playerData == nil then
+        playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+    end
 
     local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
     local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
@@ -83,18 +92,80 @@ function PlayerFrameMapping:RefreshData(fetchNew)
     local playerFrame = _G["KM_Player_Frame"]
     local playerMapData = _G["KM_PlayerMapInfo"]
 
-    if fetchNew == nil then fetchNew = true end
-    local playerData 
+    if fetchNew == nil then fetchNew = true end     
     if fetchNew then
-        playerData = CharacterInfo:GetMyCharacterInfo()
+        local playerData = CharacterInfo:GetMyCharacterInfo()
         KeyMaster.UnitData:SetUnitData(playerData)
-    else
-        playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+        CharacterData:SetCharacterData(UnitGUID("player"), playerData)
     end
+
+    -- reset score calculation state
+    local scoreCalcScores = _G["KM_ScoreCalcScores"]
+    local scoreCalcDirection = _G["KM_ScoreCalcDirection"]
+    scoreCalcDirection:Show()
+    scoreCalcScores:Hide()
+
+    local playerFrame = _G["KM_Player_Frame"]
+
+    local selectedCharacterGUID = CharacterData:GetSelectedCharacterGUID()
+    if selectedCharacterGUID == nil then
+        selectedCharacterGUID = UnitGUID("player")
+    end
+    
+    local selectedCharacterClass
+    local selectedCharacterName
+    local selectedCharacterRealm
+    if KeyMaster_C_DB[selectedCharacterGUID] == nil then
+        _, selectedCharacterClass = UnitClassBase("PLAYER")  
+        selectedCharacterName = UnitName("player")
+        selectedCharacterRealm = GetRealmName()
+    else
+        selectedCharacterClass = KeyMaster_C_DB[selectedCharacterGUID].class
+        selectedCharacterName = KeyMaster_C_DB[selectedCharacterGUID].name
+        selectedCharacterRealm = KeyMaster_C_DB[selectedCharacterGUID].realm
+    end
+    
+    -- character class    
+    local localizedClassName, className, _ = GetClassInfo(selectedCharacterClass)
+    local classRGB = {}  
+    local hexColor
+    classRGB.r, classRGB.g, classRGB.b, hexColor = GetClassColor(className)
+    playerFrame.playerDetails:SetText(localizedClassName)
+
+    -- character row highlight
+    local highlightFrame = _G["KM_PlayerFrameHighlight"]
+    highlightFrame.textureHighlight:SetVertexColor(classRGB.r, classRGB.g, classRGB.b, 1)
+
+    -- character name            
+    playerFrame.playerName:SetText("|c"..hexColor..selectedCharacterName.."|r")
+    playerFrame.playerNameLarge:SetText("|c"..hexColor..selectedCharacterName.."|r")
+
+    -- character realm    
+    playerFrame.realmName:SetText(selectedCharacterRealm)
+
+    -- character modelFrame
+    local playerModelFrame = _G["KM_PlayerModel"]
+    if UnitGUID("player") == selectedCharacterGUID then
+        playerModelFrame:Show()
+    else
+        playerModelFrame:Hide()
+    end    
+
+    -- character vault
+    -- local vaultDetails = _G["KM_VaultDetailView"]
+    -- if UnitGUID("player") == selectedCharacterGUID then
+    --     vaultDetails:Show()
+    -- else
+    --     vaultDetails:Hide()
+    -- end
+
+    -- character data
+    local playerData = CharacterData:GetCharacterDataByGUID(selectedCharacterGUID) or KeyMaster.UnitData:GetUnitDataByUnitId("player")
 
     -- Player Dungeon Rating
     playerFrame.playerRating:SetText(playerData.mythicPlusRating or defaultString)
 
+    -- Player Dungeon Runs
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     for mapId, _ in pairs(mapTable) do
         local mapFrame = _G["KM_PlayerFrameMapInfo"..mapId]
@@ -164,8 +235,14 @@ function PlayerFrameMapping:RefreshData(fetchNew)
     -- Player Mythic Plus Weekly Vault
     local MythicPlusEventTypeId = 1
     local thresholds = KeyMaster.WeeklyRewards:GetVaultThresholds(MythicPlusEventTypeId)
-    local bestKeys = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
-    
+    --local bestKeys = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys() -- TODO: Get this from characterdata
+    local bestKeys
+    if KeyMaster_C_DB[selectedCharacterGUID] ~= nil then
+        bestKeys = KeyMaster_C_DB[selectedCharacterGUID].vault
+    end    
+    if bestKeys == nil then
+        bestKeys = {}
+    end
     local numKeysCompleted = #bestKeys
     if numKeysCompleted > 0 then
         local numKeysCompleted = #bestKeys
@@ -214,8 +291,11 @@ function PlayerFrameMapping:RefreshData(fetchNew)
                 -- Set Vault Threshold
                 vaultRowFrame.vaultTotals:SetText(vaultThreshhold)
 
+                -- Set Vault Runs
+                vaultRowFrame.vaultRuns:SetText("")
+
                 -- Set Vault Slot Image
-                setVaultStatusIcon(vaultRowFrame, isCompleted)
+                setVaultStatusIcon(vaultRowFrame, false)
             end
         end
     end

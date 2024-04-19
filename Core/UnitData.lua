@@ -2,6 +2,7 @@ local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
+local CharacterData = KeyMaster.CharacterData
 
 local unitInformation = {}
 
@@ -94,18 +95,14 @@ local function setUnitSaveData(unitData)
         KeyMaster_C_DB[unitData.GUID].keyId = unitData.ownedKeyId
         KeyMaster_C_DB[unitData.GUID].keyLevel = unitData.ownedKeyLevel
         --KeyMaster_C_DB[unitData.GUID].timestamp = GetServerTime()
-        KeyMaster_C_DB[unitData.GUID].vault = nil -- todo: Set Vault Data
-
-        -- Serialize, compress and encode Unit Data for Saved Variables
-        local serialized = LibSerialize:Serialize(unitData)
-        local compressed = LibDeflate:CompressDeflate(serialized)
-        local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)
-        KeyMaster_C_DB[unitData.GUID].data = encoded
+        local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+        if rewards then
+            KeyMaster_C_DB[unitData.GUID].vault = rewards
+        else
+            KeyMaster_C_DB[unitData.GUID].vault = {}
+        end
+        CharacterData:SetCharacterData(unitData.GUID, unitData)
         UnitData:UpdateListCharacter(unitData.GUID)
-    end
-    -- clean all data every data-update because first run or two can be api-tempermental.
-    if unitData.GUID == UnitGUID("PLAYER") then -- make sure it's only the client so not to spam cleanup (more than it already does).
-        KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)
     end
 end
 
