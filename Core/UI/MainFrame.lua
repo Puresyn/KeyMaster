@@ -1,6 +1,13 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
 
+-- mainFrame hide handler for events
+local function hideOnEvent(frame)
+    if frame:IsShown() then
+        frame:Hide() 
+    end
+end
+
 function MainInterface:CreateMainFrame()
     local yOfs = KeyMaster_DB.addonConfig.interfaceFramePos.yOfs
     local xOfs = KeyMaster_DB.addonConfig.interfaceFramePos.xOfs
@@ -25,7 +32,30 @@ function MainInterface:CreateMainFrame()
     mainFrame.closeBtn:SetSize(20, 20)
     mainFrame.closeBtn:SetNormalFontObject("GameFontNormalLarge")
     mainFrame.closeBtn:SetHighlightFontObject("GameFontHighlightLarge")
+
     mainFrame:Hide()
 
+    -- Closes Key Master whenever a spell is cast or an ability is used
+    hooksecurefunc("CastSpellByName", function() hideOnEvent(mainFrame) end)
+    hooksecurefunc("UseAction", function() hideOnEvent(mainFrame) end)
+
+
+    
     return mainFrame
 end
+
+-- this avoids hide() show() taint issues
+-- handles combat states and opens window if client tried while in combat.
+local combatTrackerFrame = CreateFrame("Frame")
+combatTrackerFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+combatTrackerFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+combatTrackerFrame:SetScript("OnEvent", function(self, event,...)
+    if event == "PLAYER_REGEN_ENABLED" then
+        if KM_shownCombatMessage == 1 then
+            MainInterface:Toggle()
+        end
+        KM_shownCombatMessage = 0
+    elseif event == "PLAYER_REGEN_DISABLED" then
+        hideOnEvent(_G["KeyMaster_MainFrame"])
+    end
+end)

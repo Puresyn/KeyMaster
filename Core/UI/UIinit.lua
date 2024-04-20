@@ -81,8 +81,19 @@ function MainInterface:Initialize()
   return mainFrame
 end
 
+KM_shownCombatMessage = 0 -- See MainFrame.lua
+local _, _, _, msgColor = Theme:GetThemeColor("themeFontColorYellow")
 function MainInterface:Toggle()
 -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
   local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
-  mainUI:SetShown(not mainUI:IsShown())
+  if not InCombatLockdown() then
+    --if mainUI:IsShown() then mainUI:Hide() else mainUI:Show() end
+    mainUI:SetShown(not mainUI:IsShown())
+  elseif KM_shownCombatMessage == 0 then
+    if _G["UIErrorsFrame"] then
+      _G["UIErrorsFrame"]:AddMessage("|cffff3333".. KeyMasterLocals.COMBATMESSAGE.errormsg .."|r")
+    end
+    KeyMaster:Print("|cff"..msgColor.. KeyMasterLocals.COMBATMESSAGE.chatmsg .."|r")
+    KM_shownCombatMessage = 1
+  end
 end
