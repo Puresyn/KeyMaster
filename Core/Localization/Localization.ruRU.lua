@@ -120,6 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Новый", text = "Ваш рейтинг по
 L.PLAYERFRAME["RatingCalculator"] = { name = "Калькулятор", text = "Рассчитайте потенциальный прирост рейтинга"}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Введите уровень ключа", text = "Введите уровень ключа, чтобы увидеть"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Базовый прирост рейтинга", text = "Ваш базовый прирост рейтинга"}
+L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Ключ не найден", text = "Ключ не найден"}

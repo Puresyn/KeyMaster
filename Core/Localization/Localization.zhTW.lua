@@ -120,6 +120,7 @@ L.PLAYERFRAME["New"] = { name = "新", text = "你完成此鑰石+1後的評分�
 L.PLAYERFRAME["RatingCalculator"] = { name = "評分計算", text = "計算潛在評分收益。"}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "輸入鑰石層數", text = "輸入一個鑰石層數來觀看"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "基礎評分收益", text = "你的基礎評分收益預測。"}
+L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "未找到鑰石", text = "未找到鑰石"}

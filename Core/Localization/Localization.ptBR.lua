@@ -120,6 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Novo", text = "Sua pontuação após completar 
 L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora", text = "Calcula o ganho potencial de pontuação."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Nível-chave", text = "Insira o nível da chave para ver"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Ganho base de pontuação", text = "previsão base de ganho de pontuação."}
+L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Chave não encontrada", text = "Chave não encontrada"}
