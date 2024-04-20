@@ -26,37 +26,49 @@ local function setDefaultColor(row)
     row.textureHighlight:SetVertexColor(color.r, color.g, color.b, 1)
 end
 
-local function setRowActive(row)
-    local activeColor = {}
-    row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Title-BG1")
-    --row:SetAttribute("highlight", row.textureHighlight)
-    --activeColor.r, activeColor.g, activeColor.b, _ = Theme:GetThemeColor("themeFontColorMain")
-    --row.textureHighlight:SetVertexColor(activeColor.r, activeColor.g, activeColor.b, 1)
-    setDefaultColor(row)
+local function setRowActive(row, setActive)
+    if not row then return end
+    if setActive == nil then setActive = true end-- set true by default if undefined
+    local characterSelectFrame = _G["KM_CharacterSelectFrame"]
+    if not characterSelectFrame then return end -- just incase setRowActive is called to early
+    local currentActiveGUID = characterSelectFrame:GetAttribute("selectedCharacterGUID")
+    local thisGUID = row:GetAttribute("GUID")
+
+    --if not currentActiveGUID == thisGUID then return end -- this is already the active row so exit function
+
+    if setActive then
+        --print("Setting row for "..thisGUID.." active")
+        --local activeColor = {}
+        
+        row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Title-BG1")
+        --row:SetAttribute("highlight", row.textureHighlight)
+        --activeColor.r, activeColor.g, activeColor.b, _ = Theme:GetThemeColor("themeFontColorMain")
+        --row.textureHighlight:SetVertexColor(activeColor.r, activeColor.g, activeColor.b, 1)
+        CharacterData:SetSelectedCharacterGUID(thisGUID)
+        characterSelectFrame:SetAttribute("selectedCharacterRow", row)
+        characterSelectFrame:SetAttribute("selectedCharacterGUID", thisGUID)
+        row.selectedTexture:Show()
+        --setDefaultColor(row)
+    else
+        --print("Setting row for "..thisGUID.." inactive")
+        row:SetAttribute("active", false)
+        row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight")
+        row.selectedTexture:Hide()
+    end
 end
 
 local function characterRow_OnRowClick(self)
     if self:GetAttribute('active') == true then return end -- already the selected character
+
+    local prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
+    if prevRow then setRowActive(prevRow, false) end
     
     -- Store selected character
     CharacterData:SetSelectedCharacterGUID(self:GetAttribute("GUID"))
     PlayerFrameMapping:RefreshData(false)
     
-    local prevRow = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow")
-    local prevCharacter = _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterGUID")
-    if prevCharacter ~= self:GetAttribute("GUID") then
-        if prevRow then
-            prevRow:SetAttribute("active", false)
-            prevRow.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight")
-            setDefaultColor(prevRow)
-        end
-        self:SetAttribute("active", true)
-        setRowActive(self)
+    setRowActive(self, true)
 
-        -- store new row information pointers
-        _G["KM_CharacterSelectFrame"]:SetAttribute("selectedCharacterRow", self) -- track selected character row
-        _G["KM_CharacterSelectFrame"]:SetAttribute("selectedCharacterGUID", self:GetAttribute("GUID")) -- track selected character GUID
-    end
 end
 
 local function characterRow_onmouseover(self)
@@ -219,11 +231,18 @@ local function createCharacterRow(characterGUID, cData)
     characterRow.key = characterRow:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     characterRow.key:SetPoint("BOTTOMRIGHT", characterRow, "BOTTOMRIGHT", 0, 4)
     characterRow.key:SetJustifyH("RIGHT")
-    --[[ local Path, _, Flags = characterRow.key:GetFont()
-    characterRow.key:SetFont(Path, 16, Flags) ]]
-    --[[ local OverallColor = {}
-    OverallColor.r, OverallColor.g, OverallColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
-    characterRow.key:SetTextColor(OverallColor.r, OverallColor.g, OverallColor.b, 1) ]]
+    
+    --local selectedColor = {}
+   -- selectedColor.r, selectedColor.g, selectedColor.b, _ = Theme:GetThemeColor("color_COMMON")
+    characterRow.selectedTexture = characterRow:CreateTexture(nil, "ARTWORK")
+    characterRow.selectedTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KeyMaster-Interface-Clean")
+    characterRow.selectedTexture:SetTexCoord(957/1024, 1, 332/1024,  399/1024)
+    characterRow.selectedTexture:SetSize(66, characterRow:GetHeight())
+    characterRow.selectedTexture:SetPoint("LEFT", characterRow, "LEFT", 0, 1)
+    characterRow.selectedTexture:SetAlpha(0.15)
+    --characterRow.selectedTexture:SetVertexColor(selectedColor.r, selectedColor.g, selectedColor.b, 0.2)
+    characterRow.selectedTexture:Hide()
+
     local keyText = getKeyText(cData) or ""
     characterRow.key:SetText(keyText)
     characterRow:SetAttribute("keyText", characterRow.key)
@@ -290,7 +309,6 @@ function PlayerFrame:GenerateCharacterList(characterSelectFrame)
     local currentPlayerGUID = UnitGUID("PLAYER")
     if KeyMaster:GetTableLength(KeyMaster_C_DB) ~= 0 then
         local prevRowAnchor, currentRow
-
         -- constant options for future use
         local FS_REALM = "realm"
         local FS_RATING = "rating"
@@ -315,37 +333,49 @@ function PlayerFrame:GenerateCharacterList(characterSelectFrame)
             end
         end
 
-        -- this mess is difficult to navigate and debug because of the rigid way LUA handles table sorting.. :(
         local characterTable = charSort(sortTable, FS_RATING)
+
+        -- see if we removed a previously selected row from the list
+        local previousGUID = characterSelectFrame:GetAttribute("selectedCharacterGUID")
+         if previousGUID then
+            local isInNewList = false
+            for k in pairs(characterTable) do
+                if characterTable[k][previousGUID] then
+                    isInNewList = true
+                end
+            end
+            if not isInNewList then
+                characterSelectFrame:SetAttribute("selectedCharacterRow", nil)
+                characterSelectFrame:SetAttribute("selectedCharacterGUID", nil)
+                CharacterData:SetSelectedCharacterGUID(UnitGUID("player"))
+                PlayerFrameMapping:RefreshData(false)
+            end
+         end
+
         for k, v in pairs(characterTable) do
             for k2 in pairs(v) do
-                if characterTable[k][currentPlayerGUID] ~= nil then -- set active player to the top row if has data
-                    currentRow = _G["KM_CharacterRow_"..currentPlayerGUID] or createCharacterRow(currentPlayerGUID, characterTable[k][currentPlayerGUID])
-                    currentRow:SetAttribute("active", true) -- set as currently selected
-                    CharacterData:SetSelectedCharacterGUID(currentPlayerGUID)
-                    if not characterSelectFrame:GetAttribute("selectedCharacterRow") then -- if updating list, skip this
-                        characterSelectFrame:SetAttribute("selectedCharacterRow", currentRow)
-                        characterSelectFrame:SetAttribute("selectedCharacterGUID", currentPlayerGUID)
-                        setRowActive(currentRow)
-                    else
-                        currentRow:SetAttribute("active", false)
-                    end
+
+                currentRow = _G["KM_CharacterRow_"..k2] or createCharacterRow(k2, characterTable[k][k2])
+                
+                if previousGUID == k2 then
+                    setRowActive(currentRow, true)
                 else
-                    currentRow = _G["KM_CharacterRow_"..k2] or createCharacterRow(k2, characterTable[k][k2])
-                    currentRow:SetAttribute("active", false) -- set as not currently selected
-                    --setRowInactive(currentRow)
+                    setRowActive(currentRow, false)
                 end
 
+                -- set display order of the rows
                 if prevRowAnchor == nil then
                     currentRow:SetPoint("TOPLEFT", characterSelectFrame, "TOPLEFT", mlr, -mtb)
                 else
                     currentRow:SetPoint("TOP", prevRowAnchor, "BOTTOM", 0, -mtb)
                 end
+
                 currentRow:Show()
                 prevRowAnchor = currentRow
             end
+
         end
-        
+
         KeyMaster.characterList = characterTable
     end
 end
@@ -358,6 +388,7 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     characterSelectFrame:SetFrameLevel(_G["KeyMaster_MainFrame"]:GetFrameLevel()-1)
     characterSelectFrame:SetSize(frameWidth, parent:GetHeight())
     characterSelectFrame:SetPoint("RIGHT", parent, "LEFT", 4, 0)
+    characterSelectFrame:EnableMouse(true)
     characterSelectFrame:SetBackdrop({bgFile="", 
         edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
         tile = false, 
@@ -380,6 +411,10 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     PlayerFrame:GenerateCharacterList(characterSelectFrame)
 
     characterSelectFrame:Hide()
+    characterSelectFrame:SetScript("OnLoad", function()
+        tinsert(UISpecialFrames, self:GetName());
+    end)
+
     return characterSelectFrame
 end
 

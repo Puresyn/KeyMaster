@@ -7,6 +7,7 @@ local DungeonTools = KeyMaster.DungeonTools
 local MainInterface = KeyMaster.MainInterface
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local CharacterData = KeyMaster.CharacterData
+local Factory = KeyMaster.Factory
 
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
@@ -18,44 +19,6 @@ local function shortenDungeonName(fullDungeonName)
         return fullDungeonName
     end
 end
-
---[[ local function portalButton_buttonevent(self, event)
-    local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
-    local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
-    if (dur < 2) then
-        MainInterface:Toggle()
-    end
-end
- 
-local function portalButton_tooltipon(self, event)
-end
-
-local function portalButton_tooltipoff(self, event)
-end
-
-local function portalButton_mouseover(self, event)
-    local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
-    local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
-    if (start == 0) then
-        local animFrame = self:GetParent():GetAttribute("portalFrame")
-        animFrame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portal-texture1", false)
-        animFrame.textureportal:SetAlpha(1)
-        animFrame.animg:Play()
-    else
-        local cdFrame = self:GetParent():GetAttribute("portalCooldownFrame")
-        cdFrame:SetCooldown(start ,dur)
-    end
-
-end
-
-local function portalButton_mouseoout(self, event, ...)
-    local animFrame = self:GetParent():GetAttribute("portalFrame")
-    animFrame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Active", false)
-    animFrame.textureportal:SetAlpha(0.6)
-    animFrame.animg:Stop()
-    local cdFrame = self:GetParent():GetAttribute("portalCooldownFrame")
-    cdFrame:SetCooldown(0 ,0)
-end ]]
 
 local function getColor(strColor)
     local Color = {}
@@ -246,12 +209,14 @@ local function toggleCharactersFrame(self)
             
             CharacterData:SetSelectedCharacterGUID(UnitGUID("player"))
             PlayerFrameMapping:RefreshData(false)
-            -- TODO: set active here
             
-            self:SetText("< Characters")
+            self.text:SetText(KeyMasterLocals.PLAYERFRAME["Characters"])
+            _G["KeyMaster_MainFrameTab1"]:SetText(KeyMasterLocals.TABPLAYER)
         else
             charactersFrame:Show()
-            self:SetText("Characters >")
+            self.text:SetText(KeyMasterLocals.TABPLAYER)
+            _G["KeyMaster_MainFrameTab1"]:SetText(KeyMasterLocals.PLAYERFRAME["Characters"])
+            
         end
     end
 end
@@ -317,9 +282,12 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.fortText:SetText(KeyMasterLocals.FORTIFIED)
 
     if KeyMaster:GetTableLength(KeyMaster_C_DB) > 0 then
-        local charactersButton = CreateFrame("Button", "KM_CharactersButton", mapHeaderFrame, "UIPanelButtonTemplate")
-        charactersButton:SetText("< Characters")
-        charactersButton:SetSize(charactersButton:GetTextWidth()+12, charactersButton:GetTextHeight()+8)
+        local btnOptions = {}
+        btnOptions.name = "KM_CharactersButton"
+        btnOptions.text = KeyMasterLocals.PLAYERFRAME["Characters"]
+
+        local charactersButton = Factory:Create(mapHeaderFrame,"Button", btnOptions)
+
         charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 4, 0)
         charactersButton:SetScript("OnClick", toggleCharactersFrame)
     end
@@ -406,26 +374,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         mapFrame:SetScript("OnEnter", mapData_onmouseover)
         mapFrame:SetScript("OnLeave", mapData_onmouseout)
 
-        -- Portal Frame
-        --[[ local portalFrameSquare = mapFrame:GetHeight()
-        local portalFrame = CreateFrame("Frame", nil, mapFrame)
-        portalFrame:SetFrameLevel(dataFrame:GetFrameLevel()+1)
-        portalFrame:SetPoint("TOPRIGHT", mapFrame, "TOPRIGHT", -4, 0)
-        portalFrame:SetSize(portalFrameSquare, portalFrameSquare) ]]
-
-
-        --[[ dataFrame.divider1 = dataFrame:CreateTexture()
-        dataFrame.divider1:SetPoint("CENTER", portalFrame, "LEFT", -4, 0)
-        dataFrame.divider1:SetSize(dataFrame:GetHeight(), dataFrame:GetHeight())
-        dataFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-        dataFrame.divider1:SetAlpha(0.3) ]]
-
-        --[[ dataFrame.divider2 = dataFrame:CreateTexture("KM_RowDivider"..mapId)
-        dataFrame.divider2:SetPoint("CENTER", dataFrame, "CENTER", -portalFrame:GetWidth(), 0)
-        dataFrame.divider2:SetSize(dataFrame:GetHeight(), dataFrame:GetHeight())
-        dataFrame.divider2:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-        dataFrame.divider2:SetAlpha(0.3) ]]
-
         local scoreColor = {}
         scoreColor.r, scoreColor.g, scoreColor.b, _ = Theme:GetThemeColor("color_TAUPE")
 
@@ -487,65 +435,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.fortifiedRunTime:SetJustifyH("LEFT")
         dataFrame.fortifiedRunTime:SetJustifyV("TOP")
         dataFrame.fortifiedRunTime:SetText("")
-
-        --[[ -- Portal Animation
-        local anim_frame = CreateFrame("Frame", "portalTexture"..mapId, portalFrame)
-        anim_frame:SetFrameLevel(portalFrame:GetFrameLevel()+1)
-        anim_frame:SetSize(40, 40)
-        anim_frame:SetPoint("CENTER", portalFrame, "CENTER", 0, 0)
-        anim_frame.textureportal = anim_frame:CreateTexture(nil, "ARTWORK")
-        anim_frame.textureportal:SetAllPoints(anim_frame)
-        --anim_frame.textureportal:SetAlpha(0.8)
-        anim_frame.animg = anim_frame:CreateAnimationGroup()
-        local a1 = anim_frame.animg:CreateAnimation("Rotation")
-        a1:SetDegrees(-360)
-        a1:SetDuration(2)
-        anim_frame.animg:SetLooping("REPEAT")
-        portalFrame:SetAttribute("portalFrame", anim_frame)
-
-        portalFrame.maskTexture = portalFrame:CreateMaskTexture()
-        portalFrame.maskTexture:SetSize(portalFrame:GetWidth(),portalFrame:GetHeight())
-        portalFrame.maskTexture:SetPoint("CENTER")
-        portalFrame.maskTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Mask-PlayerFame")
-        anim_frame.textureportal:AddMaskTexture(portalFrame.maskTexture)
-
-        -- Portal Cooldown
-        local portalCooldownFrame = CreateFrame("Cooldown", "portalCooldown", portalFrame, "CooldownFrameTemplate")
-        portalCooldownFrame:SetAllPoints(portalFrame)
-        portalFrame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
-
-        -- Add clickable portal spell casting to dungeon portal frame if they have the spell
-        local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
-        
-        if (portalSpellId) then -- if the player has the portal, make the portal image clickable to cast it if clicked.
-            --portalFrame.textureportal = portalFrame:CreateTexture()
-            --portalFrame.textureportal:SetSize(40, 40)
-            --portalFrame.textureportal:SetPoint("CENTER", portalFrame, "CENTER", 0, 0)
-            anim_frame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Active")
-            anim_frame.textureportal:SetRotation(math.random(0,2) + math.random())
-            anim_frame.textureportal:SetAlpha(0.6)
-
-            local pButton
-            pButton = CreateFrame("Button","portal_button"..mapId,portalFrame,"SecureActionButtonTemplate")
-            pButton:SetAttribute("type", "spell")
-            pButton:SetAttribute("spell", portalSpellName)
-            pButton:RegisterForClicks("LeftButtonDown")
-            pButton:SetWidth(pButton:GetParent():GetWidth())
-            pButton:SetHeight(pButton:GetParent():GetWidth())
-            pButton:SetPoint("TOPLEFT", portalFrame, "TOPLEFT", 0, 0)
-            pButton:SetScript("OnMouseUp", portalButton_buttonevent)
-            pButton:SetScript("OnEnter", portalButton_mouseover)
-            pButton:SetScript("OnLeave", portalButton_mouseoout)
-
-            portalFrame:SetAttribute("portalSpellName", portalSpellName)
-        else
-            --portalFrame.textureportal = portalFrame:CreateTexture()
-            --portalFrame.textureportal:SetSize(40, 40)
-            --portalFrame.textureportal:SetPoint("CENTER", portalFrame, "CENTER", 0, 0)
-            anim_frame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Inactive")
-            anim_frame.textureportal:SetRotation(math.random(0,1) + math.random())
-            anim_frame.textureportal:SetAlpha(0.6)
-        end ]]
 
         if (doOnce == 0) then
             local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.overallScore:GetPoint()
@@ -855,13 +744,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     divider.texture:SetSize(divider:GetWidth(), divider:GetHeight())
     divider.texture:SetColorTexture(1, 1, 1, 0.1)
 
-    --[[ divider.textureHighlight = divider:CreateTexture(nil, "BACKGROUND", nil, 1)
-    divider.textureHighlight:SetSize(divider:GetWidth(), 64)
-    divider.textureHighlight:SetPoint("BOTTOMLEFT", divider, "BOTTOMLEFT", 0, 0)
-    divider.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-    divider.textureHighlight:SetAlpha(highlightAlpha)
-    divider.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha) ]]
-
     local Hline = KeyMaster:CreateHLine(divider:GetWidth()+8, divider, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
@@ -962,9 +844,6 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     vaultRowFrame.vaultTotals:SetPoint("RIGHT", vaultRowFrame.vaultComplete, "LEFT", 0, -1)
     vaultRowFrame.vaultTotals:SetSize(parentFrame:GetWidth()*0.15, vaultRowFrame:GetHeight())
-    --vaultRowFrame.vaultTotals:SetJustifyH("RIGHT")
-    --[[ local Path, _, Flags = vaultRowFrame.vaultTotals:GetFont()
-    vaultRowFrame.vaultTotals:SetFont(Path, 18, Flags) ]]
     vaultRowFrame.vaultTotals:SetJustifyV("CENTER")
     vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
     
@@ -977,30 +856,10 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     vaultRowFrame.vaultRuns:SetJustifyV("CENTER")
     vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
 
-    --[[ vaultRowFrame.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    vaultRowFrame.texture:SetAllPoints(vaultRowFrame.vaultRuns)
-    --vaultRowFrame.texture:SetSize(vaultRowFrame:GetWidth(), vaultDetails:GetHeight())
-    vaultRowFrame.texture:SetColorTexture(0.5,0.5,0.5,1) ]]
-    
-   --[[  if (vaultRowNumber ~= 3) then
-        local Hline = KeyMaster:CreateHLine(parentFrame:GetWidth(), vaultRowFrame, "BOTTOM", 0, 0)
-        Hline:SetAlpha(0.5)
-    end ]]
     parentFrame:SetAttribute("vault"..vaultRowNumber,  vaultRowFrame)
 
     return vaultRowFrame
 end
-
--- function PlayerFrame:SetVaultRowData(rowFrame, totals, runs, isComplete)
---     rowFrame.vaultTotals:SetText(totals)
---     rowFrame.vaultRuns:SetText(runs)
---     rowFrame.vaultComplete:SetTexture()
---     setVaultCompleteStatusIcon(rowFrame, "vaultComplete", isComplete)
--- end
-
--- PlayerFrame:SetVaultRowData(createVaultRow(1), "1/1", "27", true)
--- PlayerFrame:SetVaultRowData(createVaultRow(2), "4/4", "27, 27, 26", true)
--- PlayerFrame:SetVaultRowData(createVaultRow(3), "7/8", "26, 26, 25", false)
 
 -- creates the entire player frame and sub-frames
 function PlayerFrame:Initialize(parentFrame)
@@ -1008,7 +867,6 @@ function PlayerFrame:Initialize(parentFrame)
     local playerContent = _G["KM_PlayerContentFrame"] or PlayerFrame:CreatePlayerContentFrame(parentFrame)
     local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
     local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
-    --local playerExtraFrame = _G["KM_PLayerExtraInfo"] or PlayerFrame:CreateExtraInfoFrame(playerMapFrame)
     local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerContent)
 
     -- Mythic Vault Progress
@@ -1016,7 +874,6 @@ function PlayerFrame:Initialize(parentFrame)
     local MythicPlusEventTypeId = 1
     for i=1,3 do
         local vaultRow = createVaultRow(i, vaultDetails)
-        --PlayerFrame:SetVaultRowData(vaultRow, "0/1", "30", true)
     end
     
     return playerContent
