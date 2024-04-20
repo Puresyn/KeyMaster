@@ -85,6 +85,7 @@ L.INSTANCETIMER = "Informazioni sull'istanza"
 L.VAULTINFORMATION = "M+ Progressione del volteggio"
 L.TIMELIMIT = "Limite di tempo"
 L.SEASON = "Stagione"
+L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}

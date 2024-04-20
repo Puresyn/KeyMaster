@@ -85,6 +85,7 @@ L.INSTANCETIMER = "副本訊息"
 L.VAULTINFORMATION = "傳奇+ 寶庫進度"
 L.TIMELIMIT = "時間限制"
 L.SEASON = "賽季"
+L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
