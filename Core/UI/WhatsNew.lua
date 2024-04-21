@@ -157,7 +157,7 @@ function WhatsNew:Init()
     noticeFrame.titleFrame = CreateFrame("Frame", nil, noticeFrame)
     noticeFrame.titleFrame:SetPoint("BOTTOMLEFT", noticeFrame, "TOPLEFT", 0, 0)
 
-    noticeFrame:SetScript("OnShow", function() PlaySound(6012) end)
+    --noticeFrame:HookScript("OnShow", function() PlaySound(122630, "Dialog", true) end)
 
     local bgHOffset = 150
     local bgWidth = noticeFrame:GetWidth()-7
