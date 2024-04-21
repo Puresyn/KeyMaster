@@ -26,23 +26,39 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Update 1.1 has landed!|r</h2>
-                <h3>You asked, you voted, we listened!</h3>
+                <h3>You asked, we listened, you voted, we added it!</h3>
                 <br/>
                 <p>Key Master now shows your alternate max level characters on the player page! See below for details</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>]]..textBullet..[[Added alternate characters to player frame. These are filtered by maxium level and then sorted by mythic plus rating.</p>
-                <p>]]..textBullet..[[Added character list filter options to configuration frame.</p>
-                <p>]]..textBullet..[[Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
+                <p>Added alternate characters to player tab.</p>
+                <p>]]..textBullet..[[Selecting an alternate character turns the Player tab into a Characters tab.</p>
+                <p>]]..textBullet..[[All functionality of the Player tab updates and works as the selection character; which includes the calculator and vault progress.</p>
+                <p>]]..textBullet..[[The character list only shows max level characters.</p>
+                <p>]]..textBullet..[[All keys are reset with regional server weekly reset.</p>
+                <p>]]..textBullet..[[The character list is reset with each new season.</p>
+                <br/>
+                <p>Added character list filter options to configuration tab.</p>
+                <br/>
+                <p>Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
+                <br/>
+                <p>Improved Key Master interface open/close functionality.</p>
+                <p>]]..textBullet..[[It now closes automatically when entering combat.</p>
+                <p>]]..textBullet..[[If opening the interface during combat, it will open automatically after exiting combat.</p>
+                <p>]]..textBullet..[[It now closes automatically when casting a spell or using an ability.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>]]..textBullet..[[Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization.</p>
+                <p>ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()' should no longer be an issue.</p>
+                <br/>
+                <p>Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization or it is otherwise unknown.</p>
+                <br/>
+                <p>Fixed issue where some clients were not able to use the portal icons.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>]]..textBullet..[[None</p>
+                <p>None</p>
                 <br/>
-                <p>If you experience any bugs with Key Master, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
-                <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r</p>
+                <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
+                <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
             </body>
         </html>
         ]]
