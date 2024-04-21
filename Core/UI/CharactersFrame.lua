@@ -34,23 +34,14 @@ local function setRowActive(row, setActive)
     local currentActiveGUID = characterSelectFrame:GetAttribute("selectedCharacterGUID")
     local thisGUID = row:GetAttribute("GUID")
 
-    --if not currentActiveGUID == thisGUID then return end -- this is already the active row so exit function
-
     if setActive then
-        --print("Setting row for "..thisGUID.." active")
-        --local activeColor = {}
-        
+
         row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Title-BG1")
-        --row:SetAttribute("highlight", row.textureHighlight)
-        --activeColor.r, activeColor.g, activeColor.b, _ = Theme:GetThemeColor("themeFontColorMain")
-        --row.textureHighlight:SetVertexColor(activeColor.r, activeColor.g, activeColor.b, 1)
         CharacterData:SetSelectedCharacterGUID(thisGUID)
         characterSelectFrame:SetAttribute("selectedCharacterRow", row)
         characterSelectFrame:SetAttribute("selectedCharacterGUID", thisGUID)
         row.selectedTexture:Show()
-        --setDefaultColor(row)
     else
-        --print("Setting row for "..thisGUID.." inactive")
         row:SetAttribute("active", false)
         row.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight")
         row.selectedTexture:Hide()
@@ -72,17 +63,15 @@ local function characterRow_OnRowClick(self)
 end
 
 local function characterRow_onmouseover(self)
-    if self:GetAttribute("active") == false then
-        local hoverColor = {}
-        hoverColor.r, hoverColor.g, hoverColor.b, _ = Theme:GetThemeColor("party_colHighlight")
-        self.textureHighlight:SetVertexColor(hoverColor.r, hoverColor.g, hoverColor.b, 1)
+    if self ~= _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow") then
+        self.selectedTexture:Show()
     end
 end
 
 local function characterRow_onmouseout(self)
-    if self:GetAttribute("active") == false then
-        setDefaultColor(self)
-    end
+    if self ~= _G["KM_CharacterSelectFrame"]:GetAttribute("selectedCharacterRow") then
+            self.selectedTexture:Hide()
+        end
 end
 
 local function createScrollFrame(parent)
@@ -166,13 +155,6 @@ local function createCharacterRow(characterGUID, cData)
     local characterRow = CreateFrame("Frame", "KM_CharacterRow_"..characterGUID, parent)
     characterRow:SetAttribute("GUID", characterGUID)
     characterRow:SetSize(rWidth-mlr, rHeight)
-    --[[ if prevRowAnchor == nil then
-        characterRow:SetPoint("TOPLEFT", parent, "TOPLEFT", mlr, -mtb)
-        prevRowAnchor = characterRow
-    else
-        characterRow:SetPoint("TOP", prevRowAnchor, "BOTTOM", 0, -mtb)
-        prevRowAnchor = characterRow
-    end ]]
     characterRow:SetFrameLevel(parent:GetFrameLevel()+1)
     characterRow:SetAttribute("row", characterRow)
 
@@ -182,15 +164,12 @@ local function createCharacterRow(characterGUID, cData)
     local highlightAlpha = 1
     characterRow.textureHighlight = characterRow:CreateTexture(nil, "BACKGROUND", nil, 1)
     characterRow.textureHighlight:SetSize(characterRow:GetWidth(), characterRow:GetHeight())
-    --characterRow.textureHighlight:SetPoint("LEFT", characterRow, "LEFT", 0, 0)
     characterRow.textureHighlight:SetAllPoints(characterRow)
     characterRow.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
     characterRow.textureHighlight:SetAlpha(highlightAlpha)
     local classColor = {}
-    --local hlColorString = "color_COMMON"
     local _, className, _ = GetClassInfo(cData.class)
     classColor.r, classColor.g, classColor.b, _ = GetClassColor(className)
-    --hlColor.r, hlColor.g, hlColor.b, _ = Theme:GetThemeColor(hlColorString)
     characterRow.textureHighlight:SetVertexColor(classColor.r,classColor.g,classColor.b, highlightAlpha)
     characterRow:SetAttribute("highlight", characterRow.textureHighlight)
     characterRow:SetAttribute("defColor", {classColor.r, classColor.g, classColor.b})
@@ -232,15 +211,13 @@ local function createCharacterRow(characterGUID, cData)
     characterRow.key:SetPoint("BOTTOMRIGHT", characterRow, "BOTTOMRIGHT", 0, 4)
     characterRow.key:SetJustifyH("RIGHT")
     
-    --local selectedColor = {}
-   -- selectedColor.r, selectedColor.g, selectedColor.b, _ = Theme:GetThemeColor("color_COMMON")
     characterRow.selectedTexture = characterRow:CreateTexture(nil, "ARTWORK")
     characterRow.selectedTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KeyMaster-Interface-Clean")
     characterRow.selectedTexture:SetTexCoord(957/1024, 1, 332/1024,  399/1024)
     characterRow.selectedTexture:SetSize(66, characterRow:GetHeight())
-    characterRow.selectedTexture:SetPoint("LEFT", characterRow, "LEFT", 0, 1)
-    characterRow.selectedTexture:SetAlpha(0.15)
-    --characterRow.selectedTexture:SetVertexColor(selectedColor.r, selectedColor.g, selectedColor.b, 0.2)
+    characterRow.selectedTexture:SetPoint("LEFT", characterRow, "LEFT", -3, 1)
+    characterRow.selectedTexture:SetAlpha(0)
+    characterRow.selectedTexture:SetVertexColor(classColor.r, classColor.g, classColor.b, 0.3)
     characterRow.selectedTexture:Hide()
 
     local keyText = getKeyText(cData) or ""
@@ -335,10 +312,21 @@ function PlayerFrame:GenerateCharacterList(characterSelectFrame)
 
         local characterTable = charSort(sortTable, FS_RATING)
 
-        -- see if we removed a previously selected row from the list
+        -- see if we removed a previously selected row from the list and set the correct character to selected.
+        local isInNewList = false
+        local playerGUID = UnitGUID("player")
+        local selectedGUID = CharacterData:GetSelectedCharacterGUID()
+        if not selectedGUID then
+            CharacterData:SetSelectedCharacterGUID(playerGUID)
+            selectedGUID = playerGUID
+        end
         local previousGUID = characterSelectFrame:GetAttribute("selectedCharacterGUID")
-         if previousGUID then
-            local isInNewList = false
+        
+        if previousGUID ~= selectedGUID then 
+            previousGUID = selectedGUID
+        end
+
+        if previousGUID then
             for k in pairs(characterTable) do
                 if characterTable[k][previousGUID] then
                     isInNewList = true
@@ -347,10 +335,11 @@ function PlayerFrame:GenerateCharacterList(characterSelectFrame)
             if not isInNewList then
                 characterSelectFrame:SetAttribute("selectedCharacterRow", nil)
                 characterSelectFrame:SetAttribute("selectedCharacterGUID", nil)
-                CharacterData:SetSelectedCharacterGUID(UnitGUID("player"))
+                CharacterData:SetSelectedCharacterGUID(playerGUID)
+                previousGUID = playerGUID
                 PlayerFrameMapping:RefreshData(false)
             end
-         end
+        end
 
         for k, v in pairs(characterTable) do
             for k2 in pairs(v) do
@@ -384,7 +373,6 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     local frameWidth = 175
     local characterSelectFrame = CreateFrame("Frame", "KM_CharacterSelectFrame", parent, "BackdropTemplate")
     characterSelectFrame:ClearAllPoints()
-    --characterSelectFrame:SetClampedToScreen(true)
     characterSelectFrame:SetFrameLevel(_G["KeyMaster_MainFrame"]:GetFrameLevel()-1)
     characterSelectFrame:SetSize(frameWidth, parent:GetHeight())
     characterSelectFrame:SetPoint("RIGHT", parent, "LEFT", 4, 0)
@@ -400,7 +388,6 @@ function PlayerFrame:CreateCharacterSelectFrame(parent)
     local bgHeight = characterSelectFrame:GetHeight()-4
     local bgHOffset = 150
     characterSelectFrame.bgTexture = characterSelectFrame:CreateTexture(nil, "BACKGROUND")
-    --characterSelectFrame.bgTexture:SetAllPoints(characterSelectFrame)
     characterSelectFrame.bgTexture:SetPoint("TOPLEFT", characterSelectFrame, "TOPLEFT", 4, 0)
     characterSelectFrame.bgTexture:SetSize(bgWidth, bgHeight)
     characterSelectFrame.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
@@ -433,32 +420,4 @@ function PlayerFrame:UpdateCharacterList()
 
     -- update UI with the updated character list (resort, etc)
     PlayerFrame:GenerateCharacterList(_G["KM_CharacterSelectFrame"])
-    --print("Character list updated.")
 end
-
---[[ function PlayerFrame:UpdateListCharacter(playerGUID)
-    if not playerGUID then return end
-
-    local unitData = UnitData:GetUnitDataByGUID(playerGUID)
-    if not unitData then return end
-
-    local ratingObj, keyTextObj, keyText
-    local keyInfo = {}
-    local characterFrame = _G["KM_CharacterRow_"..playerGUID]:GetAttribute("row") or false
-    if not characterFrame or not type(characterFrame == "table") then return end
-    ratingObj = characterFrame:GetAttribute("overallRating")
-    if ratingObj then
-        ratingObj:SetText(tostring(UnitData.overallRating))
-    end
-    keyTextObj = characterFrame:GetAttribute("keyText")
-    if unitData.keyLevel > 0 then
-        keyInfo.keyLevel = unitData.keyLevel
-        keyInfo.keyId = unitData.keyId
-        keyText = getKeyText(keyInfo)
-    else
-        keyText = ""
-    end
-    if keyTextObj and keyText then
-        keyTextObj:SetText(keyText)
-    end
-end ]]
