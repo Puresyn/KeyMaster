@@ -13,7 +13,7 @@ local L = KM_Localization_ruRU
 -- Проблема с переводом? Помогите нам исправить это! Посетите: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Русский (RU)"
-L.TRANSLATOR = "Hollicsh" -- Translator display name
+L.TRANSLATOR = "Hollicsh" -- Отображаемое имя переводчика
 
 L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "Отображение подробной информации о контенте М+"
@@ -85,7 +85,7 @@ L.INSTANCETIMER = "Информация о подземелье"
 L.VAULTINFORMATION = "Прогресс Хранилища М+"
 L.TIMELIMIT = "Лимит времени"
 L.SEASON = "сезон"
-L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
+L.COMBATMESSAGE = { errormsg = "Key Master недоступен в бою.", chatmsg = "Интерфейс откроется после выхода из боя."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -120,7 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Новый", text = "Ваш рейтинг по
 L.PLAYERFRAME["RatingCalculator"] = { name = "Калькулятор", text = "Рассчитайте потенциальный прирост рейтинга"}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Введите уровень ключа", text = "Введите уровень ключа, чтобы увидеть"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Базовый прирост рейтинга", text = "Ваш базовый прирост рейтинга"}
-L.PLAYERFRAME["Characters"] = "Characters"
+L.PLAYERFRAME["Characters"] = "Персонажи"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Ключ не найден", text = "Ключ не найден"}
@@ -140,10 +140,10 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Настройки диа
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Отображение ошибок", text = "Отображать сообщения об ошибках"}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Отображение отладки", text = "Отображать сообщения отладки"}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Расширенная диагностика", text="Примечание: Это предназначено только для диагностических целей. Это может заспамить Ваш чат, если он включен!"}
-L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
-L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
-L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Фильтры списка персонажей", text = "Параметры фильтрации списка Альтернативных персонажей." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Текущий сервер", text = "Показывать только текущий сервер." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Без рейтинга", text = "Показывать только персонажей с рейтингом." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Без ключа", text = "Показывать только персонажей с ключом." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
