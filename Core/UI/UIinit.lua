@@ -5,6 +5,7 @@ local ConfigFrame = KeyMaster.ConfigFrame
 local InfoFrame = KeyMaster.InfoFrame
 local PlayerFrame = KeyMaster.PlayerFrame
 local PartyFrame = KeyMaster.PartyFrame
+local CharactersFrame = KeyMaster.CharactersFrame
 local Theme = KeyMaster.Theme
 local WhatsNew = KeyMaster.WhatsNew
 
@@ -54,7 +55,7 @@ function MainInterface:Initialize()
 
   -- Player Tab Content
   local playerTabContent = PlayerFrame:Initialize(contentRegion)
-  local characterSelect = _G["KM_CharacterSelectFrame"] or PlayerFrame:CreateCharacterSelectFrame(playerTabContent)
+  local characterSelect = CharactersFrame:Initialize(playerTabContent)
 
   -- Party Tab Content
   local partyTabContent = PartyFrame:Initialize(contentRegion)

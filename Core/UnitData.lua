@@ -84,28 +84,6 @@ function UnitData:UpdateListCharacter(playerGUID)
     end
 end
 
-local function setUnitSaveData(unitData)
-    -- Save character information to file
-    if KeyMaster_C_DB[unitData.GUID] then -- Only updates/saves existing PLAYER characters.
-        local LibSerialize = LibStub("LibSerialize")
-        local LibDeflate = LibStub("LibDeflate")
-
-        -- pull out/set a couple details for better performance.
-        KeyMaster_C_DB[unitData.GUID].rating = unitData.mythicPlusRating
-        KeyMaster_C_DB[unitData.GUID].keyId = unitData.ownedKeyId
-        KeyMaster_C_DB[unitData.GUID].keyLevel = unitData.ownedKeyLevel
-        --KeyMaster_C_DB[unitData.GUID].timestamp = GetServerTime()
-        local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
-        if rewards then
-            KeyMaster_C_DB[unitData.GUID].vault = rewards
-        else
-            KeyMaster_C_DB[unitData.GUID].vault = {}
-        end
-        CharacterData:SetCharacterData(unitData.GUID, unitData)
-        UnitData:UpdateListCharacter(unitData.GUID)
-    end
-end
-
 function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
@@ -122,9 +100,12 @@ function UnitData:SetUnitData(unitData)
     -- STORE DATA IN MEMORY
     unitInformation[unitData.GUID] = unitData
 
-    -- Store/Update Unit Data in Saveved Variables
-    setUnitSaveData(unitData)
-
+    -- Store/Update Unit Data in Saved Variables
+    if unitData.GUID == UnitGUID("player") and UnitLevel("PLAYER") == GetMaxPlayerLevel() then
+        CharacterData:SetCharacterData(unitData.GUID, unitData)
+        UnitData:UpdateListCharacter(unitData.GUID) -- todo: move out of this file 
+    end
+    
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
 end
 

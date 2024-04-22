@@ -3,6 +3,8 @@ local ConfigFrame = {}
 KeyMaster.ConfigFrame = ConfigFrame
 local Theme = KeyMaster.Theme
 local KMFactory = KeyMaster.Factory
+local CharacterData = KeyMaster.CharacterData
+local CharacterInfo = KeyMaster.CharacterInfo
 
 function ConfigFrame:CreateConfigFrame(parentFrame)
     local mtb = 4 -- margin top/bottom
@@ -394,11 +396,13 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.hex = Theme:GetThemeColor("color_ERRORMSG")
     btnOptions.textHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
     local preText = KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"]
-    local listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB) or 0))..")"
+    local listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB)))..")"
     btnOptions.text = preText..listCountText
 
     local function purgeCharacterList(self)
         KeyMaster_C_DB = {}
+        CharacterData:CreateDefaultCharacterData()
+
         --KeyMaster.characterList = {}
         KeyMaster:Print("|cff"..hoverColor.hex..KeyMasterLocals.CONFIGURATIONFRAME["Purge"].past..listCountText.." "..KeyMasterLocals.PLAYERFRAME["Characters"].."|r")
         self:Hide()
