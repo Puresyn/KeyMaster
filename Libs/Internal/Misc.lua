@@ -180,6 +180,38 @@ function KeyMaster:CleanCharSavedData(data)
     return data 
 end
 
+function KeyMaster:CreateDefaultCharacterData()
+    local charDefaults = {}
+    if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
+        
+        local playerGUID = UnitGUID("PLAYER")
+        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
+
+        charDefaults = {
+            [""..playerGUID..""] = {
+                client = true,                              -- flag if this character is owned by client (future use)
+                name = UnitName("PLAYER"),                  -- character's name
+                realm = GetRealmName(),                     -- character's realm
+                rating = 0,                                 -- set default rating to 0
+                season = nil,                               -- season placeholder (slow API)
+                class = baseClassId,                        -- Players class id #
+                data = nil,                                 -- character data placeholder (for reference)
+                keyId = nil,
+                keyLevel = nil,
+                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
+                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
+                level = UnitLevel("PLAYER"),                -- level reference for cleanup
+                vault = {},                                -- vault information
+                teams = {                                   -- teams table (for later use)
+                    team1 = nil
+                }
+            }
+        }
+
+    end
+    return charDefaults
+end
+
 -- This function gets run when the PLAYER_LOGIN event fires:
 function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
@@ -231,46 +263,7 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     }
 
     -- This table defines the players default character information IF max level
-    local charDefaults = {}
-    if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
-        
-        local playerGUID = UnitGUID("PLAYER")
-        --local currentRating = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER").currentSeasonScore
-        --if currentRating == nil then currentRating = 0 end
-        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
-
-        --[[ -- apparently if you PK this table by anything but default int [1 thru inf] you can never sort it directly...
-        local charId
-        for k in pairs(KeyMaster_C_DB) do
-            local guid = KeyMaster_C_DB[k]["guid"]
-            if guid == playerGUID then
-                charId = k
-            end
-        end
-        if not charId then charId = KeyMaster:GetTableLength(KeyMaster_C_DB)+1 end ]]
-
-        charDefaults = {
-            [""..playerGUID..""] = {
-                client = true,                              -- flag if this character is owned by client (future use)
-                name = UnitName("PLAYER"),                  -- character's name
-                realm = GetRealmName(),                     -- character's realm
-                rating = 0,                                 -- set default rating to 0
-                season = nil,                               -- season placeholder (slow API)
-                class = baseClassId,                        -- Players class id #
-                data = nil,                                 -- character data placeholder (for reference)
-                keyId = nil,
-                keyLevel = nil,
-                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
-                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
-                level = UnitLevel("PLAYER"),                -- level reference for cleanup
-                vault = {},                                -- vault information
-                teams = {                                   -- teams table (for later use)
-                    team1 = nil
-                }
-            }
-        }
-
-    end
+    local charDefaults = KeyMaster:CreateDefaultCharacterData()
 
     -- Copy the values from the defaults table into the saved variables table
     -- if data doesn't exist and assign the result to the global variable:
