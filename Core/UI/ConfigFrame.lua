@@ -381,6 +381,37 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
         end
     end)
 
+    local function purgeStatus(button)
+        if not button then return end
+        if not KeyMaster_C_DB or type(KeyMaster_C_DB) ~= "table" or KeyMaster:GetTableLength(KeyMaster_C_DB) == 0 then
+            button:Hide()
+        else
+            button:Show()
+        end
+    end
+    local btnOptions = {}
+    local hoverColor = {}
+    hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.hex = Theme:GetThemeColor("color_ERRORMSG")
+    btnOptions.textHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
+    local preText = KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"]
+    local listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB) or 0))..")"
+    btnOptions.text = preText..listCountText
+
+    local function purgeCharacterList(self)
+        KeyMaster_C_DB = {}
+        --KeyMaster.characterList = {}
+        KeyMaster:Print("|cff"..hoverColor.hex..KeyMasterLocals.CONFIGURATIONFRAME["Purge"].past..listCountText.." "..KeyMasterLocals.PLAYERFRAME["Characters"].."|r")
+        self:Hide()
+        -- listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB) or 0))..")"
+        --self.text:SetText(preText..listCountText)
+    end
+
+    charactersSetting.purgeButton = KMFactory:Create(charactersSetting, "Button", btnOptions)
+    charactersSetting.purgeButton:SetPoint("TOPLEFT", charactersSetting.filterNoKey, "BOTTOMLEFT", 0, -4)
+    charactersSetting.purgeButton:SetScript("OnClick", purgeCharacterList)
+
+    charactersSetting:HookScript("OnShow", function() purgeStatus(charactersSetting.purgeButton) end)
+
     --[[ -- Testing DropDownMenu IN DEVELOPMENT
     local dropDownTest = CreateFrame("Frame", nil, conFrame)
     dropDownTest:SetPoint("TOPLEFT", diagnosticSettings, "TOPRIGHT", mlr, 0)

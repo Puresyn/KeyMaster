@@ -144,6 +144,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Фильтры списка 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Текущий сервер", text = "Показывать только текущий сервер." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Без рейтинга", text = "Показывать только персонажей с рейтингом." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Без ключа", text = "Показывать только персонажей с ключом." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Информация Key Master", text = "Информация Key Master"}
@@ -151,6 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Авторы", text = "Авторы"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Особая благодарность", text = "Особая благодарность"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Участники", text = "Участники"}
 L.ABOUTFRAME["Translators"] = { text = "Переводчики" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга 4-го сезона Dragonflight всё ещё проверяются."}

@@ -198,6 +198,19 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.realmName:SetTextColor(0.3, 0.3, 0.3, 1)
     playerFrame.realmName:SetText(GetRealmName())
 
+    --[[ playerFrame:HookScript("OnShow", function()
+        if not KeyMaster.characterList or not type(KeyMaster.characterList) == "table" then
+            print("No character list")
+            _G["KM_CharactersButton"]:Hide()
+        elseif KeyMaster:GetTableLength(KeyMaster.characterList) == 0 then
+            print("Empty character list")
+            _G["KM_CharactersButton"]:Hide()
+        elseif KeyMaster:GetTableLength(KeyMaster.characterList) > 0 then
+            print("Characters in list")
+            _G["KM_CharactersButton"]:Show()
+        end
+    end) ]]
+
     return playerFrame
 end
 
@@ -281,15 +294,17 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame.fortText:SetJustifyH("LEFT")
     mapHeaderFrame.fortText:SetText(KeyMasterLocals.FORTIFIED)
 
+    local btnOptions = {}
+    btnOptions.name = "KM_CharactersButton"
+    btnOptions.text = KeyMasterLocals.PLAYERFRAME["Characters"]
+
+    local charactersButton = Factory:Create(mapHeaderFrame,"Button", btnOptions)
+    charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 4, 0)
+    charactersButton:SetScript("OnClick", toggleCharactersFrame)
+    charactersButton:Hide()
+
     if KeyMaster:GetTableLength(KeyMaster_C_DB) > 0 then
-        local btnOptions = {}
-        btnOptions.name = "KM_CharactersButton"
-        btnOptions.text = KeyMasterLocals.PLAYERFRAME["Characters"]
-
-        local charactersButton = Factory:Create(mapHeaderFrame,"Button", btnOptions)
-
-        charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 4, 0)
-        charactersButton:SetScript("OnClick", toggleCharactersFrame)
+        charactersButton:Show()
     end
 
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()

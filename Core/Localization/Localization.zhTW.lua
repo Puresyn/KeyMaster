@@ -144,6 +144,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", tex
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master 資訊", text = "Key Master 資訊"}
@@ -151,6 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "作者", text = "作者"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "特別感謝", text = "特別感謝"}
 L.ABOUTFRAME["AboutContributors"] = { name = "貢獻者", text = "貢獻者"}
 L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}

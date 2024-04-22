@@ -144,6 +144,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", tex
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
@@ -151,6 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
 L.ABOUTFRAME["Translators"] = { text = "Übersetzer" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated
