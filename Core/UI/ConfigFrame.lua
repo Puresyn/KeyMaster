@@ -5,6 +5,7 @@ local Theme = KeyMaster.Theme
 local KMFactory = KeyMaster.Factory
 local CharacterData = KeyMaster.CharacterData
 local CharacterInfo = KeyMaster.CharacterInfo
+local CharactersFrame = KeyMaster.CharactersFrame
 
 function ConfigFrame:CreateConfigFrame(parentFrame)
     local mtb = 4 -- margin top/bottom
@@ -400,14 +401,12 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     btnOptions.text = preText..listCountText
 
     local function purgeCharacterList(self)
+        KeyMaster.CharactersFrame:ResetCharacterList() -- change load order?
         KeyMaster_C_DB = {}
         CharacterData:CreateDefaultCharacterData()
 
-        --KeyMaster.characterList = {}
         KeyMaster:Print("|cff"..hoverColor.hex..KeyMasterLocals.CONFIGURATIONFRAME["Purge"].past..listCountText.." "..KeyMasterLocals.PLAYERFRAME["Characters"].."|r")
         self:Hide()
-        -- listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB) or 0))..")"
-        --self.text:SetText(preText..listCountText)
     end
 
     charactersSetting.purgeButton = KMFactory:Create(charactersSetting, "Button", btnOptions)
