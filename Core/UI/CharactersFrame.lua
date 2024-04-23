@@ -305,7 +305,9 @@ function CharactersFrame:CreateCharacters()
     if isToggledActiveCharacter == false then
         local playerGUID = UnitGUID("player")
         CharacterData:SetSelectedCharacterGUID(playerGUID)
-        toggleActiveCharacterRow(playerGUID, true)
+        if _G["KM_CharacterRow_"..playerGUID] then
+            toggleActiveCharacterRow(playerGUID, true)
+        end
         PlayerFrameMapping:RefreshData(false)
     end
 end

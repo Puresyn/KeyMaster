@@ -137,49 +137,6 @@ function KeyMaster:_DebugMsg(funcName, fileName, ...)
     end
 end
 
---local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
-function KeyMaster:CleanCharSavedData(data)
-     if not data then
-        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
-        return
-    end
-    for k, v in pairs(data) do
-
-        -- long-winded season check/set becuase the API can be slow
-        local apiCheck = DungeonTools:GetCurrentSeason()
-        if v.season  then  
-             -- make sure api is available before we mess with data.
-            if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
-                if v.season < apiCheck then
-                    table.remove(data, k)
-                    return data
-                else
-                    v.season = apiCheck
-                end
-            end
-        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
-            v.season = apiCheck
-        end
-
-        if v.level then -- nil check
-            if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
-                table.remove(data, k)
-                return data
-            end
-        end
-        if v.expire then -- nil check
-            if v.expire < GetServerTime() then -- remove key data if expired
-                data[k].keyLevel = 0
-                data[k].keyId = 0
-                data[k].expire = KeyMaster:WeeklyResetTime()
-            end
-        else
-            data[k].expire = KeyMaster:WeeklyResetTime()
-        end
-    end
-    return data 
-end
-
 function KeyMaster:CreateDefaultCharacterData()
     local charDefaults = {}
     if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
@@ -210,6 +167,59 @@ function KeyMaster:CreateDefaultCharacterData()
 
     end
     return charDefaults
+end
+
+--local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
+function KeyMaster:CleanCharSavedData(data)
+    if not data then
+       KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
+       return
+   end
+
+   for k, v in pairs(data) do
+       local deleteME = false
+       -- long-winded season check/set becuase the API can be slow
+       local apiCheck = DungeonTools:GetCurrentSeason()
+       if v.season  then  
+            -- make sure api is available before we mess with data.
+           if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
+               if v.season < apiCheck then
+                   deleteME = true
+                   --table.remove(data, k)
+               else
+                   v.season = apiCheck
+               end
+           end
+       elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
+           v.season = apiCheck
+       end
+
+       if v.level then -- nil check
+           if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
+               deleteME = true
+               --table.remove(data, k)
+               return data
+           end
+       end
+       if v.expire then -- nil check
+           if v.expire < GetServerTime() then -- remove key data if expired
+               data[k].keyLevel = 0
+               data[k].keyId = 0
+               data[k].expire = KeyMaster:WeeklyResetTime()
+           end
+       else
+           data[k].expire = KeyMaster:WeeklyResetTime()
+       end
+       
+       if deleteME then data[k] = nil end
+
+   end
+
+   if KeyMaster:GetTableLength(data) == 0 then
+       data = KeyMaster:CreateDefaultCharacterData()
+   end
+
+   return data 
 end
 
 -- This function gets run when the PLAYER_LOGIN event fires:

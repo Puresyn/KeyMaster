@@ -34,8 +34,9 @@ local function getUnitRealm(unitGUID)
     KeyMaster:_ErrorMsg("getUnitRealm", "UnitData", "Cannot find unit for GUID: "..unitGUID)
 end
 
-function UnitData:UpdateListCharacter(playerGUID)
+function UnitData:UpdateListCharacter(playerGUID, cData)
 
+    KeyMaster:_DebugMsg("UpdateListCharacter","UnitData","Updating player character frame data.")
     local function getKeyText(cData)
         local keyText
         if cData.keyId > 0 and cData.keyLevel > 0 then
@@ -103,7 +104,7 @@ function UnitData:SetUnitData(unitData)
     -- Store/Update Unit Data in Saved Variables
     if unitData.GUID == UnitGUID("player") and UnitLevel("PLAYER") == GetMaxPlayerLevel() then
         CharacterData:SetCharacterData(unitData.GUID, unitData)
-        UnitData:UpdateListCharacter(unitData.GUID) -- todo: move out of this file 
+        UnitData:UpdateListCharacter(unitData.GUID, unitData) -- todo: move out of this file 
     end
     
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
