@@ -145,31 +145,12 @@ function CharacterData:GetCharactersList()
     return characterTable
 end
 
+-- dealing with a purged character that now needs popluated.
 function CharacterData:CreateDefaultCharacterData()
-    local charDefaults = {}
-    if UnitLevel("PLAYER") ~= GetMaxPlayerLevel() then return end
-        
-    local playerGUID = UnitGUID("PLAYER")
-    local _, baseClassId = UnitClassBase("PLAYER")
-
-    charDefaults = {
-        client = true,                              -- flag if this character is owned by client (future use)
-        name = UnitName("PLAYER"),                  -- character's name
-        realm = GetRealmName(),                     -- character's realm
-        rating = 0,                                 -- set default rating to 0
-        season = nil,                               -- season placeholder (slow API)
-        class = baseClassId,                        -- Players class id #
-        data = nil,                                 -- character data placeholder (for reference)
-        keyId = nil,
-        keyLevel = nil,
-        expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
-        timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
-        level = UnitLevel("PLAYER"),                -- level reference for cleanup
-        vault = {},                                -- vault information
-        teams = {                                   -- teams table (for later use)
-            team1 = nil
-        }
-    }
+    local playerGUID = UnitGUID("player")
+    local charDefaults = KeyMaster:CreateDefaultCharacterData() -- Misc.lua - Get character defaults data and structure.
+    
+    charDefaults = charDefaults[playerGUID] -- move data up one level for proper data format.
 
     -- store default data
     KeyMaster_C_DB[playerGUID] = charDefaults

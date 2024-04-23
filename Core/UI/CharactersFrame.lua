@@ -87,10 +87,12 @@ local function toggleActiveCharacterRow(guid, setActive)
     local characterRow = _G["KM_CharacterRow_"..guid]
     if not characterRow then
         KeyMaster:_ErrorMsg("toggleActiveCharacterRow","CharactersFrame", "Character row not found.")
+        return
     end
     local characterSelectFrame = _G["KM_CharacterSelectFrame"]
     if not characterSelectFrame then
         KeyMaster:_ErrorMsg("toggleActiveCharacterRow","CharactersFrame", "Character select frame not found.")
+        return
     end
 
     if setActive then
