@@ -101,7 +101,7 @@ local function KeyWatch()
             ---@param itemChangedFrom integer Returned ID of the changed item.
             ---@param itemChangedTo integer Returned ID of what the item changed to.
             local itemChangedFrom, itemChangedTo, _ = ...
-            if (string.match(itemChangedFrom, "Mythic Keystone")) then
+            if (string.match(itemChangedFrom, KeyMasterLocals.MPLUSKEYCHATFILTER)) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_CHANGED: "..tostring(itemChangedFrom))
                 NotifyEvent("KEY_CHANGED")                
             end
@@ -126,7 +126,7 @@ local function KeyWatch()
         if event == "CHAT_MSG_LOOT" then
             local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
             if guid == UnitGUID("player") then
-                if (string.match(itemTextRecieved, "Mythic Keystone")) then
+                if (string.match(itemTextRecieved, KeyMasterLocals.MPLUSKEYCHATFILTER)) then
                     KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHAT_MSG_LOOT: "..tostring(itemTextRecieved))
                     NotifyEvent("KEY_CHANGED")
                     return      
