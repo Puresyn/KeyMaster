@@ -123,12 +123,23 @@ local function KeyWatch()
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_COMPLETED")
             NotifyEvent("SCORE_GAINED")
         end
+        if event == "CHAT_MSG_LOOT" then
+            local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
+            if guid == UnitGUID("player") then
+                if (string.match(itemTextRecieved, "Mythic Keystone")) then
+                    KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHAT_MSG_LOOT: "..tostring(itemTextRecieved))
+                    NotifyEvent("KEY_CHANGED")
+                    return      
+                end
+            end
+        end
     end)
-    f:RegisterEvent("ITEM_COUNT_CHANGED") -- fired when getting key from vendor
+    f:RegisterEvent("ITEM_COUNT_CHANGED") -- fired when getting key from vendor (only fires when going into default bag?!?!)
     f:RegisterEvent("ITEM_CHANGED") -- fires on key downgrade from vendor
     f:RegisterEvent("CHALLENGE_MODE_START") -- key going down on start
     f:RegisterEvent("CHALLENGE_MODE_COMPLETED") -- key going up & score change
     --f:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+    f:RegisterEvent("CHAT_MSG_LOOT")
 end
 
 -- Trigger all event staging here. (for now)
