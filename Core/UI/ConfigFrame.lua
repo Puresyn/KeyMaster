@@ -396,6 +396,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     local hoverColor = {}
     hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.hex = Theme:GetThemeColor("color_ERRORMSG")
     btnOptions.textHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
+    btnOptions.btnHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
     local preText = KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"]
     local listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB)))..")"
     btnOptions.text = preText..listCountText
@@ -410,7 +411,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     end
 
     charactersSetting.purgeButton = KMFactory:Create(charactersSetting, "Button", btnOptions)
-    charactersSetting.purgeButton:SetPoint("TOPLEFT", charactersSetting.filterNoKey, "BOTTOMLEFT", 0, -4)
+    charactersSetting.purgeButton:SetPoint("BOTTOMLEFT", charactersSetting, "BOTTOMLEFT", 4, 8)
     charactersSetting.purgeButton:SetScript("OnClick", purgeCharacterList)
 
     charactersSetting:HookScript("OnShow", function() purgeStatus(charactersSetting.purgeButton) end)
