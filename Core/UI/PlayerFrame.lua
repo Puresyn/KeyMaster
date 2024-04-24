@@ -133,6 +133,17 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
         self:RefreshCamera() 
     end)
 
+    local characterIconFrame = CreateFrame("Frame", "KM_CharacterIcon", playerFrame)
+    characterIconFrame:SetPoint("LEFT", playerFrame, "LEFT", 10, 0)
+    characterIconFrame:SetSize(playerFrame:GetHeight()-20, playerFrame:GetHeight()-20)
+    characterIconFrame.icon = characterIconFrame:CreateTexture(nil, "ARTWORK")
+    characterIconFrame.icon:SetAllPoints(characterIconFrame)
+    --characterIconFrame.icon:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES")
+    --characterIconFrame.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/Ellie/warcraftflat/rogue_warcraftflat")
+    characterIconFrame.icon:SetAlpha(0.3)
+    --characterIconFrame.icon:SetTexture("")
+    characterIconFrame:Hide()
+
     local playerFrameHighlight = CreateFrame("Frame", "KM_PlayerFrameHighlight" ,playerFrame)
     playerFrameHighlight:SetFrameLevel(modelFrame:GetFrameLevel()+1)
     playerFrameHighlight:SetPoint("TOPLEFT")
@@ -299,7 +310,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     btnOptions.text = KeyMasterLocals.PLAYERFRAME["Characters"]
 
     local charactersButton = Factory:Create(mapHeaderFrame,"Button", btnOptions)
-    charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 4, 0)
+    charactersButton:SetPoint("LEFT", mapHeaderFrame, "LEFT", 10, 0)
     charactersButton:SetScript("OnClick", toggleCharactersFrame)
     charactersButton:Hide()
 

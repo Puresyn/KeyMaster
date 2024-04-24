@@ -143,21 +143,19 @@ function PlayerFrameMapping:RefreshData(fetchNew)
     -- character realm    
     playerFrame.realmName:SetText(selectedCharacterRealm)
 
-    -- character modelFrame
+    -- character icon/modelFrame    
+    local characterIconFrame = _G["KM_CharacterIcon"]
     local playerModelFrame = _G["KM_PlayerModel"]
     if UnitGUID("player") == selectedCharacterGUID then
         playerModelFrame:Show()
+        characterIconFrame:Hide()
     else
         playerModelFrame:Hide()
+        --local coords = CLASS_ICON_TCOORDS[className]
+        --characterIconFrame.icon:SetTexCoord(unpack(coords))
+        --characterIconFrame.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/Ellie/warcraftflat/"..string.lower(className).."_warcraftflat")
+        characterIconFrame:Show()
     end    
-
-    -- character vault
-    -- local vaultDetails = _G["KM_VaultDetailView"]
-    -- if UnitGUID("player") == selectedCharacterGUID then
-    --     vaultDetails:Show()
-    -- else
-    --     vaultDetails:Hide()
-    -- end
 
     -- character data
     local playerData = CharacterData:GetCharacterDataByGUID(selectedCharacterGUID) or KeyMaster.UnitData:GetUnitDataByUnitId("player")
