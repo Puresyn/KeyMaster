@@ -13,7 +13,7 @@ local L = KM_Localization_deDE
 -- Übersetzungsproblem? Helfen Sie uns bei der Korrektur! Besuchen: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Deutsch (DE)"
-L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur)" -- Translator display name
+L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur) + Salty" -- Translator display name
 
 L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Schlüsselstein Informations- und Kollaborationstool"
@@ -85,7 +85,7 @@ L.INSTANCETIMER = "Instanzinformationen"
 L.VAULTINFORMATION = "M+ Schatzkammer-Fortschritt"
 L.TIMELIMIT = "Zeitlimit"
 L.SEASON = "Saison"
-L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
+L.COMBATMESSAGE = { errormsg = "Key Master im Kampf nicht verfügbar.", chatmsg = "Das Interface wird geöffnet, sobald Sie den Kampf verlassen."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -120,7 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Neu", text = "Deine Wertung nach Abschluss dies
 L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne potenzielle Wertungssteigerungen."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um eine Abschätzung"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "der Basiswertungssteigerung zu sehen."}
-L.PLAYERFRAME["Characters"] = "Characters"
+L.PLAYERFRAME["Characters"] = "Charaktere"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden"}
@@ -140,11 +140,11 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnoseeinstellungen", t
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeigen", text = "Fehlermeldungen anzeigen."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnoseinformationen", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, könnten sie deine Chatbox überfluten!"}
-L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
-L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
-L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
-L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Charakterlistenfilter", text = "Filteroptionen für die Liste der alternativen Charaktere." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Aktueller Server", text = "Nur aktuellen Server anzeigen." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Keine Wertung", text = "Nur Charaktere mit Wertung anzeigen." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Kein Schlüsselstein", text = "Nur Charaktere mit einem Schlüsselstein anzeigen." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Zurücksetzen", past = "Zurückgesetzt" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
@@ -152,7 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
 L.ABOUTFRAME["Translators"] = { text = "Übersetzer" }
-L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
+L.ABOUTFRAME["WhatsNew"] = { text = "Neuerungen anzeigen"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated
