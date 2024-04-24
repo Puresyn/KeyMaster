@@ -13,7 +13,7 @@ local CharactersFrameMapping = KeyMaster.CharactersFrameMapping
 
 local function createCharacterSelectFrame(parent)
     local frameWidth = 175
-    local characterSelectFrame = CreateFrame("Frame", "KM_CharacterSelectFrame", parent, "BackdropTemplate")
+    local characterSelectFrame = _G["KM_CharacterSelectFrame"] or CreateFrame("Frame", "KM_CharacterSelectFrame", parent, "BackdropTemplate")
     characterSelectFrame:ClearAllPoints()
     characterSelectFrame:SetFrameLevel(_G["KeyMaster_MainFrame"]:GetFrameLevel()-1)
     characterSelectFrame:SetSize(frameWidth, parent:GetHeight())
@@ -41,7 +41,8 @@ local function createCharacterSelectFrame(parent)
         end
     )
     
-    local scrollFrame = CreateFrame("Frame", nil, characterSelectFrame)
+    local scrollFrame
+    scrollFrame = _G["KM_CharacterListScrollFrame"] or CreateFrame("Frame", "KM_CharacterListScrollFrame", characterSelectFrame)
     scrollFrame:SetFrameLevel(characterSelectFrame:GetFrameLevel()+1)
     scrollFrame:SetSize(characterSelectFrame:GetWidth()-8, characterSelectFrame:GetHeight()-12)
     scrollFrame:SetPoint("BOTTOMLEFT", characterSelectFrame, "BOTTOMLEFT", 4, 6)
