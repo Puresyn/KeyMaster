@@ -48,6 +48,10 @@ local function setWhatsNewContent(parent)
                 <p>]]..textBullet..[[It now closes automatically when casting a spell or using an ability.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <p>Fixed a bug when recieving a new or updated keystone under certian conditions, your key information didn't update in real-time without a reload or relog.</p>
+                <br/>
+                <p>Fixed a bug where non-english client keys were sometimes not updating real-time.</p>
+                <br/>
                 <p>ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()' should no longer be an issue.</p>
                 <br/>
                 <p>Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization or it is otherwise unknown.</p>
