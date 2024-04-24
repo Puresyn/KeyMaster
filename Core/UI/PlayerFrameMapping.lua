@@ -151,9 +151,10 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         characterIconFrame:Hide()
     else
         playerModelFrame:Hide()
+        characterIconFrame.icon:SetVertexColor(classRGB.r, classRGB.g, classRGB.b, 0.15)
         --local coords = CLASS_ICON_TCOORDS[className]
         --characterIconFrame.icon:SetTexCoord(unpack(coords))
-        --characterIconFrame.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/Ellie/warcraftflat/"..string.lower(className).."_warcraftflat")
+        --characterIconFrame.icon:SetTexture("")
         characterIconFrame:Show()
     end    
 

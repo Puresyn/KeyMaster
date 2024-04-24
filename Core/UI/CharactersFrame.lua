@@ -234,7 +234,7 @@ function CharactersFrame:CreateCharacterRow(characterGUID)
     characterRow.key:SetJustifyH("RIGHT")
     
     characterRow.selectedTexture = characterRow:CreateTexture(nil, "ARTWORK")
-    characterRow.selectedTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KeyMaster-Interface-Clean")
+    characterRow.selectedTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     characterRow.selectedTexture:SetTexCoord(957/1024, 1, 332/1024,  399/1024)
     characterRow.selectedTexture:SetSize(66, characterRow:GetHeight())
     characterRow.selectedTexture:SetPoint("LEFT", characterRow, "LEFT", -3, 1)
