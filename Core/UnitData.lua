@@ -57,13 +57,15 @@ function UnitData:UpdateListCharacter(playerGUID, cData)
 
     local ratingObj, keyTextObj, keyText
     local keyInfo = {}
-    local characterFrame = _G["KM_CharacterRow_"..playerGUID]:GetAttribute("row") or false
-    if not characterFrame or not type(characterFrame == "table") then return end
-    ratingObj = characterFrame:GetAttribute("overallRating")
+    local characterRow = _G["KM_CharacterRow_"..playerGUID] or false
+    if not characterRow or not type(characterRow == "table") then return end
+    ratingObj = characterRow.overallScore
     if ratingObj then
-        ratingObj:SetText(tostring(UnitData.overallRating))
+        local overallRating = UnitData.overallRating
+        if not UnitData.overallRating then overallRating = 0 end
+        ratingObj:SetText(tostring(overallRating))
     end
-    keyTextObj = characterFrame:GetAttribute("keyText")
+    keyTextObj = characterRow.key
     if unitData.ownedKeyLevel > 0 then
         keyInfo.keyLevel = unitData.ownedKeyLevel
         keyInfo.keyId = unitData.ownedKeyId
@@ -73,15 +75,6 @@ function UnitData:UpdateListCharacter(playerGUID, cData)
     end
     if keyTextObj and keyText then
         keyTextObj:SetText(keyText)
-    end
-
-    -- only need to do this when the panel is currently visible. Otherwise
-    -- the action of showing/hiding the character select frame does this.
-    if  _G["KM_CharacterSelectFrame"]  then -- nil check for any unknown states.
-        if _G["KM_CharacterSelectFrame"]:IsShown() then
-            local PlayerFrame = KeyMaster.PlayerFrame
-            PlayerFrame:UpdateCharacterList() -- player frame counterpart - script laoding order.
-        end
     end
 end
 
