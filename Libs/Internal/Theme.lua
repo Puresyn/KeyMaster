@@ -206,8 +206,8 @@ local Colors = {
     },
     color_ERRORMSG = {
         r = 1,
-        g = 1,
-        b = 1,
+        g = 0.184,
+        b = 0.184,
         hex = "FF2F2F"
     },
     color_DEBUGMSG = {
