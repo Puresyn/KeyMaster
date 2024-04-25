@@ -85,7 +85,7 @@ L.INSTANCETIMER = "Informação da Instância"
 L.VAULTINFORMATION = "M+ Progressão do Baú"
 L.TIMELIMIT = "Limite de Tempo"
 L.SEASON = "Temporada"
-L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
+L.COMBATMESSAGE = { errormsg = "Key Master indisponível em combate.", chatmsg = "A interface irá abrir assim que sair de combate."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -120,7 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Novo", text = "Sua pontuação após completar 
 L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora", text = "Calcula o ganho potencial de pontuação."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Nível-chave", text = "Insira o nível da chave para ver"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Ganho base de pontuação", text = "previsão base de ganho de pontuação."}
-L.PLAYERFRAME["Characters"] = "Characters"
+L.PLAYERFRAME["Characters"] = "Personagens"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Chave não encontrada", text = "Chave não encontrada"}
@@ -140,11 +140,11 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Configurações de Diagn�
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Exibir erros", text = "Exibir mensagens de erro."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Exibir Debug", text = "Exibir mensagens de debugging."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnóstico Avançado", text="Nota: Apenas para propósito de diagnóstico. Poderá inundar sua janela de chat se ativado!"}
-L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
-L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
-L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
-L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Filtros da lista de Persoagens", text = "Opções alternativas de filtro para lista de personagens." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Servidor atual", text = "Mostrar apenas servidor atual." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Sem classificação", text = "Mostrar apenas personagens com classificação M+." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Sem Chave", text = "Mostrar apenas personagens com chave M+." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Expurgar", past = "Expurgados" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Informações Key Master", text = "Informações Key Master"}
@@ -152,7 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Autores", text = "Autores"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Agradecimentos Especiais", text = "Agradecimentos Especiais"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contribuidores", text = "Contribuidores"}
 L.ABOUTFRAME["Translators"] = { text = "Tradutores" }
-L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
+L.ABOUTFRAME["WhatsNew"] = { text = "Mostrar atualizações"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Importante: Os cálculos para a 4a temporada de Dragonflight ainda estão sendo verificados."}
