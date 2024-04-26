@@ -90,7 +90,10 @@ function HeaderFrame:SystemMessage(parentframe)
     else
         sysMessage:Hide()
     end
-    --sysMessage.text:SetSize(400, 100)
+    
+    sysMessage:SetScript("OnMouseUp", function (self)
+        self:Hide()
+    end)
 
     return sysMessage
 end
