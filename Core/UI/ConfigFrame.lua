@@ -402,6 +402,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     btnOptions.text = preText..listCountText
 
     local function purgeCharacterList(self)
+        listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB)))..")"
         KeyMaster.CharactersFrame:ResetCharacterList() -- change load order?
         KeyMaster_C_DB = {}
         CharacterData:CreateDefaultCharacterData()
@@ -414,7 +415,10 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     charactersSetting.purgeButton:SetPoint("BOTTOMLEFT", charactersSetting, "BOTTOMLEFT", 4, 8)
     charactersSetting.purgeButton:SetScript("OnClick", purgeCharacterList)
 
-    charactersSetting:HookScript("OnShow", function() purgeStatus(charactersSetting.purgeButton) end)
+    charactersSetting:HookScript("OnShow", function() 
+        purgeStatus(charactersSetting.purgeButton)
+        charactersSetting.purgeButton.text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"].." ("..KeyMaster:GetTableLength(KeyMaster_C_DB)..")")
+    end)
 
     --[[ -- Testing DropDownMenu IN DEVELOPMENT
     local dropDownTest = CreateFrame("Frame", nil, conFrame)
