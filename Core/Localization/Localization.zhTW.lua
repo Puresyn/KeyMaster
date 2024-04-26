@@ -144,7 +144,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="字元列表過濾器", text
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "目前伺服器", text = "只顯示目前伺服器。" }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "無評級", text = "僅顯示具有評級的角色。" }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "無鑰石", text = "只顯示帶有鍵的字元。" }
-L.CONFIGURATIONFRAME["Purge"] = { present = "清除", past = "淨化的" }
+L.CONFIGURATIONFRAME["Purge"] = { present = "清除", past = "远离" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master 資訊", text = "Key Master 資訊"}
@@ -152,7 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "作者", text = "作者"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "特別感謝", text = "特別感謝"}
 L.ABOUTFRAME["AboutContributors"] = { name = "貢獻者", text = "貢獻者"}
 L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
-L.ABOUTFRAME["WhatsNew"] = { text = "顯示新內容"}
+L.ABOUTFRAME["WhatsNew"] = { text = "显示补丁说明"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}
