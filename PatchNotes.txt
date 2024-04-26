@@ -16,11 +16,14 @@ Updates:
 
 - Added character list filter options to configuration tab.
 - Added "What's New" splash screen to display recent news, updates, and patch notes.
+- Added a "Show What's New" button to the about tab header to display patch notes on-demand.
 
 - Improved Key Master interface open/close functionality.
 -- It now closes automatically when entering combat.
 -- If opening the interface during combat, it will open automatically after exiting combat.
 -- It now closes automatically when casting a spell or using an ability.
+
+- Clicking on the Key Master Notice frame now dismisses the message until next reload/relog.
 
 Fixes:
 - Fixed a bug when recieving a new or updated keystone under certian conditions, your key information

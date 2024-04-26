@@ -42,10 +42,14 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <p>Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
                 <br/>
+                <p>Added a &quot;Show What's New&quot; button to the about tab header to display patch notes on-demand.</p>
+                <br/>
                 <p>Improved Key Master interface open/close functionality.</p>
                 <p>]]..textBullet..[[It now closes automatically when entering combat.</p>
                 <p>]]..textBullet..[[If opening the interface during combat, it will open automatically after exiting combat.</p>
                 <p>]]..textBullet..[[It now closes automatically when casting a spell or using an ability.</p>
+                <br/>
+                <p>Clicking on the Key Master Notice frame now dismisses the message until next reload/relog.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <p>Fixed a bug when recieving a new or updated keystone under certian conditions, your key information didn't update in real-time without a reload or relog.</p>
