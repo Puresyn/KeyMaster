@@ -167,6 +167,46 @@ local function updateCharacterData(guid, characterData)
     end    
 end
 
+function CharactersFrame:NoCharactersToDisplay(show)
+    if not show then show = false end
+    local noCharacters = _G["KM_NoCharacters"]
+
+    local function showHide(frame)
+        if frame and show then
+            frame:Show()
+        elseif frame and not show then
+            frame:Hide()
+        end
+        return frame 
+    end
+
+    if noCharacters then
+        noCharacters = showHide(noCharacters)
+        return noCharacters
+    end
+
+    local parent = _G["KM_CharacterSelectFrame"]
+    if not parent then 
+        KeyMaster:_ErrorMsg("NoCharactersToDisplay","CharactersFrame", "Attemped to create (no characters) icon before parent frame created.")
+        return
+    end
+
+    noCharacters = CreateFrame("Frame", "KM_NoCharacters", parent)
+    noCharacters:SetSize(80, 80)
+    noCharacters:SetPoint("CENTER", parent, "CENTER", -5, 0)
+    noCharacters:SetFrameLevel(parent:GetFrameLevel()+1)
+    noCharacters.icon = noCharacters:CreateTexture()
+    noCharacters.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
+    noCharacters.icon:SetTexCoord(916/1024, 1, 216/1024, 322/1024)
+    noCharacters.icon:SetAllPoints(noCharacters)
+    noCharacters.icon:SetSize(80, 80)
+    noCharacters.icon:SetAlpha(0.1)
+ 
+    noCharacters = showHide(noCharacters)
+    return noCharacters
+
+end
+
 function CharactersFrame:CreateCharacterRow(characterGUID)
     local parent = _G["KM_CharacterList"]
     if not parent then 
@@ -311,6 +351,13 @@ function CharactersFrame:CreateCharacters()
         end
         PlayerFrameMapping:RefreshData(false)
     end
+
+    if KeyMaster:GetTableLength(charactersTable) == 0 then
+        CharactersFrame:NoCharactersToDisplay(true)
+    else
+        CharactersFrame:NoCharactersToDisplay(false)
+    end
+
 end
 
 function CharactersFrame:Initialize(parentFrame)
