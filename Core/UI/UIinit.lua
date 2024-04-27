@@ -5,7 +5,9 @@ local ConfigFrame = KeyMaster.ConfigFrame
 local InfoFrame = KeyMaster.InfoFrame
 local PlayerFrame = KeyMaster.PlayerFrame
 local PartyFrame = KeyMaster.PartyFrame
+local CharactersFrame = KeyMaster.CharactersFrame
 local Theme = KeyMaster.Theme
+local WhatsNew = KeyMaster.WhatsNew
 
 -- Minimap Icon
 local function createMiniMapIcon()
@@ -35,6 +37,11 @@ end
 function MainInterface:Initialize()
   -- Creates UI structure, but making sure we only create the frames once IF they're not in _G[] Global namespace.
 
+  -- show what's new (once per version)
+  if KeyMaster_DB.addonConfig.splashViewed == false or KeyMaster_DB.addonConfig.splashViewed == nil then
+    local whatsNew = _G["KM_WhatsNewFrame"] or WhatsNew:Init()
+  end
+
   -- Main Parent Frame
   local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()    
   local addonIcon = _G["KeyMaster_Icon"] or MainInterface:CreateAddonIcon(mainFrame)
@@ -48,6 +55,7 @@ function MainInterface:Initialize()
 
   -- Player Tab Content
   local playerTabContent = PlayerFrame:Initialize(contentRegion)
+  local characterSelect = CharactersFrame:Initialize(playerTabContent)
 
   -- Party Tab Content
   local partyTabContent = PartyFrame:Initialize(contentRegion)
@@ -74,8 +82,19 @@ function MainInterface:Initialize()
   return mainFrame
 end
 
+KM_shownCombatMessage = 0 -- See MainFrame.lua
+local _, _, _, msgColor = Theme:GetThemeColor("themeFontColorYellow")
 function MainInterface:Toggle()
 -- Shows/Hides the main interface - will only create the windows once, otherwise it holds the window pointer
   local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
-  mainUI:SetShown(not mainUI:IsShown())
+  if not InCombatLockdown() then
+    --if mainUI:IsShown() then mainUI:Hide() else mainUI:Show() end
+    mainUI:SetShown(not mainUI:IsShown())
+  elseif KM_shownCombatMessage == 0 then
+    if _G["UIErrorsFrame"] then
+      _G["UIErrorsFrame"]:AddMessage("|cffff3333".. KeyMasterLocals.COMBATMESSAGE.errormsg .."|r")
+    end
+    KeyMaster:Print("|cff"..msgColor.. KeyMasterLocals.COMBATMESSAGE.chatmsg .."|r")
+    KM_shownCombatMessage = 1
+  end
 end

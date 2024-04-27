@@ -15,11 +15,7 @@ KeyMaster.PartyFrame = {}
 local PartyFrame = KeyMaster.PartyFrame
 
 local function portalButton_buttonevent(self, event)
-    local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
-    local start, dur, _ = GetSpellCooldown(spellNameToCheckCooldown);
-    if (dur < 2) then
-        MainInterface:Toggle()
-    end
+ -- left empty
 end
 
 local function portalButton_tooltipon(self, event)
@@ -533,13 +529,6 @@ function PartyFrame:CreatePartyRowsFrame(parentFrame)
     temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 440)
     temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -108)
     timeSinceLastUpdate = 0
-    
-    --[[ local txtPlaceHolder = temp_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = txtPlaceHolder:GetFont()
-    txtPlaceHolder:SetFont(Path, 20, Flags)
-    txtPlaceHolder:SetPoint("TOPLEFT", 0, 30)
-    txtPlaceHolder:SetTextColor(1, 1, 1)
-    txtPlaceHolder:SetText(KeyMasterLocals.PARTYFRAME["PartyInformation"].name..":") ]]
 
     return temp_frame
 end

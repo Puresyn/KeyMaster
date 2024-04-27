@@ -1,0 +1,41 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+	../UI.xsd">
+	<Button name="WhatsNewButtonTemplate" virtual="true">
+		<Size x="25" y="25"/>
+		<Scripts>
+			<OnClick>
+			</OnClick>
+			<OnEnter>
+			</OnEnter>
+			<OnLeave>
+			</OnLeave>
+		</Scripts>
+	</Button>
+    <Frame name="WhatsNewTemplate" toplevel="true" movable="true" enableMouse="true" resizable="false" frameStrata="HIGH" inherits="BackdropTemplate" virtual="true">
+		<Size x="500" y="300"/>
+		<Anchors>
+            <!-- <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+				<Offset x="0" y="0"/>
+			</Anchor> -->
+		</Anchors>
+		<Layers>
+            <Layer level="BACKGROUND">
+            </Layer>
+            <Layer level="ARTWORK">
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad>
+                <!-- tinsert(UISpecialFrames, self:GetName()); -->
+            </OnLoad>
+			<OnShow>
+                <!-- PlaySound(SOUNDKIT.IG_SPELLBOOK_OPEN); -->
+				<!-- KeyMaster:Initialize(self); -->
+			</OnShow>
+			<OnHide>
+                <!-- PlaySound(SOUNDKIT.IG_SPELLBOOK_CLOSE); -->
+			</OnHide>
+		</Scripts>
+    </Frame>
+
+</Ui>

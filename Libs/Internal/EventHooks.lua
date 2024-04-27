@@ -41,8 +41,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
-                KeyMaster.PlayerFrameMapping:RefreshData(true)
-                KeyMaster.HeaderFrameMapping:RefreshData(true)
+                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
             end
 
             -- Transmit unit data to party members with addon
@@ -64,8 +64,8 @@ local function NotifyEvent(event)
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
-                KeyMaster.PlayerFrameMapping:RefreshData(true)
-                KeyMaster.HeaderFrameMapping:RefreshData(true)
+                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
             end
                     
             -- Transmit unit data to party members with addon
@@ -101,7 +101,7 @@ local function KeyWatch()
             ---@param itemChangedFrom integer Returned ID of the changed item.
             ---@param itemChangedTo integer Returned ID of what the item changed to.
             local itemChangedFrom, itemChangedTo, _ = ...
-            if (string.match(itemChangedFrom, "Mythic Keystone")) then
+            if (string.match(itemChangedFrom, tostring(MYTHIC_PLUS_KEY_ID))) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_CHANGED: "..tostring(itemChangedFrom))
                 NotifyEvent("KEY_CHANGED")                
             end
@@ -123,12 +123,22 @@ local function KeyWatch()
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_COMPLETED")
             NotifyEvent("SCORE_GAINED")
         end
+        if event == "CHAT_MSG_LOOT" then
+            local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
+            if guid == UnitGUID("player") then
+                if (string.match(itemTextRecieved, tostring(MYTHIC_PLUS_KEY_ID))) then
+                    KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHAT_MSG_LOOT: "..tostring(itemTextRecieved))
+                    NotifyEvent("KEY_CHANGED")
+                end
+            end
+        end
     end)
-    f:RegisterEvent("ITEM_COUNT_CHANGED") -- fired when getting key from vendor
+    f:RegisterEvent("ITEM_COUNT_CHANGED") -- fired when getting key from vendor (only fires when going into default bag?!?!)
     f:RegisterEvent("ITEM_CHANGED") -- fires on key downgrade from vendor
     f:RegisterEvent("CHALLENGE_MODE_START") -- key going down on start
     f:RegisterEvent("CHALLENGE_MODE_COMPLETED") -- key going up & score change
     --f:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+    f:RegisterEvent("CHAT_MSG_LOOT")
 end
 
 -- Trigger all event staging here. (for now)

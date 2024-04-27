@@ -85,6 +85,7 @@ L.INSTANCETIMER = "Informations sur les instances"
 L.VAULTINFORMATION = "Progression du coffre-fort M+"
 L.TIMELIMIT = "Limite de temps"
 L.SEASON = "Saison"
+L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -119,6 +120,7 @@ L.PLAYERFRAME["New"] = { name = "Nouveau", text = "Votre note après avoir compl
 L.PLAYERFRAME["RatingCalculator"] = { name = "Calculateur", text = "Calculez les gains de notation potentiels."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Niveau clé", text = "Entrez un niveau clé pour voir"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Gain de note de base", text = "yvotre prédiction de gain de note de base."}
+L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Aucune clé trouvée", text = "Aucune clé trouvée"}
@@ -138,6 +140,11 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Paramètres de diagnostic
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Erreurs d'affichage", text = "Afficher les messages d'erreur."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Afficher le débogage", text = "Afficher les messages de débogage."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnostic avancé", text="Remarque : ces informations sont uniquement destinées à des fins de diagnostic. Ils peuvent inonder votre boîte de discussion s’ils sont activés !"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}
@@ -145,6 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Auteurs", text = "Auteurs"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Remerciement spécial", text = "Remerciement spécial"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contributeurs", text = "Contributeurs"}
 L.ABOUTFRAME["Translators"] = { text = "Translators" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}

@@ -209,7 +209,74 @@ local function createDropDownMenu(f, options)
 
 end
 
--- Create(parent, ["DropDownMenu", "Submenu"], {options}
+local function createButton(f, options)
+
+    local btnText = ""
+    --text.width = 0
+    --text.height = 0
+    local btnName = nil
+
+    local btnTint = {0.779, 0.686, 0.384, 0.8} --{1, 1,  1, 0.6} -- default NONPHOTOBLUE
+    local btnTextColor = {1, 0.854, 0, 0.85}
+    local btnTextHoverColor = {1, 0.854, 0, 1} -- {0.64, 0.91, 0.99, 1} -- {1, 0.854, 0, 1}
+    local btnHoverColor = {0.779, 0.686, 0.384, 0.8}
+    local font = "KeyMasterFontSmall"
+
+    if options and type(options) == "table" then
+        if options["text"] then btnText = options["text"] end
+        if options["name"] then btnName = options["name"] end
+        if options["tint"] then btnTint = options["tint"] end
+        if options["textColor"] then btnTextColor = options["textColor"] end
+        if options["textHoverColor"] then btnTextHoverColor = options["textHoverColor"] end
+        if options["btnHoverColor"] then btnHoverColor = options["btnHoverColor"] end
+        if options["font"] then font = options["font"] end
+    end
+
+    local function ButtonEnter(self)
+        self.text:SetTextColor(btnTextHoverColor[1], btnTextHoverColor[2], btnTextHoverColor[3], btnTextHoverColor[4])
+    end
+
+    local function ButtonLeave(self)
+        self.text:SetTextColor(btnTextColor[1], btnTextColor[2],btnTextColor[3], btnTextColor[4])
+    end
+
+    local btn = CreateFrame("Button", btnName, f)
+
+    btn:SetText(nil) -- not using built-in text becuase it lacks some functionality
+    btn.text = btn:CreateFontString(nil, "OVERLAY", font)
+    btn.text:SetPoint("CENTER", btn, "CENTER")
+    btn.text:SetText(btnText)
+    btn.text:SetTextColor(btnTextColor[1], btnTextColor[2], btnTextColor[3], btnTextColor[4])
+    btn:SetSize(btn.text:GetStringWidth()+24,btn.text:GetStringHeight()+8)
+    btn.upTexture = btn:CreateTexture()
+    btn.upTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KM-Panel-Button-Up")
+    btn.upTexture:SetTexCoord(0, 79/128, 0, 22/32)
+    btn.upTexture:SetAllPoints(btn)
+    btn.upTexture:SetSize(btn:GetWidth(), btn:GetHeight())
+    btn.upTexture:SetVertexColor(btnTint[1],btnTint[2],btnTint[3],btnTint[4])
+    btn:SetNormalTexture(btn.upTexture)
+
+    btn.pushedTexture = btn:CreateTexture()
+    btn.pushedTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KM-Panel-Button-Down")
+    btn.pushedTexture:SetTexCoord(0, 79/128, 0, 22/32)
+    btn.pushedTexture:SetAllPoints(btn)
+    btn.pushedTexture:SetVertexColor(btnTint[1],btnTint[2],btnTint[3],btnTint[4])
+    btn:SetPushedTexture(btn.pushedTexture)
+
+    btn.highlightTexture = btn:CreateTexture()
+    btn.highlightTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KM-Panel-Button-Highlight")
+    btn.highlightTexture:SetTexCoord(0, 79/128, 0, 22/32)
+    btn.highlightTexture:SetAllPoints(btn)
+    btn.highlightTexture:SetVertexColor(btnHoverColor[1],btnHoverColor[2],btnHoverColor[3],btnHoverColor[4])
+    btn:SetHighlightTexture(btn.highlightTexture)
+
+    btn:SetScript("OnEnter", ButtonEnter)
+    btn:SetScript("OnLeave", ButtonLeave)
+
+    return btn
+end
+
+-- Create(parent, ["DropDownMenu", "Submenu", "Button"], {options}
 function KMFactory:Create(parent, itemType, options)
 
     local obj
@@ -217,6 +284,10 @@ function KMFactory:Create(parent, itemType, options)
 
     if itemType == "DropDownMenu" then
         obj = createDropDownMenu(f, options)
+    end
+
+    if itemType == "Button" then
+        obj = createButton(f, options)
     end
 
     return obj

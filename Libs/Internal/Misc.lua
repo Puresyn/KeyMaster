@@ -137,14 +137,129 @@ function KeyMaster:_DebugMsg(funcName, fileName, ...)
     end
 end
 
+function KeyMaster:CreateDefaultCharacterData()
+    local charDefaults = {}
+    if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
+        
+        local playerGUID = UnitGUID("PLAYER")
+        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
+
+        charDefaults = {
+            [""..playerGUID..""] = {
+                client = true,                              -- flag if this character is owned by client (future use)
+                name = UnitName("PLAYER"),                  -- character's name
+                realm = GetRealmName(),                     -- character's realm
+                rating = 0,                                 -- set default rating to 0
+                season = nil,                               -- season placeholder (slow API)
+                class = baseClassId,                        -- Players class id #
+                data = nil,                                 -- character data placeholder (for reference)
+                keyId = nil,
+                keyLevel = nil,
+                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
+                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
+                level = UnitLevel("PLAYER"),                -- level reference for cleanup
+                vault = {},                                -- vault information
+                teams = {                                   -- teams table (for later use)
+                    team1 = nil
+                }
+            }
+        }
+
+    end
+    return charDefaults
+end
+
+--local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
+function KeyMaster:CleanCharSavedData(data)
+    if not data then
+       KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
+       return
+   end
+
+   for k, v in pairs(data) do
+       local deleteME = false
+       -- long-winded season check/set becuase the API can be slow
+       local apiCheck = DungeonTools:GetCurrentSeason()
+       if v.season  then  
+            -- make sure api is available before we mess with data.
+           if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
+               if v.season < apiCheck then
+                   deleteME = true
+                   --table.remove(data, k)
+               else
+                   v.season = apiCheck
+               end
+           end
+       elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
+           v.season = apiCheck
+       end
+
+       if v.level then -- nil check
+           if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
+               deleteME = true
+               --table.remove(data, k)
+               return data
+           end
+       end
+       if v.expire then -- nil check
+           if v.expire < GetServerTime() then -- remove key data if expired
+               data[k].keyLevel = 0
+               data[k].keyId = 0
+               data[k].expire = KeyMaster:WeeklyResetTime()
+           end
+       else
+           data[k].expire = KeyMaster:WeeklyResetTime()
+       end
+       
+       if deleteME then data[k] = nil end
+
+   end
+
+   if KeyMaster:GetTableLength(data) == 0 then
+       data = KeyMaster:CreateDefaultCharacterData()
+   end
+
+   return data 
+end
+
 -- This function gets run when the PLAYER_LOGIN event fires:
 function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
-    -- This table defines the addon's default settings:
-    local defaults = {
+
+    -- This function copies values from one table into another:
+        local function copyDefaults(src, dst)
+            -- If no source (defaults) is specified, return an empty table:
+            if type(src) ~= "table" then return {} end
+            -- If no target (saved variable) is specified, create a new table:
+            if type(dst) ~= "table" then dst = { } end
+            -- Loop through the source (defaults):
+            for k, v in pairs(src) do
+                -- If the value is a sub-table:
+                if type(v) == "table" then
+                    -- Recursively call the function:
+                    dst[k] = copyDefaults(v, dst[k])
+                -- Or if the default value type doesn't match the existing value type:
+                elseif type(v) ~= type(dst[k]) then
+                    -- Overwrite the existing value with the default one:
+                    dst[k] = v
+                end
+            end
+            -- Return the destination table:
+            return dst
+        end
+
+    -- This table defines the addon's default congiuration settings:
+    local configDefaults = {
         addonConfig = {
+            version = tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS,
             showErrors = false,
             showDebugging = false,
             showRatingFloat = false,
+            splashViewed = false,
+            characterFilters = {
+                serverFilter = false,
+                filterNoRating = false,
+                filterNoKey = false
+            },
             miniMapButtonPos = {
                 ["minimapPos"] = 206,
 	            ["hide"] = false
@@ -157,31 +272,22 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
         }
     }
 
-    -- This function copies values from one table into another:
-    local function copyDefaults(src, dst)
-        -- If no source (defaults) is specified, return an empty table:
-        if type(src) ~= "table" then return {} end
-        -- If no target (saved variable) is specified, create a new table:
-        if type(dst) ~= "table" then dst = { } end
-        -- Loop through the source (defaults):
-        for k, v in pairs(src) do
-            -- If the value is a sub-table:
-            if type(v) == "table" then
-                -- Recursively call the function:
-                dst[k] = copyDefaults(v, dst[k])
-            -- Or if the default value type doesn't match the existing value type:
-            elseif type(v) ~= type(dst[k]) then
-                -- Overwrite the existing value with the default one:
-                dst[k] = v
-            end
-        end
-        -- Return the destination table:
-        return dst
-    end
+    -- This table defines the players default character information IF max level
+    local charDefaults = KeyMaster:CreateDefaultCharacterData()
 
     -- Copy the values from the defaults table into the saved variables table
-    -- if it exists, and assign the result to the saved variable:
-    KeyMaster_DB = copyDefaults(defaults, KeyMaster_DB)
+    -- if data doesn't exist and assign the result to the global variable:
+    KeyMaster_DB = copyDefaults(configDefaults, KeyMaster_DB)
+    KeyMaster_C_DB = copyDefaults(charDefaults, KeyMaster_C_DB)
+    
+    -- splash screen set/check
+    if KeyMaster_DB.addonConfig.version ~=  (tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS) then
+        KeyMaster_DB.addonConfig.splashViewed = false
+        KeyMaster_DB.addonConfig.version =  tostring(KM_AUTOVERSION).."-"..KM_VERSION_STATUS
+    end
+
+    -- clean data
+    KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)
 
 end
 

@@ -2,6 +2,7 @@ local _, KeyMaster = ...
 KeyMaster.UnitData = {}
 local UnitData = KeyMaster.UnitData
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
+local CharacterData = KeyMaster.CharacterData
 
 local unitInformation = {}
 
@@ -33,6 +34,50 @@ local function getUnitRealm(unitGUID)
     KeyMaster:_ErrorMsg("getUnitRealm", "UnitData", "Cannot find unit for GUID: "..unitGUID)
 end
 
+function UnitData:UpdateListCharacter(playerGUID, cData)
+
+    KeyMaster:_DebugMsg("UpdateListCharacter","UnitData","Updating player character frame data.")
+    local function getKeyText(cData)
+        local keyText
+        if cData.keyId > 0 and cData.keyLevel > 0 then
+            if not KeyMasterLocals.MAPNAMES[cData.keyId] then
+                cData.keyId = 9001 -- unknown keyId
+            end
+            keyText = "("..tostring(cData.keyLevel)..") "..KeyMasterLocals.MAPNAMES[cData.keyId].abbr
+        end
+        return keyText
+    end
+
+    if not playerGUID then return end
+
+    if not _G["KM_CharacterRow_"..playerGUID] then return end -- nothing to update so exit out.
+
+    local unitData = UnitData:GetUnitDataByGUID(playerGUID)
+    if not unitData then return end
+
+    local ratingObj, keyTextObj, keyText
+    local keyInfo = {}
+    local characterRow = _G["KM_CharacterRow_"..playerGUID] or false
+    if not characterRow or not type(characterRow == "table") then return end
+    ratingObj = characterRow.overallScore
+    if ratingObj then
+        local overallRating = UnitData.overallRating
+        if not UnitData.overallRating then overallRating = 0 end
+        ratingObj:SetText(tostring(overallRating))
+    end
+    keyTextObj = characterRow.key
+    if unitData.ownedKeyLevel > 0 then
+        keyInfo.keyLevel = unitData.ownedKeyLevel
+        keyInfo.keyId = unitData.ownedKeyId
+        keyText = getKeyText(keyInfo)
+    else
+        keyText = ""
+    end
+    if keyTextObj and keyText then
+        keyTextObj:SetText(keyText)
+    end
+end
+
 function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
@@ -46,9 +91,15 @@ function UnitData:SetUnitData(unitData)
         unitData.realm = getUnitRealm(unitData.GUID)
     end
     
-    -- STORE DATA IN MEMORY! duh?
+    -- STORE DATA IN MEMORY
     unitInformation[unitData.GUID] = unitData
 
+    -- Store/Update Unit Data in Saved Variables
+    if unitData.GUID == UnitGUID("player") and UnitLevel("PLAYER") == GetMaxPlayerLevel() then
+        CharacterData:SetCharacterData(unitData.GUID, unitData)
+        UnitData:UpdateListCharacter(unitData.GUID, unitData) -- todo: move out of this file 
+    end
+    
     KeyMaster:_DebugMsg("SetUnitData", "UnitData", "Stored data for "..unitData.name)
 end
 
