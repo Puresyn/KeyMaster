@@ -63,7 +63,7 @@ local function setWhatsNewContent(parent)
                 <p>Fixed issue where some clients were not able to use the portal icons.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>Still validating season 4 rating calculations (We are cautiously optimistic that the scores are accurate.)</p>
+                <p>Still validating season 4 rating calculations (We are cautiously optimistic that the ratings are accurate.)</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
