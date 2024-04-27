@@ -5,6 +5,9 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.1.4
 --------------------------------------------------
+- Fixed portal click issue (FINALLY!) This was due to a CVAR setting from OPie
+  (or any addon that changes the way mouse-clicks happen in WoW)..
+- Updates to TW localization.
 
 --------------------------------------------------
 Key Master v1.1.3

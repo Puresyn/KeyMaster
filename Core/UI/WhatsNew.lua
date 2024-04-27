@@ -52,6 +52,8 @@ local function setWhatsNewContent(parent)
                 <p>Clicking on the Key Master Notice frame now dismisses the message until next reload/relog.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <p>Fixed portal click issue (FINALLY!) This was due to a CVAR setting from OPie(?) or any addon that changes the way mouse-clicks happen in WoW...</p>
+                <br/>
                 <p>Fixed a bug when receiving a new or updated keystone under certain conditions, your key information didn't update in real-time without a reload or relog.</p>
                 <br/>
                 <p>Fixed a bug where non-English client keys were sometimes not updating real-time.</p>
@@ -59,8 +61,6 @@ local function setWhatsNewContent(parent)
                 <p>ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()' should no longer be an issue.</p>
                 <br/>
                 <p>Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization or it is otherwise unknown.</p>
-                <br/>
-                <p>Fixed issue where some clients were not able to use the portal icons.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
                 <p>Still validating season 4 rating calculations (We are cautiously optimistic that the ratings are accurate.)</p>
