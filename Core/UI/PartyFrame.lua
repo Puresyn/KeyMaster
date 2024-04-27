@@ -167,7 +167,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
         pButton:SetFrameLevel(10)
         pButton:SetAttribute("type", "spell")
         pButton:SetAttribute("spell", portalSpellId)
-        pButton:RegisterForClicks("AnyDown")
+        pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
         pButton:SetWidth(pButton:GetParent():GetWidth())
         pButton:SetHeight(pButton:GetParent():GetWidth())
         pButton:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)

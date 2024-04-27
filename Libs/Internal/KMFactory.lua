@@ -73,7 +73,7 @@ local function createItem(p, name, value, callback)
 
     if callback then
         menuListItem:SetScript("OnClick", callback)
-        menuListItem:RegisterForClicks("AnyDown") -- , "AnyUp"
+        menuListItem:RegisterForClicks("AnyDown", "AnyUp")
     end
     return menuListItem
 end
