@@ -16,7 +16,7 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '1.0.3'
+KM_AUTOVERSION = '1.1.3'
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -115,7 +115,11 @@ local function intializeUIWithRetries(retryCount)
     else
         if retryCount < 5 then
             C_Timer.After(3, function() intializeUIWithRetries(retryCount + 1) end)
-            KeyMaster:_DebugMsg("intializeUIWithRetries", "KeyMaster.lua", "Retrying to create UI frames after "..tostring(retryCount).." retries.")
+            if retryCount > 0 then
+                KeyMaster:_DebugMsg("intializeUIWithRetries", "KeyMaster.lua", "Retrying to create UI frames after "..tostring(retryCount).." retries.")
+            else
+                KeyMaster:_DebugMsg("intializeUIWithRetries", "KeyMaster.lua", "Initializing user interface.")
+            end            
         else
             KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
         end
@@ -128,20 +132,15 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
     --------------------------------
     -- Register Slash Commands:
     --------------------------------
-    -- todo: Point commands to Localization
-    -- todo: Remove these comments and debug functions for release
     SLASH_RELOADUI1 = "/rl" -- Faster reaload
     SlashCmdList.RELOADUI = ReloadUI
 
-    SLASH_FRAMESTK1 = "/fs"; -- slash command for showing framestack tool
+    SLASH_FRAMESTK1 = "/fs"
 	SlashCmdList.FRAMESTK = function()
-		LoadAddOn("Blizzard_DebugTools");
-		FrameStackTooltip_Toggle();
+		LoadAddOn("Blizzard_DebugTools")
+		FrameStackTooltip_Toggle()
 	end
 
-    -- commands to be included in release
-    --SLASH_KeyMaster1 = "/km"  -- Localized
-    --SLASH_KeyMaster2 = "/keymaster" -- Localized
     SlashCmdList.KeyMaster = HandleSlashCommands
 
     KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
@@ -224,6 +223,17 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
 
         -- creates the UI but only when bliz data is avaiable from C_MythicPlus
         intializeUIWithRetries()
+
+        C_Timer.After(5, 
+            function() 
+                local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+                if rewards then
+                    if KeyMaster_C_DB[UnitGUID("player")] then
+                        KeyMaster_C_DB[UnitGUID("player")].vault = rewards
+                    end
+                end
+            end
+        )
     end
     if isReload then
         local inGroup = UnitInRaid("player") or IsInGroup()

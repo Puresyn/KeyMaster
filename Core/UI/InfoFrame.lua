@@ -2,6 +2,7 @@ local _, KeyMaster = ...
 local InfoFrame = {}
 KeyMaster.InfoFrame = InfoFrame
 local Theme = KeyMaster.Theme
+local KMFactory = KeyMaster.Factory
 
 function InfoFrame:CreateInfoFrame(parentFrame)
 
@@ -50,6 +51,15 @@ function InfoFrame:CreateInfoFrame(parentFrame)
     headerTextColor.r, headerTextColor.g, headerTextColor.b, _ = Theme:GetThemeColor("color_COMMON")
     infoFrameHeader.title:SetTextColor(headerTextColor.r, headerTextColor.g, headerTextColor.b, 1)
     infoFrameHeader.title:SetText(KeyMasterLocals.TABABOUT)
+
+    local btnOptions = {}
+    btnOptions.text = KeyMasterLocals.ABOUTFRAME["WhatsNew"].text
+    infoFrameHeader.whatsNew = KMFactory:Create(infoFrameHeader, "Button", btnOptions)
+    infoFrameHeader.whatsNew:SetPoint("BOTTOMRIGHT", infoFrameHeader, "BOTTOMRIGHT", -4, 4)
+    infoFrameHeader.whatsNew:SetScript("OnClick", function()
+        local whatsNewFrame = _G["KM_WhatsNewFrame"] or KeyMaster.WhatsNew:Init()
+        whatsNewFrame:Show()
+    end)
 
    --/////////////////////////// 
     --About Panels Colors
@@ -171,7 +181,7 @@ https://discord.gg/bbMaUpfgn8
 
     local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu\n\n"
     textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
-    textContributors = textContributors .. "Cyph, Hollicsh, bns3388, Feedy88, Rumorix"
+    textContributors = textContributors .. "Cyph, Hollicsh, bns3388, Feedy88, Rumorix, Salty"
 
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)

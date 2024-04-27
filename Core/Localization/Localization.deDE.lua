@@ -13,7 +13,7 @@ local L = KM_Localization_deDE
 -- Übersetzungsproblem? Helfen Sie uns bei der Korrektur! Besuchen: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Deutsch (DE)"
-L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur)" -- Translator display name
+L.TRANSLATOR = "Feedy88 + Rumorix (Korrektur) + Salty" -- Translator display name
 
 L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
 L.TOCNOTES["ADDONDESC"] = "Mythic Plus Schlüsselstein Informations- und Kollaborationstool"
@@ -85,6 +85,7 @@ L.INSTANCETIMER = "Instanzinformationen"
 L.VAULTINFORMATION = "M+ Schatzkammer-Fortschritt"
 L.TIMELIMIT = "Zeitlimit"
 L.SEASON = "Saison"
+L.COMBATMESSAGE = { errormsg = "Key Master im Kampf nicht verfügbar.", chatmsg = "Das Interface wird geöffnet, sobald der Kampf verlassen wird."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -113,17 +114,18 @@ L.PARTYFRAME["NoKey"] = { name = "Kein Schlüsselstein", text = "Kein Schlüssel
 L.PARTYFRAME["NoPartyInfo"] = { text = "Informationen über Gruppenmitglieder sind in Matchmaking-Gruppen nicht verfügbar. (Dungeonbrowser, Schlachtzugsbrowser, etc.)" }
 
 L.PLAYERFRAME = {}
-L.PLAYERFRAME["KeyLevel"] = { name = "Schlüsselsteinstufe", text = "Zu berechnendes Schlüsselsteinniveau."}
+L.PLAYERFRAME["KeyLevel"] = { name = "Schlüsselsteinstufe", text = "Zu berechnendes Schlüsselsteinniveau." }
 L.PLAYERFRAME["Gain"] = { name = "Steigerung", text = "Mögliche Wertungssteigerung."}
-L.PLAYERFRAME["New"] = { name = "Neu", text = "Deine Wertung nach Abschluss dieses Schlüsselsteins liegt bei +1."}
-L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne potenzielle Wertungssteigerungen."}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um eine Abschätzung"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "der Basiswertungssteigerung zu sehen."}
+L.PLAYERFRAME["New"] = { name = "Neu", text = "Deine Wertung nach Abschluss dieses Schlüsselsteins liegt bei +1." }
+L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne potenzielle Wertungssteigerungen." }
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um eine Abschätzung" }
+L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "der Basiswertungssteigerung zu sehen." }
+L.PLAYERFRAME["Characters"] = "Charaktere"
 
 L.CHARACTERINFO = {}
-L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden"}
-L.CHARACTERINFO["KeyInVault"] = { name = "Schlüsselstein im Bankschließfach", text = "Im Bankschließfach"}
-L.CHARACTERINFO["AskMerchant"] = { name = "Frag den Schlüsselsteinhändler", text = "Schlüsselsteinhändler"}
+L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden" }
+L.CHARACTERINFO["KeyInVault"] = { name = "Schlüsselstein im Bankschließfach", text = "Im Bankschließfach" }
+L.CHARACTERINFO["AskMerchant"] = { name = "Frag den Schlüsselsteinhändler", text = "Schlüsselsteinhändler" }
 
 L.TABPLAYER = "Spieler"
 L.TABPARTY = "Gruppe"
@@ -131,20 +133,26 @@ L.TABABOUT = "Über"
 L.TABCONFIG = "Konfiguration"
 
 L.CONFIGURATIONFRAME = {}
-L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Anzeigeeinstellungen", text = "Anzeigeeinstellungen"}
-L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Wertungsdezimale umschalten", text = "Wertungsdezimalstellen anzeigen."}
+L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Anzeigeeinstellungen", text = "Anzeigeeinstellungen" }
+L.CONFIGURATIONFRAME["ToggleRatingFloat"] = { name = "Wertungsdezimale umschalten", text = "Wertungsdezimalstellen anzeigen." }
 L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Schaltfläche „Minikarte anzeigen“.", text = "Schaltfläche an der „Minikarte\" anzeigen."}
-L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnoseeinstellungen", text = "Diagnoseeinstellungen."}
-L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeigen", text = "Fehlermeldungen anzeigen."}
-L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen."}
+L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnoseeinstellungen", text = "Diagnoseeinstellungen." }
+L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Fehlermeldungen anzeigen", text = "Fehlermeldungen anzeigen." }
+L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Debuginformationen anzeigen", text = "Debugging-Meldungen anzeigen." }
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Erweiterte Diagnoseinformationen", text="Hinweis: Diese dienen nur zu Diagnosezwecken. Wenn sie aktiviert sind, könnten sie deine Chatbox überfluten!"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Charakterlistenfilter", text = "Filteroptionen für die Liste der alternativen Charaktere." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Aktueller Server", text = "Nur aktuellen Server anzeigen." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Keine Wertung", text = "Nur Charaktere mit Wertung anzeigen." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Kein Schlüsselstein", text = "Nur Charaktere mit einem Schlüsselstein anzeigen." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Zurücksetzen", past = "Zurückgesetzt" }
 
 L.ABOUTFRAME = {}
-L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen"}
+L.ABOUTFRAME["AboutGeneral"] = { name = "Allgemeine Informationen", text = "Allgemeine Informationen" }
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autoren", text = "Autoren"}
-L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank"}
-L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende"}
+L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Besonderer Dank", text = "Besonderer Dank" }
+L.ABOUTFRAME["AboutContributors"] = { name = "Mitwirkende", text = "Mitwirkende" }
 L.ABOUTFRAME["Translators"] = { text = "Übersetzer" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Neuerungen anzeigen" }
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated

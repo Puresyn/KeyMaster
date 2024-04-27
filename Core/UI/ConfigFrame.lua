@@ -3,6 +3,9 @@ local ConfigFrame = {}
 KeyMaster.ConfigFrame = ConfigFrame
 local Theme = KeyMaster.Theme
 local KMFactory = KeyMaster.Factory
+local CharacterData = KeyMaster.CharacterData
+local CharacterInfo = KeyMaster.CharacterInfo
+local CharactersFrame = KeyMaster.CharactersFrame
 
 function ConfigFrame:CreateConfigFrame(parentFrame)
     local mtb = 4 -- margin top/bottom
@@ -272,6 +275,149 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
         end
         if (status == true) then status = KeyMasterLocals.ENABLED.."." else status = KeyMasterLocals.DISABLED.."." end
         KeyMaster:Print(KeyMasterLocals.DEBUGMESSAGES .. " " .. status)
+    end)
+
+    -- Character Filter Settings
+    local charactersSetting = CreateFrame("Frame", nil, conFrame)
+    charactersSetting:SetPoint("TOPLEFT", diagnosticSettings, "TOPRIGHT", 4, 0)
+    charactersSetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/3)
+    charactersSetting.title = charactersSetting:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+    charactersSetting.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
+    charactersSetting.title:SetPoint("TOPLEFT", charactersSetting, "TOPLEFT", 4, -4)
+    charactersSetting.title:SetText(KeyMasterLocals.CONFIGURATIONFRAME["CharacterSettings"].name)
+
+    local Hline = KeyMaster:CreateHLine(charactersSetting:GetWidth()+8, charactersSetting, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    charactersSetting.texture = charactersSetting:CreateTexture(nil, "BACKGROUND", nil, 0)
+    charactersSetting.texture:SetAllPoints(charactersSetting)
+    charactersSetting.texture:SetColorTexture(0, 0, 0, 1)
+
+    charactersSetting.textureHighlight = charactersSetting:CreateTexture(nil, "BACKGROUND", nil, 1)
+    charactersSetting.textureHighlight:SetSize(charactersSetting:GetWidth(), charactersSetting:GetHeight())
+    charactersSetting.textureHighlight:SetPoint("LEFT", charactersSetting, "LEFT", 0, 0)
+    charactersSetting.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    charactersSetting.textureHighlight:SetAlpha(highlightAlpha)
+    charactersSetting.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    -- Filter Server Checkbox/Button
+    local serverFilterFrame = CreateFrame("Frame", nil, charactersSetting)
+    serverFilterFrame:SetPoint("TOPLEFT", charactersSetting.title, "BOTTOMLEFT", 0, 0)
+    serverFilterFrame:SetWidth(charactersSetting:GetWidth()-8)
+    
+    charactersSetting.filterServer = CreateFrame("CheckButton", "KM_FilterServerCheckBox", serverFilterFrame, "ChatConfigCheckButtonTemplate")
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    charactersSetting.filterServer.Text:SetFont(Path, 12, Flags)
+    charactersSetting.filterServer.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    charactersSetting.filterServer.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["FilterByServer"].text)
+    charactersSetting.filterServer.Text:SetWidth(serverFilterFrame:GetWidth()- charactersSetting.filterServer:GetWidth())
+
+    serverFilterFrame:SetHeight(charactersSetting.filterServer.Text:GetHeight()+12)
+
+    charactersSetting.filterServer:SetPoint("BOTTOMLEFT",serverFilterFrame, "BOTTOMLEFT", 0, 0)
+    charactersSetting.filterServer.Text:SetPoint("BOTTOMLEFT", charactersSetting.filterServer, "BOTTOMRIGHT", 0, 6)
+
+    if (KeyMaster_DB.addonConfig.characterFilters.serverFilter) then
+        charactersSetting.filterServer:SetChecked(KeyMaster_DB.addonConfig.characterFilters.serverFilter)
+    end
+    charactersSetting.filterServer:HookScript("OnClick", function()
+        if (charactersSetting.filterServer:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.characterFilters.serverFilter = true
+        else
+            KeyMaster_DB.addonConfig.characterFilters.serverFilter = false
+        end
+    end)
+
+    -- Filter Rating Checkbox/Button
+    local characterRatingFrame = CreateFrame("Frame", nil, charactersSetting)
+    characterRatingFrame:SetPoint("TOPLEFT", serverFilterFrame, "BOTTOMLEFT", 0, 0)
+    characterRatingFrame:SetWidth(charactersSetting:GetWidth()-8)
+    
+    charactersSetting.filterNoRating = CreateFrame("CheckButton", "KM_FilerRatingCheckBox", characterRatingFrame, "ChatConfigCheckButtonTemplate")
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    charactersSetting.filterNoRating.Text:SetFont(Path, 12, Flags)
+    charactersSetting.filterNoRating.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    charactersSetting.filterNoRating.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["FilterByNoRating"].text)
+    charactersSetting.filterNoRating.Text:SetWidth(characterRatingFrame:GetWidth()- charactersSetting.filterNoRating:GetWidth())
+
+    characterRatingFrame:SetHeight(charactersSetting.filterNoRating.Text:GetHeight()+12)
+
+    charactersSetting.filterNoRating:SetPoint("BOTTOMLEFT",characterRatingFrame, "BOTTOMLEFT", 0, 0)
+    charactersSetting.filterNoRating.Text:SetPoint("BOTTOMLEFT", charactersSetting.filterNoRating, "BOTTOMRIGHT", 0, 6)
+
+    if (KeyMaster_DB.addonConfig.characterFilters.filterNoRating) then
+        charactersSetting.filterNoRating:SetChecked(KeyMaster_DB.addonConfig.characterFilters.filterNoRating)
+    end
+    charactersSetting.filterNoRating:HookScript("OnClick", function()
+        if (charactersSetting.filterNoRating:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.characterFilters.filterNoRating = true
+        else
+            KeyMaster_DB.addonConfig.characterFilters.filterNoRating = false
+        end
+    end)
+
+    -- Filter Key Checkbox/Button
+    local characterKeyFrame = CreateFrame("Frame", nil, charactersSetting)
+    characterKeyFrame:SetPoint("TOPLEFT", characterRatingFrame, "BOTTOMLEFT", 0, 0)
+    characterKeyFrame:SetWidth(charactersSetting:GetWidth()-8)
+    
+    charactersSetting.filterNoKey = CreateFrame("CheckButton", "KM_FilerRatingCheckBox", characterKeyFrame, "ChatConfigCheckButtonTemplate")
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    charactersSetting.filterNoKey.Text:SetFont(Path, 12, Flags)
+    charactersSetting.filterNoKey.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    charactersSetting.filterNoKey.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["FilterByNoKey"].text)
+    charactersSetting.filterNoKey.Text:SetWidth(characterKeyFrame:GetWidth()- charactersSetting.filterNoKey:GetWidth())
+
+    characterKeyFrame:SetHeight(charactersSetting.filterNoKey.Text:GetHeight()+12)
+
+    charactersSetting.filterNoKey:SetPoint("BOTTOMLEFT",characterKeyFrame, "BOTTOMLEFT", 0, 0)
+    charactersSetting.filterNoKey.Text:SetPoint("BOTTOMLEFT", charactersSetting.filterNoKey, "BOTTOMRIGHT", 0, 6)
+
+    if (KeyMaster_DB.addonConfig.characterFilters.filterNoKey) then
+        charactersSetting.filterNoKey:SetChecked(KeyMaster_DB.addonConfig.characterFilters.filterNoKey)
+    end
+    charactersSetting.filterNoKey:HookScript("OnClick", function()
+        if (charactersSetting.filterNoKey:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.characterFilters.filterNoKey = true
+        else
+            KeyMaster_DB.addonConfig.characterFilters.filterNoKey = false
+        end
+    end)
+
+    local function purgeStatus(button)
+        if not button then return end
+        if not KeyMaster_C_DB or type(KeyMaster_C_DB) ~= "table" or KeyMaster:GetTableLength(KeyMaster_C_DB) == 0 then
+            button:Hide()
+        else
+            button:Show()
+        end
+    end
+    local btnOptions = {}
+    local hoverColor = {}
+    hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.hex = Theme:GetThemeColor("color_ERRORMSG")
+    btnOptions.textHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
+    btnOptions.btnHoverColor = {hoverColor.r, hoverColor.g, hoverColor.b, 1}
+    local preText = KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"]
+    local listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB)))..")"
+    btnOptions.text = preText..listCountText
+
+    local function purgeCharacterList(self)
+        listCountText = " ("..(tostring(KeyMaster:GetTableLength(KeyMaster_C_DB)))..")"
+        KeyMaster.CharactersFrame:ResetCharacterList() -- change load order?
+        KeyMaster_C_DB = {}
+        CharacterData:CreateDefaultCharacterData()
+
+        KeyMaster:Print("|cff"..hoverColor.hex..KeyMasterLocals.CONFIGURATIONFRAME["Purge"].past..listCountText.." "..KeyMasterLocals.PLAYERFRAME["Characters"].."|r")
+        self:Hide()
+    end
+
+    charactersSetting.purgeButton = KMFactory:Create(charactersSetting, "Button", btnOptions)
+    charactersSetting.purgeButton:SetPoint("BOTTOMLEFT", charactersSetting, "BOTTOMLEFT", 4, 8)
+    charactersSetting.purgeButton:SetScript("OnClick", purgeCharacterList)
+
+    charactersSetting:HookScript("OnShow", function() 
+        purgeStatus(charactersSetting.purgeButton)
+        charactersSetting.purgeButton.text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["Purge"].present.." "..KeyMasterLocals.PLAYERFRAME["Characters"].." ("..KeyMaster:GetTableLength(KeyMaster_C_DB)..")")
     end)
 
     --[[ -- Testing DropDownMenu IN DEVELOPMENT

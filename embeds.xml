@@ -43,6 +43,7 @@
 	<Include file='Core\Localization\Languages.xml'/>
 	
 	<Script file='Libs\Internal\KMFactory.lua'/>
+	<Script file='Libs\Internal\Schedule.lua'/>
 	<Include file='Assets\Load_Media.xml'/>
 	<Script file='Libs\Internal\Theme.lua'/>
 	<Script file='Libs\Internal\DungeonTools.lua'/>

@@ -85,6 +85,7 @@ L.INSTANCETIMER = "Instance Information"
 L.VAULTINFORMATION = "M+ Vault Progression"
 L.TIMELIMIT = "Time Limit"
 L.SEASON = "Season"
+L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
@@ -119,6 +120,7 @@ L.PLAYERFRAME["New"] = { name = "New", text = "Your rating after completing this
 L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calculate potential rating gains."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gain", text = "your base rating gain prediction."}
+L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
@@ -138,6 +140,11 @@ L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Diagnostic Settings", tex
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Display Errors", text = "Display error messages."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Display Debug", text = "Display debugging messages."}
 L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Advanced Diagnostics", text="Note: These are for diagnostic purposes only. They may flood your chat box if enabled!"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}
 L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Information", text = "Key Master Information"}
@@ -145,6 +152,7 @@ L.ABOUTFRAME["AboutAuthors"] = { name = "Authors", text = "Authors"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Special Thanks", text = "Special Thanks"}
 L.ABOUTFRAME["AboutContributors"] = { name = "Contributors", text = "Contributors"}
 L.ABOUTFRAME["Translators"] = { text = "Translators" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}

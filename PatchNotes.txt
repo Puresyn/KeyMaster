@@ -3,18 +3,43 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.0.3
+Key Master v1.1.3
 --------------------------------------------------
 Updates:
+- Added alternate characters to player tab.
+-- Selecting an alternate character turns the Player tab into a Characters tab.
+-- All functionality of the Player tab updates and works as the selection character; which
+   includes the calculator and vault progress.
+-- The character list only shows max level characters.
+-- All keys are reset with regional server weekly reset.
+-- The character list is reset with each new season.
+
+- Added character list filter options to configuration tab.
+- Added "What's New" splash screen to display recent news, updates, and patch notes.
+- Added a "Show What's New" button to the about tab header to display patch notes on-demand.
+
+- Improved Key Master interface open/close functionality.
+-- It now closes automatically when entering combat.
+-- If opening the interface during combat, it will open automatically after exiting combat.
+-- It now closes automatically when casting a spell or using an ability.
+
+- Clicking on the Key Master Notice frame now dismisses the message until next reload/relog.
 
 Fixes:
+- Fixed a bug when recieving a new or updated keystone under certian conditions, your key information
+  didn't update in real-time without a reload or relog.
+- Fixed a bug where non-english client keys were sometimes not updating real-time.
+- [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'
+  should no longer be an issue.
+- Removed empty quotation marks in specialization on the player page header when a player does not have a
+  current active specialization or it is otherwise unknown.
+- Fixed issue where some clients were not able to use the portal icons.
 
 Open Items:
-- Known: [ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()'.
-- Reported: Dungeon portals buttons not casting the portal spell when the spell is available (known/off CD) and clicked.
+- Still validating season 4 rating calculation (We are cautiously optimistic that the scores are accurate.)
 
-  If you experience any of these open item unicorns, please report them with as much detail as possible in the
-  Key Master Issues GitHub. https://github.com/Puresyn/KeyMaster/issues
+  If you experience any other issues, please report them with as much detail as possible in the
+  Key Master Issues GitHub. https://github.com/Puresyn/KeyMaster/issues or visit us on Discord.
   
 --------------------------------------------------
 Key Master v1.0.2

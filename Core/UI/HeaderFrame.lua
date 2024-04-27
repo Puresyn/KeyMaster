@@ -82,6 +82,13 @@ function HeaderFrame:SystemMessage(parentframe)
     sysMessage.text:SetTextColor(1,1,0,1)
     sysMessage.text:SetText(KeyMasterLocals.SYSTEMMESSAGE["NOTICE"].text)
     sysMessage.text:SetWidth(sysMessage:GetWidth()-8)
+
+    sysMessage.x = sysMessage:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
+    sysMessage.x:SetPoint("TOPRIGHT", sysMessage, "TOPRIGHT", -2, -3)
+    sysMessage.x:SetTextColor(1,1,1,1)
+    sysMessage.x:SetText("X")
+    sysMessage.x:SetSize(10,10)
+
     sysMessage:SetHeight(sysMessage.text:GetHeight()+8)
     sysMessage.boxBackground:SetSize(sysMessage:GetWidth()-2, sysMessage:GetHeight()-2)
 
@@ -90,7 +97,10 @@ function HeaderFrame:SystemMessage(parentframe)
     else
         sysMessage:Hide()
     end
-    --sysMessage.text:SetSize(400, 100)
+    
+    sysMessage:SetScript("OnMouseUp", function (self)
+        self:Hide()
+    end)
 
     return sysMessage
 end

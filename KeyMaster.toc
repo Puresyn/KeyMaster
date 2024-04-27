@@ -2,7 +2,7 @@
 ## X-Max-Interface: 100206
 ## X-Min-Interface: 100205
 
-## Version: 1.0.3
+## Version: 1.1.3
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
@@ -14,7 +14,7 @@
 ## Notes-zhTW: 傳奇+鑰石資訊以及協同工具
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## DefaultState: enabled
-## SavedVariables: KeyMaster_DB
+## SavedVariables: KeyMaster_DB, KeyMaster_C_DB
 
 ## IconTexture: Interface/AddOns/KeyMaster/Assets/Images/KM-Icon-32
 
@@ -30,6 +30,7 @@ Embeds.xml
 Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua
+Core\CharacterData.lua
 Core\UnitData.lua
 Core\UI\PlayerFrameMapping.lua
 Core\UI\PartyFrameMapping.lua
@@ -42,5 +43,8 @@ Core\UI\MainFrameTemplate.xml
 Core\UI\MainFrame.lua
 Core\UI\HeaderFrame.lua
 Core\UI\PartyFrame.lua
+Core\UI\CharactersFrame.lua
+Core\UI\WhatsNew.xml
+Core\UI\WhatsNew.lua
 Core\UI\UIinit.lua
 KeyMaster.lua
