@@ -3,7 +3,7 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.1.2
+Key Master v1.1.3
 --------------------------------------------------
 Updates:
 - Added alternate characters to player tab.
@@ -36,7 +36,7 @@ Fixes:
 - Fixed issue where some clients were not able to use the portal icons.
 
 Open Items:
-- None
+- Still validating season 4 rating calculation (We are cautiously optimistic that the scores are accurate.)
 
   If you experience any other issues, please report them with as much detail as possible in the
   Key Master Issues GitHub. https://github.com/Puresyn/KeyMaster/issues or visit us on Discord.
