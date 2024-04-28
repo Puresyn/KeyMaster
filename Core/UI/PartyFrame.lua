@@ -164,13 +164,13 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     
     if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
         local pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
+        pButton:SetFrameLevel(10)
         pButton:SetAttribute("type", "spell")
-        pButton:SetAttribute("spell", portalSpellName)
-        pButton:RegisterForClicks("AnyDown")
+        pButton:SetAttribute("spell", portalSpellId)
+        pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
         pButton:SetWidth(pButton:GetParent():GetWidth())
         pButton:SetHeight(pButton:GetParent():GetWidth())
         pButton:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
-        pButton:SetScript("OnMouseDown", portalButton_buttonevent)
         pButton:SetScript("OnEnter", portalButton_mouseover)
         pButton:SetScript("OnLeave", portalButton_mouseoout)
 
