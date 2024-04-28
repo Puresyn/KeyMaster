@@ -3,6 +3,10 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.1.5
+--------------------------------------------------
+
+--------------------------------------------------
 Key Master v1.1.4
 --------------------------------------------------
 - Fixed portal click issue (FINALLY!) This was due to a CVAR setting from OPie
