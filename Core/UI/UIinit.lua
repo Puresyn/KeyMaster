@@ -89,7 +89,7 @@ function MainInterface:Toggle()
   local mainUI = _G["KeyMaster_MainFrame"] or MainInterface:Initialize()
   if not InCombatLockdown() then
     --if mainUI:IsShown() then mainUI:Hide() else mainUI:Show() end
-    mainUI:SetShown(not mainUI:IsShown())
+    mainUI:SetShown(not mainUI:IsVisible())
   elseif KM_shownCombatMessage == 0 then
     if _G["UIErrorsFrame"] then
       _G["UIErrorsFrame"]:AddMessage("|cffff3333".. KeyMasterLocals.COMBATMESSAGE.errormsg .."|r")

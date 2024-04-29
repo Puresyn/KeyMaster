@@ -186,7 +186,7 @@ local function onEvent_PartyChanges(self, event, ...)
         if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
             -- Only update UI if party tab is open
             local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-            if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+            if partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
                 -- reprocess party1-4 units
                 KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
             end
