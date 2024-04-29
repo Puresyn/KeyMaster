@@ -1,5 +1,6 @@
 local _, KeyMaster = ...
 local MainInterface = KeyMaster.MainInterface
+KM_PLAYER_IN_COMBAT = false
 
 -- mainFrame hide handler for events
 local function hideOnEvent(frame)
@@ -51,11 +52,14 @@ combatTrackerFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 combatTrackerFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 combatTrackerFrame:SetScript("OnEvent", function(self, event,...)
     if event == "PLAYER_REGEN_ENABLED" then
+        KM_PLAYER_IN_COMBAT = false
+        KeyMaster.EventHooks:ProcessCombatQueue()
         if KM_shownCombatMessage == 1 then
             MainInterface:Toggle()
         end
         KM_shownCombatMessage = 0
     elseif event == "PLAYER_REGEN_DISABLED" then
+        KM_PLAYER_IN_COMBAT = true
         hideOnEvent(_G["KeyMaster_MainFrame"])
     end
 end)

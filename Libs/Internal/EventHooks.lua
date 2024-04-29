@@ -4,10 +4,36 @@ KeyMaster.EventHooks = {}
 ---@type table Local namespace
 local EventHooks = KeyMaster.EventHooks
 
+---@type table - function queueing table.
+EventHooks.combatEventQueue = {}
+
 ---@param hookFrame table Holds the event frame pointer
 local hookFrame
 ---@type integer Mythic Plus Key item id as provided by Blizzard.
 local MYTHIC_PLUS_KEY_ID = 180653
+
+-- Example: table.insert(KeyMaster.EventHooks.combatEventQueue, function() print("Queue function test.") end)
+---@type fun() process EventHooks.combatEventQueue table one command at a time while combat state checking
+function EventHooks:ProcessCombatQueue()
+    local eventTable = EventHooks.combatEventQueue
+    if eventTable and type(eventTable) == "table" then
+        if KeyMaster:GetTableLength(eventTable) > 0 then
+            if type(eventTable[1]) == "function" then
+                if not KM_PLAYER_IN_COMBAT then
+                    eventTable[1]()
+                    table.remove(eventTable, 1)
+                    EventHooks:ProcessCombatQueue() -- execute the next funciton
+                else
+                    return -- stop processing if entering combat.
+                end
+            else
+                KeyMaster:_ErrorMsg("ProcessCombatQueue","EventHooks", type(eventTable[1]).." "..tostring(eventTable[1]).." is not a function.")
+                table.remove(eventTable, 1)
+                EventHooks:ProcessCombatQueue()
+            end
+        end
+    end
+end
 
 local function UpdateKeyInformation(playerData)    
     -- get new key information
@@ -37,7 +63,7 @@ local function NotifyEvent(event)
 
             -- Only update UI if it's open
             local mainFrame = _G["KeyMaster_MainFrame"]
-            if mainFrame ~= nil and mainFrame:IsShown() then
+            if mainFrame ~= nil and mainFrame:IsVisible() then
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
@@ -60,7 +86,7 @@ local function NotifyEvent(event)
 
             -- Only update UI if it's open
             local mainFrame = _G["KeyMaster_MainFrame"]
-            if mainFrame ~= nil and mainFrame:IsShown() then
+            if mainFrame ~= nil and mainFrame:IsVisible() then
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
@@ -71,6 +97,10 @@ local function NotifyEvent(event)
             -- Transmit unit data to party members with addon
             MyAddon:Transmit(playerData, "PARTY", nil)    
         end)
+    end
+    if event == "CHALLENGE_MODE_COMPLETED" then
+        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
+        KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
     end
 end
 
@@ -122,6 +152,7 @@ local function KeyWatch()
         if event == "CHALLENGE_MODE_COMPLETED" then
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_COMPLETED")
             NotifyEvent("SCORE_GAINED")
+            NotifyEvent("CHALLENGE_MODE_COMPLETED")
         end
         if event == "CHAT_MSG_LOOT" then
             local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
@@ -143,4 +174,3 @@ end
 
 -- Trigger all event staging here. (for now)
 KeyWatch()
-
