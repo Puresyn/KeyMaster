@@ -29,6 +29,9 @@ SLASH_KeyMaster2 = KeyMasterLocals.COMMANDLINE["/keymaster"].name
 
 KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
+    [KeyMasterLocals.COMMANDLINE["Version"].name] = function()
+        KeyMaster:Print("Version: "..tostring(KM_AUTOVERSION).." - "..KM_VERSION_STATUS)
+    end,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
@@ -36,6 +39,7 @@ KeyMaster.Commands = {
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Version"].name.."|r"..KeyMasterLocals.COMMANDLINE["Version"].text)
         print("=====================")
     end,
     -- Sample nested command line functions
