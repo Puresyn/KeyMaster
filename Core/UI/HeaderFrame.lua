@@ -280,7 +280,7 @@ function HeaderFrame:Initialize(parentFrame)
     local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
 
     -- System Message
-    local sysMessage = _G["KM_SystemMessage"] or HeaderFrame:SystemMessage(parentFrame)
+    --local sysMessage = _G["KM_SystemMessage"] or HeaderFrame:SystemMessage(parentFrame)
     
     return headerRegion
 end
