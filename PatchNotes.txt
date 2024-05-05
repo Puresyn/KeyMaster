@@ -3,8 +3,21 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.2.1
+--------------------------------------------------
+Updates:
+- Added end of mythic plus key completion screen that gives a overview of the run.
+- Added key completion screen options to the configuration tab.
+
+--------------------------------------------------
 Key Master v1.1.5
 --------------------------------------------------
+Updates:
+- Added version information to command line options. /km version
+- Removed the rating system notification.
+
+Fixes:
+- More fixes for the "Show" error sometimes recieved when completing a dungeon.
 
 --------------------------------------------------
 Key Master v1.1.4

@@ -98,9 +98,9 @@ local function NotifyEvent(event)
             MyAddon:Transmit(playerData, "PARTY", nil)    
         end)
     end
-    if event == "CHALLENGE_MODE_COMPLETED" then
-        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
-        KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
+    if event == "CHALLENGE_MODE_NOTIFY" then
+        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_NOTIFY")
+        KeyMaster.ChallengeCompletion:GetCompletionInfoWithRetries(1, 5)
     end
 end
 
@@ -152,7 +152,7 @@ local function KeyWatch()
         if event == "CHALLENGE_MODE_COMPLETED" then
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_COMPLETED")
             NotifyEvent("SCORE_GAINED")
-            NotifyEvent("CHALLENGE_MODE_COMPLETED")
+            NotifyEvent("CHALLENGE_MODE_NOTIFY")
         end
         if event == "CHAT_MSG_LOOT" then
             local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...

@@ -2,7 +2,7 @@
 ## X-Max-Interface: 100206
 ## X-Min-Interface: 100205
 
-## Version: 1.1.5
+## Version: 1.2.1
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
@@ -28,6 +28,8 @@
 
 Embeds.xml
 Core\Localization\Localization.lua
+Core\UI\ChallengeCompletionMapping.lua
+Core\UI\ChallengeCompletion.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua
 Core\CharacterData.lua

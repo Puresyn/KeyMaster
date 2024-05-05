@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "show", text = " - show/hide the main window."}
 L.COMMANDLINE["Help"] = { name = "help", text = " - shows this help menu."}
 L.COMMANDLINE["Errors"] = { name = "errors", text = " - toggle error messages."}
 L.COMMANDLINE["Debug"] = { name = "debug", text = " - toggle debug messages."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Mythic Rating", text = "This is the chacacter's current Mythic Plus rating." }
@@ -156,3 +157,7 @@ L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
 L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+
+L.CHALLENGECOMPLETE = {}
+L.CHALLENGECOMPLETE["ChallengeComplete"] = "CHALLENGE COMPLETE!"
+L.CHALLENGECOMPLETE["NewRecord"] = "NEW RECORD"

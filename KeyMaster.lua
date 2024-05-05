@@ -13,10 +13,11 @@ local Theme = KeyMaster.Theme
 local UnitData = KeyMaster.UnitData
 local KeyScoreCalc = KeyMaster.KeyScoreCalc
 local PartyFrame = KeyMaster.PartyFrame
+local ChallengeCompletion = KeyMaster.ChallengeCompletion
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '1.1.5'
+KM_AUTOVERSION = '1.2.1'
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -29,6 +30,16 @@ SLASH_KeyMaster2 = KeyMasterLocals.COMMANDLINE["/keymaster"].name
 
 KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
+    ["challenge"] = function ()
+        if _G["KM_Challenge_Mode_Completed"] then 
+            _G["KM_Challenge_Mode_Completed"]:Show() 
+        else
+            ChallengeCompletion:CreateChallengeBanner(ChallengeCompletion:getDummyData())
+        end
+    end,
+    [KeyMasterLocals.COMMANDLINE["Version"].name] = function()
+        KeyMaster:Print("Version: "..tostring(KM_AUTOVERSION).." - "..KM_VERSION_STATUS)
+    end,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
@@ -36,6 +47,7 @@ KeyMaster.Commands = {
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Version"].name.."|r"..KeyMasterLocals.COMMANDLINE["Version"].text)
         print("=====================")
     end,
     -- Sample nested command line functions
@@ -164,6 +176,7 @@ local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:SetScript("OnEvent", OnEvent_AddonLoaded)
 
+-- todo: Move below to EventHooks
 local function onEvent_PartyChanges(self, event, ...)
     --print(event, ...)
     

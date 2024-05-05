@@ -54,6 +54,26 @@ function KeyMaster:FormatDurationSec(timeInSec)
     return date("%M:%S", timeInSec)
 end
 
+function KeyMaster:FormatCompTimeDurationMilsec(timeInMilSec)
+        local formattedTime
+        local timeInSec = timeInMilSec/1000
+        local hours = floor(timeInSec/3600)
+        local minutes = floor(mod(timeInSec,3600)/60)
+        local seconds = floor(mod(timeInSec,60))
+        local milliseconds = floor(mod(timeInMilSec,1000))
+        if hours > 0 and milliseconds > 0 and KeyMaster_DB.addonConfig.completionScreen.showMilliseconds then
+            formattedTime = format("%02d:%02d:%02d.%02d",hours,minutes,seconds,milliseconds)
+        elseif hours > 0 and milliseconds == 0 then
+            formattedTime = format("%02d:%02d:%02d",hours,minutes,seconds)
+        elseif hours == 0 and milliseconds > 0 and KeyMaster_DB.addonConfig.completionScreen.showMilliseconds then
+            formattedTime = format("%02d:%02d.%02d",minutes,seconds,milliseconds)
+        else
+            formattedTime = format("%02d:%02d",minutes,seconds)
+        end
+
+        return formattedTime
+end
+
 -- CreateHLine(width [INT], parentFrame [FRAME], xOfs [INT (optional)], yOfs [INT (optional)])
 function KeyMaster:CreateHLine(width, parentFrame, realativeAnchor, xOfs, yOfs)
     local lrm = 8 -- left/right line margin
@@ -268,6 +288,11 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
                 ["xOfs"] = 0,
                 ["yOfs"] = 0,
                 ["relativePoint"] = "CENTER"
+            },
+            completionScreen = {
+                showCompletion = true,
+                enableSounds = true,
+                showMilliseconds = true
             }
         }
     }

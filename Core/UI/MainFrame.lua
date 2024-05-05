@@ -50,7 +50,7 @@ end
 local combatTrackerFrame = CreateFrame("Frame")
 combatTrackerFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 combatTrackerFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-combatTrackerFrame:SetScript("OnEvent", function(self, event,...)
+combatTrackerFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_REGEN_ENABLED" then
         KM_PLAYER_IN_COMBAT = false
         KeyMaster.EventHooks:ProcessCombatQueue()
