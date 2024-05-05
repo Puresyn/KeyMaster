@@ -3,7 +3,7 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.2.1
+Key Master v1.2.0
 --------------------------------------------------
 Updates:
 - Added end of mythic plus key completion screen that gives a overview of the run.
