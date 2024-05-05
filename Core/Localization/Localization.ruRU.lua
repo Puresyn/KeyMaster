@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "показать", text = " - показать
 L.COMMANDLINE["Help"] = { name = "помощь", text = " - показать меню помощи."}
 L.COMMANDLINE["Errors"] = { name = "ошибки", text = " - включить/отключить сообщения об ошибках."}
 L.COMMANDLINE["Debug"] = { name = "отладка", text = " - включить/отключить сообщения об отладке."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Рейтинг М+", text = "Текущий М+ рейтинг персонажа" }

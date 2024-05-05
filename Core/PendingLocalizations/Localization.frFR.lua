@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "montrer", text = " - afficher ou masquer la fe
 L.COMMANDLINE["Help"] = { name = "aide", text = " - affiche ce menu d'aide."}
 L.COMMANDLINE["Errors"] = { name = "les erreurs", text = " - basculer les messages d'erreur."}
 L.COMMANDLINE["Debug"] = { name = "déboguer", text = " - basculer les messages de débogage."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Note mythique", text = "Il s'agit de la note Mythique Plus actuelle du personnage." }

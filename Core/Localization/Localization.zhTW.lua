@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "show", text = " - 顯示/隱藏主視窗。"}
 L.COMMANDLINE["Help"] = { name = "help", text = " - 顯示幫助選單。"}
 L.COMMANDLINE["Errors"] = { name = "errors", text = " - 切換錯誤訊息。"}
 L.COMMANDLINE["Debug"] = { name = "debug", text = " - 切換偵錯訊息。"}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "傳奇評分", text = "此為角色當前的傳奇+評分。" }
