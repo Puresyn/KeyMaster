@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "mostrar", text = " - mostrar u ocultar la vent
 L.COMMANDLINE["Help"] = { name = "ayuda", text = " - muestra este menú de ayuda."}
 L.COMMANDLINE["Errors"] = { name = "errores", text = " - alternar mensajes de error."}
 L.COMMANDLINE["Debug"] = { name = "depurar", text = " - alternar mensajes de depuración."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Calificación mítica", text = "Esta es la calificación Mythic Plus actual del personaje." }

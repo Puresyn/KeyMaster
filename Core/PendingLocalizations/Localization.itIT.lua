@@ -94,6 +94,7 @@ L.COMMANDLINE["Show"] = { name = "spettacolo", text = " - mostrare o nascondere 
 L.COMMANDLINE["Help"] = { name = "aiuto", text = " - mostra questo menu di aiuto."}
 L.COMMANDLINE["Errors"] = { name = "errori", text = " - attiva/disattiva i messaggi di errore."}
 L.COMMANDLINE["Debug"] = { name = "debug", text = " - attiva/disattiva i messaggi di debug."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Valutazione mitica", text = "Questa è l'attuale valutazione Mitica Plus del personaggio." }
