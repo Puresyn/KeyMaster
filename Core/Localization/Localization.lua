@@ -43,9 +43,9 @@ if(langPref == "enUS") then
 elseif (langPref == "deDE") then
     -- Localization.deDE.lua
     KeyMasterLocals = KM_Localization_deDE
---[[ elseif (langPref == "itIT") then
+elseif (langPref == "itIT") then
     -- Localization.itIT.lua
-    KeyMasterLocals = KM_Localization_itIT ]]
+    KeyMasterLocals = KM_Localization_itIT
 elseif (langPref == "ruRU") then
     -- Localization.ruRU.lua
     KeyMasterLocals = KM_Localization_ruRU
