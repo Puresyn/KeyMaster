@@ -2,7 +2,7 @@ KM_Localization_itIT = {}
 local L = KM_Localization_itIT
 
 -- Localization file for "itIT": Italian (Italy)
--- Translated by: Google Translate
+-- Translated by: Kereru
 
 --[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
     overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
