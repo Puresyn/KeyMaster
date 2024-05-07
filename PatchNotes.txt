@@ -6,12 +6,18 @@ PATCH NOTES:
 Key Master v1.1.5
 --------------------------------------------------
 Updates:
+- Updated to WoW Interface 100207
 - Added version information to command line options. /km version
 - Removed the rating system notification.
 - Added Italian translation.
 
 Fixes:
 - More fixes for the "Show" error sometimes recieved when completing a dungeon.
+- Fixed WoW 10.2.7 code change errors.
+
+Known Issues:
+Portals do not update immediatly when gaining a portal spell. /reload is requried. We will
+address this issue in the next release.
 
 --------------------------------------------------
 Key Master v1.1.4
