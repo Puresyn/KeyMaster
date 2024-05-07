@@ -2,7 +2,7 @@ KM_Localization_itIT = {}
 local L = KM_Localization_itIT
 
 -- Localization file for "itIT": Italian (Italy)
--- Translated by: Google Translate
+-- Translated by: Kereru
 
 --[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
     overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
@@ -13,32 +13,32 @@ local L = KM_Localization_itIT
 -- Problema di traduzione? Aiutaci a correggerlo! Visita: https://discord.gg/bbMaUpfgn8
 
 L.LANGUAGE = "Italiano (IT)"
-L.TRANSLATOR = "Google Traduttore" -- Translator display name
+L.TRANSLATOR = "Kereru" -- Translator display name
 
 L.TOCNOTES = {} -- these are manaually copied to the TOC so they show up in the appropriate language in the AddOns list. Please translate them both but let a dev know if you update them later.
-L.TOCNOTES["ADDONDESC"] = "Mythic Plus Keystone Information and Collaboration Tool"
+L.TOCNOTES["ADDONDESC"] = "Informazioni sulle Chiavi Mythic Plus e Strumento di Collaborazione"
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Sconosciuto", abbr = "???" }
-L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "FALL"}
-L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond\'s Rise", abbr = "RISE"}
-L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "AD" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "WM" }
-L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "BRH" }
-L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "DHT" }
-L.MAPNAMES[168] = { name = "The Everbloom", abbr = "EB" }
-L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "TotT" }
+L.MAPNAMES[463] = { name = "Alba degli Infiniti: Cauduta di Galakrond", abbr = "AICG"}
+L.MAPNAMES[464] = { name = "Alba degli Infiniti: Ascesa di Murozond", abbr = "AIAM"}
+L.MAPNAMES[244] = { name = "Atal'dazar", abbr = "AD" }
+L.MAPNAMES[248] = { name = "Maniero dei Crestabianca", abbr = "MdC" }
+L.MAPNAMES[199] = { name = "Forte Corvonero", abbr = "FC" }
+L.MAPNAMES[198] = { name = "Boschetto Cuortetro", abbr = "BCT" }
+L.MAPNAMES[168] = { name = "Verdeterno", abbr = "VE" }
+L.MAPNAMES[456] = { name = "Trono delle Maree", abbr = "TdM" }
 --DF S4
-L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "RLP" }
-L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "AV" }
-L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "NO" }
-L.MAPNAMES[402] = { name = "Algeth\'ar Academy", abbr = "AA" }
-L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "ULD" }
-L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
-L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
-L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
+L.MAPNAMES[399] = { name = "Pozze della Vita di Rubino", abbr = "PVR" }
+L.MAPNAMES[401] = { name = "Cripta Azzurra", abbr = "CA" }
+L.MAPNAMES[400] = { name = "Offensiva dei Nokhud", abbr = "OdN" }
+L.MAPNAMES[402] = { name = "Accademia di Algeth\'ar", abbr = "AdA" }
+L.MAPNAMES[403] = { name = "Uldaman: Eredità di Tyr", abbr = "UEdT" }
+L.MAPNAMES[404] = { name = "Neltharus", abbr = "Nelt" }
+L.MAPNAMES[405] = { name = "Conca dei Felcepelle", abbr = "CdF" }
+L.MAPNAMES[406] = { name = "Sale dell'Infusione", abbr = "SdI" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -61,14 +61,14 @@ L.MPLUSSEASON[14] = { name = "Stagione 2" } -- expecting season 14 to be TWW S2
 
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Bentornato"
-L.ON = "SU"
+L.ON = "acceso"
 L.OFF = "spento"
 L.ENABLED = "abilitato"
 L.DISABLED = "disabilitato"
-L.CLICK = "Clic"
-L.CLICKDRAG = "Fare clic e trascinare"
-L.TOOPEN = "aprire"
-L.TOREPOSITION = "riposizionare"
+L.CLICK = "Clicca"
+L.CLICKDRAG = "Clicca e trascina"
+L.TOOPEN = "per aprire"
+L.TOREPOSITION = "per riposizionare"
 L.EXCLIMATIONPOINT = "!"
 L.THISWEEKSAFFIXES = "Questa settimana..."
 L.YOURRATING = "Il tuo punteggio"
@@ -80,56 +80,57 @@ L.COMMANDERROR1 = "Comando non valido"
 L.COMMANDERROR2 = "Inserire"
 L.COMMANDERROR3 = "per i comandi"
 L.YOURCURRENTKEY = "LA TUA CHIAVE"
-L.ADDONOUTOFDATE = "Il tuo componente aggiuntivo Key Master non è aggiornato!"
+L.ADDONOUTOFDATE = "Il tuo addon Key Master non è aggiornato!"
 L.INSTANCETIMER = "Informazioni sull'istanza"
-L.VAULTINFORMATION = "M+ Progressione del volteggio"
+L.VAULTINFORMATION = "Progresso M+ della Gran Banca"
 L.TIMELIMIT = "Limite di tempo"
 L.SEASON = "Stagione"
-L.COMBATMESSAGE = { errormsg = "Key Master unavailable in combat.", chatmsg = "The interface will open once you exit combat."}
+L.COMBATMESSAGE = { errormsg = "Key Master non è disponibile in combattimento.", chatmsg = "L'interfaccia si aprirà una volta fuori dal combattimento."}
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
 L.COMMANDLINE["/keymaster"] = {name = "/keymaster", text = "/keymaster"}
-L.COMMANDLINE["Show"] = { name = "spettacolo", text = " - mostrare o nascondere la finestra principale."}
+L.COMMANDLINE["Show"] = { name = "spettacolo", text = " - mostra o nascondi la finestra principale."}
 L.COMMANDLINE["Help"] = { name = "aiuto", text = " - mostra questo menu di aiuto."}
 L.COMMANDLINE["Errors"] = { name = "errori", text = " - attiva/disattiva i messaggi di errore."}
 L.COMMANDLINE["Debug"] = { name = "debug", text = " - attiva/disattiva i messaggi di debug."}
+L.COMMANDLINE["Version"] = { name = "version", text = " - mostra l'attuale versione della build." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Valutazione mitica", text = "Questa è l'attuale valutazione Mitica Plus del personaggio." }
-L.TOOLTIPS["OverallScore"] = { name = "Punteggio totale", text = "Il punteggio complessivo è una combinazione dei punteggi delle corse Tiranniche e Fortificate per una mappa. (Con un sacco di matematica coinvolta)"}
-L.TOOLTIPS["TeamRatingGain"] = { name = "Guadagno stimato del rating del partito", text = "Questa è una stima che Key Master fa internamente. Questo numero rappresenta il potenziale minimo totale di guadagno di valutazione del tuo gruppo attuale per completare con successo la chiave del gruppo specificata. Potrebbe non essere accurato al 100% ed è qui solo a scopo di stima."}
+L.TOOLTIPS["OverallScore"] = { name = "Punteggio totale", text = "Il punteggio complessivo è una combinazione dei punteggi delle run in Tirannia e Potenziamento per una mappa. (Con un sacco di matematica coinvolta)"}
+L.TOOLTIPS["TeamRatingGain"] = { name = "Guadagno stimato di punteggio del gruppo", text = "Questa è una stima che Key Master fa internamente. Questo numero rappresenta il guadagno di punteggio minimo potenziale totale del tuo gruppo attuale per completare con successo la chiave del gruppo specificata. Potrebbe non essere accurato al 100% ed è qui solo a scopo di stima."}
 
 L.PARTYFRAME = {}
-L.PARTYFRAME["PartyInformation"] = { name = "Informazioni sul partito", text = "Informazioni sul partito"}
-L.PARTYFRAME["OverallRating"] = { name = "Complessivamente attuale", text = "Complessivamente attuale" }
-L.PARTYFRAME["PartyPointGain"] = { name = "Guadagno punti del partito", text = "Guadagno punti del partito"}
+L.PARTYFRAME["PartyInformation"] = { name = "Informazioni sul gruppo", text = "Informazioni sul gruppo"}
+L.PARTYFRAME["OverallRating"] = { name = "Punteggio complessivo attuale", text = "Punteggio complessivo attuale" }
+L.PARTYFRAME["PartyPointGain"] = { name = "Guadagno punti del gruppo", text = "Guadagno punti del gruppo"}
 L.PARTYFRAME["Level"] = { name = "Livello", text = "Livello" }
 L.PARTYFRAME["Weekly"] = { name = "settimanalmente", text = "settimanalmente"}
-L.PARTYFRAME["NoAddon"] = { name = "Nessun componente aggiuntivo rilevato", text = "non rilevata!"}
-L.PARTYFRAME["PlayerOffline"] = { name = "Giocatore non in linea", text = "Il giocatore è offline."}
-L.PARTYFRAME["TeamRatingGain"] = { name = "Potenziale di guadagno del partito", text = "Guadagno stimato del rating del partito"}
-L.PARTYFRAME["MemberPointsGain"] = { name = "Guadagna potenziale", text = "Guadagno di punti personali stimato per le chiavi disponibili al completamento +1."}
+L.PARTYFRAME["NoAddon"] = { name = "Nessun addon rilevato", text = "non rilevato!"}
+L.PARTYFRAME["PlayerOffline"] = { name = "Giocatore offline", text = "Il giocatore è offline."}
+L.PARTYFRAME["TeamRatingGain"] = { name = "Guadagno potenziale del gruppo", text = "Guadagno stimato di punteggio del gruppo"}
+L.PARTYFRAME["MemberPointsGain"] = { name = "Guadagno potenziale", text = "Guadagno di punti personali stimato per le chiavi disponibili al completamento +1."}
 L.PARTYFRAME["NoKey"] = { name = "Nessuna chiave", text = "Nessuna chiave"}
-L.PARTYFRAME["NoPartyInfo"] = { text = "Party member information unavailable in matchmaking groups. (Dungeon Finder, Raid Finder, etc.)" }
+L.PARTYFRAME["NoPartyInfo"] = { text = "Informazioni sul membro del gruppo non disponibili nei gruppi di matchmaking. (Ricarca Gruppi, Ricerca Incursioni, etc.)" }
 
 L.PLAYERFRAME = {}
 L.PLAYERFRAME["KeyLevel"] = { name = "Livello chiave", text = "Livello chiave da calcolare."}
-L.PLAYERFRAME["Gain"] = { name = "Guadagno", text = "Potenziale guadagno di rating."}
+L.PLAYERFRAME["Gain"] = { name = "Guadagno", text = "Guadagno potenziale di punteggio."}
 L.PLAYERFRAME["New"] = { name = "Nuovo", text = "La tua valutazione dopo aver completato questa chiave a +1."}
-L.PLAYERFRAME["RatingCalculator"] = { name = "Calcolatore della valutazione", text = "Calcola i potenziali guadagni di rating."}
+L.PLAYERFRAME["RatingCalculator"] = { name = "Calcolatore della valutazione", text = "Calcola i potenziali guadagni di punteggio."}
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Livello chiave", text = "Inserisci un livello chiave per vedere"}
-L.PLAYERFRAME["YourBaseRating"] = { name = "Guadagno della valutazione base", text = "la previsione del guadagno della tua valutazione base."}
+L.PLAYERFRAME["YourBaseRating"] = { name = "Guadagno base di punteggio", text = "la previsione del guadagno base di punteggio."}
 L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Nessuna chiave trovata", text = "Nessuna chiave trovata"}
-L.CHARACTERINFO["KeyInVault"] = { name = "Digitare nel caveau", text = "Nel caveau"}
+L.CHARACTERINFO["KeyInVault"] = { name = "Chiave nella Gran Banca", text = "Nella Gran Banca"}
 L.CHARACTERINFO["AskMerchant"] = { name = "Mercante di chiavi", text = "Mercante di chiavi"}
 
 L.TABPLAYER = "Giocatore"
 L.TABPARTY = "Gruppo"
-L.TABABOUT = "Attorno"
+L.TABABOUT = "Informazioni"
 L.TABCONFIG = "Configurazione"
 
 L.CONFIGURATIONFRAME = {}
@@ -139,20 +140,20 @@ L.CONFIGURATIONFRAME["ShowMiniMapButton"] = { name = "Mostra pulsante minimappa"
 L.CONFIGURATIONFRAME["DiagnosticSettings"] = { name = "Impostazioni diagnostiche", text = "Impostazioni diagnostiche."}
 L.CONFIGURATIONFRAME["DisplayErrorMessages"] = { name = "Visualizza errori", text = "Visualizza messaggi di errore."}
 L.CONFIGURATIONFRAME["DisplayDebugMessages"] = { name = "Visualizza debug", text = "Visualizza i messaggi di debug."}
-L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnostica avanzata", text="Nota: questi sono solo a scopo diagnostico. Se abilitati, potrebbero inondare la tua casella di chat!"}
-L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", text = "Alternate character list filter options." }
-L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
-L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
-L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
-L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
+L.CONFIGURATIONFRAME["DiagnosticsAdvanced"] = { name = "Diagnostica avanzata", text="Nota: questi dati sono solo a scopo diagnostico. Se abilitati, potrebbero inondare la tua finestra di chat!"}
+L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Filtri Lista Personaggi", text = "Opzioni alternative per i filtri della lista personaggi." }
+L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Server Attuale", text = "Mostra solo server attuale." }
+L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Nessun punteggio", text = "Mostra solo personaggi con un punteggio." }
+L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Nessuna chiave", text = "Mostra solo personaggi con una chiave." }
+L.CONFIGURATIONFRAME["Purge"] = { present = "Pulisci", past = "Pulito" }
 
 L.ABOUTFRAME = {}
-L.ABOUTFRAME["AboutGeneral"] = { name = "Key Master Informazione", text = "Key Master Informazione"}
+L.ABOUTFRAME["AboutGeneral"] = { name = "Informazioni su Key Master", text = "Informazioni su Key Master"}
 L.ABOUTFRAME["AboutAuthors"] = { name = "Autori", text = "Autori"}
 L.ABOUTFRAME["AboutSpecialThanks"] = { name = "Ringraziamenti speciali", text = "Ringraziamenti speciali"}
-L.ABOUTFRAME["AboutContributors"] = { name = "Contributori", text = "Contributori"}
-L.ABOUTFRAME["Translators"] = { text = "Translators" }
-L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
+L.ABOUTFRAME["AboutContributors"] = { name = "Collaboratori", text = "Collaboratori"}
+L.ABOUTFRAME["Translators"] = { text = "Traduttori" }
+L.ABOUTFRAME["WhatsNew"] = { text = "Mostra cosa c'è di nuovo"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Avviso: I calcoli della stagione 4 di Dragonflight sono ancora in fase di verifica."}

@@ -15,7 +15,11 @@ local partyFrameLookup = {
 }
 
 function PartyFrameMapping:ShowPartyRow(unitId)
-    _G[partyFrameLookup[unitId]]:Show()
+    if _G["KeyMaster_MainFrame"]:IsShown() then
+        if not KM_PLAYER_IN_COMBAT then
+            _G[partyFrameLookup[unitId]]:Show()
+        end
+    end
 end
 
 function PartyFrameMapping:HidePartyRow(unitId)

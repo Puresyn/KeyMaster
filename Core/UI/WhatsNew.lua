@@ -25,45 +25,22 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Update 1.1 has landed!|r</h2>
-                <h3>You asked, we listened, you voted, we added it!</h3>
-                <br/>
-                <p>Key Master now shows your alternate max level characters on the player page! See below for details</p>
-                <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Added alternate characters to player tab.</p>
-                <p>]]..textBullet..[[Selecting an alternate character turns the Player tab into a Characters tab.</p>
-                <p>]]..textBullet..[[All functionality of the Player tab updates and works as the selection character; which includes the calculator and vault progress.</p>
-                <p>]]..textBullet..[[The character list only shows max level characters.</p>
-                <p>]]..textBullet..[[All keys are reset with regional server weekly reset.</p>
-                <p>]]..textBullet..[[The character list is reset with each new season.</p>
+                <p>Updated to WoW Interface 100207</p>
                 <br/>
-                <p>Added character list filter options to configuration tab.</p>
+                <p>Added version information to command line options. /km version</p>
                 <br/>
-                <p>Added &quot;What's New&quot; splash screen to display recent news, updates, and patch notes.</p>
+                <p>Removed the rating system notification.</p>
                 <br/>
-                <p>Added a &quot;Show What's New&quot; button to the about tab header to display patch notes on-demand.</p>
-                <br/>
-                <p>Improved Key Master interface open/close functionality.</p>
-                <p>]]..textBullet..[[It now closes automatically when entering combat.</p>
-                <p>]]..textBullet..[[If opening the interface during combat, it will open automatically after exiting combat.</p>
-                <p>]]..textBullet..[[It now closes automatically when casting a spell or using an ability.</p>
-                <br/>
-                <p>Clicking on the Key Master Notice frame now dismisses the message until next reload/relog.</p>
+                <p>Added Italian localization.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>Fixed portal click issue (FINALLY!) This was due to a CVAR setting from OPie(?) or any addon that changes the way mouse-clicks happen in WoW...</p>
+                <p>More fixes for the "Show" error sometimes recieved when completing a dungeon.</p>
                 <br/>
-                <p>Fixed a bug when receiving a new or updated keystone under certain conditions, your key information didn't update in real-time without a reload or relog.</p>
-                <br/>
-                <p>Fixed a bug where non-English client keys were sometimes not updating real-time.</p>
-                <br/>
-                <p>ADDON_ACTION_BLOCKED] AddOn 'KeyMaster' tried to call a protected function 'KM_PlayerRow1:Show()' should no longer be an issue.</p>
-                <br/>
-                <p>Removed empty quotation marks in specialization on the player page header when a player does not have a current active specialization or it is otherwise unknown.</p>
+                <p>Fixed WoW 10.2.7 code change errors.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>Still validating season 4 rating calculations (We are cautiously optimistic that the ratings are accurate.)</p>
+                <p>Portals do not update immediately when gaining a portal spell. /reload is required. We will address this issue in the next release.</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>

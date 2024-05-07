@@ -16,7 +16,7 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '1.1.4'
+KM_AUTOVERSION = '1.1.5'
 KM_VERSION_STATUS = KeyMasterLocals.BUILDRELEASE -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -29,6 +29,9 @@ SLASH_KeyMaster2 = KeyMasterLocals.COMMANDLINE["/keymaster"].name
 
 KeyMaster.Commands = {
     [KeyMasterLocals.COMMANDLINE["Show"].name] = KeyMaster.MainInterface.Toggle,
+    [KeyMasterLocals.COMMANDLINE["Version"].name] = function()
+        KeyMaster:Print("Version: "..tostring(KM_AUTOVERSION).." - "..KM_VERSION_STATUS)
+    end,
     [KeyMasterLocals.COMMANDLINE["Help"].name] = function() 
         local defaultColor = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
         local color = select(4, Theme:GetThemeColor("themeFontColorYellow")):upper()
@@ -36,6 +39,7 @@ KeyMaster.Commands = {
         KeyMaster:Print("List of slash commands:")
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Show"].name.."|r"..KeyMasterLocals.COMMANDLINE["Show"].text)
         KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Help"].name.."|r"..KeyMasterLocals.COMMANDLINE["Help"].text)
+        KeyMaster:Print("|cff"..defaultColor..KeyMasterLocals.COMMANDLINE["/km"].text.."|r |cff"..color..KeyMasterLocals.COMMANDLINE["Version"].name.."|r"..KeyMasterLocals.COMMANDLINE["Version"].text)
         print("=====================")
     end,
     -- Sample nested command line functions
@@ -186,7 +190,7 @@ local function onEvent_PartyChanges(self, event, ...)
         if not inGroup or (inGroup and GetNumGroupMembers() >= 2) then
             -- Only update UI if party tab is open
             local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-            if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+            if partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
                 -- reprocess party1-4 units
                 KeyMaster.PartyFrameMapping:UpdatePartyFrameData()
             end

@@ -4,8 +4,8 @@
 <!--<Script file='Core\Localization\Localization.frFR.lua'/>-->
     <Script file='Core\Localization\Localization.deDE.lua'/>
 <!--<Script file='Core\Localization\Localization.esES.lua'/>
-    <Script file='Core\Localization\Localization.esMX.lua'/>
-    <Script file='Core\Localization\Localization.itIT.lua'/> -->
+    <Script file='Core\Localization\Localization.esMX.lua'/> -->
+    <Script file='Core\Localization\Localization.itIT.lua'/>
     <Script file='Core\Localization\Localization.ruRU.lua'/>
     <Script file='Core\Localization\Localization.zhTW.lua'/>
 </Ui>

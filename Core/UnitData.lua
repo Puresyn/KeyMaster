@@ -81,7 +81,7 @@ end
 function UnitData:SetUnitData(unitData)
     local unitId = UnitData:GetUnitId(unitData.GUID)
     if unitId == nil then
-        KeyMaster:_ErrorMsg("SetUnitData", "UnitData", "UnitId is nil.  Cannot store data for "..unitData.name)
+        --KeyMaster:_ErrorMsg("SetUnitData", "UnitData", "UnitId is nil.  Cannot store data for "..unitData.name)
         return
     end
     unitData.unitId = unitId -- set unitId for this client

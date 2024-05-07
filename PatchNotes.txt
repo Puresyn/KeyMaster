@@ -3,6 +3,23 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.1.5
+--------------------------------------------------
+Updates:
+- Updated to WoW Interface 100207
+- Added version information to command line options. /km version
+- Removed the rating system notification.
+- Added Italian localization.
+
+Fixes:
+- More fixes for the "Show" error sometimes recieved when completing a dungeon.
+- Fixed WoW 10.2.7 code change errors.
+
+Known Issues:
+- Portals do not update immediately when gaining a portal spell. /reload is required.
+  We will address this issue in the next release.
+
+--------------------------------------------------
 Key Master v1.1.4
 --------------------------------------------------
 - Fixed portal click issue (FINALLY!) This was due to a CVAR setting from OPie

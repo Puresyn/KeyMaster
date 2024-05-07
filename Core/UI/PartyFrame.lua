@@ -56,7 +56,7 @@ function PartyFrame:noPartyInfoNotification(parent)
     noPartyInfo.text:SetText(KeyMasterLocals.PARTYFRAME["NoPartyInfo"].text)
     noPartyInfo.text:SetPoint("CENTER", noPartyInfo, "CENTER", 60, -90)
     noPartyInfo.text:SetWidth(parent:GetWidth()*0.55)
-    noPartyInfo.text:SetJustifyV("CENTER")
+    noPartyInfo.text:SetJustifyV("MIDDLE")
     noPartyInfo.text:SetJustifyH("LEFT")
     local msgColor = {}
     msgColor.r, msgColor.g, msgColor.b, _ = Theme:GetThemeColor("color_POOR")
@@ -500,7 +500,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
         tempText6:SetAllPoints(temp_Frame)
         local r, g, b, _ = Theme:GetThemeColor("color_TAUPE")
         tempText6:SetTextColor(r, g, b, 1)
-        tempText6:SetJustifyV("CENTER")
+        tempText6:SetJustifyV("MIDDLE")
 
         firstItem = false
         prevMapId = mapid
@@ -513,7 +513,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
     tallyDescTextBox.text = tallyDescTextBox:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     tallyDescTextBox.text:SetAllPoints(tallyDescTextBox)
     tallyDescTextBox.text:SetJustifyH("RIGHT")
-    tallyDescTextBox.text:SetJustifyV("CENTER")
+    tallyDescTextBox.text:SetJustifyV("MIDDLE")
     tallyDescTextBox.text:SetText(KeyMasterLocals.PARTYFRAME.TeamRatingGain.name..":")
 end
 

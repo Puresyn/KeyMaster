@@ -168,7 +168,7 @@ local function processOpenRaidData(payload, sender)
         
         -- Only update UI if party tab is open
         local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-        if isDirty == true and partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+        if isDirty == true and partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
             PartyFrameMapping:UpdateSingleUnitData(senderData.GUID)
             PartyFrameMapping:UpdateKeystoneHighlights()
             PartyFrameMapping:CalculateTotalRatingGainPotential() 
@@ -239,7 +239,7 @@ local function processKM2Data(payload, sender)
     
     -- Only update UI if party tab is open
     local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-    if partyTabContentFrame ~= nil and partyTabContentFrame:IsShown() then
+    if partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
         PartyFrameMapping:UpdateSingleUnitData(data.GUID)
         PartyFrameMapping:UpdateKeystoneHighlights()
         PartyFrameMapping:CalculateTotalRatingGainPotential()
