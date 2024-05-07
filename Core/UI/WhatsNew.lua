@@ -32,13 +32,15 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <p>Removed the rating system notification.</p>
                 <br/>
+                <p>Added Italian localization.</p>
+                <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <p>More fixes for the "Show" error sometimes recieved when completing a dungeon.</p>
                 <br/>
                 <p>Fixed WoW 10.2.7 code change errors.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>Portals do not update immediatly when gaining a portal spell. /reload is requried. We will address this issue in the next release.</p>
+                <p>Portals do not update immediately when gaining a portal spell. /reload is required. We will address this issue in the next release.</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
