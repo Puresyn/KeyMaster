@@ -72,7 +72,7 @@ end
 
 function CharacterData:GetCharacterDataByGUID(playerGUID)
     if KeyMaster_C_DB[playerGUID] == nil then
-        --KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", playerGUID.." is not in the list of alternate characters.")
+        KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", playerGUID.." is not in the list of alternate characters.")
         return nil
     end
 
