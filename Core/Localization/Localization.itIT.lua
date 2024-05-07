@@ -125,7 +125,7 @@ L.PLAYERFRAME["Characters"] = "Characters"
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Nessuna chiave trovata", text = "Nessuna chiave trovata"}
-L.CHARACTERINFO["KeyInVault"] = { name = "Digitare nel caveau", text = "Nel caveau"}
+L.CHARACTERINFO["KeyInVault"] = { name = "Chiave nella Gran Banca", text = "Nella Gran Banca"}
 L.CHARACTERINFO["AskMerchant"] = { name = "Mercante di chiavi", text = "Mercante di chiavi"}
 
 L.TABPLAYER = "Giocatore"
