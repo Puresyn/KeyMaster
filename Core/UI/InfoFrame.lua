@@ -109,10 +109,9 @@ Visit us at:
 https://www.curseforge.com/wow/addons/key-master
 https://discord.gg/bbMaUpfgn8
 
-    We are actively seeking volunteer translators and proof readers to help represent their countries for the following languages:
+    We are actively seeking volunteer translators and proofreaders for ALL supported languages - but specifically for the following languages:
 
 -French (France)
--Italian (Italy)
 -Chinese (China) (simplified) implemented LTR
 -Spanish (Spain)
 -Spanish (Mexico)]]
