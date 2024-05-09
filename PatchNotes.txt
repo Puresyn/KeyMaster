@@ -5,6 +5,16 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.1.6
 --------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- Dungeon portal buttons now update on dungeon completion.
+- Mythic plus vault progression now updates on dungeon completion.
+- Mythic zeros added to vault progression.
+
+Known Issues:
+- None
 
 --------------------------------------------------
 Key Master v1.1.5
