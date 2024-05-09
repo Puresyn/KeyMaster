@@ -90,8 +90,14 @@ function PartyFrame:UpdatePortals(mapId)
         if portalButton then return end
 
         local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+        local portalLock = _G["KM_PortalLock"..mapId]
         
         if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
+            if portalLock then
+                if portalLock:IsShown() then
+                    portalLock:Hide()
+                end
+            end
             local pButton = CreateFrame("Button","portal_button"..mapId,parent,"SecureActionButtonTemplate")
             pButton:SetFrameLevel(10)
             pButton:SetAttribute("type", "spell")
@@ -209,6 +215,16 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     local portalCooldownFrame = CreateFrame("Cooldown", "portalCooldown", dungeonIconFrame, "CooldownFrameTemplate")
     anim_frame:SetAllPoints(dungeonIconFrame)
     dungeonIconFrame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
+
+    local portalLock = CreateFrame("Frame", "KM_PortalLock"..mapId, dungeonIconFrame)
+    portalLock:SetPoint("BOTTOM", dungeonIconFrame, "TOP", 0, 4)
+    portalLock:SetSize(10, 13)
+    portalLock.lockIcon = portalLock:CreateTexture()
+    portalLock.lockIcon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KeyMaster-Interface-Clean")
+    portalLock.lockIcon:SetTexCoord(964/1024, 984/1024, 3/1024, 29/1024)
+    portalLock.lockIcon:SetAllPoints(portalLock)
+    --lockIcon:SetSize(80, 80)
+    portalLock.lockIcon:SetAlpha(0.3)
 
     -- Add clickable portal spell casting to dungeon texture frames if they have the spell
     PartyFrame:UpdatePortals(mapId)
