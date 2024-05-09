@@ -7,7 +7,7 @@ Key Master v1.1.6
 --------------------------------------------------
 Updates:
 - Added a lock icon above dungeon maps in the party frame when a portal
-  is not yet unlocked.
+  is not yet unlocked for you.
 
 Fixes:
 - Dungeon portal buttons now update on dungeon completion.
