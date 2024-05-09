@@ -44,13 +44,15 @@ local function UpdateKeyInformation(playerData)
     return playerData
 end
 
+
+
 -- Use this function as an end-point event hanlder to group and process pre-validated events.
 ---@type fun() Event handling end-point. Use this function to process events registered in this file.
 ---@param event string A string representing the name of the local function for an event.
-local function NotifyEvent(event)
+function EventHooks:NotifyEvent(event)
     if (event == "KEY_CHANGED") then
             C_Timer.After(5, function()
-            KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
+            KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: KEY_CHANGED")
 
             -- fetch self data
             local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
@@ -76,7 +78,7 @@ local function NotifyEvent(event)
         end)
     end
     if event == "SCORE_GAINED" then
-        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: SCORE_GAINED")
+        KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: SCORE_GAINED")
         C_Timer.After(5, function()
             -- fetch self data
             local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
@@ -99,8 +101,34 @@ local function NotifyEvent(event)
         end)
     end
     if event == "CHALLENGE_MODE_COMPLETED" then
-        KeyMaster:_DebugMsg("NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
+        KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
         KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
+    end
+
+    if event == "VAULT_UPDATE" then
+        KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: VAULT_UPDATE")
+        if KeyMaster_C_DB[UnitGUID("player")] then
+            C_Timer.After(5, 
+            function()
+                local mZeros = KeyMaster.WeeklyRewards:GetNumMythicZeroRuns()
+                local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
+                if mZeros > 0 or rewards then
+                    if not rewards then rewards = {} end
+                    for i=1, mZeros, 1 do
+                        table.insert(rewards, 0)
+                    end
+                    KeyMaster_C_DB[UnitGUID("player")].vault = rewards
+                end
+            end)
+        end
+    end
+
+    if event == "PORTALS_UPDATE" then
+        C_Timer.After(3,
+        function() 
+            KeyMaster.PartyFrame:UpdatePortals()
+            KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: PORTALS_UPDATE")
+        end)
     end
 end
 
@@ -124,7 +152,7 @@ local function KeyWatch()
             local itemID, _ = ...
             if (itemID == MYTHIC_PLUS_KEY_ID) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_COUNT_CHANGED: "..tostring(MYTHIC_PLUS_KEY_ID))
-                NotifyEvent("KEY_CHANGED")                
+                EventHooks:NotifyEvent("KEY_CHANGED")                
             end
         end
         if event == "ITEM_CHANGED" then
@@ -133,7 +161,7 @@ local function KeyWatch()
             local itemChangedFrom, itemChangedTo, _ = ...
             if (string.match(itemChangedFrom, tostring(MYTHIC_PLUS_KEY_ID))) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_CHANGED: "..tostring(itemChangedFrom))
-                NotifyEvent("KEY_CHANGED")                
+                EventHooks:NotifyEvent("KEY_CHANGED")                
             end
         end
         --[[ if event == "ITEM_DATA_LOAD_RESULT" then
@@ -141,25 +169,27 @@ local function KeyWatch()
             itemID, _ = ...
             if (itemID == MYTHIC_PLUS_KEY_ID) then
                 KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "ITEM_DATA_LOAD_RESULT")
-                NotifyEvent("KEY_CHANGED")
+                EventHooks:NotifyEvent("KEY_CHANGED")
             end
         end ]]
         if event == "CHALLENGE_MODE_START" then
             local mapid = ...
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_START")
-            NotifyEvent("KEY_CHANGED")
+            EventHooks:NotifyEvent("KEY_CHANGED")
         end
         if event == "CHALLENGE_MODE_COMPLETED" then
             KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHALLENGE_MODE_COMPLETED")
-            NotifyEvent("SCORE_GAINED")
-            NotifyEvent("CHALLENGE_MODE_COMPLETED")
+            EventHooks:NotifyEvent("SCORE_GAINED")
+            EventHooks:NotifyEvent("CHALLENGE_MODE_COMPLETED")
+            EventHooks:NotifyEvent("VAULT_UPDATE")
+            EventHooks:NotifyEvent("VAULT_UPDATE")
         end
         if event == "CHAT_MSG_LOOT" then
             local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
             if guid == UnitGUID("player") then
                 if (string.match(itemTextRecieved, tostring(MYTHIC_PLUS_KEY_ID))) then
                     KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHAT_MSG_LOOT: "..tostring(itemTextRecieved))
-                    NotifyEvent("KEY_CHANGED")
+                    EventHooks:NotifyEvent("KEY_CHANGED")
                 end
             end
         end
