@@ -41,6 +41,12 @@ function WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
             bestKeys[i] = history[i].level
         end
     end
-
+    
     return bestKeys
+end
+
+function WeeklyRewards:GetNumMythicZeroRuns()
+    local _, mZeros, _ = C_WeeklyRewards.GetNumCompletedDungeonRuns()
+    if not mZeros then mZeros = 0 end
+    return mZeros
 end
