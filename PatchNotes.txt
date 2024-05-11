@@ -8,8 +8,10 @@ Key Master v1.1.6
 Updates:
 - Added a lock icon above dungeon maps in the party frame when a portal
   is not yet unlocked for you.
+- Added Korean localization.
 
 Fixes:
+- Fixed bug introduced in 1.1.5 when logging into a character under max level.
 - Dungeon portal buttons now update on dungeon completion.
 - Mythic plus vault progression now updates on dungeon completion.
 - Mythic zeros added to vault progression.
