@@ -354,12 +354,12 @@ end
 
 function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
     if unitGUID == nil then
-        KeyMaster:_ErrorMsg("MapPartyUnitData", "UnitData", "Parameter unitGUID cannot be empty.")
+        KeyMaster:_ErrorMsg("MapPartyUnitData", "PartyFrameMapping", "Parameter unitGUID cannot be empty.")
         return
     end
     local unitId = UnitData:GetUnitId(unitGUID)
     if unitId == nil then
-        KeyMaster:_ErrorMsg("MapPartyUnitData", "UnitData", "UnitId is nil.  Cannot map data for "..unitGUID)
+        KeyMaster:_ErrorMsg("MapPartyUnitData", "PartyFrame Mapping", "UnitId is nil.  Cannot map data for "..unitGUID)
         return
     end
     -- find if we have data for this player, if not get a set of default data from blizzard
@@ -375,6 +375,9 @@ end
 function PartyFrameMapping:UpdatePartyFrameData()
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
         PartyFrameMapping:HideAllPartyFrame()  
+        PartyFrameMapping:UpdateSingleUnitData(UnitGUID("player"))
+        PartyFrameMapping:UpdateKeystoneHighlights()
+        PartyFrameMapping:CalculateTotalRatingGainPotential()    
         PartyFrameMapping:ResetTallyFramePositioning()
         if _G["KM_NoPartyInfo"] then _G["KM_NoPartyInfo"]:Show() end
         -- Show explination frame
