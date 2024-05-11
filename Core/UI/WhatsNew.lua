@@ -26,21 +26,23 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Updated to WoW Interface 100207</p>
+                <p>Added a lock icon above dungeon maps in the party frame when a portal is not yet unlocked for you.</p>
                 <br/>
-                <p>Added version information to command line options. /km version</p>
-                <br/>
-                <p>Removed the rating system notification.</p>
-                <br/>
-                <p>Added Italian localization.</p>
+                <p>Added Korean localization.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>More fixes for the "Show" error sometimes recieved when completing a dungeon.</p>
+                <p>Fixed bug introduced in 1.1.5 when logging into a character under max level.</p>
                 <br/>
-                <p>Fixed WoW 10.2.7 code change errors.</p>
+                <p>Dungeon portal buttons now update on dungeon completion.</p>
+                <br/>
+                <p>Mythic plus vault progression now updates on dungeon completion.</p>
+                <br/>
+                <p>Mythic zeros added to vault progression.</p>
+                <br/>
+                <p>Fixed empty player frame when in Group/Raid finder groups.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>Portals do not update immediately when gaining a portal spell. /reload is required. We will address this issue in the next release.</p>
+                <p>None</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>

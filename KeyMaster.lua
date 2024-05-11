@@ -16,7 +16,7 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = '1.1.5'
+KM_AUTOVERSION = GetAddOnMetadata("KeyMaster", "Version")
 KM_VERSION_STATUS = KeyMasterLocals.BUILDRELEASE -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -227,8 +227,8 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
 
         -- creates the UI but only when bliz data is avaiable from C_MythicPlus
         intializeUIWithRetries()
-
-        C_Timer.After(5, 
+        KeyMaster.EventHooks:NotifyEvent("VAULT_UPDATE")
+       --[[  C_Timer.After(5, 
             function() 
                 local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
                 if rewards then
@@ -237,7 +237,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
                     end
                 end
             end
-        )
+        ) ]]
     end
     if isReload then
         local inGroup = UnitInRaid("player") or IsInGroup()

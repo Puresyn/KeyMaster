@@ -38,9 +38,8 @@ function MainInterface:CreateMainFrame()
 
     -- Closes Key Master whenever a spell is cast or an ability is used
     hooksecurefunc("CastSpellByName", function() hideOnEvent(mainFrame) end)
+    hooksecurefunc("CastSpellByID", function() hideOnEvent(mainFrame) end)
     hooksecurefunc("UseAction", function() hideOnEvent(mainFrame) end)
-
-
     
     return mainFrame
 end

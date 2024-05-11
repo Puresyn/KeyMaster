@@ -48,6 +48,65 @@ local portalSpellIds = {
 
 }
 
+-- Affix IDs
+local OVERFLOWING_ID = 1
+local SKITTISH_ID = 2
+local VOLCANIC_ID = 3
+local NECROTIC_ID = 4
+local TEEMING_ID = 5
+local RAGING_ID = 6
+local BOLSTERING_ID = 7
+local SANGUINE_ID = 8
+local TYRANNICAL_ID = 9
+local FORTIFIED_ID = 10
+local BURSTING_ID = 11
+local GRIEVOUS_ID = 12
+local EXPLOSIVE_ID = 13
+local QUAKING_ID = 14
+local INFESTED_ID = 16
+local SPITEFUL_ID = 123
+local STORMING_ID = 124
+local ENTAGLING_ID = 134
+local AFFLICTED_ID = 135
+local INCORPOREAL_ID = 136
+
+
+
+
+local weeklyAffixes = { -- DF S4
+    [1] = {TYRANNICAL_ID, STORMING_ID, RAGING_ID},
+    [2] = {FORTIFIED_ID, ENTAGLING_ID, BOLSTERING_ID},
+    [3] = {TYRANNICAL_ID, INCORPOREAL_ID, SPITEFUL_ID},
+    [4] = {FORTIFIED_ID, AFFLICTED_ID, RAGING_ID},
+    [5] = {TYRANNICAL_ID, VOLCANIC_ID, SANGUINE_ID},
+    [6] = {FORTIFIED_ID, STORMING_ID, BURSTING_ID},
+    [7] = {TYRANNICAL_ID, AFFLICTED_ID, BOLSTERING_ID},
+    [8] = {FORTIFIED_ID, INCORPOREAL_ID, SANGUINE_ID},
+    [9] = {TYRANNICAL_ID, ENTAGLING_ID, BURSTING_ID},
+    [10] = {FORTIFIED_ID, VOLCANIC_ID, SPITEFUL_ID}
+}
+
+function DungeonTools:nextWeeksAffixes(curAffixes)
+    local a1, a2, a3 = unpack(curAffixes)
+    local thisWeek, nextWeek, nextWeeksAffixes
+
+    for k, v in pairs(weeklyAffixes) do
+        if v[1] == a1 and v[2] == a2 and v[3] == a3 then
+            thisWeek = k
+        end
+    end
+
+    nextWeek = thisWeek + 1
+    if nextWeek > #weeklyAffixes then
+        nextWeek = 1
+    end
+
+    nextWeeksAffixes = weeklyAffixes[nextWeek]
+    --print("Next Week Affixes: "..C_ChallengeMode.GetAffixInfo(nextWeeksAffixes[1])..C_ChallengeMode.GetAffixInfo(nextWeeksAffixes[2])..C_ChallengeMode.GetAffixInfo(nextWeeksAffixes[3]))
+    --print(nextWeeksAffixes)
+    return nextWeeksAffixes
+end
+
 function DungeonTools:portalSpells()
     return portalSpellIds
 end

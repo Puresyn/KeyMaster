@@ -72,6 +72,63 @@ function PartyFrame:noPartyInfoNotification(parent)
     return noPartyInfo
 end
 
+function PartyFrame:UpdatePortals(mapId)
+    local mapsTable
+    if not mapId then
+        mapsTable = DungeonTools:GetCurrentSeasonMaps()
+    elseif not DungeonTools:GetCurrentSeasonMaps()[mapId] then
+        KeyMaster:_ErrorMsg("PartyFrame:UpdatePortals", "PartyFrame", "Invalid map ID: "..tostring(mapId))
+        return
+    end
+        
+
+    local function createButton(mapId)
+        local parent = _G["Dungeon_"..mapId.."_Header"]
+        if not parent then return end
+
+        local portalButton = _G["portal_button"..mapId]
+        if portalButton then return end
+
+        local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+        local portalLock = _G["KM_PortalLock"..mapId]
+        
+        if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
+            if portalLock then
+                if portalLock:IsShown() then
+                    portalLock:Hide()
+                end
+            end
+            local pButton = CreateFrame("Button","portal_button"..mapId,parent,"SecureActionButtonTemplate")
+            pButton:SetFrameLevel(10)
+            pButton:SetAttribute("type", "spell")
+            pButton:SetAttribute("spell", portalSpellId)
+            pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
+            pButton:SetWidth(pButton:GetParent():GetWidth())
+            pButton:SetHeight(pButton:GetParent():GetWidth())
+            pButton:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, 0)
+            pButton:SetScript("OnEnter", portalButton_mouseover)
+            pButton:SetScript("OnLeave", portalButton_mouseoout)
+
+            parent:SetAttribute("portalSpellName", portalSpellName)
+        end
+        
+    end
+
+    if mapsTable then
+        for k, v in pairs(mapsTable) do
+            createButton(k)
+        end
+    else
+        local portalButton = _G["portal_button"..mapId]
+        if portalButton then 
+            return
+        else
+            createButton(mapId)
+        end
+    end
+    mapsTable = nil -- may not be needed but ensuring garbage collection.
+end
+
 local function createPartyDungeonHeader(anchorFrame, mapId)
     if not anchorFrame and mapId then 
         KeyMaster:_ErrorMsg("createPartyDungeonHeader", "PartyFrame", "No valid parameters passed.")
@@ -93,14 +150,14 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     local mapAbbr = DungeonTools:GetDungeonNameAbbr(mapId)
 
     -- Dungeon Header Icon Frame
-    local temp_frame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
-    temp_frame:SetSize(iconSizex, iconSizey)
-    temp_frame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10) -- 10, 24
+    local dungeonIconFrame = CreateFrame("Frame", "Dungeon_"..mapId.."_Header", _G["KeyMaster_Frame_Party"])
+    dungeonIconFrame:SetSize(iconSizex, iconSizey)
+    dungeonIconFrame:SetPoint("BOTTOM", anchorFrame, "TOP", 0, 10) -- 10, 24
 
-    local backgroundHighlight = CreateFrame("Frame", "KM_MapHeaderHighlight"..mapId, temp_frame)
-    backgroundHighlight:SetFrameLevel(temp_frame:GetFrameLevel()-1)
-    backgroundHighlight:SetPoint("TOP", temp_frame, "BOTTOM", 0, -4)
-    backgroundHighlight:SetSize(temp_frame:GetWidth(), 2)
+    local backgroundHighlight = CreateFrame("Frame", "KM_MapHeaderHighlight"..mapId, dungeonIconFrame)
+    backgroundHighlight:SetFrameLevel(dungeonIconFrame:GetFrameLevel()-1)
+    backgroundHighlight:SetPoint("TOP", dungeonIconFrame, "BOTTOM", 0, -4)
+    backgroundHighlight:SetSize(dungeonIconFrame:GetWidth(), 2)
     backgroundHighlight.texture = backgroundHighlight:CreateTexture()
     backgroundHighlight.texture:SetAllPoints(backgroundHighlight)
     local highlightColor = {}
@@ -109,7 +166,7 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     backgroundHighlight:Hide()
 
     -- Dungeon abbr text
-    local txtPlaceHolder = temp_frame:CreateFontString("KM_Dungeon_"..mapId.."_Abbr", "OVERLAY", "KeyMasterFontSmall")
+    local txtPlaceHolder = dungeonIconFrame:CreateFontString("KM_Dungeon_"..mapId.."_Abbr", "OVERLAY", "KeyMasterFontSmall")
     local Path, _, Flags = txtPlaceHolder:GetFont()
     txtPlaceHolder:SetFont(Path, 12, Flags)
     txtPlaceHolder:SetPoint("BOTTOM", 0, 2)
@@ -117,27 +174,27 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     txtPlaceHolder:SetText(mapAbbr)
 
     -- Dungeon Abbr background
-    temp_frame.texture = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 3)
-    temp_frame.texture:SetPoint("BOTTOM", temp_frame, 0, 0)
-    temp_frame.texture:SetSize(temp_frame:GetWidth(), 16)
-    temp_frame.texture:SetColorTexture(0, 0, 0, 0.7)
+    dungeonIconFrame.texture = dungeonIconFrame:CreateTexture(nil, "BACKGROUND",nil, 3)
+    dungeonIconFrame.texture:SetPoint("BOTTOM", dungeonIconFrame, 0, 0)
+    dungeonIconFrame.texture:SetSize(dungeonIconFrame:GetWidth(), 16)
+    dungeonIconFrame.texture:SetColorTexture(0, 0, 0, 0.7)
 
     -- Dungeon image thumbnail
-    temp_frame.texturemap = temp_frame:CreateTexture(nil, "BACKGROUND",nil, 1)
-    temp_frame.texturemap:SetAllPoints(temp_frame)
-    temp_frame.texturemap:SetTexture(mapsTable[mapId].texture)
-    temp_frame.shadowTexture = temp_frame:CreateTexture("KM_GroupKeyShadow"..mapId, "OVERLAY")
-    temp_frame.shadowTexture:SetSize(64, 64)
-    temp_frame.shadowTexture:SetPoint("TOPLEFT")
-    temp_frame.shadowTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Key-Number-Background")
-    temp_frame:SetAttribute("dungeonMapId", mapId)
-    temp_frame:SetAttribute("texture", mapsTable[mapId].texture)
+    dungeonIconFrame.texturemap = dungeonIconFrame:CreateTexture(nil, "BACKGROUND",nil, 1)
+    dungeonIconFrame.texturemap:SetAllPoints(dungeonIconFrame)
+    dungeonIconFrame.texturemap:SetTexture(mapsTable[mapId].texture)
+    dungeonIconFrame.shadowTexture = dungeonIconFrame:CreateTexture("KM_GroupKeyShadow"..mapId, "OVERLAY")
+    dungeonIconFrame.shadowTexture:SetSize(64, 64)
+    dungeonIconFrame.shadowTexture:SetPoint("TOPLEFT")
+    dungeonIconFrame.shadowTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Key-Number-Background")
+    dungeonIconFrame:SetAttribute("dungeonMapId", mapId)
+    dungeonIconFrame:SetAttribute("texture", mapsTable[mapId].texture)
 
     -- Portal Animation
-    local anim_frame = CreateFrame("Frame", "portalTexture"..mapAbbr, temp_frame)
-    anim_frame:SetFrameLevel(temp_frame:GetFrameLevel()+1)
+    local anim_frame = CreateFrame("Frame", "portalTexture"..mapAbbr, dungeonIconFrame)
+    anim_frame:SetFrameLevel(dungeonIconFrame:GetFrameLevel()+1)
     anim_frame:SetSize(35, 35)
-    anim_frame:SetPoint("CENTER", temp_frame, "CENTER", 0, 8)
+    anim_frame:SetPoint("CENTER", dungeonIconFrame, "CENTER", 0, 8)
     anim_frame.textureportal = anim_frame:CreateTexture(nil, "ARTWORK")
     anim_frame.textureportal:SetAllPoints(anim_frame)
     --anim_frame.textureportal:SetAlpha(0.8)
@@ -146,41 +203,53 @@ local function createPartyDungeonHeader(anchorFrame, mapId)
     a1:SetDegrees(-360)
     a1:SetDuration(2)
     anim_frame.animg:SetLooping("REPEAT")
-    temp_frame:SetAttribute("portalFrame", anim_frame)
+    dungeonIconFrame:SetAttribute("portalFrame", anim_frame)
 
-    temp_frame.maskTexture = temp_frame:CreateMaskTexture()
-    temp_frame.maskTexture:SetSize(64,64)
-    temp_frame.maskTexture:SetPoint("CENTER")
-    temp_frame.maskTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Mask")
-    anim_frame.textureportal:AddMaskTexture(temp_frame.maskTexture)
+    dungeonIconFrame.maskTexture = dungeonIconFrame:CreateMaskTexture()
+    dungeonIconFrame.maskTexture:SetSize(64,64)
+    dungeonIconFrame.maskTexture:SetPoint("CENTER")
+    dungeonIconFrame.maskTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Dungeon-Portal-Mask")
+    anim_frame.textureportal:AddMaskTexture(dungeonIconFrame.maskTexture)
 
     -- Portal Cooldown
-    local portalCooldownFrame = CreateFrame("Cooldown", "portalCooldown", temp_frame, "CooldownFrameTemplate")
-    anim_frame:SetAllPoints(temp_frame)
-    temp_frame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
+    local portalCooldownFrame = CreateFrame("Cooldown", "portalCooldown", dungeonIconFrame, "CooldownFrameTemplate")
+    anim_frame:SetAllPoints(dungeonIconFrame)
+    dungeonIconFrame:SetAttribute("portalCooldownFrame", portalCooldownFrame)
+
+    local portalLock = CreateFrame("Frame", "KM_PortalLock"..mapId, dungeonIconFrame)
+    portalLock:SetPoint("BOTTOM", dungeonIconFrame, "TOP", 0, 4)
+    portalLock:SetSize(10, 13)
+    portalLock.lockIcon = portalLock:CreateTexture()
+    portalLock.lockIcon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/KeyMaster-Interface-Clean")
+    portalLock.lockIcon:SetTexCoord(964/1024, 984/1024, 3/1024, 29/1024)
+    portalLock.lockIcon:SetAllPoints(portalLock)
+    --lockIcon:SetSize(80, 80)
+    portalLock.lockIcon:SetAlpha(0.3)
 
     -- Add clickable portal spell casting to dungeon texture frames if they have the spell
-    local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+    PartyFrame:UpdatePortals(mapId)
+
+    --[[ local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
     
     if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
-        local pButton = CreateFrame("Button","portal_button"..mapId,temp_frame,"SecureActionButtonTemplate")
+        local pButton = CreateFrame("Button","portal_button"..mapId,dungeonIconFrame,"SecureActionButtonTemplate")
         pButton:SetFrameLevel(10)
         pButton:SetAttribute("type", "spell")
         pButton:SetAttribute("spell", portalSpellId)
         pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
         pButton:SetWidth(pButton:GetParent():GetWidth())
         pButton:SetHeight(pButton:GetParent():GetWidth())
-        pButton:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
+        pButton:SetPoint("TOPLEFT", dungeonIconFrame, "TOPLEFT", 0, 0)
         pButton:SetScript("OnEnter", portalButton_mouseover)
         pButton:SetScript("OnLeave", portalButton_mouseoout)
 
-        temp_frame:SetAttribute("portalSpellName", portalSpellName)
-    end
+        dungeonIconFrame:SetAttribute("portalSpellName", portalSpellName)
+    end ]]
 
     -- Group Key Level Frame
-    local groupKey = CreateFrame("Frame", "Dungeon_"..mapId.."_HeaderKeyLevel", temp_frame)
+    local groupKey = CreateFrame("Frame", "Dungeon_"..mapId.."_HeaderKeyLevel", dungeonIconFrame)
     groupKey:SetSize(40, 15)
-    groupKey:SetPoint("TOPLEFT", temp_frame, "TOPLEFT", 0, 0)
+    groupKey:SetPoint("TOPLEFT", dungeonIconFrame, "TOPLEFT", 0, 0)
     local keyText = groupKey:CreateFontString("Dungeon_"..mapId.."_HeaderKeyLevelText", "OVERLAY", "KeyMasterFontNormal")
     Path, _, Flags = txtPlaceHolder:GetFont()
     keyText:SetFont(Path, 12, Flags)
@@ -305,36 +374,36 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
     for mapid, mapData in pairs(mapTable) do
         bolColHighlight = not bolColHighlight -- alternate row highlighting
         
-        local temp_Frame = CreateFrame("Frame", "KM_MapData"..playerNumber..mapid, parentFrame)
-        temp_Frame:ClearAllPoints()
+        local mapDataFrame = CreateFrame("Frame", "KM_MapData"..playerNumber..mapid, parentFrame)
+        mapDataFrame:ClearAllPoints()
 
         -- Dynamicly set map data frame anchors
         if (firstItem) then
-            temp_Frame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
+            mapDataFrame:SetPoint("TOPRIGHT", dataFrame, "TOPRIGHT", 0, 0)
         else
-            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..prevMapId], "TOPLEFT", 0, 0)
+            mapDataFrame:SetPoint("TOPRIGHT", _G["KM_MapData"..playerNumber..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((parentFrame:GetWidth() / 12.5), parentFrame:GetHeight())
+        mapDataFrame:SetSize((parentFrame:GetWidth() / 12.5), parentFrame:GetHeight())
 
         if (not bolColHighlight) then
-            temp_Frame.texture = temp_Frame:CreateTexture()
-            temp_Frame.texture:SetAllPoints(temp_Frame)
-            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
+            mapDataFrame.texture = mapDataFrame:CreateTexture()
+            mapDataFrame.texture:SetAllPoints(mapDataFrame)
+            mapDataFrame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.2)
         end
 
         -- Tyrannical Scores
-        local tempText1 = temp_Frame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
-        tempText1:SetPoint("CENTER", temp_Frame, "TOP", 0, -10)
+        local tempText1 = mapDataFrame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
+        tempText1:SetPoint("CENTER", mapDataFrame, "TOP", 0, -10)
         prevAnchor = tempText1
 
         -- Fortified Scores
-        local tempText4 = temp_Frame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
+        local tempText4 = mapDataFrame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
         tempText4:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -8)
         prevAnchor = tempText4
 
         -- Member Point Gain From Key
-        local tempText5 = temp_Frame:CreateFontString("KM_PointGain"..playerNumber..mapid, "OVERLAY", "KeyMasterFontSmall")
+        local tempText5 = mapDataFrame:CreateFontString("KM_PointGain"..playerNumber..mapid, "OVERLAY", "KeyMasterFontSmall")
         tempText5:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -10)
         local PointGainColor = {}
         PointGainColor.r, PointGainColor.g, PointGainColor.b, _ = Theme:GetThemeColor("color_TAUPE")
@@ -342,15 +411,15 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
         prevAnchor = tempText5
 
         -- Map Total Score
-        local tempText6 = temp_Frame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
-        tempText6:SetPoint("CENTER", temp_Frame, "BOTTOM", 0, 10)
+        local tempText6 = mapDataFrame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
+        tempText6:SetPoint("CENTER", mapDataFrame, "BOTTOM", 0, 10)
         local MapScoreTotalColor = {}
         MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         tempText6:SetTextColor(MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, 1)
 
         -- create dungeon identity header if this is the clinets row (the first row)
         if (playerNumber == 1) then
-            local anchorFrame = temp_Frame
+            local anchorFrame = mapDataFrame
             local id = mapid
             createPartyDungeonHeader(anchorFrame, id)
         end
@@ -365,27 +434,27 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
     local legendRightMargin = 4
     local xOffset = (-(_G["KM_MapLevelT"..playerNumber..prevMapId]:GetParent():GetWidth())/2)-legendRightMargin
 
-    local temp_Frame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
-    temp_Frame:ClearAllPoints()
-    temp_Frame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
-    temp_Frame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", -4, 0)
+    local mapLegendFrame = CreateFrame("Frame", "KM_MapDataLegend"..playerNumber, parentFrame)
+    mapLegendFrame:ClearAllPoints()
+    mapLegendFrame:SetSize((parentFrame:GetWidth() / 12), parentFrame:GetHeight())
+    mapLegendFrame:SetPoint("TOPRIGHT", "KM_MapData"..playerNumber..prevMapId, "TOPLEFT", -4, 0)
 
-    local PartyTitleText = temp_Frame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
+    local PartyTitleText = mapLegendFrame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     PartyTitleText:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     PartyTitleText:SetText(KeyMasterLocals.TYRANNICAL..":")
     
-    local FortTitleText = temp_Frame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
+    local FortTitleText = mapLegendFrame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     FortTitleText:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     FortTitleText:SetText(KeyMasterLocals.FORTIFIED..":")
 
-    local PointGainTitleText = temp_Frame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
+    local PointGainTitleText = mapLegendFrame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
     PointGainTitleText:SetPoint("RIGHT", _G["KM_PointGain"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     local PointGainTitleColor = {}
     PointGainTitleColor.r, PointGainTitleColor.g, PointGainTitleColor.b = Theme:GetThemeColor("color_TAUPE")
     PointGainTitleText:SetTextColor(PointGainTitleColor.r, PointGainTitleColor.g, PointGainTitleColor.b, 1)
     PointGainTitleText:SetText(KeyMasterLocals.PARTYFRAME["MemberPointsGain"].name..":")
 
-    local OverallRatingTitleText = temp_Frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    local OverallRatingTitleText = mapLegendFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     OverallRatingTitleText:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     OverallRatingTitleText:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
 
@@ -406,46 +475,46 @@ function PartyFrame:CreatePartyMemberFrame(unitId, parentFrame)
     local frameHeight = 0
     local mtb = 2 -- top and bottom margin of each frame in pixels
 
-    local temp_RowFrame = CreateFrame("Frame", "KM_PlayerRow"..partyNumber, parentFrame)
-    temp_RowFrame:ClearAllPoints()
+    local playerRowFrame = CreateFrame("Frame", "KM_PlayerRow"..partyNumber, parentFrame)
+    playerRowFrame:ClearAllPoints()
 
     if (unitId == "player") then -- first spot
-        temp_RowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -4)
+        playerRowFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 0, -4)
         frameHeight = (parentFrame:GetHeight()/5) - (mtb*2)
     else
-        temp_RowFrame:SetPoint("TOPLEFT", _G["KM_PlayerRow"..partyNumber - 1], "BOTTOMLEFT", 0, -4)
+        playerRowFrame:SetPoint("TOPLEFT", _G["KM_PlayerRow"..partyNumber - 1], "BOTTOMLEFT", 0, -4)
         frameHeight = parentFrame:GetHeight()
     end
 
-    temp_RowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
-    temp_RowFrame.texture = temp_RowFrame:CreateTexture("KM_Player_Row_Class_Bios"..partyNumber)
-    temp_RowFrame.texture:SetSize(temp_RowFrame:GetWidth(), temp_RowFrame:GetHeight())
-    temp_RowFrame.texture:SetPoint("LEFT")
-    temp_RowFrame.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    playerRowFrame:SetSize(parentFrame:GetWidth(), frameHeight)
+    playerRowFrame.texture = playerRowFrame:CreateTexture("KM_Player_Row_Class_Bios"..partyNumber)
+    playerRowFrame.texture:SetSize(playerRowFrame:GetWidth(), playerRowFrame:GetHeight())
+    playerRowFrame.texture:SetPoint("LEFT")
+    playerRowFrame.texture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
 
-    local temp_frame = CreateFrame("Frame", "KM_PortraitFrame"..partyNumber, _G["KM_PlayerRow"..partyNumber])
-    temp_frame:SetSize(temp_RowFrame:GetHeight(), temp_RowFrame:GetHeight())
-    temp_frame:ClearAllPoints()
-    temp_frame:SetPoint("CENTER", temp_RowFrame, "LEFT", 0, 0)
+    local playerPortraitFrame = CreateFrame("Frame", "KM_PortraitFrame"..partyNumber, _G["KM_PlayerRow"..partyNumber])
+    playerPortraitFrame:SetSize(playerRowFrame:GetHeight(), playerRowFrame:GetHeight())
+    playerPortraitFrame:ClearAllPoints()
+    playerPortraitFrame:SetPoint("CENTER", playerRowFrame, "LEFT", 0, 0)
 
-    local img1 = temp_frame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
-    img1:SetHeight(temp_RowFrame:GetHeight()-26)
-    img1:SetWidth(temp_RowFrame:GetHeight()-26)
+    local img1 = playerPortraitFrame:CreateTexture("KM_Portrait"..partyNumber, "BACKGROUND")
+    img1:SetHeight(playerRowFrame:GetHeight()-26)
+    img1:SetWidth(playerRowFrame:GetHeight()-26)
     img1:ClearAllPoints()
-    img1:SetPoint("CENTER", temp_frame, "CENTER", 0, 0)
+    img1:SetPoint("CENTER", playerPortraitFrame, "CENTER", 0, 0)
 
     -- the ring around the portrait
-    local img2 = temp_frame:CreateTexture("KM_PortraitFrame"..partyNumber, "ARTWORK")
-    img2:SetHeight(temp_RowFrame:GetHeight()+5)
-    img2:SetWidth(temp_RowFrame:GetHeight()+5)
+    local img2 = playerPortraitFrame:CreateTexture("KM_PortraitFrame"..partyNumber, "ARTWORK")
+    img2:SetHeight(playerRowFrame:GetHeight()+5)
+    img2:SetWidth(playerRowFrame:GetHeight()+5)
     img2:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\KeyMaster-Interface-Clean",false)
     img2:ClearAllPoints()
     img2:SetTexCoord(916/1024, 1, 100/1024, 206/1024)
     img2:SetPoint("CENTER", img1, "CENTER", 0, 0)
 
-    KeyMaster:CreateHLine(temp_RowFrame:GetWidth()+8, temp_RowFrame, "TOP", 0, 0)
+    KeyMaster:CreateHLine(playerRowFrame:GetWidth()+8, playerRowFrame, "TOP", 0, 0)
 
-    return temp_RowFrame
+    return playerRowFrame
 end
 
 -- Party Frame Score Tally Footer
@@ -471,40 +540,40 @@ function PartyFrame:CreatePartyScoreTallyFooter()
     for mapid, mapData in pairs(mapTable) do
         bolColHighlight = not bolColHighlight -- alternate row highlighting
         
-        local temp_Frame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
-        temp_Frame:ClearAllPoints()
+        local mapTallyFrame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
+        mapTallyFrame:ClearAllPoints()
 
         -- Dynamicly set map data frame anchors
         if (firstItem) then
-            temp_Frame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)
+            mapTallyFrame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)
         else
-            temp_Frame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
+            mapTallyFrame:SetPoint("TOPRIGHT", _G["KM_MapTally"..prevMapId], "TOPLEFT", 0, 0)
         end
 
-        temp_Frame:SetSize((partyTallyFrame:GetWidth() / 12.5), partyTallyFrame:GetHeight())
+        mapTallyFrame:SetSize((partyTallyFrame:GetWidth() / 12.5), partyTallyFrame:GetHeight())
 
-        temp_Frame.bgTexture = temp_Frame:CreateTexture()
-        temp_Frame.bgTexture:SetSize(temp_Frame:GetWidth(), temp_Frame:GetHeight())
-        temp_Frame.bgTexture:SetPoint("LEFT")
-        temp_Frame.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight-Inverted")
+        mapTallyFrame.bgTexture = mapTallyFrame:CreateTexture()
+        mapTallyFrame.bgTexture:SetSize(mapTallyFrame:GetWidth(), mapTallyFrame:GetHeight())
+        mapTallyFrame.bgTexture:SetPoint("LEFT")
+        mapTallyFrame.bgTexture:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight-Inverted")
         local r, g, b, _ = Theme:GetThemeColor("themeFontColorGreen2")
 
         if (not bolColHighlight) then
-            temp_Frame.texture = temp_Frame:CreateTexture("OVERLAY")
-            temp_Frame.texture:SetAllPoints(temp_Frame)
-            temp_Frame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.15)
+            mapTallyFrame.texture = mapTallyFrame:CreateTexture("OVERLAY")
+            mapTallyFrame.texture:SetAllPoints(mapTallyFrame)
+            mapTallyFrame.texture:SetColorTexture(partyColColor.r, partyColColor.g, partyColColor.b, 0.15)
         end
 
         -- Map Total Tally
-        local tempText6 = temp_Frame:CreateFontString("KM_MapTallyScore"..mapid, "OVERLAY", "KeyMasterFontBig")
-        tempText6:SetAllPoints(temp_Frame)
+        local tempText6 = mapTallyFrame:CreateFontString("KM_MapTallyScore"..mapid, "OVERLAY", "KeyMasterFontBig")
+        tempText6:SetAllPoints(mapTallyFrame)
         local r, g, b, _ = Theme:GetThemeColor("color_TAUPE")
         tempText6:SetTextColor(r, g, b, 1)
         tempText6:SetJustifyV("MIDDLE")
 
         firstItem = false
         prevMapId = mapid
-        lastPointsFrame = temp_Frame
+        lastPointsFrame = mapTallyFrame
     end
 
     local tallyDescTextBox = CreateFrame("Frame", "KM_TallyDesc", lastPointsFrame)
@@ -525,12 +594,12 @@ function PartyFrame:CreatePartyRowsFrame(parentFrame)
 
     local gfm = 4 -- group frame margin
 
-    local temp_frame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
-    temp_frame:SetSize(parentFrame:GetWidth()-(gfm*2), 440)
-    temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -108)
+    local memberRowsFrame =  CreateFrame("Frame", "KeyMaster_Frame_Party", parentFrame)
+    memberRowsFrame:SetSize(parentFrame:GetWidth()-(gfm*2), 440)
+    memberRowsFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", gfm, -108)
     timeSinceLastUpdate = 0
 
-    return temp_frame
+    return memberRowsFrame
 end
 
 function PartyFrame:CreatePartyFrame(parentFrame)

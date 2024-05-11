@@ -67,13 +67,19 @@
         <Scripts>
             <OnLoad>
                 tinsert(UISpecialFrames, self:GetName());
+				KM_INIT = false
             </OnLoad>
 			<OnShow>
-                PlaySound(SOUNDKIT.IG_SPELLBOOK_OPEN);
+                if KM_INIT then
+					PlaySound(SOUNDKIT.IG_SPELLBOOK_OPEN);
+				end
 				<!-- KeyMaster:Initialize(self); -->
 			</OnShow>
 			<OnHide>
-                PlaySound(SOUNDKIT.IG_SPELLBOOK_CLOSE);
+				if KM_INIT then
+                	PlaySound(SOUNDKIT.IG_SPELLBOOK_CLOSE);
+				end
+				KM_INIT = true
 			</OnHide>
 		</Scripts>
     </Frame>
