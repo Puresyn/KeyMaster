@@ -39,7 +39,11 @@ function MainInterface:CreateMainFrame()
     -- Closes Key Master whenever a spell is cast or an ability is used
     hooksecurefunc("CastSpellByName", function() hideOnEvent(mainFrame) end)
     hooksecurefunc("CastSpellByID", function() hideOnEvent(mainFrame) end)
-    hooksecurefunc("UseAction", function() hideOnEvent(mainFrame) end)
+
+    --[[ Commented the following line out because it prevents /km to be used in a macro.
+    May need to find a better solution if it becomes an issue. ]]
+    --hooksecurefunc("UseAction", function() hideOnEvent(mainFrame) end)
+
     
     return mainFrame
 end
