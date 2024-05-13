@@ -85,7 +85,7 @@ L.INSTANCETIMER = "던전 정보"
 L.VAULTINFORMATION = "쐐기 주간보상(금고)"
 L.TIMELIMIT = "제한 시간"
 L.SEASON = "시즌"
-L.COMBATMESSAGE = { errormsg = "Key Master는 전투중 사용할 수 없습니다.", chatmsg = "The interface will open once you exit combat."}
+L.COMBATMESSAGE = { errormsg = "Key Master는 전투 중 사용할 수 없습니다.", chatmsg = "Key Master는 전투 중 사용할 수 없습니다." }
 
 L.COMMANDLINE = {} -- translate whatever in this section would be standard of an addon in the language. i.e. /km show, /km XXXX, or /XX XXXX It will work just fine.
 L.COMMANDLINE["/km"] = { name = "/km", text = "/km"}
