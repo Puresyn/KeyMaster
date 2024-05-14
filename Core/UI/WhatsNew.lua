@@ -26,20 +26,14 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Added a lock icon above dungeon maps in the party frame when a portal is not yet unlocked for you.</p>
+                <p>Updated Ace3 libraries.</p>
                 <br/>
-                <p>Added Korean localization.</p>
+                <p>Updated KR localization.</p>
+                <br/>
+                <p>Changed the auto-closing of the Key Master interface so it can be opened with a macro. Side effect: The interface no longer closes automatically when using an action. This option may be added to the mconfiguration later. (Does not apply to spells unless they are within a macro.)</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>Fixed bug introduced in 1.1.5 when logging into a character under max level.</p>
-                <br/>
-                <p>Dungeon portal buttons now update on dungeon completion.</p>
-                <br/>
-                <p>Mythic plus vault progression now updates on dungeon completion.</p>
-                <br/>
-                <p>Mythic zeros added to vault progression.</p>
-                <br/>
-                <p>Fixed empty player frame when in Group/Raid finder groups.</p>
+                <p>Another fix for real-time portal updating.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
                 <p>None</p>

@@ -182,7 +182,7 @@ local function KeyWatch()
             EventHooks:NotifyEvent("SCORE_GAINED")
             EventHooks:NotifyEvent("CHALLENGE_MODE_COMPLETED")
             EventHooks:NotifyEvent("VAULT_UPDATE")
-            EventHooks:NotifyEvent("VAULT_UPDATE")
+            EventHooks:NotifyEvent("PORTALS_UPDATE")
         end
         if event == "CHAT_MSG_LOOT" then
             local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
