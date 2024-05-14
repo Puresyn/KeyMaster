@@ -7,10 +7,17 @@ Key Master v1.1.7
 --------------------------------------------------
 Updates:
 - Updated Ace3 libraries.
+- Updated KR localization.
+- Changed the auto-closing of the Key Master interface so it can be opened with
+  a macro. Side effect: The interface no longer closes automatically when using
+  an action. This option may be added to the mconfiguration later.
+  (Does not apply to spells unless they are within a macro.)
 
 Fixes:
+- Another fix for real-time portal updating.
 
 Know Issues:
+- None
 
 --------------------------------------------------
 Key Master v1.1.6
