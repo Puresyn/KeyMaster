@@ -9,4 +9,5 @@
     <Script file='Core\Localization\Localization.ruRU.lua'/>
     <Script file='Core\Localization\Localization.zhTW.lua'/>
     <Script file='Core\Localization\Localization.koKR.lua'/>
+    <Script file='Core\Localization\Localization.zhCN.lua'/>
 </Ui>
