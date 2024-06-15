@@ -5,6 +5,14 @@ PATCH NOTES:
 --------------------------------------------------
 Key Master v1.1.8
 --------------------------------------------------
+Updates:
+- Added 简体中文 (CN) - Chinese Translation
+
+Fixes:
+- Fixed bug where fortified ratings on the party screen did not correctly display decimal places.
+
+Known Issues:
+- None
 
 --------------------------------------------------
 Key Master v1.1.7
