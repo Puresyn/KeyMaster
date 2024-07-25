@@ -27,6 +27,8 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <p>Added 简体中文 (CN) - Chinese Translation</p>
+                <p>Added preliminary TWW S1 Data</p>
+                <p>Updated to WoW Build version 11.0.0Updated to WoW Build version 11.0.0</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <p>Fixed bug where fortified ratings on the party screen did not correctly display decimal places.</p>
