@@ -7,9 +7,11 @@ Key Master v1.1.8
 --------------------------------------------------
 Updates:
 - Added 简体中文 (CN) - Chinese Translation
+- Added preliminary TWW S1 Data
+- Updated to WoW Build version 11.0.0
 
 Fixes:
-- Fixed bug where fortified ratings on the party screen did not correctly display decimal places.
+- FixeD bug where fortified ratings on the party screen did not correctly display decimal places.
 
 Known Issues:
 - None
