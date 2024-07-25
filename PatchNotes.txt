@@ -15,7 +15,7 @@ Updates:
 - Updated to WoW Build version 11.0.0
 
 Fixes:
-- FixeD bug where fortified ratings on the party screen did not correctly display decimal places.
+- Fixed bug where fortified ratings on the party screen did not correctly display decimal places.
 
 Known Issues:
 - None
