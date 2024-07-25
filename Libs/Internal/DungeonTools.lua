@@ -27,6 +27,8 @@ end ]]
 --------------------------------
 -- Dungeon Portal spell IDs
 -- Must be manually maintained.
+-- https://wago.tools/db2/MapChallengeMode
+-- [ChallengeMode Dungeon ID]  Portal Spell ID
 --------------------------------
 local portalSpellIds = {
     [463] = 424197,     -- Dawn of the Infinite: Galakrond's Fall
@@ -44,7 +46,15 @@ local portalSpellIds = {
     [403] = 393222,      -- Legacy of Tyr
     [404] = 393276,     -- Neltharus
     [405] = 393267,     -- Brackenhide Hollow
-    [406] = 393283      -- Halls of Infusion
+    [406] = 393283,      -- Halls of Infusion
+    [503] = 442929,      -- Ara-Kara, City of Echoes
+    [502] = 442927,      -- City of Threads
+    [505] = 442931,      -- The Dawnbreaker
+    [501] = 442926,      -- The Stonevault
+    [353] = 272264,      -- Siege of Boralus
+    [507] = 396121,      -- The Grim Batol
+    [375] = 348533,      -- Mists of Tirna Scithe
+    [376] = 348529      -- The Necrotic Wake
 
 }
 
@@ -69,6 +79,12 @@ local STORMING_ID = 124
 local ENTAGLING_ID = 134
 local AFFLICTED_ID = 135
 local INCORPOREAL_ID = 136
+local XBASCENDANT_ID = 148
+local XBVOIDBOUND_ID = 158
+local XBOBLIVION_ID = 159
+local XBFRENZIED_ID = 153
+local CHALLENGERSPERIL_ID = 152
+local XGuile_ID = 147
 
 
 

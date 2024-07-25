@@ -334,7 +334,7 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                         if ratingChange > fortRating then
                             local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
                             local diff = newTotal - currentOverallRating
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(diff)
+                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
                             totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
                         else
                             _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")

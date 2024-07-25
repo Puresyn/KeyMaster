@@ -64,6 +64,9 @@ elseif (langPref == "zhTW") then
 elseif (langPref == "koKR") then
     -- Localization.koKR.lua
     KeyMasterLocals = KM_Localization_koKR
+elseif (langPref == "zhCN") then
+    -- Localization.koKR.lua
+    KeyMasterLocals = KM_Localization_zhCN
 else -- Default
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS
@@ -71,8 +74,10 @@ end
 
 local TYRANNICAL_ID = 9
 local FORTIFIED_ID = 10
+local CHALLENGERSPERIL_ID = 152 -- not sure if this is needed?
 KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICAL_ID)
 KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIED_ID)
+KeyMasterLocals.CHALLENGERSPERIL, _, _ = C_ChallengeMode.GetAffixInfo(CHALLENGERSPERIL_ID)  -- not sure if this is needed?
 KeyMasterLocals.BUILDRELEASE = "release" -- must remain in ENGLISH - DO NOT TRANSLATE
 KeyMasterLocals.BUILDBETA = "beta" -- must remain in ENGLISH - DO NOT TRANSLATE
 KeyMasterLocals.ADDONNAME = "Key Master" -- do not translate
