@@ -74,8 +74,10 @@ end
 
 local TYRANNICAL_ID = 9
 local FORTIFIED_ID = 10
+local CHALLENGERSPERIL_ID = 152 -- not sure if this is needed?
 KeyMasterLocals.TYRANNICAL, _, _ = C_ChallengeMode.GetAffixInfo(TYRANNICAL_ID)
 KeyMasterLocals.FORTIFIED, _, _ = C_ChallengeMode.GetAffixInfo(FORTIFIED_ID)
+KeyMasterLocals.CHALLENGERSPERIL, _, _ = C_ChallengeMode.GetAffixInfo(CHALLENGERSPERIL_ID)  -- not sure if this is needed?
 KeyMasterLocals.BUILDRELEASE = "release" -- must remain in ENGLISH - DO NOT TRANSLATE
 KeyMasterLocals.BUILDBETA = "beta" -- must remain in ENGLISH - DO NOT TRANSLATE
 KeyMasterLocals.ADDONNAME = "Key Master" -- do not translate
