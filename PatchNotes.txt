@@ -3,8 +3,20 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.2.0
+--------------------------------------------------
+Updates:
+- Added ability to auto insert mythic keystone in a mythic plus dungeon
+
+--------------------------------------------------
 Key Master v1.1.9
 --------------------------------------------------
+Fixes:
+- Fixed bug not properly storing character data.  The character list wasn't showing the right information for alts.  You will need to login/logout of characters to get the data updated properly.
+- Fixed lua error with LibCustomGlow-1.0.
+
+Known Bugs:
+- Vault data doesn't update properly once completing a dungeon.  Currently you have to reload your client by doing /reload or /rl to get the data updated.
 
 --------------------------------------------------
 Key Master v1.1.8

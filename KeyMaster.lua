@@ -16,7 +16,9 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
-KM_AUTOVERSION = GetAddOnMetadata("KeyMaster", "Version")
+--KM_AUTOVERSION = GetAddOnMetadata("KeyMaster", "Version") GetAddOnMetadata is depreciated in "The War Within" expansion.
+KM_AUTOVERSION = "1.2.0"
+
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
@@ -255,3 +257,44 @@ end
 local playerEnterEvents = CreateFrame("Frame")
 playerEnterEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 playerEnterEvents:SetScript("OnEvent", onEvent_PlayerEnterWorld)
+
+local function OnEvent_OnKeystoneOpen(ev)
+    KeyMaster:_DebugMsg("OnKeystoneOpen", "DungeonTools", "Keystone frame opened.")
+    
+    local difficulty = select(3, GetInstanceInfo())
+    if difficulty ~= 8 and difficulty ~= 23 then
+      return
+    end
+  
+    local found = nil
+    for bagIndex = 0, NUM_BAG_SLOTS do
+      for invIndex = 1, C_Container.GetContainerNumSlots(bagIndex) do
+        local itemID = C_Container.GetContainerItemID(bagIndex, invIndex)
+  
+        if itemID and C_Item.IsItemKeystoneByID(itemID) then
+          KeyMaster:_DebugMsg("OnKeystoneOpen", "DungeonTools", "Key found at ("
+            .. bagIndex .. "," .. invIndex .. ")")
+  
+          found = {
+            bagIndex = bagIndex,
+            invIndex = invIndex
+          }
+  
+          break
+        end
+      end
+  
+      if found ~= nil then break end
+    end
+  
+    if found ~= nil then
+      KeyMaster:_DebugMsg("OnKeystoneOpen", "DungeonTools", "Slotting keystone from ("
+        .. found.bagIndex .. "," .. found.invIndex .. ")")
+  
+      C_Container.UseContainerItem(found.bagIndex, found.invIndex)
+    end
+end
+
+local keystoneOpenEvents = CreateFrame("Frame")
+keystoneOpenEvents:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
+keystoneOpenEvents:SetScript("OnEvent", OnEvent_OnKeystoneOpen)
