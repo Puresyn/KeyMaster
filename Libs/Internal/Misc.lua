@@ -139,8 +139,11 @@ end
 
 function KeyMaster:CreateDefaultCharacterData()
     local charDefaults = {}
-    if UnitLevel("PLAYER") == GetMaxPlayerLevel() then
-        
+    -- below line should be changed AFTER expansion release
+    -- local maxLevel = GetMaxPlayerLevel()
+    local maxLevel = 70
+    local playerLevel = UnitLevel("PLAYER")
+    if playerLevel == maxLevel then
         local playerGUID = UnitGUID("PLAYER")
         local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
 
@@ -153,12 +156,12 @@ function KeyMaster:CreateDefaultCharacterData()
                 season = nil,                               -- season placeholder (slow API)
                 class = baseClassId,                        -- Players class id #
                 data = nil,                                 -- character data placeholder (for reference)
-                keyId = nil,
-                keyLevel = nil,
+                keyId = 9001,                               -- placeholder keyid
+                keyLevel = 0,                               -- placeholder key level
                 expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
                 timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
-                level = UnitLevel("PLAYER"),                -- level reference for cleanup
-                vault = {},                                -- vault information
+                level = playerLevel,                        -- level reference for cleanup
+                vault = {},                                 -- vault information
                 teams = {                                   -- teams table (for later use)
                     team1 = nil
                 }

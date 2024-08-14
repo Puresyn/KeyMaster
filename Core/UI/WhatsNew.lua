@@ -26,12 +26,11 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Added 简体中文 (CN) - Chinese Translation</p>
-                <p>Added preliminary TWW S1 Data</p>
-                <p>Updated to WoW Build version 11.0.0Updated to WoW Build version 11.0.0</p>
+                <p>Added ability to auto insert mythic keystone in a mythic plus dungeon</p>
+                <p>Updated to Wow Build version 11.0.2</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>Fixed bug where fortified ratings on the party screen did not correctly display decimal places.</p>
+                <p>None</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
                 <p>None</p>
