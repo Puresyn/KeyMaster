@@ -237,7 +237,7 @@ function DungeonTools:GetPortalSpell(dungeonID)
     if (not isKnown) then
         return nil
     else
-        portalSpellName, _ = C_Spell.GetSpellInfo(portalSpellId) -- name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon
+        portalSpellName = C_Spell.GetSpellName(portalSpellId) -- name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon
         return portalSpellId, portalSpellName
     end
 end
