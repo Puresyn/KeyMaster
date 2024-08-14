@@ -27,6 +27,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <p>Added ability to auto insert mythic keystone in a mythic plus dungeon</p>
+                <p>Updated to Wow Build version 11.0.2</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <p>None</p>

@@ -7,6 +7,10 @@ Key Master v1.2.0
 --------------------------------------------------
 Updates:
 - Added ability to auto insert mythic keystone in a mythic plus dungeon
+- Updated addon to Wow Build version 11.0.2
+
+Known Bugs:
+- Vault data doesn't update properly once completing a dungeon.  Currently you have to reload your client by doing /reload or /rl to get the data updated.
 
 --------------------------------------------------
 Key Master v1.1.9
