@@ -103,6 +103,29 @@ function EventHooks:NotifyEvent(event)
     if event == "CHALLENGE_MODE_COMPLETED" then
         KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
         KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
+
+        -- get finished key information
+        local _, level, _, onTime, _, _, _, _, _, _, _, _, members = C_ChallengeMode.GetCompletionInfo()
+
+        -- get current player information
+        local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
+
+        if onTime and playerData.ownedKeyId <= level then
+            -- get current io for key's mapid
+            local tyrannicalScoreInfo = KeyMaster.CharacterInfo:GetMplusScoreForMap(playerData.ownedKeyId, KeyMasterLocals.TYRANNICAL)
+            local mapRating = KeyMaster.DungeonTools:CalculateRating(playerData.ownedKeyId, tyrannicalScoreInfo.level, tyrannicalScoreInfo.durationSec)
+
+            -- get potential io for key's mapid + level
+            local potentialRating = KeyMaster.DungeonTools:CalculateRating(playerData.ownedKeyId, playerData.ownedKeyLevel, 0)
+
+            -- compare current IO to potential IO from key owned
+            -- if potential IO is lower or equal to current IO, then notify user to change key
+            --[[ if potentialRating <= mapRating then
+                KeyMaster:Print("|cff"..hexColor.. "TESTING: Please consider changing your key." .. "|r")
+            else
+                KeyMaster:Print("|cff"..hexColor.. "TESTING: Keep your key goon!" .. "|r")
+            end ]]
+        end
     end
 
     if event == "VAULT_UPDATE" then
