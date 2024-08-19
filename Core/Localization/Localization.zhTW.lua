@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "奧達曼" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "奈堡" }
 L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "蕨皮" }
 L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "灌注" }
+--TWW S1
+L.MAPNAMES[503] = { name = "『回音之城』厄拉卡拉", abbr = "回音" }
+L.MAPNAMES[502] = { name = "蛛絲城", abbr = "蛛絲" }
+L.MAPNAMES[505] = { name = "破曉者號", abbr = "破曉" }
+L.MAPNAMES[501] = { name = "石庫", abbr = "石庫" }
+L.MAPNAMES[353] = { name = "波拉勒斯圍城戰", abbr = "圍城" }
+L.MAPNAMES[507] = { name = "格瑞姆巴托", abbr = "格瑞" }
+L.MAPNAMES[375] = { name = "特拉希迷霧", abbr = "迷霧" }
+L.MAPNAMES[376] = { name = "死靈戰地", abbr = "死靈" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }

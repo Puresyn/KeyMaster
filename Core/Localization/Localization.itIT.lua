@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "Uldaman: Eredità di Tyr", abbr = "UEdT" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "Nelt" }
 L.MAPNAMES[405] = { name = "Conca dei Felcepelle", abbr = "CdF" }
 L.MAPNAMES[406] = { name = "Sale dell'Infusione", abbr = "SdI" }
+--TWW S1
+L.MAPNAMES[503] = { name = "Ara-Kara, Città degli Echi", abbr = "CdE" }
+L.MAPNAMES[502] = { name = "Città dei Fili", abbr = "CdF" }
+L.MAPNAMES[505] = { name = "Alba Infranta", abbr = "AI" }
+L.MAPNAMES[501] = { name = "Volta di Pietra", abbr = "VdP" }
+L.MAPNAMES[353] = { name = "Assedio di Boralus", abbr = "AdB" }
+L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
+L.MAPNAMES[375] = { name = "Nebbie di Tirna Falcis", abbr = "NdTF" }
+L.MAPNAMES[376] = { name = "Scia Necrotica", abbr = "SN" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
