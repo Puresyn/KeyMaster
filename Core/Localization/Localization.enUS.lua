@@ -165,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "Translators" }
 L.ABOUTFRAME["WhatsNew"] = { text = "Show What\'s New"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: Dragonflight Season 4 rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: The War Within Season 1 rating calculations are still being verified."}
