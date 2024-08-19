@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "Uldaman: Vermächtnis von Tyr", abbr = "ULD" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
 L.MAPNAMES[405] = { name = "Brackenfellhöle", abbr = "BFH" }
 L.MAPNAMES[406] = { name = "Hallen der Infusion", abbr = "HDI" }
+--TWW S1
+L.MAPNAMES[503] = { name = "Ara-Kara, Stadt der Echos", abbr = "SdE" }
+L.MAPNAMES[502] = { name = "Stadt der Fäden", abbr = "SdF" }
+L.MAPNAMES[505] = { name = "Die Morgenbringer", abbr = "MB" }
+L.MAPNAMES[501] = { name = "Das Steingewölbe", abbr = "SG" }
+L.MAPNAMES[353] = { name = "Die Belagerung von Boralus", abbr = "SoB" }
+L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
+L.MAPNAMES[375] = { name = "Die Nebel von Tirna Scithe", abbr = "MTS" }
+L.MAPNAMES[376] = { name = "Die Nekrotische Schneise", abbr = "NW" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
