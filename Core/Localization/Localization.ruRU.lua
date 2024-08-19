@@ -20,25 +20,15 @@ L.TOCNOTES["ADDONDESC"] = "Отображение подробной инфор�
 L.TOCNOTES["ADDONNAME"] = "Мастер ключей"
 
 L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
--- DF S3
-L.MAPNAMES[9001] = { name = "Неизвестный", abbr = "???" }
-L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond's Fall", abbr = "ПГ"}
-L.MAPNAMES[464] = { name = "Dawn of the Infinite: Murozond's Rise", abbr = "ПД"}
-L.MAPNAMES[244] = { name = "Atal'Dazar", abbr = "АД" }
-L.MAPNAMES[248] = { name = "Waycrest Manor", abbr = "УЭ" }
-L.MAPNAMES[199] = { name = "Black Rook Hold", abbr = "КЧЛ" }
-L.MAPNAMES[198] = { name = "Darkheart Thicket", abbr = "ЧАЩА" }
-L.MAPNAMES[168] = { name = "The Everbloom", abbr = "ВЦ" }
-L.MAPNAMES[456] = { name = "Throne of the Tides", abbr = "ТРОН" }
---DF S4
-L.MAPNAMES[399] = { name = "Ruby Life Pools", abbr = "РоЖ" }
-L.MAPNAMES[401] = { name = "The Azue Vault", abbr = "ЛХ" }
-L.MAPNAMES[400] = { name = "The Nokhud Offensive", abbr = "НкН" }
-L.MAPNAMES[402] = { name = "Algeth'ar Academy", abbr = "АА" }
-L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "УЛЬД" }
-L.MAPNAMES[404] = { name = "Neltharus", abbr = "НЕЛТ" }
-L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "ЛБ" }
-L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "ЧН" }
+--TWW S1
+L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "Ара-Кара" }
+L.MAPNAMES[502] = { name = "City of Threads", abbr = "ГН" }
+L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "СР" }
+L.MAPNAMES[501] = { name = "The Stonevault", abbr = "КС" }
+L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "ОБ" }
+L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "ГБ" }
+L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "ТТС" }
+L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "СТ" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -54,8 +44,6 @@ L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
 L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "The War Within" } -- enum will need updated when available
 
 L.MPLUSSEASON = {}
-L.MPLUSSEASON[11] = { name = "3 сезон" }
-L.MPLUSSEASON[12] = { name = "4 сезон" }
 L.MPLUSSEASON[13] = { name = "1 сезон" } -- ожидая, что 13 сезон будет TWW S1
 L.MPLUSSEASON[14] = { name = "2 сезон" } -- ожидая, что 14 сезон будет TWW S2
 
@@ -156,4 +144,4 @@ L.ABOUTFRAME["Translators"] = { text = "Переводчики" }
 L.ABOUTFRAME["WhatsNew"] = { text = "Показать, что нового"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга 4-го сезона Dragonflight всё ещё проверяются."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Примечание: расчеты рейтинга в этом сезоне всё ещё проверяются."}
