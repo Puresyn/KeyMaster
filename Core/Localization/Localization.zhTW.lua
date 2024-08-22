@@ -60,7 +60,7 @@ L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "軍臨天下" }
 L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "決戰艾澤拉斯" }
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "暗影之境" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "巨龍崛起" }
-L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "地心之戰" } -- enum will need updated when available
+L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "地心之戰" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "第3賽季" }
@@ -165,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
 L.ABOUTFRAME["WhatsNew"] = { text = "顯示更新的訊息"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: This seasons rating calculations are still being verified."}

@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "울다만: 티르의 유산", abbr = "울다만" }
 L.MAPNAMES[404] = { name = "넬타루스", abbr = "넬타" }
 L.MAPNAMES[405] = { name = "담쟁이가죽 골짜기", abbr = "담쟁이" }
 L.MAPNAMES[406] = { name = "주입의 전당", abbr = "주입" }
+--TWW S1
+L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "CE" }
+L.MAPNAMES[502] = { name = "City of Threads", abbr = "CT" }
+L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "DB" }
+L.MAPNAMES[501] = { name = "The Stonevault", abbr = "SV" }
+L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SB" }
+L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "GB" }
+L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "MTS" }
+L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "클래식" }
@@ -51,7 +60,7 @@ L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "군단" }
 L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "격전의 아제로스" }
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "어둠땅" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "용군단" }
-L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "내부 전쟁" } -- enum will need updated when available
+L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "내부 전쟁" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "시즌 3" }
@@ -156,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "번역" }
 L.ABOUTFRAME["WhatsNew"] = { text = "업데이트 내용 보기"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "참고: 용군단 시즌4 점수 계산은 아직 확인 중입니다."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: This seasons rating calculations are still being verified."}
