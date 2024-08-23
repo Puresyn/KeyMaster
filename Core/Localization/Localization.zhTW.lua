@@ -165,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
 L.ABOUTFRAME["WhatsNew"] = { text = "顯示更新的訊息"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: This seasons rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "注意：本賽季評分計算仍需驗證。"}
