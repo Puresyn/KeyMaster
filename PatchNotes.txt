@@ -7,12 +7,12 @@ Key Master v1.2.1
 --------------------------------------------------
 Updates:
 - Added French Translation
-- Added further compatability fixes for The War Within expansion.
+- Added further compatibility fixes for The War Within expansion.
 - Updated translations for TWW S1
 - Added system message for TWW S1 rating inaccuracies until they are verified
 
 Known Bugs:
-- KR and CN clients have some content in English until we recieve contributor updates.
+- KR and CN clients have some content in English until we receive contributor updates.
 - Vault data doesn't update properly once completing a dungeon.  Currently you have to reload your client by doing /reload or /rl to get the data updated.
 - Season displayed as "The War Within Season 4" if client owns TWW expansion and the last expansion M+ season is still active.
 
