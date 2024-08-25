@@ -14,6 +14,7 @@
 ## Notes-deDE: Mythic Plus Schlüsselstein Informations- und Kollaborationstool
 ## Notes-itIT: Informazioni sulle Chiavi Mythic Plus e Strumento di Collaborazione
 ## Notes-zhTW: 傳奇+鑰石資訊以及協同工具
+## Notes-frFR: Outils d'Information et de Collaboration Mythique Plus
 ## Author: Strylor-Proudmoore, Shantisoc-Proudmoore
 ## DefaultState: enabled
 ## SavedVariables: KeyMaster_DB, KeyMaster_C_DB
