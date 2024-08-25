@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "Legacy of Tyr", abbr = "奧達曼" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "奈堡" }
 L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "蕨皮" }
 L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "灌注" }
+--TWW S1
+L.MAPNAMES[503] = { name = "『回音之城』厄拉卡拉", abbr = "回音" }
+L.MAPNAMES[502] = { name = "蛛絲城", abbr = "蛛絲" }
+L.MAPNAMES[505] = { name = "破曉者號", abbr = "破曉" }
+L.MAPNAMES[501] = { name = "石庫", abbr = "石庫" }
+L.MAPNAMES[353] = { name = "波拉勒斯圍城戰", abbr = "圍城" }
+L.MAPNAMES[507] = { name = "格瑞姆巴托", abbr = "格瑞" }
+L.MAPNAMES[375] = { name = "特拉希迷霧", abbr = "迷霧" }
+L.MAPNAMES[376] = { name = "死靈戰地", abbr = "死靈" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }
@@ -51,7 +60,7 @@ L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "軍臨天下" }
 L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "決戰艾澤拉斯" }
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "暗影之境" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "巨龍崛起" }
-L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "地心之戰" } -- enum will need updated when available
+L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "地心之戰" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "第3賽季" }
@@ -156,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "翻譯者" }
 L.ABOUTFRAME["WhatsNew"] = { text = "顯示更新的訊息"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "注意: 巨龍崛起第4賽季評分計算仍待驗證。"}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "注意：本賽季評分計算仍需驗證。"}

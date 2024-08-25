@@ -39,6 +39,15 @@ L.MAPNAMES[403] = { name = "Uldaman: Vermächtnis von Tyr", abbr = "ULD" }
 L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
 L.MAPNAMES[405] = { name = "Brackenfellhöle", abbr = "BFH" }
 L.MAPNAMES[406] = { name = "Hallen der Infusion", abbr = "HDI" }
+--TWW S1
+L.MAPNAMES[503] = { name = "Ara-Kara, Stadt der Echos", abbr = "SdE" }
+L.MAPNAMES[502] = { name = "Stadt der Fäden", abbr = "SdF" }
+L.MAPNAMES[505] = { name = "Die Morgenbringer", abbr = "MB" }
+L.MAPNAMES[501] = { name = "Das Steingewölbe", abbr = "SG" }
+L.MAPNAMES[353] = { name = "Die Belagerung von Boralus", abbr = "SoB" }
+L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
+L.MAPNAMES[375] = { name = "Die Nebel von Tirna Scithe", abbr = "MTS" }
+L.MAPNAMES[376] = { name = "Die Nekrotische Schneise", abbr = "NW" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -51,7 +60,7 @@ L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "Legion" }
 L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "Battle for Azeroth" }
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "Shadowlands" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
-L.XPAC[10] = { enum = "LE_EXPANSION_11_0", desc = "The War Within" } -- enum will need updated when available
+L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "The War Within" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "Saison 3" }
@@ -156,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "Übersetzer" }
 L.ABOUTFRAME["WhatsNew"] = { text = "Neuerungen anzeigen" }
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Dragonflight Saison 4 Wertungsberechnung wird aktuell noch geprüft."} -- War noch nicht übersetzt - Wasnt translated
+L.SYSTEMMESSAGE["NOTICE"] = { text = "Hinweis: Die Berechnung der Wertung wird zurzeit noch verifiziert."}

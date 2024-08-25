@@ -26,14 +26,15 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Added ability to auto insert mythic keystone in a mythic plus dungeon</p>
-                <p>Updated to Wow Build version 11.0.2</p>
+                <p>Added French Translation</p>
+                <p>Updated translations for TWW S1</p>
+                <p>Added system message for TWW S1 rating inaccuracies until they are verified</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>None</p>
+                <p>Added further compatibility fixes for The War Within expansion.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>None</p>
+                <p>KR and CN clients have some content in English until we receive contributor updates.</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>

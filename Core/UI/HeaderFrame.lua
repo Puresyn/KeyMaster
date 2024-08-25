@@ -92,7 +92,7 @@ function HeaderFrame:SystemMessage(parentframe)
     sysMessage:SetHeight(sysMessage.text:GetHeight()+8)
     sysMessage.boxBackground:SetSize(sysMessage:GetWidth()-2, sysMessage:GetHeight()-2)
 
-    if (DungeonTools:GetCurrentSeason() == 12) then
+    if (DungeonTools:GetCurrentSeason() == 13) then
         sysMessage:Show()
     else
         sysMessage:Hide()
@@ -280,7 +280,7 @@ function HeaderFrame:Initialize(parentFrame)
     local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
 
     -- System Message
-    --local sysMessage = _G["KM_SystemMessage"] or HeaderFrame:SystemMessage(parentFrame)
+    local sysMessage = _G["KM_SystemMessage"] or HeaderFrame:SystemMessage(parentFrame)
     
     return headerRegion
 end
