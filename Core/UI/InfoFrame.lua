@@ -111,7 +111,8 @@ https://discord.gg/bbMaUpfgn8
 
     We are actively seeking volunteer translators and proofreaders for ALL supported languages - but specifically for the following languages:
 
--French (France)
+-简体中文 (CN)
+-한국어 (Korea)
 -Chinese (China) (simplified) implemented LTR
 -Spanish (Spain)
 -Spanish (Mexico)]]
@@ -180,7 +181,7 @@ https://discord.gg/bbMaUpfgn8
 
     local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu\n\n"
     textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
-    textContributors = textContributors .. "Cyph, Hollicsh, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, 姜铁憨"
+    textContributors = textContributors .. "Cyph, Hollicsh, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, 姜铁憨, Ragnarork"
 
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
