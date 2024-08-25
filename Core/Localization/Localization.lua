@@ -37,9 +37,9 @@ local langPref = GetLocale()
 if(langPref == "enUS") then
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS
---[[ elseif (langPref == "frFR") then
+elseif (langPref == "frFR") then
     -- Localization.frFR.lua
-    KeyMasterLocals = KM_Localization_frFR ]]
+    KeyMasterLocals = KM_Localization_frFR
 elseif (langPref == "deDE") then
     -- Localization.deDE.lua
     KeyMasterLocals = KM_Localization_deDE
