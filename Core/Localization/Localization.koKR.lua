@@ -40,14 +40,14 @@ L.MAPNAMES[404] = { name = "넬타루스", abbr = "넬타" }
 L.MAPNAMES[405] = { name = "담쟁이가죽 골짜기", abbr = "담쟁이" }
 L.MAPNAMES[406] = { name = "주입의 전당", abbr = "주입" }
 --TWW S1
-L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "CE" }
-L.MAPNAMES[502] = { name = "City of Threads", abbr = "CT" }
-L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "DB" }
-L.MAPNAMES[501] = { name = "The Stonevault", abbr = "SV" }
-L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SB" }
-L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "GB" }
-L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "MTS" }
-L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
+L.MAPNAMES[503] = { name = "메아리의 도시 아라카라", abbr = "메아리" }
+L.MAPNAMES[502] = { name = "실타래의 도시", abbr = "실타래" }
+L.MAPNAMES[505] = { name = "새벽인도자호", abbr = "새벽" }
+L.MAPNAMES[501] = { name = "바위 금고", abbr = "바위" }
+L.MAPNAMES[353] = { name = "보랄러스 공성전", abbr = "보랄러스" }
+L.MAPNAMES[507] = { name = "그림바톨", abbr = "그림" }
+L.MAPNAMES[375] = { name = "티르너 사이드의 안개", abbr = "티르너" }
+L.MAPNAMES[376] = { name = "죽음의 상흔", abbr = "죽상" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "클래식" }
@@ -165,4 +165,4 @@ L.ABOUTFRAME["Translators"] = { text = "번역" }
 L.ABOUTFRAME["WhatsNew"] = { text = "업데이트 내용 보기"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: This seasons rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "참고: 이번 시즌 점수 계산은 아직 검증 중입니다."}
