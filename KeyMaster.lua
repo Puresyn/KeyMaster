@@ -143,7 +143,7 @@ local function OnEvent_AddonLoaded(self, event, name, ...)
 
     SLASH_FRAMESTK1 = "/fs"
 	SlashCmdList.FRAMESTK = function()
-		LoadAddOn("Blizzard_DebugTools")
+		C_AddOns.LoadAddOn("Blizzard_DebugTools")
 		FrameStackTooltip_Toggle()
 	end
 
