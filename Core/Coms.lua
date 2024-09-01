@@ -220,16 +220,18 @@ local function processKM2Data(payload, sender)
     -- backwards/forwards compatability checks.
     -- curently ignores version older than 0.0.94b as previous versions break forwards compatability
     local buildVersion = data.buildVersion
-    local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
-    major1 = tonumber(major1)
-    minor1 = tonumber(minor1)
-    patch1 = tonumber(patch1)
-    if (major1 == 0 and minor1 == 0 and patch1 < 94) then
-        KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
-        return
+    if buildVersion ~= nil then
+        local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+        major1 = tonumber(major1)
+        minor1 = tonumber(minor1)
+        patch1 = tonumber(patch1)
+        if (major1 == 0 and minor1 == 0 and patch1 < 94) then
+            KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
+            return
+        end
+        checkVersion(data)
     end
-    checkVersion(data)
-
+    
     -- if we're in an instance party we don't want to process other people's data or make ui changes
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then return end
 
