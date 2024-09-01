@@ -26,12 +26,11 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Added French Translation</p>
-                <p>Updated translations for TWW S1</p>
-                <p>Added system message for TWW S1 rating inaccuracies until they are verified</p>
+                <p>Updated included LibRangeCheck-3.0 library to version 26</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>Added further compatibility fixes for The War Within expansion.</p>
+                <p>Fixed version checking during communications between players returning nil on players with 1.1.9 to players with 1.2.x</p>
+                <p>Fixed error when no affixes are found in DungeonTools.lua</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Open Items:|r</h2>
                 <p>KR and CN clients have some content in English until we receive contributor updates.</p>

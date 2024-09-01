@@ -133,7 +133,7 @@ function DungeonTools:GetAffixes()
     if weeklyAffixs ~= nil then return weeklyAffixs end
     local affixData = {}
     local affixes = C_MythicPlus.GetCurrentAffixes() -- Bug when this returned nils?
-    if (affixes == nil) then return nil end
+    if (affixes == nil or #affixes == 0) then return nil end
     for i=1, #affixes, 1 do
        local id = affixes[i].id
        local name, desc, filedataid = C_ChallengeMode.GetAffixInfo(id)

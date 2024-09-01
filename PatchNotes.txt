@@ -3,8 +3,27 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.2.3
+--------------------------------------------------
+Updates:
+- Updated LibRangeCheck-3.0 library to latest version 26 from version 9 to fix Spell reference from Blizzard API changing.
+
+Fixes:
+- Fixed version checking during communications between players returning nil on players with 1.1.9 to players with 1.2.x
+- Fixed error when no affixes are found in DungeonTools.lua
+
+Known Bugs:
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.2.2
 --------------------------------------------------
+Updates:
+- Updated KR localization
+
+Fixes:
+
+Known Bugs:
 
 --------------------------------------------------
 Key Master v1.2.1

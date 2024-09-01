@@ -16,7 +16,6 @@ local PartyFrame = KeyMaster.PartyFrame
 
 -- Global Variables
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
---KM_AUTOVERSION = GetAddOnMetadata("KeyMaster", "Version") GetAddOnMetadata is depreciated in "The War Within" expansion.
 KM_AUTOVERSION = C_AddOns.GetAddOnMetadata("KeyMaster", "Version")
 
 KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
