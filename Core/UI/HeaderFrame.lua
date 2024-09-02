@@ -124,7 +124,7 @@ function HeaderFrame:CreateAffixFrames(parentFrame)
     end
     local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
     if (seasonalAffixes == nil) then 
-        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found! May also happen with no active season.")
+        KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
         return 
     end    
     for i=1, #seasonalAffixes, 1 do

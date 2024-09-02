@@ -286,7 +286,7 @@ end
 function DungeonTools:GetWeeklyAffix()
     local weeklyAffix = DungeonTools:GetAffixes()
     if (weeklyAffix == nil) then
-        return "No Affixes"
+        return nil
     end
     return weeklyAffix[1].name
 end

@@ -84,6 +84,13 @@ local function updateWeeklyAffixTheme()
     local tyrannicalSelector = _G["TyrannicalSelector"]
     local fortifiedSelector = _G["FortifiedSelector"]
 
+    -- This can occur when between seasons as blizzard returns nil from C_MythicPlus.GetCurrentAffixes()
+    if weeklyAffix == nil then
+        baseFrame.fortText:SetTextColor(1, 1, 1, 1)
+        baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
+        KeyMaster:_DebugMsg("updateWeeklyAffixTheme", "PlayerFrame", "No active weekly affix was found.")
+        return
+    end
     if weeklyAffix == KeyMasterLocals.TYRANNICAL then
         baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
@@ -100,7 +107,7 @@ local function updateWeeklyAffixTheme()
     else
         baseFrame.fortText:SetTextColor(1, 1, 1, 1)
         baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
-        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "No match for weekly affix found. May also happen with no active season.")
+        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "Unexpected weekly affix value found... "..weeklyAffix)
     end
 end
 
