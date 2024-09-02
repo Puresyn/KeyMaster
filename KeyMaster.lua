@@ -126,7 +126,7 @@ local function intializeUIWithRetries(retryCount)
                 KeyMaster:_DebugMsg("intializeUIWithRetries", "KeyMaster.lua", "Initializing user interface.")
             end            
         else
-            KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries.")
+            KeyMaster:_ErrorMsg("intializeUIWithRetries", "KeyMaster.lua", "Failed to create UI frames after "..tostring(retryCount).." retries. May also happen with no active season.")
         end
     end
 end

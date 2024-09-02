@@ -139,11 +139,8 @@ end
 
 function KeyMaster:CreateDefaultCharacterData()
     local charDefaults = {}
-    -- below line should be changed AFTER expansion release
-    -- local maxLevel = GetMaxPlayerLevel()
-    local maxLevel = 70
+
     local playerLevel = UnitLevel("PLAYER")
-    if playerLevel == maxLevel then
         local playerGUID = UnitGUID("PLAYER")
         local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
 
@@ -168,11 +165,10 @@ function KeyMaster:CreateDefaultCharacterData()
             }
         }
 
-    end
     return charDefaults
 end
 
---local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
+
 function KeyMaster:CleanCharSavedData(data)
     if not data then
        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
@@ -196,14 +192,7 @@ function KeyMaster:CleanCharSavedData(data)
        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
            v.season = apiCheck
        end
-
-       if v.level then -- nil check
-           if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
-               deleteME = true
-               --table.remove(data, k)
-               return data
-           end
-       end
+       
        if v.expire then -- nil check
            if v.expire < GetServerTime() then -- remove key data if expired
                data[k].keyLevel = 0

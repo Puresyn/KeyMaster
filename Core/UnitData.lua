@@ -95,9 +95,7 @@ function UnitData:SetUnitData(unitData)
     unitInformation[unitData.GUID] = unitData
 
     -- Store/Update Unit Data in Saved Variables
-    local maxLevel = 70
-    -- local maxLevel = GetMaxPlayerLevel()
-    if unitData.GUID == UnitGUID("player") and UnitLevel("PLAYER") == maxLevel then
+    if unitData.GUID == UnitGUID("player") then
         CharacterData:SetCharacterData(unitData.GUID, unitData)
         UnitData:UpdateListCharacter(unitData.GUID, unitData) -- todo: move out of this file 
     end

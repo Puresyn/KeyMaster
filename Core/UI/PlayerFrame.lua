@@ -100,7 +100,7 @@ local function updateWeeklyAffixTheme()
     else
         baseFrame.fortText:SetTextColor(1, 1, 1, 1)
         baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
-        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "No match for weekly affix found.")
+        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "No match for weekly affix found. May also happen with no active season.")
     end
 end
 
