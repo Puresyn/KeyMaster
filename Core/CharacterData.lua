@@ -80,15 +80,21 @@ function CharacterData:GetCharacterDataByGUID(playerGUID)
     if not encodedCharacterData then return nil end
     
     local decoded = LibDeflate:DecodeForWoWAddonChannel(encodedCharacterData)
-    if not decoded then return end
+    if not decoded then 
+        KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decode data for "..playerGUID)
+        return 
+    end
     local decompressed = LibDeflate:DecompressDeflate(decoded)
-    if not decompressed then return end
+    if not decompressed then 
+        KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decompress data for "..playerGUID)
+        return
+    end
     local success, data = LibSerialize:Deserialize(decompressed)
     if not success then
         KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to deserialize data for "..playerGUID)
         return
-    end  
-
+    end
+    
     return data
 end
 
