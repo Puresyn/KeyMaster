@@ -165,6 +165,7 @@ function CharacterInfo:GetMyCharacterInfo()
     myCharacterInfo.realm = GetRealmName()
     myCharacterInfo.ownedKeyId = keyId
     myCharacterInfo.ownedKeyLevel = keyLevel
+    myCharacterInfo.charLevel = UnitLevel("player")
     myCharacterInfo.DungeonRuns = {}
     myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
     myCharacterInfo.unitId = "player"

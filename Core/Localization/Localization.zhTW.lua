@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="角色清單過濾", text = 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "當前伺服器", text = "僅顯示當前伺服器。" }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "無評分", text = "僅顯示有評分的角色。" }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "無鑰石No Key", text = "僅顯示有鑰石的角色。" }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "只限滿等", text = "只顯示滿等的角色。" }
 L.CONFIGURATIONFRAME["Purge"] = { present = "清除", past = "已清除" }
 
 L.ABOUTFRAME = {}

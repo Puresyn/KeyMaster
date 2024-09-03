@@ -3,6 +3,28 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.2.4
+--------------------------------------------------
+Fixes:
+- Fixed errors related to missing affixes from Blizzard.  This affected things like missing minimap icons, party frame not show player data, excessive error messages in chat window, etc.
+- Fixed scroll bar on character list, as it wasn't scrolling properly previously.
+- Fixed lua errors while entering combat
+- Fixed minor cosmetic UI changes related to season/expansion
+
+Updates:
+- Characters of any level will now show up in the character list, previously it was max level only.. but since Blizzard decided to change the max level before it was achievable we've decided it was easier to add a checkbox filter (in the config tab) and allow all characters to show up in the list.
+
+Known Bugs/Issues:
+- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.
+- Mythic plus vaults may not update immediately when completing a dungeon.  For now just do /reloadui to see the update properly.
+- Due to a tight timeline to fix several critical bugs, some language translations are not completed. We will be updating those ASAP.
+
+Special Note:
+- If you have any issues with the character list not function make sure you login to the character and logout one time.  If this doesn't work purge the characters on the config tab and relogging to each one.  If this doesn't work then please delete the file in your WTF folder: <GameInstallPath>\WTF\Account[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua
+
+PATCH NOTES:
+
+--------------------------------------------------
 Key Master v1.2.3
 --------------------------------------------------
 Updates:

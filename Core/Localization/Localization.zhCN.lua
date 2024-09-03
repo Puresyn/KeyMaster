@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="角色列表过滤", text = 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "当前服务器", text = "只显示当前服务器。" }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "无分数", text = "只显示有分数的角色。" }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "无钥石", text = "只显示有钥石的角色。" }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "清空", past = "已清空" }
 
 L.ABOUTFRAME = {}

@@ -9,8 +9,8 @@ local CharactersFrame = KeyMaster.CharactersFrame
 local Theme = KeyMaster.Theme
 local WhatsNew = KeyMaster.WhatsNew
 
--- Minimap Icon
-local function createMiniMapIcon()
+-- Creates Addon Minimap Icon
+function MainInterface:CreateMiniMapIcon()
   local _, _, _, c1 = Theme:GetThemeColor("color_TAUPE")
   local _, _, _, c2 = Theme:GetThemeColor("themeFontColorGreen1")
   local _, _, _, c3 = Theme:GetThemeColor("themeFontColorMain")
@@ -45,8 +45,7 @@ function MainInterface:Initialize()
   -- Main Parent Frame
   local mainFrame = _G["KeyMaster_MainFrame"] or MainInterface:CreateMainFrame()    
   local addonIcon = _G["KeyMaster_Icon"] or MainInterface:CreateAddonIcon(mainFrame)
-  createMiniMapIcon()
-
+  
   -- Main Header
   local headerRegion = HeaderFrame:Initialize(mainFrame)
 

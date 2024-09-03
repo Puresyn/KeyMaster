@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Charakterlistenfilter", text
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Aktueller Server", text = "Nur aktuellen Server anzeigen." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Keine Wertung", text = "Nur Charaktere mit Wertung anzeigen." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Kein Schlüsselstein", text = "Nur Charaktere mit einem Schlüsselstein anzeigen." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Nur Max-Level", text = "Nur Max-Level Charaktere anzeigen." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Zurücksetzen", past = "Zurückgesetzt" }
 
 L.ABOUTFRAME = {}

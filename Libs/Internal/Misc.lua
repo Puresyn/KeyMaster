@@ -139,40 +139,36 @@ end
 
 function KeyMaster:CreateDefaultCharacterData()
     local charDefaults = {}
-    -- below line should be changed AFTER expansion release
-    -- local maxLevel = GetMaxPlayerLevel()
-    local maxLevel = 70
-    local playerLevel = UnitLevel("PLAYER")
-    if playerLevel == maxLevel then
-        local playerGUID = UnitGUID("PLAYER")
-        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
 
-        charDefaults = {
-            [""..playerGUID..""] = {
-                client = true,                              -- flag if this character is owned by client (future use)
-                name = UnitName("PLAYER"),                  -- character's name
-                realm = GetRealmName(),                     -- character's realm
-                rating = 0,                                 -- set default rating to 0
-                season = nil,                               -- season placeholder (slow API)
-                class = baseClassId,                        -- Players class id #
-                data = nil,                                 -- character data placeholder (for reference)
-                keyId = 9001,                               -- placeholder keyid
-                keyLevel = 0,                               -- placeholder key level
-                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
-                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
-                level = playerLevel,                        -- level reference for cleanup
-                vault = {},                                 -- vault information
-                teams = {                                   -- teams table (for later use)
-                    team1 = nil
-                }
+    local playerLevel = UnitLevel("PLAYER")
+    local playerGUID = UnitGUID("PLAYER")
+    local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
+
+    charDefaults = {
+        [""..playerGUID..""] = {
+            client = true,                              -- flag if this character is owned by client (future use)
+            name = UnitName("PLAYER"),                  -- character's name
+            realm = GetRealmName(),                     -- character's realm
+            rating = 0,                                 -- set default rating to 0
+            season = nil,                               -- season placeholder (slow API)
+            class = baseClassId,                        -- Players class id #
+            data = nil,                                 -- character data placeholder (for reference)
+            keyId = 9001,                               -- placeholder keyid
+            keyLevel = 0,                               -- placeholder key level
+            expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
+            timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
+            level = playerLevel,                        -- level reference for cleanup
+            vault = {},                                 -- vault information
+            teams = {                                   -- teams table (for later use)
+                team1 = nil
             }
         }
+    }
 
-    end
     return charDefaults
 end
 
---local maxLevel = GetMaxPlayerLevel() -- eliminate numourous duplicate calls
+
 function KeyMaster:CleanCharSavedData(data)
     if not data then
        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
@@ -196,14 +192,7 @@ function KeyMaster:CleanCharSavedData(data)
        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
            v.season = apiCheck
        end
-
-       if v.level then -- nil check
-           if v.level < GetMaxPlayerLevel() then -- remove if level cap changed
-               deleteME = true
-               --table.remove(data, k)
-               return data
-           end
-       end
+       
        if v.expire then -- nil check
            if v.expire < GetServerTime() then -- remove key data if expired
                data[k].keyLevel = 0
@@ -261,7 +250,8 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
             characterFilters = {
                 serverFilter = false,
                 filterNoRating = false,
-                filterNoKey = false
+                filterNoKey = false,
+                filterMaxLvl = true
             },
             miniMapButtonPos = {
                 ["minimapPos"] = 206,

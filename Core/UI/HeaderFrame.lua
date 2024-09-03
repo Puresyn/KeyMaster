@@ -124,7 +124,7 @@ function HeaderFrame:CreateAffixFrames(parentFrame)
     end
     local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
     if (seasonalAffixes == nil) then 
-        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "No mythic plus season affixes found!")
+        KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
         return 
     end    
     for i=1, #seasonalAffixes, 1 do
@@ -230,10 +230,11 @@ function HeaderFrame:CreateHeaderContent(parentFrame)
     local xpacDesc
     local seasonNum = DungeonTools:GetCurrentSeason()
     if (xpacNum ~= nil) then -- check the expansion number was returned
-        xpacDesc = KeyMasterLocals.XPAC[xpacNum].desc
-        if (xpacDesc ~= nil and seasonNum ~= nil and seasonNum > 0) then
-            xpacDesc = xpacDesc.." "..KeyMasterLocals.MPLUSSEASON[seasonNum].name
-        end
+        xpacDesc = KeyMasterLocals.MPLUSSEASON[seasonNum].name
+        -- xpacDesc = KeyMasterLocals.XPAC[xpacNum].desc
+        -- if (xpacDesc ~= nil and seasonNum ~= nil and seasonNum > 0) then
+            -- xpacDesc = xpacDesc.." "..KeyMasterLocals.MPLUSSEASON[seasonNum].name
+        -- end
     end
     if (xpacDesc ~= nil) then -- if no desciption found, skip this
         headerContent.xpacInformation = headerContent:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
