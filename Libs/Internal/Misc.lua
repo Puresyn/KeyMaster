@@ -141,29 +141,29 @@ function KeyMaster:CreateDefaultCharacterData()
     local charDefaults = {}
 
     local playerLevel = UnitLevel("PLAYER")
-        local playerGUID = UnitGUID("PLAYER")
-        local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
+    local playerGUID = UnitGUID("PLAYER")
+    local englishUnitClass, baseClassId = UnitClassBase("PLAYER")
 
-        charDefaults = {
-            [""..playerGUID..""] = {
-                client = true,                              -- flag if this character is owned by client (future use)
-                name = UnitName("PLAYER"),                  -- character's name
-                realm = GetRealmName(),                     -- character's realm
-                rating = 0,                                 -- set default rating to 0
-                season = nil,                               -- season placeholder (slow API)
-                class = baseClassId,                        -- Players class id #
-                data = nil,                                 -- character data placeholder (for reference)
-                keyId = 9001,                               -- placeholder keyid
-                keyLevel = 0,                               -- placeholder key level
-                expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
-                timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
-                level = playerLevel,                        -- level reference for cleanup
-                vault = {},                                 -- vault information
-                teams = {                                   -- teams table (for later use)
-                    team1 = nil
-                }
+    charDefaults = {
+        [""..playerGUID..""] = {
+            client = true,                              -- flag if this character is owned by client (future use)
+            name = UnitName("PLAYER"),                  -- character's name
+            realm = GetRealmName(),                     -- character's realm
+            rating = 0,                                 -- set default rating to 0
+            season = nil,                               -- season placeholder (slow API)
+            class = baseClassId,                        -- Players class id #
+            data = nil,                                 -- character data placeholder (for reference)
+            keyId = 9001,                               -- placeholder keyid
+            keyLevel = 0,                               -- placeholder key level
+            expire = KeyMaster:WeeklyResetTime(),       -- When to reset the weekly data
+            timestamp = GetServerTime(),                -- creation timestamp the data (server time) may need changed
+            level = playerLevel,                        -- level reference for cleanup
+            vault = {},                                 -- vault information
+            teams = {                                   -- teams table (for later use)
+                team1 = nil
             }
         }
+    }
 
     return charDefaults
 end
