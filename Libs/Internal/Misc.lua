@@ -250,7 +250,8 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
             characterFilters = {
                 serverFilter = false,
                 filterNoRating = false,
-                filterNoKey = false
+                filterNoKey = false,
+                filterMaxLvl = true
             },
             miniMapButtonPos = {
                 ["minimapPos"] = 206,

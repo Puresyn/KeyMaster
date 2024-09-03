@@ -90,7 +90,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     -- Display Settings
     local displaySetting = CreateFrame("Frame", nil, conFrame)
     displaySetting:SetPoint("TOPLEFT", conFrameHeader, "BOTTOMLEFT", 0, -4)
-    displaySetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/3)
+    displaySetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/2)
     displaySetting.title = displaySetting:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     displaySetting.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     displaySetting.title:SetPoint("TOPLEFT", displaySetting, "TOPLEFT", 4, -4)
@@ -172,7 +172,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     -- Diagnostic Settings
     local diagnosticSettings = CreateFrame("Frame", nil, conFrame)
     diagnosticSettings:SetPoint("TOPLEFT", displaySetting, "TOPRIGHT", 4, 0)
-    diagnosticSettings:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/3)
+    diagnosticSettings:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/2)
     diagnosticSettings.title = diagnosticSettings:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     diagnosticSettings.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     diagnosticSettings.title:SetPoint("TOPLEFT", diagnosticSettings, "TOPLEFT", 4, -4)
@@ -280,7 +280,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     -- Character Filter Settings
     local charactersSetting = CreateFrame("Frame", nil, conFrame)
     charactersSetting:SetPoint("TOPLEFT", diagnosticSettings, "TOPRIGHT", 4, 0)
-    charactersSetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/3)
+    charactersSetting:SetSize((conFrame:GetWidth()-(mlr*2))/3, settingsPanelBaseHeight/2)
     charactersSetting.title = charactersSetting:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     charactersSetting.title:SetTextColor(titleColor.r, titleColor.g, titleColor.b, 1)
     charactersSetting.title:SetPoint("TOPLEFT", charactersSetting, "TOPLEFT", 4, -4)
@@ -361,7 +361,7 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
     characterKeyFrame:SetPoint("TOPLEFT", characterRatingFrame, "BOTTOMLEFT", 0, 0)
     characterKeyFrame:SetWidth(charactersSetting:GetWidth()-8)
     
-    charactersSetting.filterNoKey = CreateFrame("CheckButton", "KM_FilerRatingCheckBox", characterKeyFrame, "ChatConfigCheckButtonTemplate")
+    charactersSetting.filterNoKey = CreateFrame("CheckButton", "KM_FilerKeyCheckBox", characterKeyFrame, "ChatConfigCheckButtonTemplate")
     local Path, _, Flags = conFrameHeader.title:GetFont()
     charactersSetting.filterNoKey.Text:SetFont(Path, 12, Flags)
     charactersSetting.filterNoKey.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
@@ -381,6 +381,35 @@ function ConfigFrame:CreateConfigFrame(parentFrame)
             KeyMaster_DB.addonConfig.characterFilters.filterNoKey = true
         else
             KeyMaster_DB.addonConfig.characterFilters.filterNoKey = false
+        end
+    end)
+
+    -- Filter Level Checkbox/Button
+    local characterLevelFrame = CreateFrame("Frame", nil, charactersSetting)
+    characterLevelFrame:SetPoint("TOPLEFT", characterKeyFrame, "BOTTOMLEFT", 0, 0)
+    characterLevelFrame:SetWidth(charactersSetting:GetWidth()-8)
+    
+    charactersSetting.filterMaxLvl = CreateFrame("CheckButton", "KM_FilterLevelCheckBox", characterLevelFrame, "ChatConfigCheckButtonTemplate")
+    local Path, _, Flags = conFrameHeader.title:GetFont()
+    charactersSetting.filterMaxLvl.Text:SetFont(Path, 12, Flags)
+    charactersSetting.filterMaxLvl.Text:SetTextColor(optionsColor.r, optionsColor.g, optionsColor.b, 1)
+    charactersSetting.filterMaxLvl.Text:SetText(KeyMasterLocals.CONFIGURATIONFRAME["FilterByMaxLvl"].text)
+    charactersSetting.filterMaxLvl.Text:SetWidth(characterLevelFrame:GetWidth()- charactersSetting.filterMaxLvl:GetWidth())
+
+    characterLevelFrame:SetHeight(charactersSetting.filterMaxLvl.Text:GetHeight()+12)
+
+    charactersSetting.filterMaxLvl:SetPoint("BOTTOMLEFT",characterLevelFrame, "BOTTOMLEFT", 0, 0)
+    charactersSetting.filterMaxLvl.Text:SetPoint("BOTTOMLEFT", charactersSetting.filterMaxLvl, "BOTTOMRIGHT", 0, 6)
+
+
+    if (KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl) then
+        charactersSetting.filterMaxLvl:SetChecked(KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl)
+    end
+    charactersSetting.filterMaxLvl:HookScript("OnClick", function()
+        if (charactersSetting.filterMaxLvl:GetChecked()) == true then
+            KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl = true
+        else
+            KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl = false
         end
     end)
 
