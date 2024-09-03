@@ -6,10 +6,21 @@ PATCH NOTES:
 Key Master v1.2.4
 --------------------------------------------------
 Updates:
+- Empty characters list? Added a character list filter to the configuration tab for characters that are not maximum level (ENABLED BY DEFAULT).
+- Updated support for between-season rating display. Players should now be able to correctly view their previous seasons ratings until the next season goes live.
+- All characters, regardless of level, are now saved to the Key Master characters list.
+-- NOTE: If you experience issues or errros while selecting characters when upgrading to 1.2.4,
+please delete the saved variables file located at:
+[DRIVE]:[FILE_LOCATION]\World of Warcraft_retail_\WTF\Account\[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua
 
 Fixes:
+- Fixed scrolling issue when characters list was longer than the character panel.
+- Fixed lua error when entering combat.
+- Fixed addon errors that occur between mythic plus seasons.
 
-Known Bugs:
+Known Bugs/Issues:
+- The War Within Season 1 ratings are still being verfied to display correctly.
+- Mythic plus vault may not update immediately when completing a dungeon.
 
 PATCH NOTES:
 
