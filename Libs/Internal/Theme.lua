@@ -206,9 +206,9 @@ local Colors = {
     },
     color_ERRORMSG = {
         r = 1,
-        g = 0.184,
-        b = 0.184,
-        hex = "FF2F2F"
+        g = 0.471,
+        b = 0.471,
+        hex = "ff7878"
     },
     color_DEBUGMSG = {
         r = 0.64,
