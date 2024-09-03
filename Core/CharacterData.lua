@@ -47,7 +47,6 @@ local function charLevelFilter(table)
     local filteredTable = {}
     local maxLevel = GetMaxPlayerLevel()
     for cGUID, v in pairs(table) do
-        print(cGUID, v.level, maxLevel)
         if table[cGUID].level and table[cGUID].level == maxLevel then
             filteredTable[cGUID] = v
         end
