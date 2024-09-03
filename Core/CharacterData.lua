@@ -43,6 +43,18 @@ local function charKeyFilter(table)
     return filteredTable
 end
 
+local function charLevelFilter(table)
+    local filteredTable = {}
+    local maxLevel = GetMaxPlayerLevel()
+    for cGUID, v in pairs(table) do
+        print(cGUID, v.level, maxLevel)
+        if table[cGUID].level and table[cGUID].level == maxLevel then
+            filteredTable[cGUID] = v
+        end
+    end
+    return filteredTable
+end
+
 local function charSort(sortTable, sort)
     --local sortTable = sortTable
     local tempTable = {}
@@ -111,6 +123,7 @@ function CharacterData:SetCharacterData(playerGUID, data)
     KeyMaster_C_DB[data.GUID].rating = data.mythicPlusRating
     KeyMaster_C_DB[data.GUID].keyId = data.ownedKeyId
     KeyMaster_C_DB[data.GUID].keyLevel = data.ownedKeyLevel
+    KeyMaster_C_DB[data.GUID].level = data.charLevel
     --KeyMaster_C_DB[unitData.GUID].timestamp = GetServerTime()
     local rewards = KeyMaster.WeeklyRewards:GetMythicPlusWeeklyVaultTopKeys()
     if rewards then
@@ -144,6 +157,12 @@ function CharacterData:GetCharactersList()
     if KeyMaster_DB.addonConfig.characterFilters.filterNoKey then
         if KeyMaster_DB.addonConfig.characterFilters.filterNoKey == true then
             sortTable = charKeyFilter(sortTable)
+        end
+    end
+
+    if KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl then
+        if KeyMaster_DB.addonConfig.characterFilters.filterMaxLvl == true then
+            sortTable = charLevelFilter(sortTable)
         end
     end
 
