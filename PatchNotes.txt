@@ -20,7 +20,7 @@ Known Bugs/Issues:
 - Due to a tight timeline to fix several critical bugs, some language translations are not completed. We will be updating those ASAP.
 
 Special Note:
-If you have any issues with the character list not function make sure you login to the character and logout one time.  If this doesn't work purge the characters on the config tab and relogging to each one.  If this doesn't work then please delete the file in your WTF folder: <GameInstallPath>\WTF\Account[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua
+- If you have any issues with the character list not function make sure you login to the character and logout one time.  If this doesn't work purge the characters on the config tab and relogging to each one.  If this doesn't work then please delete the file in your WTF folder: <GameInstallPath>\WTF\Account[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua
 
 PATCH NOTES:
 

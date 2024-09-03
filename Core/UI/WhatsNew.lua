@@ -26,14 +26,21 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>Updated included LibRangeCheck-3.0 library to version 26</p>
+                <p>- Fixed errors related to missing affixes from Blizzard.  This affected things like missing minimap icons, party frame not show player data, excessive error messages in chat window, etc.</p>
+                <p>- Fixed scroll bar on character list, as it wasn't scrolling properly previously.</p>
+                <p>- Fixed lua errors while entering combat.</p>
+                <p>- Fixed minor cosmetic UI changes related to season/expansion.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>Fixed version checking during communications between players returning nil on players with 1.1.9 to players with 1.2.x</p>
-                <p>Fixed error when no affixes are found in DungeonTools.lua</p>
+                <p>- Characters of any level can now show up in the character list, previously it was max level only.. but since Blizzard decided to change the max level before it was achievable we've decided it was easier to add a checkbox filter (in the config tab) and allow all characters to show up in the list.</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Open Items:|r</h2>
-                <p>KR and CN clients have some content in English until we receive contributor updates.</p>
+                <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
+                <p>- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.</p>
+                <p>- Mythic plus vaults may not update immediately when completing a dungeon.  For now just do /reloadui to see the update properly.</p>
+                <p>- Due to a tight timeline to fix several critical bugs, some language translations are not completed. We will be updating those ASAP.</p>
+                <br/>
+                <h2>|cff]]..h2Color..[[Special Note:|r</h2>
+                <p>- If you have any issues with the character list not function make sure you login to the character and logout one time.  If this doesn't work purge the characters on the config tab and relogging to each one.  If this doesn't work then please delete the file in your WTF folder: [GAME_INSTALL_PATH]\WTF\Account\[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
