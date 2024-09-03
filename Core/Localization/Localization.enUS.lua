@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Character List Filters", tex
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Current Server", text = "Only show current server." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "No Rating", text = "Only show characters with a rating." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "No Key", text = "Only show characters with a key." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Purge", past = "Purged" }
 
 L.ABOUTFRAME = {}

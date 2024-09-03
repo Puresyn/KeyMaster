@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Filtros da lista de Persoage
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Servidor atual", text = "Mostrar apenas servidor atual." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Sem classificação", text = "Mostrar apenas personagens com classificação M+." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Sem Chave", text = "Mostrar apenas personagens com chave M+." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Expurgar", past = "Expurgados" }
 
 L.ABOUTFRAME = {}

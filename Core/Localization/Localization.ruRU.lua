@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Фильтры списка 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Текущий сервер", text = "Показывать только текущий сервер." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Без рейтинга", text = "Показывать только персонажей с рейтингом." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Без ключа", text = "Показывать только персонажей с ключом." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Очистить", past = "Очищено" }
 
 L.ABOUTFRAME = {}

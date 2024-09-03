@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Filtres de la liste de perso
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Serveur courant", text = "Afficher uniquement le serveur courant." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Aucune cote", text = "Afficher uniquement les personnages avec cote." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Aucune clé", text = "Afficher uniquement les personnages avec clé." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Purger", past = "Purgé" }
 
 L.ABOUTFRAME = {}

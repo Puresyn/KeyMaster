@@ -154,6 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Filtri Lista Personaggi", te
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Server Attuale", text = "Mostra solo server attuale." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Nessun punteggio", text = "Mostra solo personaggi con un punteggio." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Nessuna chiave", text = "Mostra solo personaggi con una chiave." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Pulisci", past = "Pulito" }
 
 L.ABOUTFRAME = {}
