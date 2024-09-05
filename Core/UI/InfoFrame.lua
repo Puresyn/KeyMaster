@@ -179,7 +179,7 @@ https://discord.gg/bbMaUpfgn8
     aboutContributors.title:SetPoint("TOPLEFT", aboutContributors, "TOPLEFT", 4, -4)
     aboutContributors.title:SetText(KeyMasterLocals.ABOUTFRAME["AboutContributors"].name)
 
-    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu\n\n"
+    local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu, Linaori\n\n"
     textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
     textContributors = textContributors .. "Cyph, Hollicsh, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, 姜铁憨, Ragnarork"
 
