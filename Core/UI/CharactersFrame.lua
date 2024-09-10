@@ -365,6 +365,8 @@ end
 function CharactersFrame:Initialize(parentFrame)
     local characterSelectFrame = _G["KM_CharacterSelectFrame"] or createCharacterSelectFrame(parentFrame)
 
+    -- clean up any old data in saved variables
+    KeyMaster_C_DB = KeyMaster:CleanCharSavedData(KeyMaster_C_DB)
     CharactersFrame:CreateCharacters()
 
     return characterSelectFrame
