@@ -154,7 +154,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="캐릭터 목록 필터", te
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "현재 서버", text = "현재 서버만 표시합니다.." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "점수 없음", text = "점수가 있는 캐릭터만 표시합니다." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "쐐기돌 없음", text = "쐐기돌이 있는 캐릭터만 표시 합니다." }
-L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "만렙", text = "최대 레벨의 캐릭터만 표시 합니다." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "제거", past = "제거됨" }
 
 L.ABOUTFRAME = {}

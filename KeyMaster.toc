@@ -2,7 +2,7 @@
 ## X-Max-Interface: 110002
 ## X-Min-Interface: 110002
 
-## Version: 1.2.4
+## Version: 1.2.5
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
