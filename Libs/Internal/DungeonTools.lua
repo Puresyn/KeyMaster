@@ -47,15 +47,20 @@ local portalSpellIds = {
     [404] = 393276,     -- Neltharus
     [405] = 393267,     -- Brackenhide Hollow
     [406] = 393283,      -- Halls of Infusion
-    [503] = 442929,      -- Ara-Kara, City of Echoes
-    [502] = 442927,      -- City of Threads
-    [505] = 442931,      -- The Dawnbreaker
-    [501] = 442926,      -- The Stonevault
-    [353] = 272264,      -- Siege of Boralus
-    [507] = 396121,      -- The Grim Batol
-    [375] = 348533,      -- Mists of Tirna Scithe
-    [376] = 348529      -- The Necrotic Wake
+    [503] = 445417,      -- Ara-Kara, City of Echoes - 442929
+    [502] = 445416,      -- City of Threads - 442927
+    [505] = 445414,      -- The Dawnbreaker - 442931
+    [501] = 445269,      -- The Stonevault - 442926
+    [353] = 445418,      -- Siege of Boralus - (A) 445418 - (H) 464256 - 272264
+    [507] = 445424,      -- The Grim Batol - 396121
+    [375] = 354464,      -- Mists of Tirna Scithe - 348533
+    [376] = 354462       -- The Necrotic Wake - 348529
 
+}
+
+-- add only horde specific portals here.
+local portalSpellIdsHorde = {
+    [353] = 464256      -- Siege of Boralus - (A) 445418 - (H) 464256 - 272264
 }
 
 -- Affix IDs
@@ -229,6 +234,13 @@ end
 -- Finds portal spells, checks if the client has it and retruns it's information
 function DungeonTools:GetPortalSpell(dungeonID)
     local portalSpellId = portalSpellIds[dungeonID]
+    local englishFaction, _ = UnitFactionGroup("player")
+    if englishFaction == "Horde" then
+        if portalSpellIdsHorde[dungeonID] then
+            portalSpellId = portalSpellIdsHorde[dungeonID]
+        end
+    end
+    
     if (not portalSpellId) then return nil end -- mapID missing from portalSpellIds table
 
     local portalSpellName
