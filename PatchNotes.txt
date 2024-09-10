@@ -3,6 +3,20 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.2.6
+--------------------------------------------------
+Fixes:
+
+
+Updates:
+
+
+Known Bugs/Issues:
+- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.
+- Mythic plus vaults may not update immediately when completing a dungeon.  For now just do /reloadui to see the update properly.
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.2.5
 --------------------------------------------------
 Fixes:
@@ -10,7 +24,7 @@ Fixes:
 - Fixed character list cleanup to purge last seasons characters correctly.
 
 Updates:
-- None
+- Updated IT Localization
 
 Known Bugs/Issues:
 - Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.
