@@ -26,13 +26,11 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>- Fixed errors related to missing affixes from Blizzard.  This affected things like missing minimap icons, party frame not show player data, excessive error messages in chat window, etc.</p>
-                <p>- Fixed scroll bar on character list, as it wasn't scrolling properly previously.</p>
-                <p>- Fixed lua errors while entering combat.</p>
-                <p>- Fixed minor cosmetic UI changes related to season/expansion.</p>
+                <p>- Updated IT localization.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>- Characters of any level can now show up in the character list, previously it was max level only.. but since Blizzard decided to change the max level before it was achievable we've decided it was easier to add a checkbox filter (in the config tab) and allow all characters to show up in the list.</p>
+                <p>- Fixed dungeon portals so they work properly if you already have it unlocked.</p>
+                <p>- Fixed character list cleanup to purge last seasons characters correctly.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
                 <p>- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.</p>
