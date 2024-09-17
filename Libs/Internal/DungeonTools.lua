@@ -79,22 +79,35 @@ local GRIEVOUS_ID = 12
 local EXPLOSIVE_ID = 13
 local QUAKING_ID = 14
 local INFESTED_ID = 16
+local REAPING_ID = 117
+local BEGUILING_ID = 119
+local AWAKENED_ID = 120
+local PRIDEFUL_ID = 121
+local INSPIRING_ID = 122
 local SPITEFUL_ID = 123
 local STORMING_ID = 124
+local TORMENTED_ID = 128
+local INFERNAL_ID = 129
+local ENCRYPTED_ID = 130
+local SHROUDED_ID = 131
+local THUNDERING_ID = 132
+local FOCUSED_ID = 133
 local ENTAGLING_ID = 134
 local AFFLICTED_ID = 135
 local INCORPOREAL_ID = 136
+local SHIELDING_ID = 137
+local THORNED_ID = 144
+local RECKLESS_ID = 145
+local ATTUNED_ID = 146
+local XGUILE_ID = 147
 local XBASCENDANT_ID = 148
+local CHALLENGERSPERIL_ID = 152
+local XBFRENZIED_ID = 153
 local XBVOIDBOUND_ID = 158
 local XBOBLIVION_ID = 159
-local XBFRENZIED_ID = 153
-local CHALLENGERSPERIL_ID = 152
-local XGuile_ID = 147
+local XBDEVOUR_ID = 160
 
-
-
-
-local weeklyAffixes = { -- DF S4
+local weeklyAffixes = { -- DF S4 -- UNUSED AT THIS TIME
     [1] = {TYRANNICAL_ID, STORMING_ID, RAGING_ID},
     [2] = {FORTIFIED_ID, ENTAGLING_ID, BOLSTERING_ID},
     [3] = {TYRANNICAL_ID, INCORPOREAL_ID, SPITEFUL_ID},
@@ -107,7 +120,7 @@ local weeklyAffixes = { -- DF S4
     [10] = {FORTIFIED_ID, VOLCANIC_ID, SPITEFUL_ID}
 }
 
-function DungeonTools:nextWeeksAffixes(curAffixes)
+function DungeonTools:nextWeeksAffixes(curAffixes) -- UNUSED AT THIS TIME
     local a1, a2, a3 = unpack(curAffixes)
     local thisWeek, nextWeek, nextWeeksAffixes
 
@@ -133,7 +146,7 @@ function DungeonTools:portalSpells()
 end
 
 -- Gets a list of the current weeks affixes.
-local weeklyAffixs = nil
+local weeklyAffixs = nil -- see decleration above?
 function DungeonTools:GetAffixes()
     if weeklyAffixs ~= nil then return weeklyAffixs end
     local affixData = {}
