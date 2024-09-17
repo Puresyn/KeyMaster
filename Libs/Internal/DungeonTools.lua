@@ -325,13 +325,29 @@ local function getRatingCalcValues()
             threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
             bonusTimerRating = 5 -- Bonus/Penalty for timers
         },
-        [12] = { -- DF S4 --- THESE ARE GUESSTIMATES AS OF KM v1.0.1!!!!!! ------
+        [12] = { -- DF S4
             baseRating = 70, -- Base score for dungeon completion
             firstAffixLevel = 2, -- lowest M+ Key possible
             fistAffixValue = 10, -- Value of the first affix
             secondAffixLevel = 5, -- Key level the second affix is added
             secondAffixValue = 10, -- Value of the second affix
             thirdAffixLevel = 10, -- Key level the third affix is added
+            thirdAffixValue = 10, -- Value of the thrid affix
+            thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
+            preThresholdValue = 7, -- Value of the pre-threshold levels
+            postThresholdValue = 7, -- Value of the post threshold levels
+            untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
+            twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
+            threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
+            bonusTimerRating = 5 -- Bonus/Penalty for timers
+        },
+        [13] = { -- TWW S1 --- TO BE VERIFIED ------
+            baseRating = 70, -- Base score for dungeon completion
+            firstAffixLevel = 2, -- lowest M+ Key possible
+            fistAffixValue = 10, -- Value of the first affix
+            secondAffixLevel = 4, -- Key level the second affix is added
+            secondAffixValue = 10, -- Value of the second affix
+            thirdAffixLevel = 7, -- Key level the third affix is added
             thirdAffixValue = 10, -- Value of the thrid affix
             thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
             preThresholdValue = 7, -- Value of the pre-threshold levels
