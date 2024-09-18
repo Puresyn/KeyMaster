@@ -127,7 +127,7 @@ function HeaderFrame:CreateAffixFrames(parentFrame)
         KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
         return 
     end    
-    for i=1, #seasonalAffixes, 1 do
+    for i=1, 2, 1 do -- #seasonalAffixes
         local affixName = seasonalAffixes[i].name
         local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
         temp_frame:SetSize(50, 50)
@@ -150,11 +150,11 @@ function HeaderFrame:CreateAffixFrames(parentFrame)
         local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
         local path, _, flags = myText:GetFont()
         myText:SetFont(path, 9, flags)
-        myText:SetPoint("LEFT", -12, -9)
+        myText:SetPoint("BOTTOM", 0, -12) -- -12, -9
         myText:SetTextColor(1,1,1)
         myText:SetJustifyH("LEFT")
         myText:SetText(affixName)
-        myText:SetRotation(math.pi/2)
+        --myText:SetRotation(math.pi/2)
 
         -- Affix name background
         local affixBGFrame = CreateFrame("Frame", nil, temp_frame)

@@ -91,14 +91,28 @@ local function updateWeeklyAffixTheme()
         KeyMaster:_DebugMsg("updateWeeklyAffixTheme", "PlayerFrame", "No active weekly affix was found.")
         return
     end
-    if weeklyAffix == KeyMasterLocals.TYRANNICAL then
+    if weeklyAffix == KeyMasterLocals.ASCENDANT then
         baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
         
         tyrannicalSelector:SetChecked(true)
         fortifiedSelector:SetChecked(false)
     
-    elseif weeklyAffix == KeyMasterLocals.FORTIFIED then
+    elseif weeklyAffix == KeyMasterLocals.VOIDBOUND then
+        baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
+        baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
+
+        tyrannicalSelector:SetChecked(false)
+        fortifiedSelector:SetChecked(true)
+
+    elseif weeklyAffix == KeyMasterLocals.OBLIVION then
+        baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
+        baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
+        
+        tyrannicalSelector:SetChecked(true)
+        fortifiedSelector:SetChecked(false)
+    
+    elseif weeklyAffix == KeyMasterLocals.DEVOUR then
         baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
         baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
 
