@@ -91,38 +91,6 @@ local function updateWeeklyAffixTheme()
         KeyMaster:_DebugMsg("updateWeeklyAffixTheme", "PlayerFrame", "No active weekly affix was found.")
         return
     end
-    --[[ if weeklyAffix == KeyMasterLocals.ASCENDANT then
-        baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
-        baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
-        
-        tyrannicalSelector:SetChecked(true)
-        fortifiedSelector:SetChecked(false)
-    
-    elseif weeklyAffix == KeyMasterLocals.VOIDBOUND then
-        baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
-        baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
-
-        tyrannicalSelector:SetChecked(false)
-        fortifiedSelector:SetChecked(true)
-
-    elseif weeklyAffix == KeyMasterLocals.OBLIVION then
-        baseFrame.tyranText:SetTextColor(cw.r, cw.g, cw.b, 1)
-        baseFrame.fortText:SetTextColor(ow.r, ow.g, ow.b, 1)
-        
-        tyrannicalSelector:SetChecked(true)
-        fortifiedSelector:SetChecked(false)
-    
-    elseif weeklyAffix == KeyMasterLocals.DEVOUR then
-        baseFrame.fortText:SetTextColor(cw.r, cw.g, cw.b, 1)
-        baseFrame.tyranText:SetTextColor(ow.r, ow.g, ow.b, 1)
-
-        tyrannicalSelector:SetChecked(false)
-        fortifiedSelector:SetChecked(true)
-    else
-        baseFrame.fortText:SetTextColor(1, 1, 1, 1)
-        baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
-        KeyMaster:_ErrorMsg("updateWeeklyAffixTheme", "PlayerFrame", "Unexpected weekly affix value found... "..weeklyAffix)
-    end ]]
 end
 
 function PlayerFrame:CreatePlayerFrame(parentFrame)
@@ -317,15 +285,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     headerColor.r, headerColor.g, headerColor.b, _ = getColor("color_NONPHOTOBLUE")
     mapHeaderFrame.textureHighlight:SetVertexColor(headerColor.r, headerColor.g, headerColor.b, 0.6)
     mapHeaderFrame.textureHighlight:SetRotation(math.pi)
-
-    --[[ mapHeaderFrame.tyranText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_TyranTitle", "OVERLAY", "KeyMasterFontBig")
-    local Path, _, Flags = mapHeaderFrame.tyranText:GetFont()
-    mapHeaderFrame.tyranText:SetJustifyH("RIGHT")
-    mapHeaderFrame.tyranText:SetText(KeyMasterLocals.TYRANNICAL)
-
-    mapHeaderFrame.fortText = mapHeaderFrame:CreateFontString("KM_PlayerFrame_FortTitle", "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.fortText:SetJustifyH("LEFT")
-    mapHeaderFrame.fortText:SetText(KeyMasterLocals.FORTIFIED) ]]
 
     local btnOptions = {}
     btnOptions.name = "KM_CharactersButton"
@@ -690,47 +649,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalc.keyLevelTitle:SetJustifyH("CENTER")
     scoreCalc.keyLevelTitle:SetText(KeyMasterLocals.PLAYERFRAME.KeyLevel.name..":")
 
-    -- Affix Selector
-    --[[ local affixSelectorFrame = CreateFrame("Frame", nil, scoreCalc)
-    affixSelectorFrame:SetPoint("TOPLEFT", scoreCalc.DetailsTitleDesc, "BOTTOMLEFT", 0, -4)
-    affixSelectorFrame:SetSize(scoreCalc:GetWidth()/2, 40)
-
-    local tyrannicalSelector = CreateFrame("CheckButton", "TyrannicalSelector", affixSelectorFrame, "UIRadioButtonTemplate")
-    local fortifiedSelector = CreateFrame("CheckButton", "FortifiedSelector", affixSelectorFrame, "UIRadioButtonTemplate")
-
-    local function selectTyrannical()
-        if (tyrannicalSelector:GetChecked()) == true then
-            fortifiedSelector:SetChecked(false)
-        else
-            fortifiedSelector:SetChecked(true)
-        end
-    end
-
-    local function selectFortified()
-        if (fortifiedSelector:GetChecked()) == true then
-            tyrannicalSelector:SetChecked(false)
-        else
-            tyrannicalSelector:SetChecked(true)
-        end
-    end
-
-    tyrannicalSelector:SetPoint("TOPLEFT", affixSelectorFrame, "TOPLEFT")
-    tyrannicalSelector:SetScript("PostClick", selectTyrannical)
-
-    tyrannicalSelector.text = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    tyrannicalSelector.text:SetPoint("LEFT", tyrannicalSelector, "RIGHT", 0, 0)
-    tyrannicalSelector.text:SetJustifyH("LEFT")
-    tyrannicalSelector.text:SetText(KeyMasterLocals.TYRANNICAL)
-
-    fortifiedSelector:SetPoint("TOPLEFT", tyrannicalSelector, "BOTTOMLEFT")
-    fortifiedSelector:SetScript("PostClick", selectFortified)
-
-
-    fortifiedSelector.text = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-    fortifiedSelector.text:SetPoint("LEFT", fortifiedSelector, "RIGHT", 0, 0)
-    fortifiedSelector.text:SetJustifyH("LEFT")
-    fortifiedSelector.text:SetText(KeyMasterLocals.FORTIFIED) ]]
-
     -----------------
     scoreCalcScores.divider1 = scoreCalcScores:CreateTexture()
     scoreCalcScores.divider1:SetSize(16, 36)
@@ -966,7 +884,7 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     mapHeaderFrame.texture:SetColorTexture(0, 0, 0, 1)
 
     mapHeaderFrame.MapName = mapHeaderFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.MapName:SetPoint("TOP", mapHeaderFrame, "TOP", 0, -4)
+    mapHeaderFrame.MapName:SetPoint("TOP", mapHeaderFrame, "TOP", 0, 0)
     local Path, _, Flags = mapHeaderFrame.MapName:GetFont()
     mapHeaderFrame.MapName:SetFont(Path, 16, Flags)
     mapHeaderFrame.MapName:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
