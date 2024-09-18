@@ -195,8 +195,8 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         else
             tyrannicalRating = tyrannicalRating * 0.5
         end
-        tyrannicalRating = getNumberPerferenceValue(tyrannicalRating)        
-        playerMapDataFrame.tyrannicalScore:SetText(tyrannicalRating or defaultString)        
+        --[[ tyrannicalRating = getNumberPerferenceValue(tyrannicalRating)        
+        playerMapDataFrame.tyrannicalScore:SetText(tyrannicalRating or defaultString)  ]]       
                 
         -- Tyrannical Run Time
         local tyrannicalRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Tyrannical"].DurationSec)
@@ -206,28 +206,28 @@ function PlayerFrameMapping:RefreshData(fetchNew)
 
         -- Fortified Dungeon Level
         local fortifiedLevel = playerData.DungeonRuns[mapId]["Fortified"].Level
-        playerMapDataFrame.fortifiedLevel:SetText(fortifiedLevel or defaultString)
+        --[[ playerMapDataFrame.fortifiedLevel:SetText(fortifiedLevel or defaultString) ]]
 
         -- Fortified Bonus Time
         local fortifiedBonusTime = DungeonTools:CalculateChest(mapId, playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
-        playerMapDataFrame.fortifiedBonus:SetText(fortifiedBonusTime)
+        --[[ playerMapDataFrame.fortifiedBonus:SetText(fortifiedBonusTime) ]]
 
         -- Fortified Dungeon Score
-        local fortifiedRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
+        --[[ local fortifiedRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
         if highestAffix == "Fortified" then
             fortifiedRating = fortifiedRating * 1.5
         else
             fortifiedRating = fortifiedRating * 0.5
-        end
-        fortifiedRating = getNumberPerferenceValue(fortifiedRating)
-        playerMapDataFrame.fortifiedScore:SetText(fortifiedRating or defaultString)
+        end ]]
+        --[[ fortifiedRating = getNumberPerferenceValue(fortifiedRating)
+        playerMapDataFrame.fortifiedScore:SetText(fortifiedRating or defaultString) ]]
         
         -- Fortified Run Time
-        local fortifiedRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
-        playerMapDataFrame.fortifiedRunTime:SetText(fortifiedRunTime)
+        --[[ local fortifiedRunTime = KeyMaster:FormatDurationSec(playerData.DungeonRuns[mapId]["Fortified"].DurationSec)
+        playerMapDataFrame.fortifiedRunTime:SetText(fortifiedRunTime) ]]
 
         -- Overall Dungeon Score
-        local mapOverallRating = fortifiedRating + tyrannicalRating
+        local mapOverallRating = 9999 -- fortifiedRating + tyrannicalRating -- todo: fix mapping for 1.2.6
         mapOverallRating = getNumberPerferenceValue(mapOverallRating)
         playerMapDataFrame.overallScore:SetText(mapOverallRating or defaultString)
     end

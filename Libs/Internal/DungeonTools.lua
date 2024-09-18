@@ -185,7 +185,7 @@ end
 -- FUNCTION NOTE:
 -- C_MythicPlus.GetCurrentSeason()
 -- Returns the current Mythic Plus season. Returns -1 until C_MythicPlus.RequestMapInfo() is called at least once.
--- Returns 0 when there is no active season. (To be confirmed)
+-- Returns last season when there is no active season.
 -- source: https://wowpedia.fandom.com/wiki/API_C_MythicPlus.GetCurrentSeason
 local currentSeason
 function DungeonTools:GetCurrentSeason(retryCount)
