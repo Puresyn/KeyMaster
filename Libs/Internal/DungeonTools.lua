@@ -273,7 +273,7 @@ end
     local wc = {}
     local cw = {}
     local ow = {}
-    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
+    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("color_COMMON")
     ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
     weeklyAffix = DungeonTools:GetAffixes()
     if (weeklyAffix == nil) then
@@ -284,9 +284,14 @@ end
         wc.g = cw.g
         wc.b = cw.b
     else
-        wc.r = ow.r
+        --[[ wc.r = ow.r
         wc.g = ow.g
-        wc.b = ow.b
+        wc.b = ow.b ]]
+
+        wc.r = cw.r
+        wc.g = cw.g
+        wc.b = cw.b
+
     end
     return wc.r, wc.g, wc.b
 end
@@ -295,7 +300,8 @@ end
 function DungeonTools:GetWeekFont(currentAffix)
     local weeklyAffix, weekFont, offWeekFont, myFont, cw, ow
     weekFont = "KeyMasterFontBig"
-    offWeekFont = "KeyMasterFontSmall"
+    --[[ offWeekFont = "KeyMasterFontSmall" ]]
+    offWeekFont = "KeyMasterFontBig"
     weeklyAffix = DungeonTools:GetAffixes()
     if (weeklyAffix == nil) then
         return offWeekFont
