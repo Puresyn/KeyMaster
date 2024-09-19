@@ -32,11 +32,11 @@ function HeaderFrame:CreateHeaderRegion(parentFrame)
     topBar.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
 
-    topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    --[[ topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
     topBar.displayBG:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -2)
     topBar.displayBG:SetSize(320, 77)
     topBar.displayBG:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
-    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1)
+    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1) ]]
 
     return headerRegion
 end
@@ -107,8 +107,13 @@ end
 
 function HeaderFrame:CreatePlayerInfoBox(parentFrame)
     local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
-    headerPlayerInfoBox:SetSize(198, 80)
+    headerPlayerInfoBox:SetSize(4, 80)
     headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 6)
+
+    --------------------------------
+    -- todo: remove box - hide for now
+    headerPlayerInfoBox:Hide()
+    --------------------------------
 
     return headerPlayerInfoBox
 
@@ -120,7 +125,7 @@ end
 function HeaderFrame:CreateHeaderKeyFrame(parentFrame, anchorFrame)
     local key_frame = CreateFrame("Frame", "KeyMaster_MythicKeyHeader", parentFrame)
     key_frame:SetSize(anchorFrame:GetHeight(), anchorFrame:GetHeight())
-    key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 0)
+    key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 20)
 
     key_frame.keyLevelText = key_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local path, _, flags = key_frame.keyLevelText:GetFont()
