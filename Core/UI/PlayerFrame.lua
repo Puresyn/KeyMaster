@@ -714,6 +714,14 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local Hline = KeyMaster:CreateHLine(divider:GetWidth()+8, divider, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
+    ----------------------------------
+    -- todo: fix calculator - hide for now
+    scoreCalcBox:Hide()
+    scoreCalc.DetailsTitleDesc:Hide()
+    scoreCalcDirection.text:Hide()
+    scoreCalc.keyLevelTitle:Hide()
+    -----------------------------------
+
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
     vaultDetails:SetPoint("TOP", divider, "BOTTOM", 0, -4)
