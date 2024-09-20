@@ -361,20 +361,24 @@ local function getRatingCalcValues()
             bonusTimerRating = 5 -- Bonus/Penalty for timers
         },
         [13] = { -- TWW S1 --- TO BE VERIFIED ------
-            baseRating = 70, -- Base score for dungeon completion
+            baseRating = 120, -- Base score for dungeon completion
             firstAffixLevel = 2, -- lowest M+ Key possible
-            fistAffixValue = 10, -- Value of the first affix
+            fistAffixValue = 15, -- Value of the first affix
             secondAffixLevel = 4, -- Key level the second affix is added
             secondAffixValue = 10, -- Value of the second affix
             thirdAffixLevel = 7, -- Key level the third affix is added
-            thirdAffixValue = 10, -- Value of the thrid affix
+            thirdAffixValue = 15, -- Value of the thrid affix
+            fourthAffixLevel = 10, -- Key level the third affix is added
+            fourthAffixValue = 10, -- Value of the thrid affix
+            fifthAffixLevel = 12, -- Key level the third affix is added
+            fifthAffixValue = 15, -- Value of the thrid affix
             thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
-            preThresholdValue = 7, -- Value of the pre-threshold levels
-            postThresholdValue = 7, -- Value of the post threshold levels
+            preThresholdValue = 15, -- Value of the pre-threshold levels
+            postThresholdValue = 15, -- Value of the post threshold levels
             untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
             twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
             threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
-            bonusTimerRating = 5 -- Bonus/Penalty for timers
+            bonusTimerRating = 15 -- Bonus/Penalty for timers
         }
     }
 
@@ -484,7 +488,16 @@ local function getBaseScore(level)
     if level >= seasonVars.thirdAffixLevel then
         affixScore = affixScore + seasonVars.thirdAffixValue
     end
-
+    if seasonVars.fourthAffixLevel ~= nil and seasonVars.fifthAffixLevel ~= nil then -- backwards compatability < 1.3.0
+        if level >= seasonVars.fourthAffixLevel then
+            affixScore = affixScore + seasonVars.fourthAffixValue
+        end
+        if level >= seasonVars.fifthAffixLevel then
+            affixScore = affixScore + seasonVars.fifthAffixValue
+        end
+    else
+        KeyMaster:_DebugMsg("getBaseScore","DungeonTools","Attempted to get fourth and fith affix values - values not present (Is it pre TWW S1?)")
+    end
     --print("Base: For level "..level.." is "..tostring(baseRating + firstRating + secondRating + affixScore).." ")
     return baseRating + firstRating + secondRating + affixScore
 end
@@ -543,13 +556,15 @@ end
 ---@param seasonAffixScore2 integer - best score for dungeon for a weekly affix
 ---@return integer - the total rating for the dungeons scores
 function DungeonTools:CalculateDungeonTotal(seasonAffixScore1, seasonAffixScore2)
-    local total
+    -- todo: Delete this - removed affix comparison for 1.3.0
+    --[[ local total
     if(seasonAffixScore1 > seasonAffixScore2) then
         total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 1.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 0.5)
     else
         total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 0.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 1.5)
-    end
-    return total
+    end 
+    return total ]]
+    return KeyMaster:RoundSingleDecimal(seasonAffixScore1)
 end
 
 ---@return table - Challenge Mode Completion Information

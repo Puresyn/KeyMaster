@@ -48,44 +48,49 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, weeklyAffix)
         playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
     end
 
-    local ratingChange = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
-    local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
-    local tyranRating = playerData.DungeonRuns[mapId]["Tyrannical"].Rating
+    local keyBaseScore = KeyMaster.DungeonTools:CalculateRating(mapId, keyLevel, dungeonTimeLimit)
+    --local fortRating = playerData.DungeonRuns[mapId]["Fortified"].Rating
+    --local tyranRating = playerData.DungeonRuns[mapId]["Tyrannical"].Rating
     local currentOverallRating = playerData.DungeonRuns[mapId].bestOverall
     
     local totalKeyRatingChange = 0
-    if (weeklyAffix == "Tyrannical") then
-        if ratingChange > tyranRating then
-            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
+    --[[ if (weeklyAffix == "Tyrannical") then
+        if keyBaseScore > tyranRating then
+            local newTotal = DungeonTools:CalculateDungeonTotal(keyBaseScore, fortRating)
             scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
             totalKeyRatingChange = newTotal - currentOverallRating
         else
             scoreFrame.ratingGain:SetText("0")
         end
     else
-        if ratingChange > fortRating then
-            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
+        if keyBaseScore > fortRating then
+            local newTotal = DungeonTools:CalculateDungeonTotal(keyBaseScore, tyranRating)
             scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
             totalKeyRatingChange = newTotal - currentOverallRating
         else
             scoreFrame.ratingGain:SetText("0")
         end
-    end
+    end ]]
+
+    if(keyBaseScore < currentOverallRating) then keyBaseScore = currentOverallRating end
+    local newTotal = DungeonTools:CalculateDungeonTotal(keyBaseScore, currentOverallRating)
+    scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
+    totalKeyRatingChange = newTotal - currentOverallRating
     
     local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
     newOverall = getNumberPerferenceValue(newOverall)
     scoreFrame.newRating:SetText(newOverall)
 
-    if weeklyAffix == "Tyrannical" then
+    --[[ if weeklyAffix == "Tyrannical" then
         weeklyAffix = KeyMasterLocals.TYRANNICAL
     elseif weeklyAffix == "Fortified" then
         weeklyAffix = KeyMasterLocals.FORTIFIED
     else
         weeklyAffix = "Tyrannical"
         KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to determine weeklyAffix. Defaulting to Tyrannical.")
-    end
+    end ]]
     
-    scoreFrame.keyLevel:SetText(keyLevel.." "..weeklyAffix)
+    scoreFrame.keyLevel:SetText(KeyMasterLocals.PLAYERFRAME["KeyLevel"].name .. ": "..keyLevel) --.." "..weeklyAffix)
 end
 
 function PlayerFrameMapping:RefreshData(fetchNew)
