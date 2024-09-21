@@ -206,33 +206,6 @@ function KeyMaster:CleanCharSavedData(data)
             data[k].expire = KeyMaster:WeeklyResetTime()
         end
 
-        -- TODO: Delete this in 1.3.1 or later
-        -- this code is added to clean up old character data structured before 1.3.0
-        --[[ if v.data then
-            local encodedCharacterData = v.data --saved variable
-            if not encodedCharacterData then return nil end
-
-            local decoded = LibDeflate:DecodeForWoWAddonChannel(encodedCharacterData)
-            if not decoded then 
-                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decode data for "..playerGUID)
-                return 
-            end
-            local decompressed = LibDeflate:DecompressDeflate(decoded)
-            if not decompressed then 
-                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decompress data for "..playerGUID)
-                return
-            end
-            local success, data = LibSerialize:Deserialize(decompressed)
-            if not success then
-                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to deserialize data for "..playerGUID)
-                return
-            end
-
-            if not data["dungeonData"] then
-                deleteME = true
-            end
-        end ]]
-
         if deleteME then data[k] = nil end
 
     end
@@ -299,28 +272,18 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
     local charDefaults = KeyMaster:CreateDefaultCharacterData()
 
     --function KeyMaster:PurgeOldCharacterData()
-        -- Purge all characters with incompatable data by version
-        local playerGUID = UnitGUID("player")
-        local buildVersion = KeyMaster_DB.addonConfig.version
-        if buildVersion ~= nil then
-            local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
-            major1 = tonumber(major1)
-            minor1 = tonumber(minor1)
-            patch1 = tonumber(patch1)
-            print(major1.."."..minor1.."."..patch1)
-            if (major1 <= 1 and minor1 <= 3) then
-                KeyMaster_C_DB = {}
-               
-                -- fetch self data
-                local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
-                -- Store new data
-                KeyMaster.UnitData:SetUnitData(playerData)
-      
-                --KeyMaster.PlayerFrameMapping:RefreshData(false)
-            end
+    -- Purge all characters with incompatable data by version
+    local playerGUID = UnitGUID("player")
+    local buildVersion = KeyMaster_DB.addonConfig.version
+    if buildVersion ~= nil then
+        local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+        major1 = tonumber(major1)
+        minor1 = tonumber(minor1)
+        patch1 = tonumber(patch1)
+        if (major1 <= 1 and minor1 < 3) then
+            KeyMaster_C_DB = {}      
         end
-      --end
-      --KeyMaster:PurgeOldCharacterData()
+    end
 
     -- Copy the values from the defaults table into the saved variables table
     -- if data doesn't exist and assign the result to the global variable:
