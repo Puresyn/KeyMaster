@@ -19,7 +19,7 @@ Updates:
 - Adjusted the "What's New" content for easier readability.
 
 Known Bugs/Issues:
-- Pary members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!
+- Party members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!
 
 PATCH NOTES:
 --------------------------------------------------

@@ -48,7 +48,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
-                <p>- Pary members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!</p>
+                <p>- Party members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
