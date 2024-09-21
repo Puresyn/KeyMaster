@@ -64,50 +64,63 @@ local portalSpellIdsHorde = {
 }
 
 -- Affix IDs
-local OVERFLOWING_ID = 1
-local SKITTISH_ID = 2
-local VOLCANIC_ID = 3
-local NECROTIC_ID = 4
-local TEEMING_ID = 5
-local RAGING_ID = 6
-local BOLSTERING_ID = 7
-local SANGUINE_ID = 8
-local TYRANNICAL_ID = 9
-local FORTIFIED_ID = 10
-local BURSTING_ID = 11
-local GRIEVOUS_ID = 12
-local EXPLOSIVE_ID = 13
-local QUAKING_ID = 14
-local INFESTED_ID = 16
-local SPITEFUL_ID = 123
-local STORMING_ID = 124
-local ENTAGLING_ID = 134
-local AFFLICTED_ID = 135
-local INCORPOREAL_ID = 136
-local XBASCENDANT_ID = 148
-local XBVOIDBOUND_ID = 158
-local XBOBLIVION_ID = 159
-local XBFRENZIED_ID = 153
-local CHALLENGERSPERIL_ID = 152
-local XGuile_ID = 147
+KM_OVERFLOWING_ID = 1
+KM_SKITTISH_ID = 2
+KM_VOLCANIC_ID = 3
+KM_NECROTIC_ID = 4
+KM_TEEMING_ID = 5
+KM_RAGING_ID = 6
+KM_BOLSTERING_ID = 7
+KM_SANGUINE_ID = 8
+KM_TYRANNICAL_ID = 9
+KM_FORTIFIED_ID = 10
+KM_BURSTING_ID = 11
+KM_GRIEVOUS_ID = 12
+KM_EXPLOSIVE_ID = 13
+KM_QUAKING_ID = 14
+KM_INFESTED_ID = 16
+KM_REAPING_ID = 117
+KM_BEGUILING_ID = 119
+KM_AWAKENED_ID = 120
+KM_PRIDEFUL_ID = 121
+KM_INSPIRING_ID = 122
+KM_SPITEFUL_ID = 123
+KM_STORMING_ID = 124
+KM_TORMENTED_ID = 128
+KM_INFERNAL_ID = 129
+KM_ENCRYPTED_ID = 130
+KM_SHROUDED_ID = 131
+KM_THUNDERING_ID = 132
+KM_FOCUSED_ID = 133
+KM_ENTAGLING_ID = 134
+KM_AFFLICTED_ID = 135
+KM_INCORPOREAL_ID = 136
+KM_SHIELDING_ID = 137
+KM_THORNED_ID = 144
+KM_RECKLESS_ID = 145
+KM_ATTUNED_ID = 146
+KM_XGUILE_ID = 147
+KM_XBASCENDANT_ID = 148
+KM_CHALLENGERSPERIL_ID = 152
+KM_XBFRENZIED_ID = 153
+KM_XBVOIDBOUND_ID = 158
+KM_XBOBLIVION_ID = 159
+KM_XBDEVOUR_ID = 160
 
-
-
-
-local weeklyAffixes = { -- DF S4
-    [1] = {TYRANNICAL_ID, STORMING_ID, RAGING_ID},
-    [2] = {FORTIFIED_ID, ENTAGLING_ID, BOLSTERING_ID},
-    [3] = {TYRANNICAL_ID, INCORPOREAL_ID, SPITEFUL_ID},
-    [4] = {FORTIFIED_ID, AFFLICTED_ID, RAGING_ID},
-    [5] = {TYRANNICAL_ID, VOLCANIC_ID, SANGUINE_ID},
-    [6] = {FORTIFIED_ID, STORMING_ID, BURSTING_ID},
-    [7] = {TYRANNICAL_ID, AFFLICTED_ID, BOLSTERING_ID},
-    [8] = {FORTIFIED_ID, INCORPOREAL_ID, SANGUINE_ID},
-    [9] = {TYRANNICAL_ID, ENTAGLING_ID, BURSTING_ID},
-    [10] = {FORTIFIED_ID, VOLCANIC_ID, SPITEFUL_ID}
+local weeklyAffixes = { -- DF S4 -- UNUSED AT THIS TIME
+    [1] = {KM_TYRANNICAL_ID, KM_STORMING_ID, KM_RAGING_ID},
+    [2] = {KM_FORTIFIED_ID, KM_ENTAGLING_ID, KM_BOLSTERING_ID},
+    [3] = {KM_TYRANNICAL_ID, KM_INCORPOREAL_ID, KM_SPITEFUL_ID},
+    [4] = {KM_FORTIFIED_ID, KM_AFFLICTED_ID, KM_RAGING_ID},
+    [5] = {KM_TYRANNICAL_ID, KM_VOLCANIC_ID, KM_SANGUINE_ID},
+    [6] = {KM_FORTIFIED_ID, KM_STORMING_ID, KM_BURSTING_ID},
+    [7] = {KM_TYRANNICAL_ID, KM_AFFLICTED_ID, KM_BOLSTERING_ID},
+    [8] = {KM_FORTIFIED_ID, KM_INCORPOREAL_ID, KM_SANGUINE_ID},
+    [9] = {KM_TYRANNICAL_ID, KM_ENTAGLING_ID, KM_BURSTING_ID},
+    [10] = {KM_FORTIFIED_ID, KM_VOLCANIC_ID, KM_SPITEFUL_ID}
 }
 
-function DungeonTools:nextWeeksAffixes(curAffixes)
+function DungeonTools:nextWeeksAffixes(curAffixes) -- UNUSED AT THIS TIME
     local a1, a2, a3 = unpack(curAffixes)
     local thisWeek, nextWeek, nextWeeksAffixes
 
@@ -133,7 +146,7 @@ function DungeonTools:portalSpells()
 end
 
 -- Gets a list of the current weeks affixes.
-local weeklyAffixs = nil
+local weeklyAffixs = nil -- see decleration above?
 function DungeonTools:GetAffixes()
     if weeklyAffixs ~= nil then return weeklyAffixs end
     local affixData = {}
@@ -172,7 +185,7 @@ end
 -- FUNCTION NOTE:
 -- C_MythicPlus.GetCurrentSeason()
 -- Returns the current Mythic Plus season. Returns -1 until C_MythicPlus.RequestMapInfo() is called at least once.
--- Returns 0 when there is no active season. (To be confirmed)
+-- Returns last season when there is no active season.
 -- source: https://wowpedia.fandom.com/wiki/API_C_MythicPlus.GetCurrentSeason
 local currentSeason
 function DungeonTools:GetCurrentSeason(retryCount)
@@ -260,7 +273,7 @@ end
     local wc = {}
     local cw = {}
     local ow = {}
-    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
+    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("color_COMMON")
     ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
     weeklyAffix = DungeonTools:GetAffixes()
     if (weeklyAffix == nil) then
@@ -271,9 +284,14 @@ end
         wc.g = cw.g
         wc.b = cw.b
     else
-        wc.r = ow.r
+        --[[ wc.r = ow.r
         wc.g = ow.g
-        wc.b = ow.b
+        wc.b = ow.b ]]
+
+        wc.r = cw.r
+        wc.g = cw.g
+        wc.b = cw.b
+
     end
     return wc.r, wc.g, wc.b
 end
@@ -282,7 +300,8 @@ end
 function DungeonTools:GetWeekFont(currentAffix)
     local weeklyAffix, weekFont, offWeekFont, myFont, cw, ow
     weekFont = "KeyMasterFontBig"
-    offWeekFont = "KeyMasterFontSmall"
+    --[[ offWeekFont = "KeyMasterFontSmall" ]]
+    offWeekFont = "KeyMasterFontBig"
     weeklyAffix = DungeonTools:GetAffixes()
     if (weeklyAffix == nil) then
         return offWeekFont
@@ -325,7 +344,7 @@ local function getRatingCalcValues()
             threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
             bonusTimerRating = 5 -- Bonus/Penalty for timers
         },
-        [12] = { -- DF S4 --- THESE ARE GUESSTIMATES AS OF KM v1.0.1!!!!!! ------
+        [12] = { -- DF S4
             baseRating = 70, -- Base score for dungeon completion
             firstAffixLevel = 2, -- lowest M+ Key possible
             fistAffixValue = 10, -- Value of the first affix
@@ -340,6 +359,26 @@ local function getRatingCalcValues()
             twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
             threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
             bonusTimerRating = 5 -- Bonus/Penalty for timers
+        },
+        [13] = { -- TWW S1 --- TO BE VERIFIED ------
+            baseRating = 120, -- Base score for dungeon completion
+            firstAffixLevel = 2, -- lowest M+ Key possible
+            fistAffixValue = 15, -- Value of the first affix
+            secondAffixLevel = 4, -- Key level the second affix is added
+            secondAffixValue = 10, -- Value of the second affix
+            thirdAffixLevel = 7, -- Key level the third affix is added
+            thirdAffixValue = 15, -- Value of the thrid affix
+            fourthAffixLevel = 10, -- Key level the third affix is added
+            fourthAffixValue = 10, -- Value of the thrid affix
+            fifthAffixLevel = 12, -- Key level the third affix is added
+            fifthAffixValue = 15, -- Value of the thrid affix
+            thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
+            preThresholdValue = 15, -- Value of the pre-threshold levels
+            postThresholdValue = 15, -- Value of the post threshold levels
+            untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
+            twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
+            threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
+            bonusTimerRating = 15 -- Bonus/Penalty for timers
         }
     }
 
@@ -449,7 +488,16 @@ local function getBaseScore(level)
     if level >= seasonVars.thirdAffixLevel then
         affixScore = affixScore + seasonVars.thirdAffixValue
     end
-
+    if seasonVars.fourthAffixLevel ~= nil and seasonVars.fifthAffixLevel ~= nil then -- backwards compatability < 1.3.0
+        if level >= seasonVars.fourthAffixLevel then
+            affixScore = affixScore + seasonVars.fourthAffixValue
+        end
+        if level >= seasonVars.fifthAffixLevel then
+            affixScore = affixScore + seasonVars.fifthAffixValue
+        end
+    else
+        KeyMaster:_DebugMsg("getBaseScore","DungeonTools","Attempted to get fourth and fith affix values - values not present (Is it pre TWW S1?)")
+    end
     --print("Base: For level "..level.." is "..tostring(baseRating + firstRating + secondRating + affixScore).." ")
     return baseRating + firstRating + secondRating + affixScore
 end
@@ -501,20 +549,6 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
         keyLevel = base
     end
     return getBaseScore(keyLevel) + bonusRating
-end
-
---CalculateDungeonTotal - Calculates a dungeons overall score contributing to a players rating.
----@param seasonAffixScore1 integer - best score for dungeon for a weekly affix
----@param seasonAffixScore2 integer - best score for dungeon for a weekly affix
----@return integer - the total rating for the dungeons scores
-function DungeonTools:CalculateDungeonTotal(seasonAffixScore1, seasonAffixScore2)
-    local total
-    if(seasonAffixScore1 > seasonAffixScore2) then
-        total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 1.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 0.5)
-    else
-        total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 0.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 1.5)
-    end
-    return total
 end
 
 ---@return table - Challenge Mode Completion Information

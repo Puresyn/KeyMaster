@@ -79,55 +79,6 @@ local function fetchCharacterMythicPlusData(mapId, retryCount)
     end
 end
 
-function CharacterInfo:GetMplusScoreForMap(mapid, weeklyAffix)
-    if (weeklyAffix ~= KeyMasterLocals.TYRANNICAL and weeklyAffix ~= KeyMasterLocals.FORTIFIED) then
-       KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo", "Incorrect weeklyAffix value provided.")
-       return nil
-    end
-    
-    local emptyData = {
-       name = weeklyAffix, --WeeklyAffix Name (e.g.; Tyran/Fort)
-       score = 0, -- io gained
-       level = 0, -- keystone level
-       durationSec = 0, -- how long took to complete map
-       overTime = false -- was completion overtime
-    }
-    
-    local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
-    -- this is true when a character has not ran a key for this map on either weekly affix.
-    if (mapScore == nil) then
-       return emptyData
-    end
-    -- No data means no keys ran on either weekly affix
-    if mapScore[1] == nil and mapScore[2] == nil then
-        KeyMaster:_ErrorMsg("GetMplusScoreForMap", "CharacterInfo.lua", "Failed to fetch score data for mapid "..mapid)
-        return emptyData
-    end
-    
-    -- This is setup this way because blizzard returns the data in a table with the first index being the weekly affix
-    -- So on a tyrannical week mapScore[1] is for Tyrannical information and mapScore[2] is for Fortified information
-    -- on a fortified week mapScore[1] is for Fortified information and mapScore[2] is for Tyrannical information
-    if mapScore[1].name == weeklyAffix then
-        if mapScore[1].name == KeyMasterLocals.FORTIFIED then
-            mapScore[1].name = "Fortified"
-        else
-            mapScore[1].name = "Tyrannical"
-        end
-        return mapScore[1]
-    else
-        if mapScore[2] == nil then
-            return emptyData
-        else
-            if mapScore[2].name == KeyMasterLocals.FORTIFIED then
-                mapScore[2].name = "Fortified"
-            else
-                mapScore[2].name = "Tyrannical"
-            end
-            return mapScore[2]
-        end
-    end
-end
-
 function CharacterInfo:GetPlayerSpecialization(unitId)
     if (unitId == "player") then
         local specId = GetSpecialization()
@@ -177,32 +128,32 @@ function CharacterInfo:GetMyCharacterInfo()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
         
-        -- Overall Dungeon Score
-        keyRun["bestOverall"] = CharacterInfo:GetDungeonOverallScore(mapid)
+        -- empty data set
+        local emptyData = {
+            Rating = 0, -- rating
+            Level = 0, -- keystone level
+            DurationSec = 0, -- how long took to complete map
+            overTime = false -- was completion overtime
+        }
 
-        -- Tyrannical Key Score
-        local tyrannicalScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, KeyMasterLocals.TYRANNICAL)
-        local dungeonDetails = {
-            ["Rating"] = DungeonTools:CalculateRating(mapid, tyrannicalScoreInfo.level, tyrannicalScoreInfo.durationSec),
-            ["Level"] = tyrannicalScoreInfo.level,
-            ["DurationSec"] = tyrannicalScoreInfo.durationSec,
-            ["IsOverTime"] = tyrannicalScoreInfo.overTime
-        }
-        keyRun["Tyrannical"] = dungeonDetails
-        
-        -- Fortified Key Score
-        local fortifiedScoreInfo = CharacterInfo:GetMplusScoreForMap(mapid, KeyMasterLocals.FORTIFIED)
-        local dungeonDetails = {
-            ["Rating"] = DungeonTools:CalculateRating(mapid, fortifiedScoreInfo.level, fortifiedScoreInfo.durationSec),
-            ["Level"] = fortifiedScoreInfo.level,
-            ["DurationSec"] = fortifiedScoreInfo.durationSec,
-            ["IsOverTime"] = fortifiedScoreInfo.overTime
-        }
-        keyRun["Fortified"] = dungeonDetails
-        
-        myCharacterInfo.DungeonRuns[mapid] = keyRun
+        local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+        if (mapScore == nil or mapScore[1] == nil) then
+            keyRun["bestOverall"] = 0
+            keyRun["DungeonData"] = emptyData            
+        else
+            local dungeonDetails = {
+                ["Rating"] = DungeonTools:CalculateRating(mapid, mapScore[1].level, mapScore[1].durationSec),
+                ["Level"] = mapScore[1].level,
+                ["DurationSec"] = mapScore[1].durationSec,
+                ["overTime"] = mapScore[1].overTime
+            }
+            keyRun["bestOverall"] = bestOverallScore
+            keyRun["DungeonData"] = dungeonDetails
+        end 
+
+        myCharacterInfo.DungeonRuns[mapid] = keyRun       
     end
 
-    KeyMaster:_DebugMsg("GetMyCharacterInfo", "CharacterInfo", "Character data fetched.")
+    KeyMaster:_DebugMsg("GetCharInfo", "CharacterInfo", "Character data fetched.")
     return myCharacterInfo
 end

@@ -398,13 +398,18 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
         -- Tyrannical Scores
         local tempText1 = mapDataFrame:CreateFontString("KM_MapLevelT"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
-        tempText1:SetPoint("CENTER", mapDataFrame, "TOP", 0, -10)
+        tempText1:SetPoint("CENTER", mapDataFrame, "TOP", 0, -14)
         prevAnchor = tempText1
 
         -- Fortified Scores
         local tempText4 = mapDataFrame:CreateFontString("KM_MapLevelF"..playerNumber..mapid, "OVERLAY", "KeyMasterFontNormal")
         tempText4:SetPoint("CENTER", prevAnchor, "BOTTOM", 0, -8)
         prevAnchor = tempText4
+
+        --------------------------------
+        -- todo: Remove this data - Hide Fortified Data for now
+        tempText4:Hide()
+        --------------------------------
 
         -- Member Point Gain From Key
         local tempText5 = mapDataFrame:CreateFontString("KM_PointGain"..playerNumber..mapid, "OVERLAY", "KeyMasterFontSmall")
@@ -416,7 +421,7 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
         -- Map Total Score
         local tempText6 = mapDataFrame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
-        tempText6:SetPoint("CENTER", mapDataFrame, "BOTTOM", 0, 10)
+        tempText6:SetPoint("CENTER", mapDataFrame, "BOTTOM", 0, 14)
         local MapScoreTotalColor = {}
         MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, _ = Theme:GetThemeColor("color_HEIRLOOM")
         tempText6:SetTextColor(MapScoreTotalColor.r, MapScoreTotalColor.g, MapScoreTotalColor.b, 1)
@@ -445,11 +450,17 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     local PartyTitleText = mapLegendFrame:CreateFontString("KM_TyranTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     PartyTitleText:SetPoint("RIGHT", _G["KM_MapLevelT"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    PartyTitleText:SetText(KeyMasterLocals.TYRANNICAL..":")
+    --PartyTitleText:SetText(KeyMasterLocals.TYRANNICAL..":")
+    PartyTitleText:SetText(KeyMasterLocals.PLAYERFRAME["KeyLevel"].name..":")
     
     local FortTitleText = mapLegendFrame:CreateFontString("KM_FortTitle"..playerNumber, "OVERLAY", "KeyMasterFontNormal")
     FortTitleText:SetPoint("RIGHT", _G["KM_MapLevelF"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     FortTitleText:SetText(KeyMasterLocals.FORTIFIED..":")
+
+    --------------------------------
+    -- todo: Remove data - hide for now
+    FortTitleText:Hide()
+    --------------------------------
 
     local PointGainTitleText = mapLegendFrame:CreateFontString("KM_PiontGainTitle"..playerNumber, "OVERLAY", "KeyMasterFontSmall")
     PointGainTitleText:SetPoint("RIGHT", _G["KM_PointGain"..playerNumber..prevMapId], "CENTER", xOffset, 0)
@@ -460,7 +471,8 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
 
     local OverallRatingTitleText = mapLegendFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     OverallRatingTitleText:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
-    OverallRatingTitleText:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
+    --OverallRatingTitleText:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
+    OverallRatingTitleText:SetText(KeyMasterLocals.TOOLTIPS["MythicRating"].name..":")
 
 end
 
@@ -546,7 +558,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
         
         local mapTallyFrame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
         mapTallyFrame:ClearAllPoints()
-
+        
         -- Dynamicly set map data frame anchors
         if (firstItem) then
             mapTallyFrame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)

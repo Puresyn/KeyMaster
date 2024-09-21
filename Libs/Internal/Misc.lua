@@ -6,6 +6,9 @@ local _, KeyMaster = ...
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
+--[[ local LibSerialize = LibStub("LibSerialize")
+local LibDeflate = LibStub("LibDeflate") ]]
+
 -- sort arrays by order (order optional)
 function KeyMaster:spairs(t, order)
     -- collect the keys
@@ -171,47 +174,47 @@ end
 
 function KeyMaster:CleanCharSavedData(data)
     if not data then
-       KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
-       return
-   end
+        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
+        return
+    end
 
-   for k, v in pairs(data) do
-       local deleteME = false
-       -- long-winded season check/set becuase the API can be slow
-       local apiCheck = DungeonTools:GetCurrentSeason()
-       if v.season  then  
+    for k, v in pairs(data) do
+        local deleteME = false
+        -- long-winded season check/set becuase the API can be slow
+        local apiCheck = DungeonTools:GetCurrentSeason()
+        if v.season then  
             -- make sure api is available before we mess with data.
-           if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
-               if v.season < apiCheck then
-                   deleteME = true
-                   --table.remove(data, k)
-               else
-                   v.season = apiCheck
-               end
-           end
-       elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
-           v.season = apiCheck
-       end
-       
-       if v.expire then -- nil check
-           if v.expire < GetServerTime() then -- remove key data if expired
-               data[k].keyLevel = 0
-               data[k].keyId = 0
-               data[k].expire = KeyMaster:WeeklyResetTime()
-           end
-       else
-           data[k].expire = KeyMaster:WeeklyResetTime()
-       end
-       
-       if deleteME then data[k] = nil end
+            if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
+                if v.season < apiCheck then
+                    deleteME = true
+                    --table.remove(data, k)
+                else
+                    v.season = apiCheck
+                end
+            end
+        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
+            v.season = apiCheck
+        end
 
-   end
+        if v.expire then -- nil check
+            if v.expire < GetServerTime() then -- remove key data if expired
+                data[k].keyLevel = 0
+                data[k].keyId = 0
+                data[k].expire = KeyMaster:WeeklyResetTime()
+            end
+        else
+            data[k].expire = KeyMaster:WeeklyResetTime()
+        end
 
-   if KeyMaster:GetTableLength(data) == 0 then
-       data = KeyMaster:CreateDefaultCharacterData()
-   end
+        if deleteME then data[k] = nil end
 
-   return data 
+    end
+
+    if KeyMaster:GetTableLength(data) == 0 then
+        data = KeyMaster:CreateDefaultCharacterData()
+    end
+
+    return data 
 end
 
 -- This function gets run when the PLAYER_LOGIN event fires:
@@ -267,6 +270,20 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
     -- This table defines the players default character information IF max level
     local charDefaults = KeyMaster:CreateDefaultCharacterData()
+
+    --function KeyMaster:PurgeOldCharacterData()
+    -- Purge all characters with incompatable data by version
+    local playerGUID = UnitGUID("player")
+    local buildVersion = KeyMaster_DB.addonConfig.version
+    if buildVersion ~= nil then
+        local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+        major1 = tonumber(major1)
+        minor1 = tonumber(minor1)
+        patch1 = tonumber(patch1)
+        if (major1 <= 1 and minor1 < 3) then
+            KeyMaster_C_DB = {}      
+        end
+    end
 
     -- Copy the values from the defaults table into the saved variables table
     -- if data doesn't exist and assign the result to the global variable:

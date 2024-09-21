@@ -25,23 +25,35 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>- Updated IT localization.</p>
-                <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>- Fixed dungeon portals so they work properly if you already have it unlocked.</p>
-                <p>- Fixed character list cleanup to purge last seasons characters correctly.</p>
+                <p>- Fixed lua error when joining a party with someone that has a newer version of Key Master.</p>
+                <br/>
+                <br/>
+                <h2>|cff]]..h2Color..[[Updates:|r</h2>
+                <p>- Due to drastic API changes - all character data is reset/removed on first load of 1.3.0. Log into each character to refresh.</p>
+                <br/>
+                <p>- Changed data structure since mythic plus data no longer is kept by tran/fort criteria.</p>
+                <br/>
+                <p>- Remapped UI elements on player and party frame to use newly created data structure.</p>
+                <br/>
+                <p>- Added backward compatibility check to 1.2.5 and older to ignore data since structures are different.</p>
+                <br/>
+                <p>- Changed player and party data frames to update when an score gained event happens from a mythic plus dungeon.</p>
+                <br/>
+                <p>- Updated rating calculator on player frame for the new mythic plus rating system (Big thanks to OMGTOTEM's contribution!).</p>
+                <br/>
+                <p>- Temporality changed the player frame to a new layout since tyran/fort is no longer a thing.</p>
+                <br/>
+                <p>- Adjusted the "What's New" content for easier readability.</p>
+                <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
-                <p>- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.</p>
-                <p>- Mythic plus vaults may not update immediately when completing a dungeon.  For now just do /reloadui to see the update properly.</p>
-                <p>- Due to a tight timeline to fix several critical bugs, some language translations are not completed. We will be updating those ASAP.</p>
+                <p>- Party members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Special Note:|r</h2>
-                <p>- If you have any issues with the character list not function make sure you login to the character and logout one time.  If this doesn't work purge the characters on the config tab and relogging to each one.  If this doesn't work then please delete the file in your WTF folder: [GAME_INSTALL_PATH]\WTF\Account\[ACCOUNT_NAME]\SavedVariables\KeyMaster.lua</p>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
                 <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
+                <br/>
             </body>
         </html>
         ]]

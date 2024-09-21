@@ -32,11 +32,11 @@ function HeaderFrame:CreateHeaderRegion(parentFrame)
     topBar.bgTexture:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     topBar.bgTexture:SetTexCoord(2/1024, 856/1024, 841/1024, 945/1024)
 
-    topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
+    --[[ topBar.displayBG = topBar:CreateTexture(nil, "BACKGROUND", nil, 0)
     topBar.displayBG:SetPoint("BOTTOMRIGHT", topBar, "BOTTOMRIGHT", 0, -2)
     topBar.displayBG:SetSize(320, 77)
     topBar.displayBG:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
-    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1)
+    topBar.displayBG:SetTexCoord(662/1024, 1, 946/1024, 1) ]]
 
     return headerRegion
 end
@@ -107,64 +107,15 @@ end
 
 function HeaderFrame:CreatePlayerInfoBox(parentFrame)
     local headerPlayerInfoBox = CreateFrame("Frame", "KeyMaster_PlayerInfobox", parentFrame)
-    headerPlayerInfoBox:SetSize(198, 80)
+    headerPlayerInfoBox:SetSize(4, 80)
     headerPlayerInfoBox:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", 0, 6)
 
+    --------------------------------
+    -- todo: remove box - hide for now
+    headerPlayerInfoBox:Hide()
+    --------------------------------
+
     return headerPlayerInfoBox
-
-end
-
---------------------------------
--- Weekly Affix
---------------------------------
-function HeaderFrame:CreateAffixFrames(parentFrame)
-    if (parentFrame == nil) then 
-        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
-        return
-    end
-    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
-    if (seasonalAffixes == nil) then 
-        KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
-        return 
-    end    
-    for i=1, #seasonalAffixes, 1 do
-        local affixName = seasonalAffixes[i].name
-        local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
-        temp_frame:SetSize(50, 50)
-        if (i == 1) then
-            temp_frame:SetPoint("BOTTOMLEFT", parentFrame, "BOTTOMLEFT", 0, 0)
-        else
-            local a = i - 1
-            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostring(a), "TOPRIGHT", 20, 0)
-        end
-        
-        -- Affix Icon
-        local tex = temp_frame:CreateTexture()
-        tex:SetAllPoints(temp_frame)
-        tex:SetTexture(seasonalAffixes[i].filedataid)
-        
-        -- Affix Name
-        local affixNameFrame = CreateFrame("Frame", nil, temp_frame)
-        affixNameFrame:SetSize(50, 15)
-        affixNameFrame:SetPoint("BOTTOMLEFT", temp_frame, "BOTTOMLEFT")
-        local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-        local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 9, flags)
-        myText:SetPoint("LEFT", -12, -9)
-        myText:SetTextColor(1,1,1)
-        myText:SetJustifyH("LEFT")
-        myText:SetText(affixName)
-        myText:SetRotation(math.pi/2)
-
-        -- Affix name background
-        local affixBGFrame = CreateFrame("Frame", nil, temp_frame)
-        affixBGFrame:SetFrameLevel(affixBGFrame:GetParent():GetFrameLevel()-1)
-        affixBGFrame:SetSize(26, temp_frame:GetHeight())
-        affixBGFrame:SetPoint("BOTTOMRIGHT", temp_frame, "BOTTOMLEFT", 10, 0)
-        affixBGFrame.texture = affixBGFrame:CreateTexture(nil, "BACKGROUND",nil)
-        affixBGFrame.texture:SetAllPoints(affixBGFrame)
-        affixBGFrame.texture:SetColorTexture(0, 0, 0, 0.7)
-    end
 
 end
 
@@ -174,7 +125,7 @@ end
 function HeaderFrame:CreateHeaderKeyFrame(parentFrame, anchorFrame)
     local key_frame = CreateFrame("Frame", "KeyMaster_MythicKeyHeader", parentFrame)
     key_frame:SetSize(anchorFrame:GetHeight(), anchorFrame:GetHeight())
-    key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 0)
+    key_frame:SetPoint("RIGHT", anchorFrame, "LEFT", -20, 20)
 
     key_frame.keyLevelText = key_frame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     local path, _, flags = key_frame.keyLevelText:GetFont()
@@ -277,7 +228,7 @@ function HeaderFrame:Initialize(parentFrame)
     local addonVersionNotify = _G["KM_AddonOutdated"] or HeaderFrame:AddonVersionNotify(parentFrame)
     local headerContent = _G["KeyMaster_HeaderFrame"] or HeaderFrame:CreateHeaderContent(headerRegion)    
     local headerInfoBox = _G["KeyMaster_PlayerInfobox"] or HeaderFrame:CreatePlayerInfoBox(headerContent)
-    local headerAffixFrame = HeaderFrame:CreateAffixFrames(headerInfoBox)
+    --local headerAffixFrame = HeaderFrame:CreateAffixFrames(headerInfoBox)
     local headerKey = _G["KeyMaster_MythicKeyHeader"] or HeaderFrame:CreateHeaderKeyFrame(headerContent, headerInfoBox)
 
     -- System Message

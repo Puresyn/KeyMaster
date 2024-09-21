@@ -204,30 +204,19 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
         keyInfoFrame:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
     end
     
-
     -- Dungeon Scores
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then        
         for mapid, v in pairs(mapTable) do
-            -- Tyrannical
-            local tyranChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Tyrannical"].DurationSec)
-            local tyranLevel = tyranChestCount .. playerData.DungeonRuns[mapid]["Tyrannical"].Level
-            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(tyranLevel)
-            -- Fortified
-            local fortChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Fortified"].DurationSec)
-            local fortLevel = fortChestCount .. playerData.DungeonRuns[mapid]["Fortified"].Level
-            _G["KM_MapLevelF"..partyPlayer..mapid]:SetText(fortLevel)
-
-            local fortRating = playerData.DungeonRuns[mapid]["Fortified"].Rating
-            local tyranRating = playerData.DungeonRuns[mapid]["Tyrannical"].Rating
-            if fortRating > tyranRating then
-                fortRating = fortRating * 1.5
-                tyranRating = tyranRating * 0.5
-            else
-                fortRating = fortRating * 0.5
-                tyranRating = tyranRating * 1.5
+            local chestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["DungeonData"].DurationSec)
+            local keyLevel = "0"
+            if playerData.DungeonRuns[mapid]["DungeonData"].Level ~= nil then
+                keyLevel = chestCount .. playerData.DungeonRuns[mapid]["DungeonData"].Level    
             end
-            local overallRating = fortRating + tyranRating
+            
+            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(keyLevel)
+            
+            local overallRating = playerData.DungeonRuns[mapid]["DungeonData"].Rating
             if KeyMaster_DB.addonConfig.showRatingFloat then
                 overallRating = KeyMaster:RoundSingleDecimal(overallRating)
             else
@@ -317,28 +306,15 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                 if playerData ~= nil and playerData.DungeonRuns ~= nil then
                     --print("Checking rating gain for "..playerData.name.." on key "..keyData.ownedKeyId.." level "..keyData.ownedKeyLevel..".")
                     local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
-                    local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Rating
-                    local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Rating
+                    local currentRating = playerData.DungeonRuns[keyData.ownedKeyId]["DungeonData"].Rating
                     local currentOverallRating = playerData.DungeonRuns[keyData.ownedKeyId].bestOverall
                     
-                    if (currentWeeklyAffix == "Tyrannical") then
-                        if ratingChange > tyranRating then
-                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
-                            local diff = newTotal - currentOverallRating
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
-                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
-                        else
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
-                        end
+                    if ratingChange > currentRating then
+                        local gainedRating = ratingChange - currentRating
+                        _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(gainedRating))
+                        totalKeyRatingChange = totalKeyRatingChange + gainedRating
                     else
-                        if ratingChange > fortRating then
-                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
-                            local diff = newTotal - currentOverallRating
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
-                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
-                        else
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
-                        end
+                        _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
                     end
                 else
                     --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "PartyFrameMapping", "Player data not found for "..unitid)
