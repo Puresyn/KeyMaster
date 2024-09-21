@@ -6,8 +6,8 @@ local _, KeyMaster = ...
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
-local LibSerialize = LibStub("LibSerialize")
-local LibDeflate = LibStub("LibDeflate")
+--[[ local LibSerialize = LibStub("LibSerialize")
+local LibDeflate = LibStub("LibDeflate") ]]
 
 -- sort arrays by order (order optional)
 function KeyMaster:spairs(t, order)
@@ -297,6 +297,30 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
     -- This table defines the players default character information IF max level
     local charDefaults = KeyMaster:CreateDefaultCharacterData()
+
+    --function KeyMaster:PurgeOldCharacterData()
+        -- Purge all characters with incompatable data by version
+        local playerGUID = UnitGUID("player")
+        local buildVersion = KeyMaster_DB.addonConfig.version
+        if buildVersion ~= nil then
+            local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+            major1 = tonumber(major1)
+            minor1 = tonumber(minor1)
+            patch1 = tonumber(patch1)
+            print(major1.."."..minor1.."."..patch1)
+            if (major1 <= 1 and minor1 <= 3) then
+                KeyMaster_C_DB = {}
+               
+                -- fetch self data
+                local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
+                -- Store new data
+                KeyMaster.UnitData:SetUnitData(playerData)
+      
+                --KeyMaster.PlayerFrameMapping:RefreshData(false)
+            end
+        end
+      --end
+      --KeyMaster:PurgeOldCharacterData()
 
     -- Copy the values from the defaults table into the saved variables table
     -- if data doesn't exist and assign the result to the global variable:
