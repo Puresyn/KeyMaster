@@ -806,23 +806,26 @@ function PlayerFrame:CreateAffixFrames(parentFrame)
         
         -- Affix Name
         local affixNameFrame = CreateFrame("Frame", "AffixFrame"..tostring(1), temp_frame)
-        affixNameFrame:SetSize(50, 30)
+        affixNameFrame:SetWidth(160)
         affixNameFrame:SetPoint("TOPLEFT", temp_frame, "TOPRIGHT", 4, 0)
         local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
         local path, _, flags = myText:GetFont()
         myText:SetFont(path, 12, flags)
         myText:SetWidth(165)
         myText:SetWordWrap(true)
-        myText:SetPoint("LEFT", 0, 0) -- -12, -9
+        --myText:SetPoint(true) -- -12, -9
+        myText:SetAllPoints(affixNameFrame)
         myText:SetTextColor(affixTextColor.r,affixTextColor.g,affixTextColor.b)
         myText:SetJustifyH("LEFT")
+        myText:SetJustifyV("TOP")
         myText:SetText(affixName)
+        affixNameFrame:SetHeight(myText:GetHeight())
 
         -- Affix Description
         local affixDesc = seasonalAffixes[i].desc
         local affixDescFrame = CreateFrame("Frame", nil, temp_frame)
         affixDescFrame:SetSize(160, 50)
-        affixDescFrame:SetPoint("TOPLEFT", affixNameFrame, "BOTTOMLEFT", 4, 0)
+        affixDescFrame:SetPoint("TOPLEFT", affixNameFrame, "BOTTOMLEFT", 0, -2)
         local myText = affixDescFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
         local path, _, flags = myText:GetFont()
         myText:SetFont(path, 11, flags)
