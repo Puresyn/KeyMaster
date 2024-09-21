@@ -6,6 +6,9 @@ local _, KeyMaster = ...
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
 
+local LibSerialize = LibStub("LibSerialize")
+local LibDeflate = LibStub("LibDeflate")
+
 -- sort arrays by order (order optional)
 function KeyMaster:spairs(t, order)
     -- collect the keys
@@ -171,47 +174,74 @@ end
 
 function KeyMaster:CleanCharSavedData(data)
     if not data then
-       KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
-       return
-   end
+        KeyMaster:_ErrorMsg("cleanCharSavedData","Misc","Character(s) data is nil.")
+        return
+    end
 
-   for k, v in pairs(data) do
-       local deleteME = false
-       -- long-winded season check/set becuase the API can be slow
-       local apiCheck = DungeonTools:GetCurrentSeason()
-       if v.season  then  
+    for k, v in pairs(data) do
+        local deleteME = false
+        -- long-winded season check/set becuase the API can be slow
+        local apiCheck = DungeonTools:GetCurrentSeason()
+        if v.season then  
             -- make sure api is available before we mess with data.
-           if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
-               if v.season < apiCheck then
-                   deleteME = true
-                   --table.remove(data, k)
-               else
-                   v.season = apiCheck
-               end
-           end
-       elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
-           v.season = apiCheck
-       end
-       
-       if v.expire then -- nil check
-           if v.expire < GetServerTime() then -- remove key data if expired
-               data[k].keyLevel = 0
-               data[k].keyId = 0
-               data[k].expire = KeyMaster:WeeklyResetTime()
-           end
-       else
-           data[k].expire = KeyMaster:WeeklyResetTime()
-       end
-       
-       if deleteME then data[k] = nil end
+            if apiCheck and apiCheck > 0 then -- if the API has responded, otherwise skip
+                if v.season < apiCheck then
+                    deleteME = true
+                    --table.remove(data, k)
+                else
+                    v.season = apiCheck
+                end
+            end
+        elseif apiCheck and apiCheck > 0 then -- login didn't populate this units season, so we do it now for any empty-season characters.
+            v.season = apiCheck
+        end
 
-   end
+        if v.expire then -- nil check
+            if v.expire < GetServerTime() then -- remove key data if expired
+                data[k].keyLevel = 0
+                data[k].keyId = 0
+                data[k].expire = KeyMaster:WeeklyResetTime()
+            end
+        else
+            data[k].expire = KeyMaster:WeeklyResetTime()
+        end
 
-   if KeyMaster:GetTableLength(data) == 0 then
-       data = KeyMaster:CreateDefaultCharacterData()
-   end
+        -- TODO: Delete this in 1.3.1 or later
+        -- this code is added to clean up old character data structured before 1.3.0
+        --[[ if v.data then
+            local encodedCharacterData = v.data --saved variable
+            if not encodedCharacterData then return nil end
 
-   return data 
+            local decoded = LibDeflate:DecodeForWoWAddonChannel(encodedCharacterData)
+            if not decoded then 
+                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decode data for "..playerGUID)
+                return 
+            end
+            local decompressed = LibDeflate:DecompressDeflate(decoded)
+            if not decompressed then 
+                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to decompress data for "..playerGUID)
+                return
+            end
+            local success, data = LibSerialize:Deserialize(decompressed)
+            if not success then
+                KeyMaster:_DebugMsg("GetCharacterDataByGUID", "CharacterData", "Failed to deserialize data for "..playerGUID)
+                return
+            end
+
+            if not data["dungeonData"] then
+                deleteME = true
+            end
+        end ]]
+
+        if deleteME then data[k] = nil end
+
+    end
+
+    if KeyMaster:GetTableLength(data) == 0 then
+        data = KeyMaster:CreateDefaultCharacterData()
+    end
+
+    return data 
 end
 
 -- This function gets run when the PLAYER_LOGIN event fires:

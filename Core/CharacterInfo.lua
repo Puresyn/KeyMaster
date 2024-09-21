@@ -130,10 +130,9 @@ function CharacterInfo:GetMyCharacterInfo()
         
         -- empty data set
         local emptyData = {
-            name = "Xal'atath's Bargain: Ascendant", --WeeklyAffix Name (e.g.; Tyran/Fort)
-            score = 0, -- io gained
-            level = 0, -- keystone level
-            durationSec = 0, -- how long took to complete map
+            Rating = 0, -- rating
+            Level = 0, -- keystone level
+            DurationSec = 0, -- how long took to complete map
             overTime = false -- was completion overtime
         }
 

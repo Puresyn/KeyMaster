@@ -228,7 +228,7 @@ local function processKM2Data(payload, sender)
         if (major1 == 0 and minor1 == 0 and patch1 < 94) then
             KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
             return
-        elseif (major1 == 1 and minor1 <= 3) then -- TWW S1 Changed mythic score data significantly
+        elseif (major1 == 1 and minor1 < 3) then -- TWW S1 Changed mythic score data significantly
             KeyMaster:_DebugMsg("processKM2Data", "Coms", sender.." has incompatible ("..buildVersion..") data. Aborting mapping.")
             return
         end

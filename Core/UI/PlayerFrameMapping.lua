@@ -54,9 +54,8 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     local totalKeyRatingChange = 0
     
     if(keyBaseScore < currentOverallRating) then keyBaseScore = currentOverallRating end
-    local newTotal = DungeonTools:CalculateDungeonTotal(keyBaseScore, currentOverallRating)
-    scoreFrame.ratingGain:SetText(getNumberPerferenceValue(newTotal - currentOverallRating))
-    totalKeyRatingChange = newTotal - currentOverallRating
+    scoreFrame.ratingGain:SetText(getNumberPerferenceValue(keyBaseScore - currentOverallRating))
+    totalKeyRatingChange = keyBaseScore - currentOverallRating
     
     local newOverall = playerData.mythicPlusRating + totalKeyRatingChange
     newOverall = getNumberPerferenceValue(newOverall)
@@ -162,8 +161,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         playerMapDataFrame.tyrannicalRunTime:SetText(tyrannicalRunTime or "--:--") 
 
         -- Overall Dungeon Score
-        local mapOverallRating = 9999 -- fortifiedRating + tyrannicalRating -- todo: fix mapping for 1.2.6
-        mapOverallRating = getNumberPerferenceValue(playerData.DungeonRuns[mapId].bestOverall)
+        local mapOverallRating = getNumberPerferenceValue(playerData.DungeonRuns[mapId]["DungeonData"].Rating)
         playerMapDataFrame.overallScore:SetText(mapOverallRating or defaultString)
     end
 

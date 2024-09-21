@@ -551,22 +551,6 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     return getBaseScore(keyLevel) + bonusRating
 end
 
---CalculateDungeonTotal - Calculates a dungeons overall score contributing to a players rating.
----@param seasonAffixScore1 integer - best score for dungeon for a weekly affix
----@param seasonAffixScore2 integer - best score for dungeon for a weekly affix
----@return integer - the total rating for the dungeons scores
-function DungeonTools:CalculateDungeonTotal(seasonAffixScore1, seasonAffixScore2)
-    -- todo: Delete this - removed affix comparison for 1.3.0
-    --[[ local total
-    if(seasonAffixScore1 > seasonAffixScore2) then
-        total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 1.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 0.5)
-    else
-        total = KeyMaster:RoundSingleDecimal(seasonAffixScore1 * 0.5) + KeyMaster:RoundSingleDecimal(seasonAffixScore2 * 1.5)
-    end 
-    return total ]]
-    return KeyMaster:RoundSingleDecimal(seasonAffixScore1)
-end
-
 ---@return table - Challenge Mode Completion Information
 function DungeonTools:ChallengeModeCompletionInfo()
     ---@param mapChallengeModeID number

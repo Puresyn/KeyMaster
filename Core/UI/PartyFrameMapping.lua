@@ -216,8 +216,7 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
             
             _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(keyLevel)
             
-            --local overallRating = fortRating + tyranRating
-            local overallRating = playerData.DungeonRuns[mapid].bestOverall
+            local overallRating = playerData.DungeonRuns[mapid]["DungeonData"].Rating
             if KeyMaster_DB.addonConfig.showRatingFloat then
                 overallRating = KeyMaster:RoundSingleDecimal(overallRating)
             else
