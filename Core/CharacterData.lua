@@ -87,7 +87,7 @@ function CharacterData:GetCharacterDataByGUID(playerGUID)
         return nil
     end
 
-    local encodedCharacterData = KeyMaster_C_DB[playerGUID].data
+    local encodedCharacterData = KeyMaster_C_DB[playerGUID].data --saved variable
     if not encodedCharacterData then return nil end
     
     local decoded = LibDeflate:DecodeForWoWAddonChannel(encodedCharacterData)

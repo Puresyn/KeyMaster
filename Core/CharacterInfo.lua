@@ -157,6 +157,57 @@ function CharacterInfo:GetUnitInfo(unitId)
     return unitData
 end
 
+function CharacterInfo:GetCharInfo()
+    local myCharacterInfo = {}
+    local keyId, _, keyLevel = CharacterInfo:GetOwnedKey()
+    myCharacterInfo.GUID = UnitGUID("player")
+    myCharacterInfo.name = UnitName("player")
+    myCharacterInfo.realm = GetRealmName()
+    myCharacterInfo.ownedKeyId = keyId
+    myCharacterInfo.ownedKeyLevel = keyLevel
+    myCharacterInfo.charLevel = UnitLevel("player")
+    myCharacterInfo.DungeonRuns = {}
+    myCharacterInfo.mythicPlusRating = CharacterInfo:GetCurrentRating()
+    myCharacterInfo.unitId = "player"
+    myCharacterInfo.hasAddon = true
+    myCharacterInfo.buildVersion = KM_AUTOVERSION
+    myCharacterInfo.buildType = KM_VERSION_STATUS
+
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    for mapid, v in pairs(seasonMaps) do
+        local keyRun = {}
+        
+        -- empty data set
+        local emptyData = {
+            name = "Xal'atath's Bargain: Ascendant", --WeeklyAffix Name (e.g.; Tyran/Fort)
+            score = 0, -- io gained
+            level = 0, -- keystone level
+            durationSec = 0, -- how long took to complete map
+            overTime = false -- was completion overtime
+        }
+
+        local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+        if (mapScore == nil or mapScore[1] == nil) then
+            keyRun["bestOverall"] = 0
+            keyRun["DungeonData"] = emptyData            
+        else
+            local dungeonDetails = {
+                ["Rating"] = DungeonTools:CalculateRating(mapid, mapScore[1].level, mapScore[1].durationSec),
+                ["Level"] = mapScore[1].level,
+                ["DurationSec"] = mapScore[1].durationSec,
+                ["overTime"] = mapScore[1].overTime
+            }
+            keyRun["bestOverall"] = bestOverallScore
+            keyRun["DungeonData"] = dungeonDetails
+        end 
+
+        myCharacterInfo.DungeonRuns[mapid] = keyRun       
+    end
+
+    KeyMaster:_DebugMsg("GetCharInfo", "CharacterInfo", "Character data fetched.")
+    return myCharacterInfo
+end
+
 function CharacterInfo:GetMyCharacterInfo()
     local myCharacterInfo = {}
     local keyId, _, keyLevel = CharacterInfo:GetOwnedKey()

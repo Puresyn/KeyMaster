@@ -474,11 +474,6 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
     PointGainTitleText:SetTextColor(PointGainTitleColor.r, PointGainTitleColor.g, PointGainTitleColor.b, 1)
     PointGainTitleText:SetText(KeyMasterLocals.PARTYFRAME["MemberPointsGain"].name..":")
 
-    --------------------------------
-    -- todo: Fix data - hide for now
-    PointGainTitleText:Hide()
-    --------------------------------
-
     local OverallRatingTitleText = mapLegendFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     OverallRatingTitleText:SetPoint("RIGHT",  _G["KM_MapTotalScore"..playerNumber..prevMapId], "CENTER", xOffset, 0)
     --OverallRatingTitleText:SetText(KeyMasterLocals.PARTYFRAME["OverallRating"].name..":")
@@ -568,12 +563,7 @@ function PartyFrame:CreatePartyScoreTallyFooter()
         
         local mapTallyFrame = CreateFrame("Frame", "KM_MapTally"..mapid, parentFrame)
         mapTallyFrame:ClearAllPoints()
-
-        --------------------------------
-        -- todo: Fix data for party tally - hide for now
-        mapTallyFrame:Hide()
-        --------------------------------
-
+        
         -- Dynamicly set map data frame anchors
         if (firstItem) then
             mapTallyFrame:SetPoint("TOPRIGHT", partyTallyFrame, "TOPRIGHT", 0, 0)
@@ -643,7 +633,8 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     end)
     partyScreen:SetScript("OnShow", function(self) 
         -- Get player data
-        local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+        --local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
+        local playerData = CharacterInfo:GetCharInfo() -- TODO: CONVERT TO SAVED VARIABLES OR MEMORY DATA
         
         -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
         PartyFrame:SetPartyWeeklyDataTheme() 

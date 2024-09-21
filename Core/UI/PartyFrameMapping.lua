@@ -204,30 +204,20 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
         keyInfoFrame:SetText(ownedKeyLevel..DungeonTools:GetDungeonNameAbbr(playerData.ownedKeyId))
     end
     
-
     -- Dungeon Scores
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then        
         for mapid, v in pairs(mapTable) do
-            -- Tyrannical
-            local tyranChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Tyrannical"].DurationSec)
-            local tyranLevel = tyranChestCount .. playerData.DungeonRuns[mapid]["Tyrannical"].Level
-            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(tyranLevel)
-            -- Fortified
-            local fortChestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["Fortified"].DurationSec)
-            local fortLevel = fortChestCount .. playerData.DungeonRuns[mapid]["Fortified"].Level
-            _G["KM_MapLevelF"..partyPlayer..mapid]:SetText(fortLevel)
-
-            local fortRating = playerData.DungeonRuns[mapid]["Fortified"].Rating
-            local tyranRating = playerData.DungeonRuns[mapid]["Tyrannical"].Rating
-            if fortRating > tyranRating then
-                fortRating = fortRating * 1.5
-                tyranRating = tyranRating * 0.5
-            else
-                fortRating = fortRating * 0.5
-                tyranRating = tyranRating * 1.5
+            local chestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["DungeonData"].DurationSec)
+            local keyLevel = "0"
+            if playerData.DungeonRuns[mapid]["DungeonData"].Level ~= nil then
+                keyLevel = chestCount .. playerData.DungeonRuns[mapid]["DungeonData"].Level    
             end
-            local overallRating = fortRating + tyranRating
+            
+            _G["KM_MapLevelT"..partyPlayer..mapid]:SetText(keyLevel)
+            
+            --local overallRating = fortRating + tyranRating
+            local overallRating = playerData.DungeonRuns[mapid].bestOverall
             if KeyMaster_DB.addonConfig.showRatingFloat then
                 overallRating = KeyMaster:RoundSingleDecimal(overallRating)
             else
@@ -363,7 +353,8 @@ function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
         return
     end
     -- find if we have data for this player, if not get a set of default data from blizzard
-    local unitData = UnitData:GetUnitDataByGUID(unitGUID)
+    --local unitData = UnitData:GetUnitDataByGUID(unitGUID)
+    local unitData = CharacterInfo:GetCharInfo() --TODO: NEEDS TO GET DATA FROM UNITDATA
     if unitData == nil then
         unitData = CharacterInfo:GetUnitInfo(unitId)    
     end

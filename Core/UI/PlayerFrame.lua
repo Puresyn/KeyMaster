@@ -623,21 +623,9 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
         
         local keyLevel = tonumber(self:GetText())
         if keyLevel ~= nil then
-            -- todo: Delete this - commented out for 1.3.0
-            --[[ local tyrannicalSelector = _G["TyrannicalSelector"]
-            local fortifiedSelector = _G["FortifiedSelector"]
-            local selectedWeeklyAffix = nil
-            if fortifiedSelector:GetChecked() == true then
-                selectedWeeklyAffix = "Fortified"
-            elseif tyrannicalSelector:GetChecked() == true then
-                selectedWeeklyAffix = "Tyrannical"
-            else
-                KeyMaster:_ErrorMsg("CalculateRatingGain", "PlayerFrameMapping.lua", "Unable to find ScoreCalcScores frame.")
-                selectedWeeklyAffix = DungeonTools:GetWeeklyAffix()
-            end ]]
             local mapId = selectedMapId -- set from row click
             
-            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel, selectedWeeklyAffix)
+            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
             
             scoreCalcDirection:Hide()
             scoreCalcScores:Show()
