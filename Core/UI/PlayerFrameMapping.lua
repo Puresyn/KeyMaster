@@ -136,11 +136,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
     end    
 
     -- character data
-    --local playerData = CharacterData:GetCharacterDataByGUID(selectedCharacterGUID) or KeyMaster.UnitData:GetUnitDataByUnitId("player")
-    --KeyMaster:TPrint(playerData)
-
-    -- test data
-    local playerData = CharacterInfo:GetCharInfo() -- TODO: CONVERT TO SAVED VARIABLES OR MEMORY DATA
+    local playerData = CharacterData:GetCharacterDataByGUID(selectedCharacterGUID) or KeyMaster.UnitData:GetUnitDataByUnitId("player")
     --KeyMaster:TPrint(playerData)
 
     -- Player Dungeon Rating

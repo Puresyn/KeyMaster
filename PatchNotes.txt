@@ -3,17 +3,21 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
-Key Master v1.2.6
+Key Master v1.3.0
 --------------------------------------------------
 Fixes:
-
+- Fixed lua error when joining a party with someone that has a newer version of Key Master
 
 Updates:
-
+- Changed data structure since mythic plus data no longer is kept by tran/fort criteria
+- Remapped UI elements on player and party frame to use newly created data structure
+- Added backward compatibility check to 1.2.5 and older to ignore data since structures are different
+- Changed player and party data frames to update when an score gained event happens from a mythic plus dungeon
+- Updated rating calculator on player frame for the new mythic plus rating system (Big thanks to OMGTOTEM-PROUDMOORE)
+- Temporality changed the player frame to a new layout since tyran/fort is no longer a thing.
 
 Known Bugs/Issues:
-- Season 1 mythic plus ratings and other functions are being verified and may not be accurate on day one.  We will do our best to update ASAP.
-- Mythic plus vaults may not update immediately when completing a dungeon.  For now just do /reloadui to see the update properly.
+
 
 PATCH NOTES:
 --------------------------------------------------

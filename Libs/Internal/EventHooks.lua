@@ -65,12 +65,12 @@ function EventHooks:NotifyEvent(event)
 
             -- Only update UI if it's open
             local mainFrame = _G["KeyMaster_MainFrame"]
-            if mainFrame ~= nil and mainFrame:IsVisible() then
+            if mainFrame ~= nil then
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
-                KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential() 
-                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
-                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
+                KeyMaster.PlayerFrameMapping:RefreshData(false)
+                KeyMaster.HeaderFrameMapping:RefreshData(false)
             end
 
             -- Transmit unit data to party members with addon
@@ -88,12 +88,12 @@ function EventHooks:NotifyEvent(event)
 
             -- Only update UI if it's open
             local mainFrame = _G["KeyMaster_MainFrame"]
-            if mainFrame ~= nil and mainFrame:IsVisible() then
+            if mainFrame ~= nil then
                 KeyMaster.PartyFrameMapping:UpdateSingleUnitData(playerData.GUID)
                 KeyMaster.PartyFrameMapping:UpdateKeystoneHighlights()
                 KeyMaster.PartyFrameMapping:CalculateTotalRatingGainPotential()
-                KeyMaster.PlayerFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
-                KeyMaster.HeaderFrameMapping:RefreshData(true) -- SHOULD NOT BE TRUE
+                KeyMaster.PlayerFrameMapping:RefreshData(false)
+                KeyMaster.HeaderFrameMapping:RefreshData(false)
             end
                     
             -- Transmit unit data to party members with addon
@@ -105,14 +105,15 @@ function EventHooks:NotifyEvent(event)
         KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
 
         -- get finished key information
-        local _, level, _, onTime, _, _, _, _, _, _, _, _, members = C_ChallengeMode.GetCompletionInfo()
+        --local _, level, _, onTime, _, _, _, _, _, _, _, _, members = C_ChallengeMode.GetCompletionInfo()
 
         -- get current player information
-        local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
+        --local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
 
-        if onTime and playerData.ownedKeyId <= level then
+        -- CODE TO REMIND SOMEONE TO CHANGE THEIR KEY.. TESTING!!!
+        --[[ if onTime and playerData.ownedKeyId <= level then
             -- get current io for key's mapid
-            local tyrannicalScoreInfo = KeyMaster.CharacterInfo:GetMplusScoreForMap(playerData.ownedKeyId, KeyMasterLocals.TYRANNICAL)
+            local tyrannicalScoreInfo = KeyMaster.CharacterInfo:GetMplusScoreForMap(playerData.ownedKeyId, KeyMasterLocals.TYRANNICAL) -- FUNCTION 'GetMplusScoreForMap' was DELETED!
             local mapRating = KeyMaster.DungeonTools:CalculateRating(playerData.ownedKeyId, tyrannicalScoreInfo.level, tyrannicalScoreInfo.durationSec)
 
             -- get potential io for key's mapid + level
@@ -120,12 +121,12 @@ function EventHooks:NotifyEvent(event)
 
             -- compare current IO to potential IO from key owned
             -- if potential IO is lower or equal to current IO, then notify user to change key
-            --[[ if potentialRating <= mapRating then
+            if potentialRating <= mapRating then
                 KeyMaster:Print("|cff"..hexColor.. "TESTING: Please consider changing your key." .. "|r")
             else
                 KeyMaster:Print("|cff"..hexColor.. "TESTING: Keep your key goon!" .. "|r")
-            end ]]
-        end
+            end
+        end ]]
     end
 
     if event == "VAULT_UPDATE" then

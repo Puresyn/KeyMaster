@@ -419,11 +419,6 @@ function PartyFrame:CreatePartyDataFrame(parentFrame)
         tempText5:SetTextColor(PointGainColor.r, PointGainColor.g, PointGainColor.b, 1)
         prevAnchor = tempText5
 
-        --------------------------------
-        -- todo: Fix potentail gain calculation - Hide for now
-        tempText5:Hide()
-        --------------------------------
-
         -- Map Total Score
         local tempText6 = mapDataFrame:CreateFontString("KM_MapTotalScore"..playerNumber..mapid, "OVERLAY", "KeyMasterFontBig")
         tempText6:SetPoint("CENTER", mapDataFrame, "BOTTOM", 0, 14)
@@ -633,8 +628,7 @@ function PartyFrame:CreatePartyFrame(parentFrame)
     end)
     partyScreen:SetScript("OnShow", function(self) 
         -- Get player data
-        --local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
-        local playerData = CharacterInfo:GetCharInfo() -- TODO: CONVERT TO SAVED VARIABLES OR MEMORY DATA
+        local playerData = KeyMaster.UnitData:GetUnitDataByUnitId("player")
         
         -- Changes colors on weekly affixes on unit rows based on current affix week (tyran vs fort)
         PartyFrame:SetPartyWeeklyDataTheme() 

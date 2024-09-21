@@ -307,28 +307,15 @@ function PartyFrameMapping:CalculateTotalRatingGainPotential()
                 if playerData ~= nil and playerData.DungeonRuns ~= nil then
                     --print("Checking rating gain for "..playerData.name.." on key "..keyData.ownedKeyId.." level "..keyData.ownedKeyLevel..".")
                     local ratingChange = KeyMaster.DungeonTools:CalculateRating(keyData.ownedKeyId, keyData.ownedKeyLevel, dungeonTimer)
-                    local fortRating = playerData.DungeonRuns[keyData.ownedKeyId]["Fortified"].Rating
-                    local tyranRating = playerData.DungeonRuns[keyData.ownedKeyId]["Tyrannical"].Rating
+                    local currentRating = playerData.DungeonRuns[keyData.ownedKeyId]["DungeonData"].Rating
                     local currentOverallRating = playerData.DungeonRuns[keyData.ownedKeyId].bestOverall
                     
-                    if (currentWeeklyAffix == "Tyrannical") then
-                        if ratingChange > tyranRating then
-                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, fortRating)
-                            local diff = newTotal - currentOverallRating
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
-                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
-                        else
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
-                        end
+                    if ratingChange > currentRating then
+                        local gainedRating = ratingChange - currentRating
+                        _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(gainedRating))
+                        totalKeyRatingChange = totalKeyRatingChange + gainedRating
                     else
-                        if ratingChange > fortRating then
-                            local newTotal = DungeonTools:CalculateDungeonTotal(ratingChange, tyranRating)
-                            local diff = newTotal - currentOverallRating
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText(getNumberPerferenceValue(diff))
-                            totalKeyRatingChange = totalKeyRatingChange + (newTotal - currentOverallRating)
-                        else
-                            _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
-                        end
+                        _G["KM_PointGain"..playerNumber..keyData.ownedKeyId]:SetText("0")
                     end
                 else
                     --KeyMaster:_DebugMsg("CalculateTotalRatingGainPotential", "PartyFrameMapping", "Player data not found for "..unitid)
@@ -353,8 +340,7 @@ function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
         return
     end
     -- find if we have data for this player, if not get a set of default data from blizzard
-    --local unitData = UnitData:GetUnitDataByGUID(unitGUID)
-    local unitData = CharacterInfo:GetCharInfo() --TODO: NEEDS TO GET DATA FROM UNITDATA
+    local unitData = UnitData:GetUnitDataByGUID(unitGUID)
     if unitData == nil then
         unitData = CharacterInfo:GetUnitInfo(unitId)    
     end

@@ -27,5 +27,5 @@ end
 
 function HeaderFrameMapping:NewVersionAlert()
     local versionAlertFrame = _G["KM_AddonOutdated"]
-    versionAlertFrame:Show()
+    if(versionAlertFrame) then versionAlertFrame:Show() end
 end
