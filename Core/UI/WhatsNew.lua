@@ -26,7 +26,9 @@ local function setWhatsNewContent(parent)
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <h2>|cff]]..h2Color..[[1.3.1 HOTFIX:|r</h2>
                 <p>- Fixed lua error when joining a party with someone that has a newer version of Key Master.</p>
+                <p>- - Fixed an error for new users of keymaster that would cause Key Master not to load properly.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>

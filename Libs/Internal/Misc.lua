@@ -273,15 +273,17 @@ function KeyMaster:LOAD_SAVED_GLOBAL_VARIABLES()
 
     --function KeyMaster:PurgeOldCharacterData()
     -- Purge all characters with incompatable data by version
-    local playerGUID = UnitGUID("player")
-    local buildVersion = KeyMaster_DB.addonConfig.version
-    if buildVersion ~= nil then
-        local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
-        major1 = tonumber(major1)
-        minor1 = tonumber(minor1)
-        patch1 = tonumber(patch1)
-        if (major1 <= 1 and minor1 < 3) then
-            KeyMaster_C_DB = {}      
+    if(KeyMaster_DB) then
+        local playerGUID = UnitGUID("player")
+        local buildVersion = KeyMaster_DB.addonConfig.version
+        if buildVersion ~= nil then
+            local _, _, major1, minor1, patch1 = strfind(buildVersion, "(%d+)%.(%d+)%.(%d+)")
+            major1 = tonumber(major1)
+            minor1 = tonumber(minor1)
+            patch1 = tonumber(patch1)
+            if (major1 <= 1 and minor1 < 3) then
+                KeyMaster_C_DB = {}      
+            end
         end
     end
 
