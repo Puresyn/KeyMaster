@@ -25,10 +25,16 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <h2>|cff]]..h2Color..[[1.3.3 HOTFIX:|r</h2>
+                <p>- Fixed French clients having problems loading Key Master.</p>
+                <br/>
+                <br/>
                 <h2>|cff]]..h2Color..[[1.3.1 HOTFIX:|r</h2>
+                <p>- Fixed an error for new users of keymaster that would cause Key Master not to load properly.</p>
+                <br/>
+                <br/>
+                <h2>|cff]]..h2Color..[[Fixes (1.3.0):|r</h2>
                 <p>- Fixed lua error when joining a party with someone that has a newer version of Key Master.</p>
-                <p>- - Fixed an error for new users of keymaster that would cause Key Master not to load properly.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
