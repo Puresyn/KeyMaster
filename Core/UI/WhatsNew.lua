@@ -25,38 +25,16 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[1.3.3 HOTFIX:|r</h2>
-                <p>- Fixed French clients having problems loading Key Master.</p>
-                <br/>
-                <br/>
-                <h2>|cff]]..h2Color..[[1.3.1 HOTFIX:|r</h2>
-                <p>- Fixed an error for new users of keymaster that would cause Key Master not to load properly.</p>
-                <br/>
-                <br/>
-                <h2>|cff]]..h2Color..[[Fixes (1.3.0):|r</h2>
-                <p>- Fixed lua error when joining a party with someone that has a newer version of Key Master.</p>
+                <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <p>- Fixed an issue where the week by week ratings were not properly updating.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>- Due to drastic API changes - all character data is reset/removed on first load of 1.3.0. Log into each character to refresh.</p>
-                <br/>
-                <p>- Changed data structure since mythic plus data no longer is kept by tran/fort criteria.</p>
-                <br/>
-                <p>- Remapped UI elements on player and party frame to use newly created data structure.</p>
-                <br/>
-                <p>- Added backward compatibility check to 1.2.5 and older to ignore data since structures are different.</p>
-                <br/>
-                <p>- Changed player and party data frames to update when an score gained event happens from a mythic plus dungeon.</p>
-                <br/>
-                <p>- Updated rating calculator on player frame for the new mythic plus rating system (Big thanks to OMGTOTEM's contribution!).</p>
-                <br/>
-                <p>- Temporality changed the player frame to a new layout since tyran/fort is no longer a thing.</p>
-                <br/>
-                <p>- Adjusted the "What's New" content for easier readability.</p>
+                <p>- None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
-                <p>- Party members running an older version of KM may experience LUA errors when grouped with someone running 1.3.0 or greater. Ask them to update!</p>
+                <p>- Rating calculations are still being verified</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
