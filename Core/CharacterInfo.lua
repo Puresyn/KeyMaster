@@ -127,7 +127,7 @@ function CharacterInfo:GetMyCharacterInfo()
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     for mapid, v in pairs(seasonMaps) do
         local keyRun = {}
-        
+
         -- empty data set
         local emptyData = {
             Rating = 0, -- rating
@@ -141,16 +141,21 @@ function CharacterInfo:GetMyCharacterInfo()
             keyRun["bestOverall"] = 0
             keyRun["DungeonData"] = emptyData            
         else
-            local dungeonDetails = {
-                ["Rating"] = DungeonTools:CalculateRating(mapid, mapScore[1].level, mapScore[1].durationSec),
-                ["Level"] = mapScore[1].level,
-                ["DurationSec"] = mapScore[1].durationSec,
-                ["overTime"] = mapScore[1].overTime
-            }
-            keyRun["bestOverall"] = bestOverallScore
-            keyRun["DungeonData"] = dungeonDetails
+            for i,v in pairs(mapScore) do
+                -- Only gets the highest score data, instead of each data set for level 4 affix.
+                if (v.score == bestOverallScore) then
+                    local dungeonDetails = {
+                        ["Rating"] = DungeonTools:CalculateRating(mapid, v.level, v.durationSec),
+                        ["Level"] = v.level,
+                        ["DurationSec"] = v.durationSec,
+                        ["overTime"] = v.overTime
+                    }
+                    keyRun["DungeonData"] = dungeonDetails
+                end
+            end
+            
+            keyRun["bestOverall"] = bestOverallScore        
         end 
-
         myCharacterInfo.DungeonRuns[mapid] = keyRun       
     end
 
