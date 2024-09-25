@@ -3,6 +3,12 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.3.4
+--------------------------------------------------
+- Fixed an issue where the week by week ratings were not properly updating.
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.3.0-3
 --------------------------------------------------
 HOTFIX 1.3.3
