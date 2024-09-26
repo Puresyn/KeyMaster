@@ -1,6 +1,7 @@
 local _, KeyMaster = ...
-local KMFactory = {}
-KeyMaster.Factory = KMFactory
+KeyMaster.Factory = {}
+local KMFactory = KeyMaster.Factory
+local Theme = KeyMaster.Theme
 
 -- Key Master Widget Factory
 
@@ -276,7 +277,82 @@ local function createButton(f, options)
     return btn
 end
 
--- Create(parent, ["DropDownMenu", "Submenu", "Button"], {options}
+-- GetCursorPosition();
+local function createToolTip(anchor, options)
+    local tooltipFrame
+    local mainFrame = _G["KeyMaster_MainFrame"]
+
+    local name, icon, title, desc
+    if options and type(options) == "table" then
+        if options["name"] then name = options["name"] else return nil end
+        if options["icon"] then icon = options["icon"] end
+        if options["title"] then title = options["title"] end
+        if options["desc"] then desc = options["desc"] end
+    end
+
+    tooltipFrame = CreateFrame("Frame", name, mainFrame, "TooltipTemplate")
+    
+    tooltipFrame:SetMovable("false")
+    tooltipFrame:SetFrameStrata("HIGH")
+    tooltipFrame:SetClampedToScreen(true)
+
+    tooltipFrame:SetBackdrop({
+        bgFile="Interface/Tooltips/UI-Tooltip-Background",
+        edgeFile="Interface\\AddOns\\KeyMaster\\Assets\\Images\\UI-Border", 
+        tile = false, 
+        tileSize = 0, 
+        edgeSize = 16, 
+        insets = {left = 4, right = 4, top = 4, bottom = 4}})
+        tooltipFrame:SetBackdropColor(0,0,0,1)
+
+        local tooltipTitleColor = {}
+        tooltipTitleColor.r, tooltipTitleColor.g, tooltipTitleColor.b, _ = Theme:GetThemeColor("color_NONPHOTOBLUE")
+    
+
+        tooltipFrame.titleFrame = CreateFrame("Frame", "KM_TooltipTitle", tooltipFrame)
+        tooltipFrame.titleFrame:SetPoint("TOPLEFT", tooltipFrame, "TOPLEFT", 8, -8)
+       
+        tooltipFrame.titleText = tooltipFrame.titleFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+        local path, _, flags = tooltipFrame.titleText:GetFont()
+        tooltipFrame.titleText:SetFont(path, 12, flags)
+        tooltipFrame.titleText:SetWordWrap(false)
+        tooltipFrame.titleText:SetAllPoints(tooltipFrame.titleFrame)
+        tooltipFrame.titleText:SetTextColor(tooltipTitleColor.r,tooltipTitleColor.g,tooltipTitleColor.b)
+        tooltipFrame.titleText:SetJustifyH("LEFT")
+        tooltipFrame.titleText:SetJustifyV("TOP")
+        tooltipFrame.titleText:SetText(title)
+
+        tooltipFrame.titleFrame:SetHeight(tooltipFrame.titleText:GetStringHeight())
+
+        tooltipFrame.descFrame = CreateFrame("Frame", "KM_TooltipDesc", tooltipFrame)
+        tooltipFrame.descFrame:SetPoint("TOPLEFT", tooltipFrame.titleFrame, "BOTTOMLEFT", 0, 0)
+
+        tooltipFrame.descText = tooltipFrame.descFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
+        local path, _, flags = tooltipFrame.descText:GetFont()
+        tooltipFrame.descText:SetFont(path, 12, flags)
+        tooltipFrame.descText:SetWordWrap(true)
+        tooltipFrame.descText:SetAllPoints(tooltipFrame.descFrame)
+        tooltipFrame.descText:SetTextColor(1,1,1)
+        tooltipFrame.descText:SetJustifyH("LEFT")
+        tooltipFrame.descText:SetJustifyV("TOP")
+        tooltipFrame.descText:SetText(desc)
+
+        local tooltipWidth = tooltipFrame.titleText:GetStringWidth()
+        if tooltipWidth < 200 then tooltipWidth = 200 end
+        tooltipFrame.titleFrame:SetWidth(tooltipWidth)
+        tooltipFrame.descFrame:SetWidth(tooltipWidth)
+        tooltipFrame:SetWidth(tooltipWidth+16)
+        tooltipFrame:SetHeight(tooltipFrame.titleFrame:GetHeight()+tooltipFrame.descFrame:GetHeight()+16)
+
+    tooltipFrame:Hide()
+    return tooltipFrame
+end
+
+-- Create(parent, ["DropDownMenu", "Submenu", "Button", "Tooltip"], {options}
+---@param parent table - parent object
+---@param itemType string - type of object to create
+---@param options table - object options
+---@return table - object
 function KMFactory:Create(parent, itemType, options)
 
     local obj
@@ -288,6 +364,10 @@ function KMFactory:Create(parent, itemType, options)
 
     if itemType == "Button" then
         obj = createButton(f, options)
+    end
+
+    if itemType == "Tooltip" then
+        obj = createToolTip(f, options)
     end
 
     return obj
