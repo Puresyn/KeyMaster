@@ -944,7 +944,7 @@ function PlayerFrame:Initialize(parentFrame)
     local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
     local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
     local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerMapFrame)
-    local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerFrame, playerContent)
+    --local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerFrame, playerContent)
     --local headerAffixFrame = KeyMaster.HeaderFrame:CreateAffixFrames(mythicPlusDetailsFrame)
 
     -- Mythic Vault Progress
