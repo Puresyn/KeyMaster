@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Rating Calculator", text = "Calcul
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Enter Key Level", text = "Enter a key level to see"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Base Rating Gain", text = "your base rating gain prediction."}
 L.PLAYERFRAME["Characters"] = "Characters"
+L.PLAYERFRAME["DungeonTools"] = { name = "Dungeon Tools", text = "Various tools related to this dungeon."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "NoKeyFound", text = "No Key Found"}
