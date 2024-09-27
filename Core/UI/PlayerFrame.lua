@@ -8,6 +8,7 @@ local MainInterface = KeyMaster.MainInterface
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local CharacterData = KeyMaster.CharacterData
 local Factory = KeyMaster.Factory
+local DungeonJournal = KeyMaster.DungeonJournal
 
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
@@ -25,6 +26,13 @@ local function getColor(strColor)
     Color.r, Color.g, Color.b, _ = Theme:GetThemeColor(strColor)
     Color.a = 1
     return Color.r, Color.g, Color.b, Color.a
+end
+local function closeEncounterJournal()
+    if (_G["EncounterJournal"]) then 
+        if (_G["EncounterJournal"]:IsVisible() == true) then
+            ToggleEncounterJournal()
+        end
+    end
 end
 
 local function mapData_onmouseover(self, event)
@@ -46,11 +54,15 @@ local selectedMapId
 local function mapdData_OnRowClick(self, event)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     selectedMapId = self:GetAttribute("mapId")
+    local dungeonJournalFrame = _G["KM_Journal"]
+    dungeonJournalFrame.mapId = selectedMapId
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
     local mapCalcFrame = _G["KM_ScoreCalc"]
     local scoreCalcScores = _G["KM_ScoreCalcScores"]
     local scoresCalcDirection = _G["KM_ScoreCalcDirection"]
+
+    closeEncounterJournal()
     
     if mapDetailsFrame.MapName:GetText() ~= dungeonName then        
         mapDetailsFrame.MapName:SetText(dungeonName)
@@ -246,11 +258,107 @@ local afffixRuntimeOffsetx = 0
 local afffixRuntimeOffsety = -4
 local doOnce = 0
 
+local function journalButton_OnMouseDown(self, event)
+    if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
+    self.texture:SetTexCoord(0.0009765625, 0.0634765625, 0.822265625, 0.982421875)
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    local mapName = seasonMaps[self.mapId].name
+    DungeonJournal:ShowDungeonJournal(mapName)
+end
+
+local function journalButton_OnMouseUp(self, event)
+    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
+    --DungeonJournal:ShowDungeonJournal(0)
+end
+
+local function journalButton_onmouseover(self, event)
+    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
+end
+
+local function journalButton_onmouseout(self, event)
+    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
+end
+
+
+local function createJournalButton(parent, mapId)
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    
+    if not parent and not mapId then print("Journal Error") return end
+    local mapName = seasonMaps[mapId].name
+
+    local journalFrame = CreateFrame("Frame", "KM_Journal", parent)
+    journalFrame:SetSize(32, 41)
+    journalFrame.mapName = mapName
+    journalFrame.texture = journalFrame:CreateTexture(nil, "OVERLAY")
+    journalFrame.texture:SetTexture("interface/hud/uimicromenu2x", true)
+    journalFrame.texture:SetSize(journalFrame:GetWidth(), journalFrame:GetHeight())
+    journalFrame.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
+    journalFrame.texture:SetAllPoints(journalFrame)
+    journalFrame:SetFrameLevel(journalFrame:GetParent():GetFrameLevel()+3)
+    journalFrame:SetScript("OnMouseDown", journalButton_OnMouseDown)
+    journalFrame:SetScript("OnMouseUp", journalButton_OnMouseUp)
+    journalFrame:SetScript("OnEnter", journalButton_onmouseover)
+    journalFrame:SetScript("OnLeave", journalButton_onmouseout)
+    return journalFrame
+end
+
+local function instanceMapButton_OnMouseDown(self, event)
+    print("Key Master - todo: Wire up journal map viewer.")
+end
+
+local function createInstanceMapButton(parent, mapId)
+    --local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    
+    if not parent and not mapId then print("KM_LFG Error") return end
+    --local mapName = seasonMaps[mapId].name
+
+    local instanceMapFrame = CreateFrame("Frame", "KM_LFG", parent)
+    instanceMapFrame:SetSize(24, 24)
+    --lfgFrame.mapName = mapName
+    instanceMapFrame.texture = instanceMapFrame:CreateTexture(nil, "OVERLAY")
+    instanceMapFrame.texture:SetTexture("interface/minimap/objecticonsatlas", true)
+    instanceMapFrame.texture:SetSize(instanceMapFrame:GetWidth(), instanceMapFrame:GetHeight())
+    instanceMapFrame.texture:SetTexCoord(0.1982421875, 0.2353515625, 0.755859375, 0.79296875)
+    instanceMapFrame.texture:SetAllPoints(instanceMapFrame)
+    instanceMapFrame:SetFrameLevel(instanceMapFrame:GetParent():GetFrameLevel()+3)
+    instanceMapFrame:SetScript("OnMouseDown", instanceMapButton_OnMouseDown)
+    --[[ lfgFrame:SetScript("OnMouseUp", lfgButtoButton_OnMouseUp)
+    lfgFrame:SetScript("OnEnter", lfgButtoButton_onmouseover)
+    lfgFrame:SetScript("OnLeave", lfgButtoButton_onmouseout) ]]
+    return instanceMapFrame
+end
+
+local function lfgButton_OnMouseDown(self, event)
+    print("Key Master - todo: Wire up custom launcher for filtered mythic groupfinder.")
+end
+
+local function createLFGButton(parent, mapId)
+    --local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    
+    if not parent and not mapId then print("KM_LFG Error") return end
+    --local mapName = seasonMaps[mapId].name
+
+    local lfgFrame = CreateFrame("Frame", "KM_LFG", parent)
+    lfgFrame:SetSize(24, 24)
+    --lfgFrame.mapName = mapName
+    lfgFrame.texture = lfgFrame:CreateTexture(nil, "OVERLAY")
+    lfgFrame.texture:SetTexture("interface/hud/uigroupfinderflipbook", true)
+    lfgFrame.texture:SetSize(lfgFrame:GetWidth(), lfgFrame:GetHeight())
+    lfgFrame.texture:SetTexCoord(0.69287109375, 0.71435546875, 0.2607421875, 0.3037109375)
+    lfgFrame.texture:SetAllPoints(lfgFrame)
+    lfgFrame:SetFrameLevel(lfgFrame:GetParent():GetFrameLevel()+3)
+    lfgFrame:SetScript("OnMouseDown", lfgButton_OnMouseDown)
+    --[[ lfgFrame:SetScript("OnMouseUp", lfgButtoButton_OnMouseUp)
+    lfgFrame:SetScript("OnEnter", lfgButtoButton_onmouseover)
+    lfgFrame:SetScript("OnLeave", lfgButtoButton_onmouseout) ]]
+    return lfgFrame
+end
+
 function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
     local mapFrameHeaderHeight = 25
-    local mapFrameWIdthPercent = 0.4
+    local mapFrameWIdthPercent = 0.7
 
     -- Maps Panel
     local playerInformationFrame = CreateFrame("Frame", "KM_PlayerMapInfo", parentFrame)
@@ -443,6 +551,9 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.fortifiedRunTime:SetJustifyV("TOP")
         dataFrame.fortifiedRunTime:SetText("")
 
+        --[[ local journalButton = createJournalButton(mapFrame, mapId)
+        journalButton:SetPoint("RIGHT", dataFrame, "RIGHT") ]]
+
         if (doOnce == 0) then
             local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.overallScore:GetPoint()
             --[[ mapHeaderFrame.divider1:SetPoint("CENTER", mapHeaderFrame, "CENTER", xOfs, 0) ]]
@@ -487,7 +598,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local detailsFrame = CreateFrame("Frame", "KM_PlayerFrame_MapDetails", parentFrame)
     detailsFrame:SetPoint("TOPLEFT", contentFrame, "TOPRIGHT", -4, 0)
     --detailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, 0)
-    detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4)/2, contentFrame:GetHeight())
+    detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4), contentFrame:GetHeight())
 
     -- Map Details Frame
     local highlightAlpha = 0.5
@@ -562,9 +673,44 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     mapDetails.ThreeChestTimer:SetTextColor(threecr, threecg, threecb, 1)
     mapDetails.ThreeChestTimer:SetJustifyH("LEFT")
 
+    -- Dungeon Tools Box
+    local dungeonToolsFrame = CreateFrame("Frame", "KM_DungeonInfoBox", detailsFrame)
+    dungeonToolsFrame:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
+    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.15)-4)
+
+    dungeonToolsFrame.texture = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+    dungeonToolsFrame.texture:SetAllPoints(dungeonToolsFrame)
+    dungeonToolsFrame.texture:SetSize(dungeonToolsFrame:GetWidth(), dungeonToolsFrame:GetHeight())
+    dungeonToolsFrame.texture:SetColorTexture(0,0,0,1)
+
+    dungeonToolsFrame.textureHighlight = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
+    dungeonToolsFrame.textureHighlight:SetSize(dungeonToolsFrame:GetWidth(), 64)
+    dungeonToolsFrame.textureHighlight:SetPoint("BOTTOMLEFT", dungeonToolsFrame, "BOTTOMLEFT", 0, 0)
+    dungeonToolsFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    dungeonToolsFrame.textureHighlight:SetAlpha(highlightAlpha)
+    dungeonToolsFrame.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    local Hline = KeyMaster:CreateHLine(dungeonToolsFrame:GetWidth()+8, dungeonToolsFrame, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    dungeonToolsFrame.DetailsTitleDesc:SetPoint("TOPLEFT", dungeonToolsFrame, "TOPLEFT", 4, -4)
+    dungeonToolsFrame.DetailsTitleDesc:SetText(KeyMasterLocals.PLAYERFRAME.DungeonTools.name)
+    dungeonToolsFrame.DetailsTitleDesc:SetTextColor(boxTitler, boxTitleg, boxTitleb, 1)
+    dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT")
+
+    local journalButton = createJournalButton(dungeonToolsFrame, 501) -- todo: Set map ID to clicked map.
+    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, -4)
+
+    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame, 9999)
+    instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
+
+    local lfgButton = createLFGButton(dungeonToolsFrame, 9999)
+    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 4, 0)
+
     -- Score Calc
     local scoreCalc = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
-    scoreCalc:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
+    scoreCalc:SetPoint("TOP", dungeonToolsFrame, "BOTTOM", 0, -4)
     scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
     
     scoreCalc.texture = scoreCalc:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -735,26 +881,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
     vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -60, -10)
     vaultDetails.divider1:SetAlpha(0.3)
-
-     -- Empty Box
-     local ebox = CreateFrame("Frame", nil, detailsFrame)
-     ebox:SetPoint("TOP", vaultDetails, "BOTTOM", 0, -4)
-     ebox:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.15)-4)
-     
-     ebox.texture = ebox:CreateTexture(nil, "BACKGROUND", nil, 0)
-     ebox.texture:SetAllPoints(ebox)
-     ebox.texture:SetSize(ebox:GetWidth(), ebox:GetHeight())
-     ebox.texture:SetColorTexture(0,0,0,1)
- 
-     ebox.textureHighlight = ebox:CreateTexture(nil, "BACKGROUND", nil, 1)
-     ebox.textureHighlight:SetSize(ebox:GetWidth(), 64)
-     ebox.textureHighlight:SetPoint("BOTTOMLEFT", ebox, "BOTTOMLEFT", 0, 0)
-     ebox.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-     ebox.textureHighlight:SetAlpha(highlightAlpha)
-     ebox.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
- 
-     local Hline = KeyMaster:CreateHLine(ebox:GetWidth()+8, ebox, "TOP", 0, 0)
-     Hline:SetAlpha(0.5)
 
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
