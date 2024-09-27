@@ -50,5 +50,6 @@
 	<Script file='Libs\Internal\EventHooks.lua'/>
 	<Script file='Libs\Internal\WeeklyRewards.lua'/>
 	<Script file='Libs\Internal\LibOpenRaidStub.lua'/>
+	<Script file='Libs\Internal\DungeonJournal.lua'/>
 	
 </Ui>
