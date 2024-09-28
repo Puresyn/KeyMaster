@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Calculadora", text = "Calcula o ga
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Nível-chave", text = "Insira o nível da chave para ver"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Ganho base de pontuação", text = "previsão base de ganho de pontuação."}
 L.PLAYERFRAME["Characters"] = "Personagens"
+L.PLAYERFRAME["DungeonTools"] = { name = "Ferramentas de Masmorra", text = "Várias ferramentas relacionadas à essa masmorra"}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Chave não encontrada", text = "Chave não encontrada"}
