@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "점수 계산기", text = "추가�
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "쐐기돌 레벨 입력", text = "쐐기돌 레벨을 입력해서 보기"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "기본 획득 점수", text = "기본 획득 점수를 예상합니다."}
 L.PLAYERFRAME["Characters"] = "캐릭터"
+L.PLAYERFRAME["DungeonTools"] = { name = "던전 도구", text = "이 던전과 관련된 다양한 기능 제공"}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "쐐기돌을 찾을 수 없음", text = "쐐기돌을 찾을 수 없음"}
