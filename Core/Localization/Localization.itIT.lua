@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Calcolatore della valutazione", te
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Livello chiave", text = "Inserisci un livello chiave per vedere"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Guadagno base di punteggio", text = "la previsione del guadagno base di punteggio."}
 L.PLAYERFRAME["Characters"] = "Characters"
+L.PLAYERFRAME["DungeonTools"] = { name = "Strumenti Spedizione", text = "Vari strumenti relativi a questa spedizione."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Nessuna chiave trovata", text = "Nessuna chiave trovata"}
