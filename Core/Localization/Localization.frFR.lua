@@ -131,7 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Calcul de cote", text = "Calculer 
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Entrez niveau de clé", text = "Entrez un niveau de clé pour voir"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Base du gain de cote", text = "la prédiction de la base du gain de cote."}
 L.PLAYERFRAME["Characters"] = "Personnages"
-L.PLAYERFRAME["DungeonTools"] = { name = "Outils de donjon", text = "Divers outils en rapport avec ce donjon."}
+L.PLAYERFRAME["DungeonTools"] = { name = "Outils de donjon", text = "Divers outils pour ce donjon."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Aucune clé trouvée", text = "Aucune clé trouvée"}
