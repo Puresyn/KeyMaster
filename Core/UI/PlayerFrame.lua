@@ -9,6 +9,7 @@ local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local CharacterData = KeyMaster.CharacterData
 local Factory = KeyMaster.Factory
 local DungeonJournal = KeyMaster.DungeonJournal
+local PartyFrame = KeyMaster.PartyFrame
 
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
@@ -27,12 +28,24 @@ local function getColor(strColor)
     Color.a = 1
     return Color.r, Color.g, Color.b, Color.a
 end
+
 local function closeEncounterJournal()
     if (_G["EncounterJournal"]) then 
         if (_G["EncounterJournal"]:IsVisible() == true) then
             ToggleEncounterJournal()
         end
     end
+end
+
+local function toggleLFGPanel()
+    if (_G["GroupFinderFrame"]) then
+        if (_G["GroupFinderFrame"]:IsVisible() == false) then
+                PVEFrame_ShowFrame("GroupFinderFrame")
+        else
+            --ToggleGroupFinderFrame() -- todo: this isn't the right function to close the Group Finder... I can't seem to locate it.
+        end
+    end
+    
 end
 
 local function mapData_onmouseover(self, event)
@@ -42,6 +55,7 @@ local function mapData_onmouseover(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor("color_COMMON")
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, hlColor.a)
 end
+
 local function mapData_onmouseout(self, event)
     local highlight = self:GetAttribute("highlight")
     local defColor = self:GetAttribute("defColor")
@@ -50,12 +64,35 @@ local function mapData_onmouseout(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor(defColor)
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, defAlpha)
 end
+
 local selectedMapId
 local function mapdData_OnRowClick(self, event)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     selectedMapId = self:GetAttribute("mapId")
     local dungeonJournalFrame = _G["KM_Journal"]
     dungeonJournalFrame.mapId = selectedMapId
+
+    local portalButton = _G["KM_Playerportal_button"]
+    local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(selectedMapId)
+    if portalButton then 
+
+        local cooldown 
+        if portalSpellName then cooldown = C_Spell.GetSpellCooldown(portalSpellName) end
+        if (portalSpellId ~= nil and cooldown ~= nil and cooldown["startTime"] == 0) then
+            --portalButton:SetAttribute("portalSpellName", portalSpellName)
+            portalButton:SetAttribute("spell", portalSpellId)
+            portalButton:Enable()
+            portalButton:Show()
+
+        else
+
+            portalButton:Disable()
+            portalButton:Hide()
+
+        end
+    end
+
+
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
     local mapCalcFrame = _G["KM_ScoreCalc"]
@@ -84,27 +121,6 @@ function PlayerFrame:CreatePlayerContentFrame(parentFrame)
     return playerContentFrame
 end
 
-local function updateWeeklyAffixTheme()
-    local cw = {} -- current weekly affix highlight
-    local ow = {} -- off weekly affix highlight
-    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
-    ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
-    local weeklyAffix = DungeonTools:GetWeeklyAffix()
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
-
-    local baseFrame = _G["KM_PlayerFrameMapInfoHeader"]
-    local tyrannicalSelector = _G["TyrannicalSelector"]
-    local fortifiedSelector = _G["FortifiedSelector"]
-
-    -- This can occur when between seasons as blizzard returns nil from C_MythicPlus.GetCurrentAffixes()
-    if weeklyAffix == nil then
-        baseFrame.fortText:SetTextColor(1, 1, 1, 1)
-        baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
-        KeyMaster:_DebugMsg("updateWeeklyAffixTheme", "PlayerFrame", "No active weekly affix was found.")
-        return
-    end
-end
-
 function PlayerFrame:CreatePlayerFrame(parentFrame)
 
     local playerFrame = CreateFrame("Frame", "KM_Player_Frame",parentFrame)
@@ -115,7 +131,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.texture:SetColorTexture(0, 0, 0, 1)
     playerFrame:SetScript("OnShow", function(self)
         PlayerFrameMapping:RefreshData(false)
-        updateWeeklyAffixTheme()
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
@@ -260,23 +275,22 @@ local doOnce = 0
 
 local function journalButton_OnMouseDown(self, event)
     if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
-    self.texture:SetTexCoord(0.0009765625, 0.0634765625, 0.822265625, 0.982421875)
+    --self.texture:SetTexCoord(0.0009765625, 0.0634765625, 0.822265625, 0.982421875)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapName = seasonMaps[self.mapId].name
     DungeonJournal:ShowDungeonJournal(mapName)
 end
 
 local function journalButton_OnMouseUp(self, event)
-    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
-    --DungeonJournal:ShowDungeonJournal(0)
+    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
 end
 
 local function journalButton_onmouseover(self, event)
-    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
+    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
 end
 
 local function journalButton_onmouseout(self, event)
-    self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
+    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
 end
 
 
@@ -286,21 +300,17 @@ local function createJournalButton(parent, mapId)
     if not parent and not mapId then print("Journal Error") return end
     local mapName = seasonMaps[mapId].name
 
-    local journalFrame = CreateFrame("Frame", "KM_Journal", parent)
-    journalFrame:SetSize(32, 41)
-    journalFrame.mapName = mapName
-    journalFrame.texture = journalFrame:CreateTexture(nil, "OVERLAY")
-    journalFrame.texture:SetTexture("interface/hud/uimicromenu2x", true)
-    journalFrame.texture:SetSize(journalFrame:GetWidth(), journalFrame:GetHeight())
-    journalFrame.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
-    journalFrame.texture:SetAllPoints(journalFrame)
-    journalFrame:SetFrameLevel(journalFrame:GetParent():GetFrameLevel()+3)
-    journalFrame:SetScript("OnMouseDown", journalButton_OnMouseDown)
-    journalFrame:SetScript("OnMouseUp", journalButton_OnMouseUp)
-    journalFrame:SetScript("OnEnter", journalButton_onmouseover)
-    journalFrame:SetScript("OnLeave", journalButton_onmouseout)
-    return journalFrame
+    local journalButton = CreateFrame("Button", "KM_Journal", parent, UIPanelButtonTemplate)
+    journalButton:SetSize(32, 41)
+    journalButton:SetNormalAtlas("UI-HUD-MicroMenu-AdventureGuide-Up")
+    journalButton:SetHighlightAtlas("UI-HUD-MicroMenu-AdventureGuide-Up")
+    journalButton:SetPushedAtlas("UI-HUD-MicroMenu-AdventureGuide-Down")
+    journalButton:SetDisabledAtlas("UI-HUD-MicroMenu-AdventureGuide-Disabled")
+
+    journalButton:SetScript("OnMouseDown", journalButton_OnMouseDown)
+    return journalButton
 end
+
 
 local function instanceMapButton_OnMouseDown(self, event)
     print("Key Master - todo: Wire up journal map viewer.")
@@ -309,27 +319,98 @@ end
 local function createInstanceMapButton(parent, mapId)
     --local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     
-    if not parent and not mapId then print("KM_LFG Error") return end
+    if not parent and not mapId then print("KM_Map Error") return end
     --local mapName = seasonMaps[mapId].name
 
-    local instanceMapFrame = CreateFrame("Frame", "KM_LFG", parent)
-    instanceMapFrame:SetSize(24, 24)
-    --lfgFrame.mapName = mapName
-    instanceMapFrame.texture = instanceMapFrame:CreateTexture(nil, "OVERLAY")
-    instanceMapFrame.texture:SetTexture("interface/minimap/objecticonsatlas", true)
-    instanceMapFrame.texture:SetSize(instanceMapFrame:GetWidth(), instanceMapFrame:GetHeight())
-    instanceMapFrame.texture:SetTexCoord(0.1982421875, 0.2353515625, 0.755859375, 0.79296875)
-    instanceMapFrame.texture:SetAllPoints(instanceMapFrame)
-    instanceMapFrame:SetFrameLevel(instanceMapFrame:GetParent():GetFrameLevel()+3)
-    instanceMapFrame:SetScript("OnMouseDown", instanceMapButton_OnMouseDown)
-    --[[ lfgFrame:SetScript("OnMouseUp", lfgButtoButton_OnMouseUp)
-    lfgFrame:SetScript("OnEnter", lfgButtoButton_onmouseover)
-    lfgFrame:SetScript("OnLeave", lfgButtoButton_onmouseout) ]]
-    return instanceMapFrame
+    local instanceMapButton = CreateFrame("Button", "KM_Map", parent, UIPanelButtonTemplate)
+    instanceMapButton:SetSize(24, 24)
+    instanceMapButton:SetNormalAtlas("poi-islands-table")
+    instanceMapButton:SetHighlightAtlas("poi-islands-table")
+    instanceMapButton:SetPushedAtlas("poi-islands-table")
+    instanceMapButton:SetDisabledAtlas("poi-islands-table")
+    instanceMapButton:SetScript("OnMouseDown", instanceMapButton_OnMouseDown)
+    return instanceMapButton
+end
+
+local function portalButton_mouseover(self, event)
+end
+
+local function portalButton_mouseoout(self, event)
+end
+
+local function createPortalButton(parent, mapId)
+    local mapsTable, pButton, portalSpellId,  portalSpellName
+    if not mapId then
+        mapsTable = DungeonTools:GetCurrentSeasonMaps()
+        mapId = mapsTable[1]
+    elseif not DungeonTools:GetCurrentSeasonMaps()[mapId] then
+        KeyMaster:_ErrorMsg("createPortalButton", "PlayerFrame", "Invalid map ID: "..tostring(mapId))
+        return
+    end
+        
+
+    local function createButton(mapId)
+        if not parent or not mapId then return end
+
+        portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+        local portalButton = _G["KM_Playerportal_button"]
+        if portalButton then 
+            portalButton:SetAttribute("spell", portalSpellId)
+            return
+        end
+        
+        if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
+
+            pButton = CreateFrame("Button","KM_Playerportal_button",parent,"SecureActionButtonTemplate")
+            pButton:SetFrameLevel(10)
+            pButton:SetAttribute("type", "spell")
+            pButton:SetAttribute("spell", portalSpellId)
+            pButton:SetAttribute("portalSpellName", portalSpellName)
+            pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
+            pButton:SetSize(34, 34)
+            pButton:SetNormalAtlas("Dungeon")
+            pButton:SetHighlightAtlas("Dungeon")
+            pButton:SetPushedAtlas("questlog-questtypeicon-dungeon")
+            pButton:SetDisabledAtlas("TaxiNode_Continent_Horde_Timed")
+            pButton:SetScript("OnEnter", portalButton_mouseover)
+            pButton:SetScript("OnLeave", portalButton_mouseoout)
+        
+            return pButton
+        end
+        
+    end
+
+    if mapsTable then
+        pButton = createButton(mapsTable[mapId])
+    else
+        pButton = _G["KM_Playerportal_button"]
+        if pButton then 
+            return
+        else
+            pButton = createButton(mapId)
+        end
+        
+    end
+    pButton:SetAttribute("spell", portalSpellId)
+    mapsTable = nil -- may not be needed but ensuring garbage collection.
+    return pButton
 end
 
 local function lfgButton_OnMouseDown(self, event)
-    print("Key Master - todo: Wire up custom launcher for filtered mythic groupfinder.")
+    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.166015625, 0.326171875)
+    toggleLFGPanel()
+end
+
+local function lfgButton_onmouseover(self, event)
+   -- self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.330078125, 0.490234375)
+end
+
+local function lfgButton_onmouseout(self, event)
+    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.494140625, 0.654296875)
+end
+
+local function lfgButton_OnMouseUp(self, event)
+    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.330078125, 0.490234375)
 end
 
 local function createLFGButton(parent, mapId)
@@ -338,20 +419,15 @@ local function createLFGButton(parent, mapId)
     if not parent and not mapId then print("KM_LFG Error") return end
     --local mapName = seasonMaps[mapId].name
 
-    local lfgFrame = CreateFrame("Frame", "KM_LFG", parent)
-    lfgFrame:SetSize(24, 24)
-    --lfgFrame.mapName = mapName
-    lfgFrame.texture = lfgFrame:CreateTexture(nil, "OVERLAY")
-    lfgFrame.texture:SetTexture("interface/hud/uigroupfinderflipbook", true)
-    lfgFrame.texture:SetSize(lfgFrame:GetWidth(), lfgFrame:GetHeight())
-    lfgFrame.texture:SetTexCoord(0.69287109375, 0.71435546875, 0.2607421875, 0.3037109375)
-    lfgFrame.texture:SetAllPoints(lfgFrame)
-    lfgFrame:SetFrameLevel(lfgFrame:GetParent():GetFrameLevel()+3)
-    lfgFrame:SetScript("OnMouseDown", lfgButton_OnMouseDown)
-    --[[ lfgFrame:SetScript("OnMouseUp", lfgButtoButton_OnMouseUp)
-    lfgFrame:SetScript("OnEnter", lfgButtoButton_onmouseover)
-    lfgFrame:SetScript("OnLeave", lfgButtoButton_onmouseout) ]]
-    return lfgFrame
+    local lfgButton = CreateFrame("Button", "KM_LFG", parent, UIPanelButtonTemplate)
+    lfgButton:SetSize(32, 41)
+    lfgButton:SetNormalAtlas("UI-HUD-MicroMenu-Groupfinder-Up")
+    lfgButton:SetHighlightAtlas("UI-HUD-MicroMenu-Groupfinder-Up")
+    lfgButton:SetPushedAtlas("UI-HUD-MicroMenu-Groupfinder-Down")
+    lfgButton:SetDisabledAtlas("UI-HUD-MicroMenu-Groupfinder-Disabled")
+
+    lfgButton:SetScript("OnMouseDown", lfgButton_OnMouseDown)
+    return lfgButton
 end
 
 function PlayerFrame:CreateMapData(parentFrame, contentFrame)
@@ -676,7 +752,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -- Dungeon Tools Box
     local dungeonToolsFrame = CreateFrame("Frame", "KM_DungeonInfoBox", detailsFrame)
     dungeonToolsFrame:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
-    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.15)-4)
+    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.12)-4)
 
     dungeonToolsFrame.texture = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     dungeonToolsFrame.texture:SetAllPoints(dungeonToolsFrame)
@@ -700,18 +776,21 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT")
 
     local journalButton = createJournalButton(dungeonToolsFrame, 501) -- todo: Set map ID to clicked map.
-    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, -4)
+    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, -8)
 
-    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame, 9999)
+    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame, 9001)
     instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
 
-    local lfgButton = createLFGButton(dungeonToolsFrame, 9999)
-    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 4, 0)
+    local lfgButton = createLFGButton(dungeonToolsFrame, 9001)
+    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 2, 0)
+
+    local portalButton = createPortalButton(dungeonToolsFrame, 375)
+    portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, -8)
 
     -- Score Calc
     local scoreCalc = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
     scoreCalc:SetPoint("TOP", dungeonToolsFrame, "BOTTOM", 0, -4)
-    scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
+    scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.23)-4)
     
     scoreCalc.texture = scoreCalc:CreateTexture(nil, "BACKGROUND", nil, 0)
     scoreCalc.texture:SetAllPoints(scoreCalc)
@@ -852,7 +931,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
     vaultDetails:SetPoint("TOP", divider, "BOTTOM", 0, -4)
-    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
+    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.30)-4)
 
     vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
     vaultDetails.texture:SetAllPoints(vaultDetails)
@@ -899,74 +978,6 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
 end
 
---------------------------------
--- Weekly Affix
---------------------------------
-function PlayerFrame:CreateAffixFrames(parentFrame)
-    if (parentFrame == nil) then 
-        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
-        return
-    end
-    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
-    if (seasonalAffixes == nil) then 
-        KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
-        return 
-    end
-    local affixTextColor = {}
-    affixTextColor.r, affixTextColor.g, affixTextColor.b, _ = Theme:GetThemeColor("color_NONPHOTOBLUE")
-    for i=1, #seasonalAffixes, 1 do -- #seasonalAffixes
-        local affixName = seasonalAffixes[i].name
-        local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
-        temp_frame:SetSize(50, 50)
-        if (i == 1) then
-            temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 4, -34)
-        else
-            local a = i - 1
-            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostring(a), "BOTTOMLEFT", 0, -34)
-        end
-        
-        -- Affix Icon
-        local tex = temp_frame:CreateTexture()
-        tex:SetAllPoints(temp_frame)
-        tex:SetTexture(seasonalAffixes[i].filedataid)
-        
-        -- Affix Name
-        local affixNameFrame = CreateFrame("Frame", "AffixFrame"..tostring(1), temp_frame)
-        affixNameFrame:SetWidth(160)
-        affixNameFrame:SetPoint("TOPLEFT", temp_frame, "TOPRIGHT", 4, 0)
-        local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-        local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 12, flags)
-        myText:SetWidth(165)
-        myText:SetWordWrap(true)
-        --myText:SetPoint(true) -- -12, -9
-        myText:SetAllPoints(affixNameFrame)
-        myText:SetTextColor(affixTextColor.r,affixTextColor.g,affixTextColor.b)
-        myText:SetJustifyH("LEFT")
-        myText:SetJustifyV("TOP")
-        myText:SetText(affixName)
-        affixNameFrame:SetHeight(myText:GetHeight())
-
-        -- Affix Description
-        local affixDesc = seasonalAffixes[i].desc
-        local affixDescFrame = CreateFrame("Frame", nil, temp_frame)
-        affixDescFrame:SetSize(160, 50)
-        affixDescFrame:SetPoint("TOPLEFT", affixNameFrame, "BOTTOMLEFT", 0, -2)
-        local myText = affixDescFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-        local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 11, flags)
-        myText:SetSize(150, 50)
-        myText:SetPoint("LEFT", 0, 0) -- -12, -9
-        myText:SetWordWrap(true)
-        myText:SetTextColor(1,1,1)
-        myText:SetJustifyH("LEFT")
-        myText:SetJustifyV("TOP")
-        myText:SetText(affixDesc)
-
-    end
-
-end
-
 function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     local highlightAlpha = 0.5
     local hlColor = {}
@@ -1009,14 +1020,6 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
 
     PlayerFrame:CreateAffixFrames(mythicPlusDetailsFrame)
 
-    --[[ mapHeaderFrame.textureHighlight = mapHeaderFrame:CreateTexture(nil, "OVERLAY", nil)
-    mapHeaderFrame.textureHighlight:SetPoint("TOPLEFT", mapHeaderFrame, "TOPLEFT")
-    mapHeaderFrame.textureHighlight:SetSize(mapHeaderFrame:GetWidth(), 64)
-    mapHeaderFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-    local headerColor = {}  
-    headerColor.r, headerColor.g, headerColor.b, _ = getColor("color_NONPHOTOBLUE")
-    mapHeaderFrame.textureHighlight:SetVertexColor(headerColor.r, headerColor.g, headerColor.b, 0.6)
-    mapHeaderFrame.textureHighlight:SetRotation(math.pi) ]]
 end
 
 local function createVaultRow(vaultRowNumber, parentFrame)
@@ -1071,7 +1074,6 @@ function PlayerFrame:Initialize(parentFrame)
     local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
     local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerMapFrame)
     --local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerFrame, playerContent)
-    --local headerAffixFrame = KeyMaster.HeaderFrame:CreateAffixFrames(mythicPlusDetailsFrame)
 
     -- Mythic Vault Progress
     local vaultDetails = _G["KM_VaultDetailView"]
