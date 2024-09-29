@@ -596,3 +596,19 @@ function DungeonTools:ChallengeModeCompletionInfo()
         --KeyMaster:_ErrorMsg("ChallengeModeCompletionInfo", "DungeonTools", "CompletionInfo returned empty data.")
     --end
 end
+
+-- This doesn't work on addon Init. It returns the default value - FYI
+function DungeonTools:GetFirstSeasonMapId()
+    local mapsTable = DungeonTools:GetCurrentSeasonMaps()
+    local firstMapId = 399 -- set default map if season maps fail to Ruby Life Pools
+    local gotFirst = false
+    if mapsTable then
+        for k, v in ipairs(mapsTable) do
+            if gotFirst == false then
+                firstMapId = k
+                gotFirst = true
+            end
+        end
+    end
+    return firstMapId
+end
