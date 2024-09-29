@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "分数计算器", text = "计算�
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "输入钥石层数", text = "输入一个钥石层数来查看"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "基本分数收益", text = "你的基础分数收益预测。"}
 L.PLAYERFRAME["Characters"] = "角色"
+L.PLAYERFRAME["DungeonTools"] = { name = "Dungeon Tools", text = "Various tools related to this dungeon."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "未找到钥石", text = "未找到钥石"}

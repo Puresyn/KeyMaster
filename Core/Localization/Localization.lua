@@ -46,10 +46,10 @@ elseif (langPref == "deDE") then
 elseif (langPref == "itIT") then
     -- Localization.itIT.lua
     KeyMasterLocals = KM_Localization_itIT
-elseif (langPref == "ruRU") then
+--[[ elseif (langPref == "ruRU") then
     -- Localization.ruRU.lua
     KeyMasterLocals = KM_Localization_ruRU
---[[ elseif (langPref == "esES") then
+elseif (langPref == "esES") then
     -- Localization.esES.lua
     KeyMasterLocals = KM_Localization_esES
 elseif (langPref == "esMX") then
@@ -64,9 +64,9 @@ elseif (langPref == "zhTW") then
 elseif (langPref == "koKR") then
     -- Localization.koKR.lua
     KeyMasterLocals = KM_Localization_koKR
-elseif (langPref == "zhCN") then
+--[[ elseif (langPref == "zhCN") then
     -- Localization.koKR.lua
-    KeyMasterLocals = KM_Localization_zhCN
+    KeyMasterLocals = KM_Localization_zhCN ]]
 else -- Default
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS
