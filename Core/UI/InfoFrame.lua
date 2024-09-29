@@ -181,7 +181,7 @@ https://discord.gg/bbMaUpfgn8
 
     local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu, Linaori\n\n"
     textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
-    textContributors = textContributors .. "Cyph, Hollicsh, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, 姜铁憨, Ragnarork"
+    textContributors = textContributors .. "Cyph, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, Ragnarork"
 
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
@@ -214,7 +214,7 @@ https://discord.gg/bbMaUpfgn8
     local redditColor, twitchColor
     _, _, _, redditColor = Theme:GetThemeColor("color_REDDIT")
     _, _, _, twitchColor = Theme:GetThemeColor("color_TWITCH")
-    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n" --\n|cff" ..twitchColor.."Twitch|r Ellesmere_Gaming"
+    local textSpecialThanks = "\"The Last Pull\"\nGuild on Proudmoore\n"
     aboutSpecialThanks.text = aboutSpecialThanks:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutSpecialThanks.text:SetPoint("TOPLEFT", aboutSpecialThanks.title, "BOTTOMLEFT", 8, -4)
     aboutSpecialThanks.text:SetSize(aboutSpecialThanks:GetWidth()-indent-mlr, aboutSpecialThanks:GetHeight()-aboutSpecialThanks.title:GetHeight()-25)
