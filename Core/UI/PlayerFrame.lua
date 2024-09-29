@@ -294,11 +294,9 @@ local function journalButton_onmouseout(self, event)
 end
 
 
-local function createJournalButton(parent, mapId)
-    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+local function createJournalButton(parent)
     
-    if not parent and not mapId then print("Journal Error") return end
-    local mapName = seasonMaps[mapId].name
+    if not parent then print("Journal Error") return end
 
     local journalButton = CreateFrame("Button", "KM_Journal", parent, UIPanelButtonTemplate)
     journalButton:SetSize(32, 41)
@@ -316,11 +314,7 @@ local function instanceMapButton_OnMouseDown(self, event)
     print("Key Master - todo: Wire up journal map viewer.")
 end
 
-local function createInstanceMapButton(parent, mapId)
-    --local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
-    
-    if not parent and not mapId then print("KM_Map Error") return end
-    --local mapName = seasonMaps[mapId].name
+local function createInstanceMapButton(parent)
 
     local instanceMapButton = CreateFrame("Button", "KM_Map", parent, UIPanelButtonTemplate)
     instanceMapButton:SetSize(24, 24)
@@ -338,12 +332,10 @@ end
 local function portalButton_mouseoout(self, event)
 end
 
-local function createPortalButton(parent, mapId)
-    local mapsTable, pButton, portalSpellId,  portalSpellName
+local function createPortalButton(parent)
+    local pButton, portalSpellId, portalSpellName, mapId
+    mapId = DungeonTools:GetFirstSeasonMapId()
     if not mapId then
-        mapsTable = DungeonTools:GetCurrentSeasonMaps()
-        mapId = mapsTable[1]
-    elseif not DungeonTools:GetCurrentSeasonMaps()[mapId] then
         KeyMaster:_ErrorMsg("createPortalButton", "PlayerFrame", "Invalid map ID: "..tostring(mapId))
         return
     end
@@ -380,9 +372,7 @@ local function createPortalButton(parent, mapId)
         
     end
 
-    if mapsTable then
-        pButton = createButton(mapsTable[mapId])
-    else
+    if not pButton then
         pButton = _G["KM_Playerportal_button"]
         if pButton then 
             return
@@ -392,7 +382,6 @@ local function createPortalButton(parent, mapId)
         
     end
     pButton:SetAttribute("spell", portalSpellId)
-    mapsTable = nil -- may not be needed but ensuring garbage collection.
     return pButton
 end
 
@@ -413,11 +402,7 @@ local function lfgButton_OnMouseUp(self, event)
     --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.330078125, 0.490234375)
 end
 
-local function createLFGButton(parent, mapId)
-    --local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
-    
-    if not parent and not mapId then print("KM_LFG Error") return end
-    --local mapName = seasonMaps[mapId].name
+local function createLFGButton(parent)
 
     local lfgButton = CreateFrame("Button", "KM_LFG", parent, UIPanelButtonTemplate)
     lfgButton:SetSize(32, 41)
@@ -769,22 +754,23 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local Hline = KeyMaster:CreateHLine(dungeonToolsFrame:GetWidth()+8, dungeonToolsFrame, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
+    -- Dungeon Tools Buton Panel
     dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     dungeonToolsFrame.DetailsTitleDesc:SetPoint("TOPLEFT", dungeonToolsFrame, "TOPLEFT", 4, -4)
     dungeonToolsFrame.DetailsTitleDesc:SetText(KeyMasterLocals.PLAYERFRAME.DungeonTools.name)
     dungeonToolsFrame.DetailsTitleDesc:SetTextColor(boxTitler, boxTitleg, boxTitleb, 1)
     dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT")
 
-    local journalButton = createJournalButton(dungeonToolsFrame, 501) -- todo: Set map ID to clicked map.
+    local journalButton = createJournalButton(dungeonToolsFrame)
     journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, -8)
 
-    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame, 9001)
+    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame)
     instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
 
-    local lfgButton = createLFGButton(dungeonToolsFrame, 9001)
+    local lfgButton = createLFGButton(dungeonToolsFrame)
     lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 2, 0)
 
-    local portalButton = createPortalButton(dungeonToolsFrame, 375)
+    local portalButton = createPortalButton(dungeonToolsFrame)
     portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, -8)
 
     -- Score Calc
