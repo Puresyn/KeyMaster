@@ -442,7 +442,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
     local mapFrameHeaderHeight = 25
-    local mapFrameWIdthPercent = 0.7
+    local mapFrameWIdthPercent = 0.5
 
     -- Maps Panel
     local playerInformationFrame = CreateFrame("Frame", "KM_PlayerMapInfo", parentFrame)
@@ -636,9 +636,11 @@ end
 
 function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local detailsFrame = CreateFrame("Frame", "KM_PlayerFrame_MapDetails", parentFrame)
-    detailsFrame:SetPoint("TOPLEFT", contentFrame, "TOPRIGHT", -4, 0)
+    --detailsFrame:SetPoint("TOPLEFT", contentFrame, "TOPRIGHT", -4, 0)
+    detailsFrame:SetPoint("TOPLEFT", _G["KM_PlayerMapInfo"], "TOPRIGHT", -4, 0)
     --detailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, 0)
-    detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4), contentFrame:GetHeight())
+    --detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4), contentFrame:GetHeight())
+    detailsFrame:SetSize(parentFrame:GetWidth()*0.3, contentFrame:GetHeight())
 
     -- Map Details Frame
     local highlightAlpha = 0.5
@@ -960,14 +962,21 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     local hlColorString = "color_NONPHOTOBLUE"
     hlColor.r, hlColor.g, hlColor.b, _ = Theme:GetThemeColor(hlColorString)
     local mythicPlusDetailsFrame = CreateFrame("Frame", "KM_MythicPlusDetailsFrame", parentFrame)
-    mythicPlusDetailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
+    mythicPlusDetailsFrame:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", -4, 4)
     --mythicPlusDetailsFrame:SetPoint("TOPRIGHT", contentFrame, "TOPLEFT", -4, -4)
-    mythicPlusDetailsFrame:SetSize(parentFrame:GetWidth() - (_G["KM_PlayerMapInfo"]:GetWidth()) - (_G["KM_PlayerFrame_MapDetails"]:GetWidth()), contentFrame:GetHeight() - parentFrame:GetHeight()-12)
+    mythicPlusDetailsFrame:SetSize(parentFrame:GetWidth() - (_G["KM_PlayerMapInfo"]:GetWidth()) - (_G["KM_PlayerFrame_MapDetails"]:GetWidth()) - 8, _G["KM_PlayerMapInfo"]:GetHeight()-4)
 
     mythicPlusDetailsFrame.texture = mythicPlusDetailsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     mythicPlusDetailsFrame.texture:SetAllPoints(mythicPlusDetailsFrame)
     mythicPlusDetailsFrame.texture:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
     mythicPlusDetailsFrame.texture:SetColorTexture(0,0,0,1)
+
+    mythicPlusDetailsFrame.texture.overlay = mythicPlusDetailsFrame:CreateTexture(nil, "ARTWORK", nil, 1)
+    mythicPlusDetailsFrame.texture.overlay:SetAllPoints(mythicPlusDetailsFrame)
+    mythicPlusDetailsFrame.texture.overlay:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
+    mythicPlusDetailsFrame.texture.overlay:SetAtlas("groupfinder-background")
+    mythicPlusDetailsFrame.texture.overlay:SetTexCoord(0.55,0.85, 0, 1)
+    mythicPlusDetailsFrame.texture.overlay:SetAlpha(0.5)
 
     mythicPlusDetailsFrame.textureHighlight = mythicPlusDetailsFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
     mythicPlusDetailsFrame.textureHighlight:SetSize(mythicPlusDetailsFrame:GetWidth(), 64)
@@ -977,6 +986,9 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     mythicPlusDetailsFrame.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
 
     local Hline = KeyMaster:CreateHLine(mythicPlusDetailsFrame:GetWidth()+8, mythicPlusDetailsFrame, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    --[[ local Hline = KeyMaster:CreateHLine(mythicPlusDetailsFrame:GetWidth()+8, mythicPlusDetailsFrame, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
     local mapHeaderFrame = CreateFrame("Frame", "KM_MPlusDetailsHeader", mythicPlusDetailsFrame)
@@ -992,9 +1004,10 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     mapHeaderFrame.MapName:SetPoint("TOP", mapHeaderFrame, "TOP", 0, 0)
     local Path, _, Flags = mapHeaderFrame.MapName:GetFont()
     mapHeaderFrame.MapName:SetFont(Path, 16, Flags)
-    mapHeaderFrame.MapName:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
+    mapHeaderFrame.MapName:SetText(KeyMasterLocals.THISWEEKSAFFIXES) ]]
 
-    PlayerFrame:CreateAffixFrames(mythicPlusDetailsFrame)
+    --PlayerFrame:CreateAffixFrames(mythicPlusDetailsFrame)
+    return mythicPlusDetailsFrame
 
 end
 
@@ -1030,12 +1043,18 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     
     vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
     vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 4, -1)
-    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.62, vaultRowFrame:GetHeight()-4)
+    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.54, vaultRowFrame:GetHeight()-4)
     local Path, _, Flags = vaultRowFrame.vaultRuns:GetFont()
     vaultRowFrame.vaultRuns:SetFont(Path, 16, Flags)
     vaultRowFrame.vaultRuns:SetJustifyH("RIGHT")
     vaultRowFrame.vaultRuns:SetJustifyV("MIDDLE")
     vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
+
+    -- todo: for testing - delete after addressing new vault look
+    --[[ vaultRowFrame.vaultRuns.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil)
+    vaultRowFrame.vaultRuns.texture:SetAllPoints(vaultRowFrame.vaultRuns)
+    vaultRowFrame.vaultRuns.texture:SetSize(vaultRowFrame.vaultRuns:GetWidth(), vaultRowFrame.vaultRuns:GetHeight())
+    vaultRowFrame.vaultRuns.texture:SetColorTexture(1,0,0,0.5) ]]
 
     parentFrame:SetAttribute("vault"..vaultRowNumber,  vaultRowFrame)
 
@@ -1049,7 +1068,7 @@ function PlayerFrame:Initialize(parentFrame)
     local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
     local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
     local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerMapFrame)
-    --local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerFrame, playerContent)
+    local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerContent, playerContent)
 
     -- Mythic Vault Progress
     local vaultDetails = _G["KM_VaultDetailView"]
