@@ -48,6 +48,29 @@ local function toggleLFGPanel()
     
 end
 
+local function updateRatingCalculatorMap(self, selectedMapId)
+    self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
+
+    local scores = _G["KM_ScoreCalcScores"]
+    local directions =  _G["KM_ScoreCalcDirection"]
+    
+    local keyLevel = tonumber(self:GetText())
+    if keyLevel ~= nil and keyLevel >= 2 then
+
+        local mapId = selectedMapId -- set from row click
+        
+        PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+        
+        directions:Hide()
+        scores:Show()
+    else
+        self:SetText("")
+        directions:Show()
+        scores:Hide()
+    end
+    --self:SetText("") -- Empties the box, duh! ;)
+end
+
 local function mapData_onmouseover(self, event)
     local highlight = self:GetAttribute("highlight")
     local hlColor = {}
@@ -79,7 +102,6 @@ local function mapdData_OnRowClick(self, event)
         local cooldown 
         if portalSpellName then cooldown = C_Spell.GetSpellCooldown(portalSpellName) end
         if (portalSpellId ~= nil and cooldown ~= nil and cooldown["startTime"] == 0) then
-            --portalButton:SetAttribute("portalSpellName", portalSpellName)
             portalButton:SetAttribute("spell", portalSpellId)
             portalButton:Enable()
             portalButton:Show()
@@ -109,8 +131,9 @@ local function mapdData_OnRowClick(self, event)
         mapDetailsFrame.TimeLimit:SetText("+"..KeyMaster:FormatDurationSec(timers["1chest"]))
         mapDetailsFrame.TwoChestTimer:SetText("++"..KeyMaster:FormatDurationSec(timers["2chest"])) 
         mapDetailsFrame.ThreeChestTimer:SetText("+++"..KeyMaster:FormatDurationSec(timers["3chest"]))
-        scoreCalcScores:Hide()
-        scoresCalcDirection:Show()
+        updateRatingCalculatorMap(_G["KM_CalcKeyLevel"], selectedMapId)
+        --scoreCalcScores:Hide()
+        --scoresCalcDirection:Show()
     end
 end
 
@@ -154,11 +177,8 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     characterIconFrame:SetSize(playerFrame:GetHeight()+20, playerFrame:GetHeight())
     characterIconFrame.icon = characterIconFrame:CreateTexture(nil, "ARTWORK")
     characterIconFrame.icon:SetAllPoints(characterIconFrame)
-    --characterIconFrame.icon:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES")
     characterIconFrame.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     characterIconFrame.icon:SetTexCoord(961/1024, 1, 332/1024,  399/1024)
-    --characterIconFrame.icon:SetAlpha(0.3)
-    --characterIconFrame.icon:SetTexture("")
     characterIconFrame:Hide()
 
     local playerFrameHighlight = CreateFrame("Frame", "KM_PlayerFrameHighlight" ,playerFrame)
@@ -226,19 +246,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.realmName:SetTextColor(0.3, 0.3, 0.3, 1)
     playerFrame.realmName:SetText(GetRealmName())
 
-    --[[ playerFrame:HookScript("OnShow", function()
-        if not KeyMaster.characterList or not type(KeyMaster.characterList) == "table" then
-            print("No character list")
-            _G["KM_CharactersButton"]:Hide()
-        elseif KeyMaster:GetTableLength(KeyMaster.characterList) == 0 then
-            print("Empty character list")
-            _G["KM_CharactersButton"]:Hide()
-        elseif KeyMaster:GetTableLength(KeyMaster.characterList) > 0 then
-            print("Characters in list")
-            _G["KM_CharactersButton"]:Show()
-        end
-    end) ]]
-
     return playerFrame
 end
 
@@ -275,22 +282,18 @@ local doOnce = 0
 
 local function journalButton_OnMouseDown(self, event)
     if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
-    --self.texture:SetTexCoord(0.0009765625, 0.0634765625, 0.822265625, 0.982421875)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapName = seasonMaps[self.mapId].name
     DungeonJournal:ShowDungeonJournal(mapName)
 end
 
 local function journalButton_OnMouseUp(self, event)
-    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
 end
 
 local function journalButton_onmouseover(self, event)
-    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.001953125, 0.162109375)
 end
 
 local function journalButton_onmouseout(self, event)
-    --self.texture:SetTexCoord(0.0654296875, 0.1279296875, 0.166015625, 0.326171875)
 end
 
 
@@ -386,20 +389,16 @@ local function createPortalButton(parent)
 end
 
 local function lfgButton_OnMouseDown(self, event)
-    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.166015625, 0.326171875)
     toggleLFGPanel()
 end
 
 local function lfgButton_onmouseover(self, event)
-   -- self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.330078125, 0.490234375)
 end
 
 local function lfgButton_onmouseout(self, event)
-    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.494140625, 0.654296875)
 end
 
 local function lfgButton_OnMouseUp(self, event)
-    --self.texture:SetTexCoord(0.1943359375, 0.2568359375, 0.330078125, 0.490234375)
 end
 
 local function createLFGButton(parent)
@@ -568,14 +567,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.tyrannicalBonus:SetJustifyH("RIGHT")
         dataFrame.tyrannicalBonus:SetText("")
 
-        -- Tyrannical Score
-        --[[ dataFrame.tyrannicalScore = dataFrame:CreateFontString("KM_PlayerFrameTyranScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalScore:SetPoint("RIGHT", dataFrame.overallScore, "CENTER", -affixScoreOffsetx, affixScoreOffsety)
-        dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
-        dataFrame.tyrannicalScore:SetJustifyV("BOTTOM")
-        dataFrame.tyrannicalScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
-        dataFrame.tyrannicalScore:SetText("") ]]
-
         -- Tyrannical RunTime
         dataFrame.tyrannicalRunTime = dataFrame:CreateFontString("KM_PlayerFrameTyranRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
         dataFrame.tyrannicalRunTime:SetPoint("TOP", dataFrame.dungeonName, "BOTTOM", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
@@ -583,45 +574,9 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.tyrannicalRunTime:SetJustifyV("MIDDLE")
         dataFrame.tyrannicalRunTime:SetText("") 
 
-        --///// FORTIFIED /////--
-        -- Fortified Key Level
-        --[[ dataFrame.fortifiedLevel = dataFrame:CreateFontString("KM_PlayerFrameFortLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedLevel:SetPoint("LEFT", dataFrame.overallScore, "CENTER", keyLevelOffsetx, keyLevelOffsety)
-        local Path, _, Flags = dataFrame.fortifiedLevel:GetFont()
-        dataFrame.fortifiedLevel:SetFont(Path, 24, Flags)
-        dataFrame.fortifiedLevel:SetJustifyH("LEFT")
-        dataFrame.fortifiedLevel:SetText("") ]]
-
-        -- Fortified Bonus Time
-        --[[ dataFrame.fortifiedBonus = dataFrame:CreateFontString("KM_PlayerFrameFortBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedBonus:SetPoint("LEFT", dataFrame.fortifiedLevel, "RIGHT", affixBonusOffsetx, affixBonusOffsety)
-        dataFrame.fortifiedBonus:SetJustifyH("LEFT")
-        dataFrame.fortifiedBonus:SetText("")  ]]
-
-        -- Fortified Score
-        --[[ dataFrame.fortifiedScore = dataFrame:CreateFontString("KM_PlayerFrameFortScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedScore:SetPoint("LEFT", dataFrame.overallScore, "CENTER", affixScoreOffsetx, affixScoreOffsety)
-        dataFrame.fortifiedScore:SetJustifyH("LEFT")
-        dataFrame.fortifiedScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
-        dataFrame.fortifiedScore:SetText("") ]]
-
-        -- Tyrannical RunTime
-        dataFrame.fortifiedRunTime = dataFrame:CreateFontString("KM_PlayerFrameFortRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedRunTime:SetPoint("LEFT",dataFrame.overallScore, "CENTER", afffixRuntimeOffsetx, afffixRuntimeOffsety)
-        dataFrame.fortifiedRunTime:SetJustifyH("LEFT")
-        dataFrame.fortifiedRunTime:SetJustifyV("TOP")
-        dataFrame.fortifiedRunTime:SetText("")
-
-        --[[ local journalButton = createJournalButton(mapFrame, mapId)
-        journalButton:SetPoint("RIGHT", dataFrame, "RIGHT") ]]
-
         if (doOnce == 0) then
             local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.overallScore:GetPoint()
-            --[[ mapHeaderFrame.divider1:SetPoint("CENTER", mapHeaderFrame, "CENTER", xOfs, 0) ]]
             point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.tyrannicalLevel:GetPoint()
-            --[[ mapHeaderFrame.tyranText:SetPoint("RIGHT",  mapHeaderFrame.divider1, relativePoint, xOfs, 0)
-            point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.fortifiedLevel:GetPoint()
-            mapHeaderFrame.fortText:SetPoint("LEFT", mapHeaderFrame.divider1, relativePoint, xOfs, 0) ]]
             doOnce = 1
         end
         prevFrame = mapFrame
@@ -821,8 +776,8 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     local scoreCalcScores = CreateFrame("Frame", "KM_ScoreCalcScores", scoreCalc) -- Show/Hide frame for scores
     scoreCalcScores:SetAllPoints(scoreCalc)
-   
-    local scoreCalcBox = CreateFrame("EditBox", nil, scoreCalc, "InputBoxTemplate");
+    
+    local scoreCalcBox = CreateFrame("EditBox", "KM_CalcKeyLevel", scoreCalc, "InputBoxTemplate");
     scoreCalcBox:SetPoint("TOPRIGHT", scoreCalc, "TOPRIGHT", -4, -(scoreCalc.DetailsTitleDesc:GetHeight()+2));
     scoreCalcBox:SetWidth(24);
     scoreCalcBox:SetHeight(28);
@@ -830,7 +785,8 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalcBox:SetAutoFocus(false);
     scoreCalcBox:SetMaxLetters(2);
     scoreCalcBox:SetScript("OnEnterPressed", function(self)
-        self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
+        updateRatingCalculatorMap(self, selectedMapId)
+        --[[ self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
         
         local keyLevel = tonumber(self:GetText())
         if keyLevel ~= nil then
@@ -841,7 +797,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
             scoreCalcDirection:Hide()
             scoreCalcScores:Show()
         end
-        self:SetText("") -- Empties the box, duh! ;)
+        --self:SetText("") -- Empties the box, duh! ;) ]]
     end)
     
     scoreCalc.keyLevelTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")

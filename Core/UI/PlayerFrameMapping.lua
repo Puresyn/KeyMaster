@@ -61,7 +61,7 @@ function PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
     newOverall = getNumberPerferenceValue(newOverall)
     scoreFrame.newRating:SetText(newOverall)
     
-    scoreFrame.keyLevel:SetText(KeyMasterLocals.PLAYERFRAME["KeyLevel"].name .. ": "..keyLevel) --.." "..weeklyAffix)
+    scoreFrame.keyLevel:SetText("("..keyLevel .. ") "..DungeonTools:GetDungeonNameAbbr(mapId)) --.." "..weeklyAffix)
 end
 
 function PlayerFrameMapping:RefreshData(fetchNew)
