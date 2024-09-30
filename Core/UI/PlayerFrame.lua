@@ -934,7 +934,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.divider1 = vaultDetails:CreateTexture()
     vaultDetails.divider1:SetSize(18, vaultDetails:GetHeight()*0.8)
     vaultDetails.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -60, -10)
+    vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -80, -10)
     vaultDetails.divider1:SetAlpha(0.3)
 
     -- setup the initial map details to the first map
@@ -1019,7 +1019,7 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     
     vaultRowFrame.vaultComplete = vaultRowFrame:CreateTexture(nil, "OVERLAY")
     vaultRowFrame.vaultComplete:SetPoint("RIGHT", vaultRowFrame, "RIGHT", -2, 0)
-    vaultRowFrame.vaultComplete:SetSize(24,24)
+    vaultRowFrame.vaultComplete:SetSize(42,42)
 
     vaultRowFrame:SetSize(parentFrame:GetWidth(), vaultRowHeight)
     vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")

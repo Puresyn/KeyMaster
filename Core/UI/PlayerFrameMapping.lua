@@ -9,12 +9,12 @@ local CharacterData = KeyMaster.CharacterData
 local defaultString = 0
 
 local function setVaultStatusIcon(vaultRowFrame, isCompleted)
-    local image = "Interface/Addons/KeyMaster/Assets/Images/"..Theme.style
+    local image = "interface/weeklyreward/evergreenweeklyrewardui"
     vaultRowFrame.vaultComplete:SetTexture(image)
     if (isCompleted) then
-        vaultRowFrame.vaultComplete:SetTexCoord(992/1024 , 1, 0, 32/1024)
+        vaultRowFrame.vaultComplete:SetTexCoord(0.806640625 , 0.93212890625, 0.00048828125, 0.11083984375)
     else
-        vaultRowFrame.vaultComplete:SetTexCoord(992/1024 , 1, 32/1024, 64/1024)
+        vaultRowFrame.vaultComplete:SetTexCoord(0.806640625 , 0.93212890625, 0.22314453125, 0.33349609375)
     end
 end
 
