@@ -42,7 +42,7 @@ local function toggleLFGPanel()
         if (_G["GroupFinderFrame"]:IsVisible() == false) then
                 PVEFrame_ShowFrame("GroupFinderFrame")
         else
-            --ToggleGroupFinderFrame() -- todo: this isn't the right function to close the Group Finder... I can't seem to locate it.
+            PVEFrame_ToggleFrame()
         end
     end
     
@@ -270,14 +270,14 @@ local function toggleCharactersFrame(self)
 end
 
 
-local keyLevelOffsetx = -30
+local keyLevelOffsetx = 90
 local keyLevelOffsety = -2
 local affixScoreOffsetx = 135
 local affixScoreOffsety = 8
 local affixBonusOffsetx = 0
 local affixBonusOffsety = 0
-local afffixRuntimeOffsetx = 0
-local afffixRuntimeOffsety = -4
+local afffixRuntimeOffsetx = 160
+local afffixRuntimeOffsety = -2
 local doOnce = 0
 
 local function journalButton_OnMouseDown(self, event)
@@ -414,6 +414,30 @@ local function createLFGButton(parent)
     return lfgButton
 end
 
+local function MDTButton_onmouseover(self, event)
+end
+
+local function MDTButton_onmouseout(self, event)
+end
+
+local function createMDTButton(parent)
+
+    local mdtButton = CreateFrame("Button","KM_MDT",parent,"SecureActionButtonTemplate")
+    mdtButton:SetFrameLevel(10)
+    mdtButton:SetAttribute("type", "macro")
+    mdtButton:SetAttribute("macrotext", "/mdt") -- /mdt\n/run MDT:UpdateToDungeon(113) works with MDT lua errors
+    mdtButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
+    mdtButton:SetSize(20, 28)
+    mdtButton:SetNormalTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetHighlightTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetPushedTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetDisabledTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-D")
+    mdtButton:SetScript("OnEnter", MDTButton_onmouseover)
+    mdtButton:SetScript("OnLeave", MDTButton_onmouseout)
+
+    return mdtButton
+end
+
 function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
@@ -522,7 +546,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
 
         dataFrame.dungeonName = dataFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
         dataFrame.dungeonName:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
-        dataFrame.dungeonName:SetSize(140, 22)
+        dataFrame.dungeonName:SetSize(200, 22)
         dataFrame.dungeonName:SetJustifyV("TOP")
         dataFrame.dungeonName:SetJustifyH("LEFT")
         local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
@@ -555,7 +579,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         --///// TYRANNICAL /////--
         -- Tyrannical Key Level
         dataFrame.tyrannicalLevel = dataFrame:CreateFontString("KM_PlayerFrameTyranLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalLevel:SetPoint("CENTER", dataFrame, "CENTER", -keyLevelOffsetx, keyLevelOffsety)
+        dataFrame.tyrannicalLevel:SetPoint("RIGHT", dataFrame, "RIGHT", -keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.tyrannicalLevel:GetFont()
         dataFrame.tyrannicalLevel:SetFont(Path, 24, Flags)
         dataFrame.tyrannicalLevel:SetJustifyH("RIGHT")
@@ -569,7 +593,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
 
         -- Tyrannical RunTime
         dataFrame.tyrannicalRunTime = dataFrame:CreateFontString("KM_PlayerFrameTyranRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalRunTime:SetPoint("TOP", dataFrame.dungeonName, "BOTTOM", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
+        dataFrame.tyrannicalRunTime:SetPoint("RIGHT", dataFrame, "RIGHT", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.tyrannicalRunTime:SetJustifyH("CENTER")
         dataFrame.tyrannicalRunTime:SetJustifyV("MIDDLE")
         dataFrame.tyrannicalRunTime:SetText("") 
@@ -692,7 +716,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -- Dungeon Tools Box
     local dungeonToolsFrame = CreateFrame("Frame", "KM_DungeonInfoBox", detailsFrame)
     dungeonToolsFrame:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
-    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.12)-4)
+    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.08)-4)
 
     dungeonToolsFrame.texture = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     dungeonToolsFrame.texture:SetAllPoints(dungeonToolsFrame)
@@ -710,23 +734,33 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     Hline:SetAlpha(0.5)
 
     -- Dungeon Tools Buton Panel
-    dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    local lastDTButton
+    --[[ dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     dungeonToolsFrame.DetailsTitleDesc:SetPoint("TOPLEFT", dungeonToolsFrame, "TOPLEFT", 4, -4)
     dungeonToolsFrame.DetailsTitleDesc:SetText(KeyMasterLocals.PLAYERFRAME.DungeonTools.name)
     dungeonToolsFrame.DetailsTitleDesc:SetTextColor(boxTitler, boxTitleg, boxTitleb, 1)
-    dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT")
+    dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT") ]]
 
     local journalButton = createJournalButton(dungeonToolsFrame)
-    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, -8)
+    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, 0)
 
     local instanceMapButton = createInstanceMapButton(dungeonToolsFrame)
     instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
 
     local lfgButton = createLFGButton(dungeonToolsFrame)
     lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 2, 0)
+    lastDTButton = lfgButton
+
+    -- External Addon dependant buttons
+    if (C_AddOns.IsAddOnLoaded("MythicDungeonTools")) then
+        local mdtButton = createMDTButton(dungeonToolsFrame)
+        mdtButton:SetPoint("LEFT", lastDTButton, "RIGHT", 0, 0)
+        lastDTButton = mdtButton
+    end
+    -----------------
 
     local portalButton = createPortalButton(dungeonToolsFrame)
-    portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, -8)
+    portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, 0)
 
     -- Score Calc
     local scoreCalc = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
@@ -873,7 +907,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
     vaultDetails:SetPoint("TOP", divider, "BOTTOM", 0, -4)
-    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.30)-4)
+    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.34)-4)
 
     vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
     vaultDetails.texture:SetAllPoints(vaultDetails)
