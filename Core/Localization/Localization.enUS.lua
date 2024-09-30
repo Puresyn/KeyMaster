@@ -40,11 +40,11 @@ L.MAPNAMES[404] = { name = "Neltharus", abbr = "NELT" }
 L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "BH" }
 L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "HOI" }
 --TWW S1
-L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "CE" }
-L.MAPNAMES[502] = { name = "City of Threads", abbr = "CT" }
+L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "CoE" }
+L.MAPNAMES[502] = { name = "City of Threads", abbr = "CoT" }
 L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "DB" }
 L.MAPNAMES[501] = { name = "The Stonevault", abbr = "SV" }
-L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SB" }
+L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SoB" }
 L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "MTS" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
