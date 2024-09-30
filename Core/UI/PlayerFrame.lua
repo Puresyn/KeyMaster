@@ -94,6 +94,8 @@ local function mapdData_OnRowClick(self, event)
     selectedMapId = self:GetAttribute("mapId")
     local dungeonJournalFrame = _G["KM_Journal"]
     dungeonJournalFrame.mapId = selectedMapId
+    local dungeonMapFrame = _G["KM_Map"]
+    dungeonMapFrame.mapId = selectedMapId
 
     local portalButton = _G["KM_Playerportal_button"]
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(selectedMapId)
@@ -284,6 +286,7 @@ local function journalButton_OnMouseDown(self, event)
     if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapName = seasonMaps[self.mapId].name
+    
     DungeonJournal:ShowDungeonJournal(mapName)
 end
 
@@ -314,7 +317,10 @@ end
 
 
 local function instanceMapButton_OnMouseDown(self, event)
-    print("Key Master - todo: Wire up journal map viewer.")
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    local mapName = seasonMaps[self.mapId].name
+
+    DungeonJournal:ShowDungeonMap(mapName)
 end
 
 local function createInstanceMapButton(parent)
