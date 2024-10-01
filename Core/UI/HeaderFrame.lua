@@ -93,11 +93,11 @@ function HeaderFrame:SystemMessage(parentframe)
     sysMessage:SetHeight(sysMessage.text:GetHeight()+8)
     sysMessage.boxBackground:SetSize(sysMessage:GetWidth()-2, sysMessage:GetHeight()-2)
 
-    if (DungeonTools:GetCurrentSeason() == 13) then
-        sysMessage:Show()
-    else
+    --if (DungeonTools:GetCurrentSeason() == 13) then
+    --    sysMessage:Show()
+    --else
         sysMessage:Hide()
-    end
+    --end
     
     sysMessage:SetScript("OnMouseUp", function (self)
         self:Hide()
