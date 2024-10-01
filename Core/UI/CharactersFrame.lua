@@ -87,9 +87,10 @@ end
 local function toggleActiveCharacterRow(guid, setActive)
     local characterRow = _G["KM_CharacterRow_"..guid]
     if not characterRow then
-        if KeyMaster_C_DB[guid] then
+        -- removed in 1.3.5 as it only displayed when logging onto sub max level character and clicking a max character for the first time...
+        --[[ if KeyMaster_C_DB[guid] then
             KeyMaster:_ErrorMsg("toggleActiveCharacterRow","CharactersFrame", "Character row not found.")
-        end
+        end ]]
         return
     end
     local characterSelectFrame = _G["KM_CharacterSelectFrame"]
