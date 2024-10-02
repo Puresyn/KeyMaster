@@ -13,11 +13,13 @@ local function setWhatsNewContent(parent)
     whatsNewContent:SetFont("p", Path, 12, Flags)
     local h1Color = select(4, Theme:GetThemeColor("color_THEMEGOLD"))
     local h2Color = select(4, Theme:GetThemeColor("color_NONPHOTOBLUE"))
-    local h3Color = select(4, Theme:GetThemeColor("color_NONPHOTOBLUE"))
+    local h3Color = select(4, Theme:GetThemeColor("color_DRUID"))
     local pColor = select(4, Theme:GetThemeColor("color_COMMON"))
     local aColor = select(4, Theme:GetThemeColor("color_MAGE"))
     local bulletColor = select(4, Theme:GetThemeColor("themeFontColorGreen1"))
+    local gtColor = select(4, Theme:GetThemeColor("color_MONK"))
     local textBullet = "|cff"..bulletColor.."-|r "
+    local textGT = "|cff"..gtColor.."\> "
     local markupText = [[
         <html>
             <body>
@@ -25,27 +27,88 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h2>|cff]]..h2Color..[[Fixes:|r</h2>
-                <p>- Fixed an issue where the week by week ratings were not properly updating.</p>
+                <h3>|cff]]..h3Color..[[Key Master could use some more active translators!|r</h3>
+                <p>[Key Master Discord]|cff]]..aColor..[[ https://discord.gg/QngbCPBP|r</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>- None</p>
+                <br/>
+                <p>]]..textBullet..[[Added a dungeon tools buttons row on the Player frame that simplifies access to WoW features and other addons:</p>
+                <img src="Interface\AddOns\KeyMaster\Assets\Images\dungeontools_buttons" width="275" height="47"/>
+                <p>]]..textGT..[[Open the dungeon journal to the selected dungeon.</p>
+                <p>]]..textGT..[[Open the instance map of the selected dungeon.</p>
+                <p>]]..textGT..[[Open the group finder window.</p>
+                <p>]]..textGT..[[Open Mythic Dungeon Tools (MDT) (if installed).</p>
+                <p>]]..textGT..[[Portal to selected dungeon if unlocked and not on cooldown.</p>
+                <br/>
+                <p>]]..textBullet..[[Moved weekly affixes back into the header frame.</p>
+                <br/>
+                <p>]]..textBullet..[[Added affix tooltip functionality.</p>
+                <br/>
+                <p>]]..textBullet..[[Rearranged the Player frame to be more conducive to the new M+ rating system.</p>
+                <br/>
+                <p>]]..textBullet..[[Changed rating calculator functionality to now keep the key level entered and re-calculate automatically for each map row being selected.</p>
+                <br/>
+                <p>]]..textBullet..[[Updated some vault graphics (more updates to come).</p>
+                <br/>
+                <p>]]..textBullet..[[Disabled rating pending verification system message.</p>
+                <br/>
+                <p>]]..textBullet..[[Temporarily disabled Russian and Chinese translations due to lack of translator participation. (See us if interested!)</p>                
+                <br/>
+                <p>]]..textBullet..[[Updated a few dungeon name abbreviations to better seperate meaning.</p>                
+                <br/>
+                <br/>
+                <h2>|cff]]..h2Color..[[Fixes:|r</h2>
+                <br/>
+                <p>]]..textBullet..[[Fixed M+ Vault Progression not updating upon dungeon completion if the player tab was the last tab open (Hopefully for real this time).</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
-                <p>- Rating calculations are still being verified</p>
+                <br/>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
-                <p>|cff]]..aColor..[[https://github.com/Puresyn/KeyMaster/issues|r or visit us on Discord.</p>
+                <p>[Key Master Bug Reports - GitHub]|cff]]..aColor..[[ https://github.com/Puresyn/KeyMaster/issues|r</p>
+                <p>[Key Master Discord]|cff]]..aColor..[[ https://discord.gg/QngbCPBP|r</p>
                 <br/>
             </body>
         </html>
         ]]
+    whatsNewContent:SetHyperlinksEnabled(true)
     whatsNewContent:SetText(markupText)
+
+    -- doesn't work as intended at the moment.
+--[[local f = CreateFrame("EditBox", "KM_LinkBox", UIParent, "InputBoxTemplate")
+    f:SetSize(300, 60)
+    f:SetPoint("CENTER")
+    --f:SetHyperlinksEnabled(true)
+    f:SetText("")
+    f:Hide()
+
+    hooksecurefunc("SetItemRef", function(link)
+        local linkType, addonName, linkData = strsplit(":", link)
+        if linkType == "addon" and addonName == "KeyMaster" then
+            f:SetText("https://"..linkData)
+            f:Show()
+        end
+    end) ]]
+
+    
+    
+    --[[ f:SetScript("OnHyperlinkEnter", function(self, link, text, region, left, bottom, width, height)
+        GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+        GameTooltip:SetHyperlink(link)
+        GameTooltip:Show()
+    end)
+    
+    f:SetScript("OnHyperlinkLeave", function(self)
+        GameTooltip:Hide()
+    end) ]]
+
     return whatsNewContent
 end
+
 
 local function createScrollFrame(parent)
     -- Credit: https://www.wowinterface.com/forums/showthread.php?t=45982

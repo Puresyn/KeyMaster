@@ -6,8 +6,26 @@ PATCH NOTES:
 Key Master v1.3.5
 --------------------------------------------------
 Updates:
+- Added a dungeon tools buttons row on the Player frame that simplifies access to WoW features and other addons:
+> Open the dungeon journal to the selected dungeon.
+> Open the instance map of the selected dungeon.
+> Open the group finder window.
+> Open Mythic Dungeon Tools (MDT) (if installed).
+> Portal to selected dungeon if unlocked and not on cooldown.
 - Moved weekly affixes back into the header frame.
-- Added tooltip functionality.
+- Added affix tooltip functionality.
+- Rearranged the Player frame to be more conducive to the new M+ rating system.
+- Changed rating calculator functionality to now keep the key level entered and re-calculate automatically for each map row being selected.
+- Updated some vault graphics (more updates to come).
+- Disabled rating pending verification system message.
+- Temporarily disabled Russian and Chinese translations due to lack of translator participation. (See us if interested!)
+- Updated a few dungeon name abbreviations to better seperate meaning.
+
+Fixes:
+- Fixed M+ Vault Progression not updating upon dungeon completion if the player tab was the last tab open (Hopefully for real this time).
+
+Know Bugs/Issues:
+- None
 
 --------------------------------------------------
 Key Master v1.3.4
