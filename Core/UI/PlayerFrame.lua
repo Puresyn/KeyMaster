@@ -348,7 +348,8 @@ local function createPortalButton(parent)
         KeyMaster:_ErrorMsg("createPortalButton", "PlayerFrame", "Invalid map ID: "..tostring(mapId))
         return
     end
-        
+
+    pButton = _G["KM_Playerportal_button"]        
 
     local function createButton(mapId)
         if not parent or not mapId then return end
@@ -382,16 +383,15 @@ local function createPortalButton(parent)
     end
 
     if not pButton then
-        pButton = _G["KM_Playerportal_button"]
-        if pButton then 
-            return
-        else
-            pButton = createButton(mapId)
-        end
-        
+        pButton = createButton(mapId)
     end
-    pButton:SetAttribute("spell", portalSpellId)
-    return pButton
+
+    if pButton then
+        pButton:SetAttribute("spell", portalSpellId)
+        return pButton
+    else
+        return
+    end
 end
 
 local function lfgButton_OnMouseDown(self, event)
@@ -768,7 +768,9 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -----------------
 
     local portalButton = createPortalButton(dungeonToolsFrame)
-    portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, 0)
+    if portalButton then
+        portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, 0)
+    end
 
     -- Score Calc
     local scoreCalc = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
