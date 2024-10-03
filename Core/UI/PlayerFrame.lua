@@ -984,7 +984,7 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     mythicPlusDetailsFrame.texture.overlay:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
     mythicPlusDetailsFrame.texture.overlay:SetAtlas("groupfinder-background")
     mythicPlusDetailsFrame.texture.overlay:SetTexCoord(0.55, 0.85, 0, 1)
-    mythicPlusDetailsFrame.texture.overlay:SetAlpha(0.5)
+    --mythicPlusDetailsFrame.texture.overlay:SetAlpha(1)
 
     mythicPlusDetailsFrame.textureHighlight = mythicPlusDetailsFrame:CreateTexture(nil, "ARTWORK", nil, 1)
     mythicPlusDetailsFrame.textureHighlight:SetSize(mythicPlusDetailsFrame:GetWidth(), 64)
@@ -1040,7 +1040,7 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     
     vaultRowFrame.vaultComplete = vaultRowFrame:CreateTexture(nil, "OVERLAY")
     vaultRowFrame.vaultComplete:SetPoint("RIGHT", vaultRowFrame, "RIGHT", -2, 0)
-    vaultRowFrame.vaultComplete:SetSize(42,42)
+    vaultRowFrame.vaultComplete:SetSize(42,38)
 
     vaultRowFrame:SetSize(parentFrame:GetWidth(), vaultRowHeight)
     vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
@@ -1050,19 +1050,28 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
     
     vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 4, -1)
+    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 8, -1)
     vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.54, vaultRowFrame:GetHeight()-4)
     local Path, _, Flags = vaultRowFrame.vaultRuns:GetFont()
     vaultRowFrame.vaultRuns:SetFont(Path, 16, Flags)
-    vaultRowFrame.vaultRuns:SetJustifyH("RIGHT")
+    vaultRowFrame.vaultRuns:SetJustifyH("CENTER")
     vaultRowFrame.vaultRuns:SetJustifyV("MIDDLE")
     vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
+
+    -- WIP
+    vaultRowFrame.bgTexture = vaultRowFrame:CreateTexture(nil, "ARTWORK")
+    vaultRowFrame.bgTexture:SetTexture("interface/weeklyreward/evergreenweeklyrewardui")
+    vaultRowFrame.bgTexture:SetTexCoord(0.42529296875, 0.642578125, 0.6728515625, 0.697265625)
+    vaultRowFrame.bgTexture:SetPoint("CENTER", vaultRowFrame.vaultRuns, "CENTER", 0, -1)
+    vaultRowFrame.bgTexture:SetSize(vaultRowFrame.vaultRuns:GetWidth(), 25) -- 442/47
+    vaultRowFrame.bgTexture:SetVertexColor(1,1,1, 0.3)
 
     -- todo: for testing - delete after addressing new vault look
     --[[ vaultRowFrame.vaultRuns.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil)
     vaultRowFrame.vaultRuns.texture:SetAllPoints(vaultRowFrame.vaultRuns)
     vaultRowFrame.vaultRuns.texture:SetSize(vaultRowFrame.vaultRuns:GetWidth(), vaultRowFrame.vaultRuns:GetHeight())
     vaultRowFrame.vaultRuns.texture:SetColorTexture(1,0,0,0.5) ]]
+    -----------------
 
     parentFrame:SetAttribute("vault"..vaultRowNumber,  vaultRowFrame)
 

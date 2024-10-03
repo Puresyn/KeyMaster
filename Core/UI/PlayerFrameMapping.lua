@@ -225,7 +225,8 @@ function PlayerFrameMapping:RefreshData(fetchNew)
                 vaultRowFrame.vaultTotals:SetText(vaultThreshhold)
 
                 -- Set Vault Runs
-                vaultRowFrame.vaultRuns:SetText("")
+                vaultRowFrame.vaultRuns:SetText("--")
+                --vaultRowFrame.vaultRuns:SetText("10, 12, 13, 14, 15") -- debug
 
                 -- Set Vault Slot Image
                 setVaultStatusIcon(vaultRowFrame, false)
