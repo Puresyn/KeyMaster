@@ -306,7 +306,7 @@ local function createToolTip(anchor, options)
         tooltipFrame:SetBackdropColor(0,0,0,1)
 
         local tooltipTitleColor = {}
-        tooltipTitleColor.r, tooltipTitleColor.g, tooltipTitleColor.b, _ = Theme:GetThemeColor("color_NONPHOTOBLUE")
+        tooltipTitleColor.r, tooltipTitleColor.g, tooltipTitleColor.b, _ = Theme:GetThemeColor("themeFontColorYellow")
     
 
         tooltipFrame.titleFrame = CreateFrame("Frame", "KM_TooltipTitle", tooltipFrame)
