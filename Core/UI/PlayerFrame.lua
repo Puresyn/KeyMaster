@@ -398,32 +398,42 @@ local function lfgButton_OnMouseDown(self, event)
     toggleLFGPanel()
 end
 
-local function lfgButton_onmouseover(self, event)
-end
-
-local function lfgButton_onmouseout(self, event)
-end
-
-local function lfgButton_OnMouseUp(self, event)
-end
-
 local function createLFGButton(parent)
-
+    
     local lfgButton = CreateFrame("Button", "KM_LFG", parent, UIPanelButtonTemplate)
-    lfgButton:SetSize(32, 41)
-    lfgButton:SetNormalAtlas("UI-HUD-MicroMenu-Groupfinder-Up")
-    lfgButton:SetHighlightAtlas("UI-HUD-MicroMenu-Groupfinder-Up")
-    lfgButton:SetPushedAtlas("UI-HUD-MicroMenu-Groupfinder-Down")
-    lfgButton:SetDisabledAtlas("UI-HUD-MicroMenu-Groupfinder-Disabled")
+    lfgButton:SetSize(24, 24)
+    lfgButton:SetNormalAtlas("groupfinder-eye-single")
+    lfgButton:SetHighlightAtlas("groupfinder-eye-single")
+    lfgButton:SetPushedAtlas("groupfinder-eye-single")
+    lfgButton:SetDisabledAtlas("groupfinder-eye-single")
 
     lfgButton:SetScript("OnMouseDown", lfgButton_OnMouseDown)
     return lfgButton
 end
 
-local function MDTButton_onmouseover(self, event)
+local function vaultButton_OnMouseDown(self, event)
+    local vaultFrame = _G["WeeklyRewardsFrame"]
+    if vaultFrame and vaultFrame:IsVisible() == true then
+        vaultFrame:Hide()
+    else
+        vaultFrame:Show()
+    end
 end
 
-local function MDTButton_onmouseout(self, event)
+local function createVaultButton(parent)
+
+    if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
+        C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+    end
+    local vaultButton = CreateFrame("Button", "KM_Vault", parent, UIPanelButtonTemplate)
+    vaultButton:SetSize(32, 32)
+    vaultButton:SetNormalAtlas("GreatVault-32x32")
+    vaultButton:SetHighlightAtlas("GreatVault-32x32")
+    vaultButton:SetPushedAtlas("GreatVault-32x32")
+    vaultButton:SetDisabledAtlas("GreatVault-32x32")
+
+    vaultButton:SetScript("OnMouseDown", vaultButton_OnMouseDown)
+    return vaultButton
 end
 
 local function createMDTButton(parent)
@@ -438,8 +448,6 @@ local function createMDTButton(parent)
     mdtButton:SetHighlightTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
     mdtButton:SetPushedTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
     mdtButton:SetDisabledTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-D")
-    mdtButton:SetScript("OnEnter", MDTButton_onmouseover)
-    mdtButton:SetScript("OnLeave", MDTButton_onmouseout)
 
     return mdtButton
 end
@@ -466,10 +474,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame:SetPoint("TOPLEFT", playerInformationFrame, "TOPLEFT", 0,-mtb)
     mapHeaderFrame:SetSize(mapFrameWidth-mr, mapFrameHeaderHeight-mtb)
     mapHeaderFrame:SetFrameLevel(playerInformationFrame:GetFrameLevel()+1)
-    --[[ mapHeaderFrame.divider1 = mapHeaderFrame:CreateTexture()
-    mapHeaderFrame.divider1:SetSize(32, 18)
-    mapHeaderFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    mapHeaderFrame.divider1:SetAlpha(0.3) ]]
 
     mapHeaderFrame.texture = mapHeaderFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     mapHeaderFrame.texture:SetAllPoints(mapHeaderFrame)
@@ -743,6 +747,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     -- Dungeon Tools Buton Panel
     local lastDTButton
+    -- Dungeon Tools box title
     --[[ dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
     dungeonToolsFrame.DetailsTitleDesc:SetPoint("TOPLEFT", dungeonToolsFrame, "TOPLEFT", 4, -4)
     dungeonToolsFrame.DetailsTitleDesc:SetText(KeyMasterLocals.PLAYERFRAME.DungeonTools.name)
@@ -756,8 +761,12 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
 
     local lfgButton = createLFGButton(dungeonToolsFrame)
-    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 2, 0)
+    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 4, 0)
     lastDTButton = lfgButton
+
+    local vaultButton = createVaultButton(dungeonToolsFrame)
+    vaultButton:SetPoint("LEFT", lfgButton, "RIGHT", 0, 0)
+    lastDTButton = vaultButton
 
     -- External Addon dependant buttons
     if (C_AddOns.IsAddOnLoaded("MythicDungeonTools")) then
@@ -830,18 +839,10 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalcBox:SetMaxLetters(2);
     scoreCalcBox:SetScript("OnEnterPressed", function(self)
         updateRatingCalculatorMap(self, selectedMapId)
-        --[[ self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
-        
-        local keyLevel = tonumber(self:GetText())
-        if keyLevel ~= nil then
-            local mapId = selectedMapId -- set from row click
-            
-            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
-            
-            scoreCalcDirection:Hide()
-            scoreCalcScores:Show()
-        end
-        --self:SetText("") -- Empties the box, duh! ;) ]]
+        self:ClearFocus()
+    end)
+    scoreCalcBox:SetScript("OnMouseDown", function(self)
+        self:SetText("")
     end)
     
     scoreCalc.keyLevelTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
@@ -971,7 +972,6 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     hlColor.r, hlColor.g, hlColor.b, _ = Theme:GetThemeColor(hlColorString)
     local mythicPlusDetailsFrame = CreateFrame("Frame", "KM_MythicPlusDetailsFrame", parentFrame)
     mythicPlusDetailsFrame:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", -4, 4)
-    --mythicPlusDetailsFrame:SetPoint("TOPRIGHT", contentFrame, "TOPLEFT", -4, -4)
     mythicPlusDetailsFrame:SetSize(parentFrame:GetWidth() - (_G["KM_PlayerMapInfo"]:GetWidth()) - (_G["KM_PlayerFrame_MapDetails"]:GetWidth()) - 8, _G["KM_PlayerMapInfo"]:GetHeight()-4)
 
     mythicPlusDetailsFrame.texture = mythicPlusDetailsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
@@ -984,7 +984,6 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     mythicPlusDetailsFrame.texture.overlay:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
     mythicPlusDetailsFrame.texture.overlay:SetAtlas("groupfinder-background")
     mythicPlusDetailsFrame.texture.overlay:SetTexCoord(0.55, 0.85, 0, 1)
-    --mythicPlusDetailsFrame.texture.overlay:SetAlpha(1)
 
     mythicPlusDetailsFrame.textureHighlight = mythicPlusDetailsFrame:CreateTexture(nil, "ARTWORK", nil, 1)
     mythicPlusDetailsFrame.textureHighlight:SetSize(mythicPlusDetailsFrame:GetWidth(), 64)
@@ -996,25 +995,6 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     local Hline = KeyMaster:CreateHLine(mythicPlusDetailsFrame:GetWidth()+8, mythicPlusDetailsFrame, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
-    --[[ local Hline = KeyMaster:CreateHLine(mythicPlusDetailsFrame:GetWidth()+8, mythicPlusDetailsFrame, "TOP", 0, 0)
-    Hline:SetAlpha(0.5)
-
-    local mapHeaderFrame = CreateFrame("Frame", "KM_MPlusDetailsHeader", mythicPlusDetailsFrame)
-    mapHeaderFrame:SetPoint("TOPLEFT", mythicPlusDetailsFrame, "TOPLEFT", 0,-4)
-    mapHeaderFrame:SetSize(mythicPlusDetailsFrame:GetWidth(), 20)
-    mapHeaderFrame:SetFrameLevel(mythicPlusDetailsFrame:GetFrameLevel()+1)
-
-    mapHeaderFrame.texture = mapHeaderFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    mapHeaderFrame.texture:SetAllPoints(mapHeaderFrame)
-    mapHeaderFrame.texture:SetColorTexture(0, 0, 0, 1)
-
-    mapHeaderFrame.MapName = mapHeaderFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.MapName:SetPoint("TOP", mapHeaderFrame, "TOP", 0, 0)
-    local Path, _, Flags = mapHeaderFrame.MapName:GetFont()
-    mapHeaderFrame.MapName:SetFont(Path, 16, Flags)
-    mapHeaderFrame.MapName:SetText(KeyMasterLocals.THISWEEKSAFFIXES) ]]
-
-    --PlayerFrame:CreateAffixFrames(mythicPlusDetailsFrame)
     return mythicPlusDetailsFrame
 
 end
