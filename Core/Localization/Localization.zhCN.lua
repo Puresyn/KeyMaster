@@ -2,7 +2,7 @@ KM_Localization_zhCN = {}
 local L = KM_Localization_zhCN
 
 -- Localization file for "zhCN": 简体中文
--- Translated by: 姜铁憨
+-- Translated by: 姜铁憨, gjfLeo
 
 --[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
     overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
@@ -40,14 +40,14 @@ L.MAPNAMES[404] = { name = "Neltharus", abbr = "奈萨" }
 L.MAPNAMES[405] = { name = "Brackenhide Hollow", abbr = "蕨皮" }
 L.MAPNAMES[406] = { name = "Halls of Infusion", abbr = "注能" }
 --TWW S1
-L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "CE" }
-L.MAPNAMES[502] = { name = "City of Threads", abbr = "CT" }
-L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "DB" }
-L.MAPNAMES[501] = { name = "The Stonevault", abbr = "SV" }
-L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SB" }
-L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "GB" }
-L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "MTS" }
-L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
+L.MAPNAMES[503] = { name = "Ara-Kara, City of Echoes", abbr = "回响" }
+L.MAPNAMES[502] = { name = "City of Threads", abbr = "千丝" }
+L.MAPNAMES[505] = { name = "The Dawnbreaker", abbr = "破晨" }
+L.MAPNAMES[501] = { name = "The Stonevault", abbr = "矶石" }
+L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "围攻" }
+L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "格瑞" }
+L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "仙林" }
+L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "通灵" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "经典旧世" }
@@ -57,9 +57,9 @@ L.XPAC[3] = { enum = "LE_EXPANSION_CATACLYSM", desc = "大地的裂变" }
 L.XPAC[4] = { enum = "LE_EXPANSION_MISTS_OF_PANDARIA", desc = "熊猫人之谜" }
 L.XPAC[5] = { enum = "LE_EXPANSION_WARLORDS_OF_DRAENOR", desc = "德拉诺之王" }
 L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "军团再临" }
-L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "决战艾泽拉斯" }
-L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "暗影之境" }
-L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "巨龙崛起" }
+L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "争霸艾泽拉斯" }
+L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "暗影国度" }
+L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "巨龙时代" }
 L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "地心之战" }
 
 L.MPLUSSEASON = {}
@@ -79,7 +79,7 @@ L.CLICKDRAG = "点击 + 拖动"
 L.TOOPEN = "来开启"
 L.TOREPOSITION = "来移动位置"
 L.EXCLIMATIONPOINT = "!"
-L.THISWEEKSAFFIXES = "本周..."
+L.THISWEEKSAFFIXES = "本周词缀"
 L.YOURRATING = "你的分数"
 L.ERRORMESSAGES = "错误提示为"
 L.ERRORMESSAGESNOTIFY = "通知：错误提示已启用。"
@@ -124,11 +124,11 @@ L.PARTYFRAME["NoKey"] = { name = "无钥石", text = "无钥石"}
 L.PARTYFRAME["NoPartyInfo"] = { text = "在匹配队伍时队伍成员信息不可用。（如地下城查找器， 团队副本查找器，等等。）" }
 
 L.PLAYERFRAME = {}
-L.PLAYERFRAME["KeyLevel"] = { name = "钥石层数", text = "用于计算的钥石层数。"}
+L.PLAYERFRAME["KeyLevel"] = { name = "钥石等级", text = "用于计算的钥石等级。"}
 L.PLAYERFRAME["Gain"] = { name = "收益", text = "潜在的分数收益。"}
 L.PLAYERFRAME["New"] = { name = "新", text = "完成此钥石+1后你的分数。"}
 L.PLAYERFRAME["RatingCalculator"] = { name = "分数计算器", text = "计算潜在的分数收益。"}
-L.PLAYERFRAME["EnterKeyLevel"] = { name = "输入钥石层数", text = "输入一个钥石层数来查看"}
+L.PLAYERFRAME["EnterKeyLevel"] = { name = "输入钥石等级", text = "输入一个钥石等级来查看"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "基本分数收益", text = "你的基础分数收益预测。"}
 L.PLAYERFRAME["Characters"] = "角色"
 L.PLAYERFRAME["DungeonTools"] = { name = "Dungeon Tools", text = "Various tools related to this dungeon."}
@@ -155,7 +155,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="角色列表过滤", text = 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "当前服务器", text = "只显示当前服务器。" }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "无分数", text = "只显示有分数的角色。" }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "无钥石", text = "只显示有钥石的角色。" }
-L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "满级", text = "只显示达到最高等级的角色。" }
 L.CONFIGURATIONFRAME["Purge"] = { present = "清空", past = "已清空" }
 
 L.ABOUTFRAME = {}
@@ -167,4 +167,4 @@ L.ABOUTFRAME["Translators"] = { text = "译者" }
 L.ABOUTFRAME["WhatsNew"] = { text = "显示更新内容"}
 
 L.SYSTEMMESSAGE = {}
-L.SYSTEMMESSAGE["NOTICE"] = { text = "Notice: This seasons rating calculations are still being verified."}
+L.SYSTEMMESSAGE["NOTICE"] = { text = "注意：本赛季的分数计算仍在验证中。"}
