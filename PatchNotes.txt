@@ -18,7 +18,7 @@ Updates:
 - Changed rating calculator functionality to now keep the key level entered and re-calculate automatically for each map row being selected.
 - Updated some vault graphics (more updates to come).
 - Disabled rating pending verification system message.
-- Temporarily disabled Russian and Chinese translations due to lack of translator participation. (See us if interested!)
+- Temporarily disabled Russian translation due to lack of translator participation. (See us if interested!)
 - Updated a few dungeon name abbreviations to better seperate meaning.
 
 Fixes:

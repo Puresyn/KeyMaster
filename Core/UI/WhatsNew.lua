@@ -53,7 +53,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <p>]]..textBullet..[[Disabled rating pending verification system message.</p>
                 <br/>
-                <p>]]..textBullet..[[Temporarily disabled Russian and Chinese translations due to lack of translator participation. (See us if interested!)</p>                
+                <p>]]..textBullet..[[Temporarily disabled Russian translation due to lack of translator participation. (See us if interested!)</p>                
                 <br/>
                 <p>]]..textBullet..[[Updated a few dungeon name abbreviations to better seperate meaning.</p>                
                 <br/>
