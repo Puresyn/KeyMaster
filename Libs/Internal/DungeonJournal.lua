@@ -27,7 +27,7 @@ local function getInstances(tier)
     return instances
 end
 
-local function getInstanceId(mapName)
+ function DungeonJournal:getInstanceId(mapName)
 	local currentTier = EJ_GetCurrentTier()
 	EJ_SelectTier(currentTier); -- sets dungeon journal data to current tier data
     local instances = {}
@@ -43,13 +43,13 @@ local function getInstanceId(mapName)
 		instanceID, name, description, _, buttonImage, _, _, _, link, _, mapID = EJ_GetInstanceByIndex(dataIndex, false);
 	end
 
-	KeyMaster:_ErrorMsg("getInstanceId","DungeonJournal", "Could not find instanceID for mapName: "..mapName)
+	KeyMaster:_DebugMsg("getInstanceId","DungeonJournal", "Could not find instanceID for mapName: "..mapName)
 	return nil
 end
 
 function DungeonJournal:ShowDungeonJournal(mapName)
     local mythicPlusDifficultiyId = 8
-    local instanceID = getInstanceId(mapName)
+    local instanceID = DungeonJournal:getInstanceId(mapName)
     if (not EncounterJournal_OpenJournal) then
         UIParentLoadAddOn('Blizzard_EncounterJournal')
     end
@@ -58,7 +58,7 @@ end
 
 function DungeonJournal:ShowDungeonMap(mapName)
 	local mythicPlusDifficultiyId = 8
-    local instanceID = getInstanceId(mapName)
+    local instanceID = DungeonJournal:getInstanceId(mapName)
     if (not EncounterJournal_OpenJournal) then
         UIParentLoadAddOn('Blizzard_EncounterJournal')
     end

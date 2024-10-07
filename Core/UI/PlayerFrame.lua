@@ -97,6 +97,16 @@ local function mapdData_OnRowClick(self, event)
     local dungeonMapFrame = _G["KM_Map"]
     dungeonMapFrame.mapId = selectedMapId
 
+    local validInstanceID = DungeonJournal:getInstanceId(seasonMaps[selectedMapId].name)
+
+    if (validInstanceID) then
+        dungeonJournalFrame:Enable()
+        dungeonMapFrame:Enable()
+    else
+        dungeonJournalFrame:Disable()
+        dungeonMapFrame:Disable()        
+    end
+
     local portalButton = _G["KM_Playerportal_button"]
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(selectedMapId)
     if portalButton then 
@@ -283,6 +293,7 @@ local afffixRuntimeOffsety = -2
 local doOnce = 0
 
 local function journalButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
     if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapName = seasonMaps[self.mapId].name
@@ -317,6 +328,7 @@ end
 
 
 local function instanceMapButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     local mapName = seasonMaps[self.mapId].name
 
@@ -330,7 +342,7 @@ local function createInstanceMapButton(parent)
     instanceMapButton:SetNormalAtlas("poi-islands-table")
     instanceMapButton:SetHighlightAtlas("poi-islands-table")
     instanceMapButton:SetPushedAtlas("poi-islands-table")
-    instanceMapButton:SetDisabledAtlas("poi-islands-table")
+    instanceMapButton:SetDisabledTexture("Interface/Addons/KeyMaster/Assets/Images/poi-islands-table-disabled")
     instanceMapButton:SetScript("OnMouseDown", instanceMapButton_OnMouseDown)
     return instanceMapButton
 end
@@ -395,6 +407,7 @@ local function createPortalButton(parent)
 end
 
 local function lfgButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
     toggleLFGPanel()
 end
 
@@ -412,6 +425,7 @@ local function createLFGButton(parent)
 end
 
 local function vaultButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
     local vaultFrame = _G["WeeklyRewardsFrame"]
     if vaultFrame and vaultFrame:IsVisible() == true then
         vaultFrame:Hide()
