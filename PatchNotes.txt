@@ -19,7 +19,7 @@ Updates:
 - Updated some vault graphics (more updates to come).
 - Disabled rating pending verification system message.
 - Temporarily disabled Russian translation due to lack of translator participation. (See us if interested!)
-- Updated a few dungeon name abbreviations to better seperate meaning.
+- Updated a few dungeon name abbreviations to better separate meaning.
 
 Fixes:
 - None

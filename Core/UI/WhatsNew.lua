@@ -55,7 +55,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <p>]]..textBullet..[[Temporarily disabled Russian translation due to lack of translator participation. (See us if interested!)</p>                
                 <br/>
-                <p>]]..textBullet..[[Updated a few dungeon name abbreviations to better seperate meaning.</p>                
+                <p>]]..textBullet..[[Updated a few dungeon name abbreviations to better separate meaning.</p>                
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
