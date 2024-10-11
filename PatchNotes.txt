@@ -6,6 +6,15 @@ PATCH NOTES:
 Key Master v1.3.5
 --------------------------------------------------
 Updates:
+
+Fixes:
+
+Known Bugs/Issues:
+
+--------------------------------------------------
+Key Master v1.3.5
+--------------------------------------------------
+Updates:
 - Added a dungeon tools buttons row on the Player frame that simplifies access to WoW features and other addons:
 > Open the dungeon journal to the selected dungeon.
 > Open the instance map of the selected dungeon.
