@@ -22,10 +22,10 @@ Updates:
 - Updated a few dungeon name abbreviations to better seperate meaning.
 
 Fixes:
-- Fixed M+ Vault Progression not updating upon dungeon completion if the player tab was the last tab open (Hopefully for real this time).
+- None
 
 Know Bugs/Issues:
-- None
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
 
 --------------------------------------------------
 Key Master v1.3.4

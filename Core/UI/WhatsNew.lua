@@ -60,12 +60,12 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Fixed M+ Vault Progression not updating upon dungeon completion if the player tab was the last tab open (Hopefully for real this time).</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
