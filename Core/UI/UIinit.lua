@@ -8,6 +8,7 @@ local PartyFrame = KeyMaster.PartyFrame
 local CharactersFrame = KeyMaster.CharactersFrame
 local Theme = KeyMaster.Theme
 local WhatsNew = KeyMaster.WhatsNew
+local KMFactory = KeyMaster.Factory
 
 -- Creates Addon Minimap Icon
 function MainInterface:CreateMiniMapIcon()
@@ -77,6 +78,9 @@ function MainInterface:Initialize()
   else
     Tab_OnClick(playerTab)
   end
+
+  -- Create Tooltip
+  local tooltipFrame = _G["KM_Tooltip"] or KMFactory:Create(_G["KeyMaster_MainFrame"], "Tooltip", {name ="KM_Tooltip"})
 
   return mainFrame
 end

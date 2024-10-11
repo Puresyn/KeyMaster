@@ -8,6 +8,8 @@ local MainInterface = KeyMaster.MainInterface
 local PlayerFrameMapping = KeyMaster.PlayerFrameMapping
 local CharacterData = KeyMaster.CharacterData
 local Factory = KeyMaster.Factory
+local DungeonJournal = KeyMaster.DungeonJournal
+local PartyFrame = KeyMaster.PartyFrame
 
 local function shortenDungeonName(fullDungeonName)
     local length = string.len(fullDungeonName)
@@ -27,6 +29,48 @@ local function getColor(strColor)
     return Color.r, Color.g, Color.b, Color.a
 end
 
+local function closeEncounterJournal()
+    if (_G["EncounterJournal"]) then 
+        if (_G["EncounterJournal"]:IsVisible() == true) then
+            ToggleEncounterJournal()
+        end
+    end
+end
+
+local function toggleLFGPanel()
+    if (_G["GroupFinderFrame"]) then
+        if (_G["GroupFinderFrame"]:IsVisible() == false) then
+                PVEFrame_ShowFrame("GroupFinderFrame")
+        else
+            PVEFrame_ToggleFrame()
+        end
+    end
+    
+end
+
+local function updateRatingCalculatorMap(self, selectedMapId)
+    self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
+
+    local scores = _G["KM_ScoreCalcScores"]
+    local directions =  _G["KM_ScoreCalcDirection"]
+    
+    local keyLevel = tonumber(self:GetText())
+    if keyLevel ~= nil and keyLevel >= 2 then
+
+        local mapId = selectedMapId -- set from row click
+        
+        PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
+        
+        directions:Hide()
+        scores:Show()
+    else
+        self:SetText("")
+        directions:Show()
+        scores:Hide()
+    end
+    --self:SetText("") -- Empties the box, duh! ;)
+end
+
 local function mapData_onmouseover(self, event)
     local highlight = self:GetAttribute("highlight")
     local hlColor = {}
@@ -34,6 +78,7 @@ local function mapData_onmouseover(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor("color_COMMON")
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, hlColor.a)
 end
+
 local function mapData_onmouseout(self, event)
     local highlight = self:GetAttribute("highlight")
     local defColor = self:GetAttribute("defColor")
@@ -42,15 +87,53 @@ local function mapData_onmouseout(self, event)
     hlColor.r,hlColor.g,hlColor.b, _ = getColor(defColor)
     highlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, defAlpha)
 end
+
 local selectedMapId
 local function mapdData_OnRowClick(self, event)
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
     selectedMapId = self:GetAttribute("mapId")
+    local dungeonJournalFrame = _G["KM_Journal"]
+    dungeonJournalFrame.mapId = selectedMapId
+    local dungeonMapFrame = _G["KM_Map"]
+    dungeonMapFrame.mapId = selectedMapId
+
+    local validInstanceID = DungeonJournal:getInstanceId(seasonMaps[selectedMapId].name)
+
+    if (validInstanceID) then
+        dungeonJournalFrame:Enable()
+        dungeonMapFrame:Enable()
+    else
+        dungeonJournalFrame:Disable()
+        dungeonMapFrame:Disable()        
+    end
+
+    local portalButton = _G["KM_Playerportal_button"]
+    local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(selectedMapId)
+    if portalButton then 
+
+        local cooldown 
+        if portalSpellName then cooldown = C_Spell.GetSpellCooldown(portalSpellName) end
+        if (portalSpellId ~= nil and cooldown ~= nil and cooldown["startTime"] == 0) then
+            portalButton:SetAttribute("spell", portalSpellId)
+            portalButton:Enable()
+            portalButton:Show()
+
+        else
+
+            portalButton:Disable()
+            portalButton:Hide()
+
+        end
+    end
+
+
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
     local mapCalcFrame = _G["KM_ScoreCalc"]
     local scoreCalcScores = _G["KM_ScoreCalcScores"]
     local scoresCalcDirection = _G["KM_ScoreCalcDirection"]
+
+    closeEncounterJournal()
     
     if mapDetailsFrame.MapName:GetText() ~= dungeonName then        
         mapDetailsFrame.MapName:SetText(dungeonName)
@@ -60,8 +143,9 @@ local function mapdData_OnRowClick(self, event)
         mapDetailsFrame.TimeLimit:SetText("+"..KeyMaster:FormatDurationSec(timers["1chest"]))
         mapDetailsFrame.TwoChestTimer:SetText("++"..KeyMaster:FormatDurationSec(timers["2chest"])) 
         mapDetailsFrame.ThreeChestTimer:SetText("+++"..KeyMaster:FormatDurationSec(timers["3chest"]))
-        scoreCalcScores:Hide()
-        scoresCalcDirection:Show()
+        updateRatingCalculatorMap(_G["KM_CalcKeyLevel"], selectedMapId)
+        --scoreCalcScores:Hide()
+        --scoresCalcDirection:Show()
     end
 end
 
@@ -70,27 +154,6 @@ function PlayerFrame:CreatePlayerContentFrame(parentFrame)
     playerContentFrame:SetSize(parentFrame:GetWidth(), parentFrame:GetHeight())
     playerContentFrame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT")
     return playerContentFrame
-end
-
-local function updateWeeklyAffixTheme()
-    local cw = {} -- current weekly affix highlight
-    local ow = {} -- off weekly affix highlight
-    cw.r, cw.g, cw.b, _ = Theme:GetThemeColor("party_CurrentWeek")
-    ow.r, ow.g, ow.b, _ = Theme:GetThemeColor("party_OffWeek")
-    local weeklyAffix = DungeonTools:GetWeeklyAffix()
-    local mapTable = DungeonTools:GetCurrentSeasonMaps()
-
-    local baseFrame = _G["KM_PlayerFrameMapInfoHeader"]
-    local tyrannicalSelector = _G["TyrannicalSelector"]
-    local fortifiedSelector = _G["FortifiedSelector"]
-
-    -- This can occur when between seasons as blizzard returns nil from C_MythicPlus.GetCurrentAffixes()
-    if weeklyAffix == nil then
-        baseFrame.fortText:SetTextColor(1, 1, 1, 1)
-        baseFrame.tyranText:SetTextColor(1, 1, 1, 1)
-        KeyMaster:_DebugMsg("updateWeeklyAffixTheme", "PlayerFrame", "No active weekly affix was found.")
-        return
-    end
 end
 
 function PlayerFrame:CreatePlayerFrame(parentFrame)
@@ -103,7 +166,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.texture:SetColorTexture(0, 0, 0, 1)
     playerFrame:SetScript("OnShow", function(self)
         PlayerFrameMapping:RefreshData(false)
-        updateWeeklyAffixTheme()
     end)
 
     local modelFrame = CreateFrame("PlayerModel", "KM_PlayerModel", playerFrame)
@@ -127,11 +189,8 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     characterIconFrame:SetSize(playerFrame:GetHeight()+20, playerFrame:GetHeight())
     characterIconFrame.icon = characterIconFrame:CreateTexture(nil, "ARTWORK")
     characterIconFrame.icon:SetAllPoints(characterIconFrame)
-    --characterIconFrame.icon:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES")
     characterIconFrame.icon:SetTexture("Interface/Addons/KeyMaster/Assets/Images/"..Theme.style)
     characterIconFrame.icon:SetTexCoord(961/1024, 1, 332/1024,  399/1024)
-    --characterIconFrame.icon:SetAlpha(0.3)
-    --characterIconFrame.icon:SetTexture("")
     characterIconFrame:Hide()
 
     local playerFrameHighlight = CreateFrame("Frame", "KM_PlayerFrameHighlight" ,playerFrame)
@@ -199,19 +258,6 @@ function PlayerFrame:CreatePlayerFrame(parentFrame)
     playerFrame.realmName:SetTextColor(0.3, 0.3, 0.3, 1)
     playerFrame.realmName:SetText(GetRealmName())
 
-    --[[ playerFrame:HookScript("OnShow", function()
-        if not KeyMaster.characterList or not type(KeyMaster.characterList) == "table" then
-            print("No character list")
-            _G["KM_CharactersButton"]:Hide()
-        elseif KeyMaster:GetTableLength(KeyMaster.characterList) == 0 then
-            print("Empty character list")
-            _G["KM_CharactersButton"]:Hide()
-        elseif KeyMaster:GetTableLength(KeyMaster.characterList) > 0 then
-            print("Characters in list")
-            _G["KM_CharactersButton"]:Show()
-        end
-    end) ]]
-
     return playerFrame
 end
 
@@ -236,21 +282,195 @@ local function toggleCharactersFrame(self)
 end
 
 
-local keyLevelOffsetx = -30
+local keyLevelOffsetx = 90
 local keyLevelOffsety = -2
 local affixScoreOffsetx = 135
 local affixScoreOffsety = 8
 local affixBonusOffsetx = 0
 local affixBonusOffsety = 0
-local afffixRuntimeOffsetx = 0
-local afffixRuntimeOffsety = -4
+local afffixRuntimeOffsetx = 160
+local afffixRuntimeOffsety = -2
 local doOnce = 0
+
+local function journalButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
+    if _G["EncounterJournal"] and _G["EncounterJournal"]:IsVisible() == true then closeEncounterJournal() return end
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    local mapName = seasonMaps[self.mapId].name
+    
+    DungeonJournal:ShowDungeonJournal(mapName)
+end
+
+local function journalButton_OnMouseUp(self, event)
+end
+
+local function journalButton_onmouseover(self, event)
+end
+
+local function journalButton_onmouseout(self, event)
+end
+
+
+local function createJournalButton(parent)
+    
+    if not parent then print("Journal Error") return end
+
+    local journalButton = CreateFrame("Button", "KM_Journal", parent, UIPanelButtonTemplate)
+    journalButton:SetSize(32, 41)
+    journalButton:SetNormalAtlas("UI-HUD-MicroMenu-AdventureGuide-Up")
+    journalButton:SetHighlightAtlas("UI-HUD-MicroMenu-AdventureGuide-Up")
+    journalButton:SetPushedAtlas("UI-HUD-MicroMenu-AdventureGuide-Down")
+    journalButton:SetDisabledAtlas("UI-HUD-MicroMenu-AdventureGuide-Disabled")
+
+    journalButton:SetScript("OnMouseDown", journalButton_OnMouseDown)
+    return journalButton
+end
+
+
+local function instanceMapButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
+    local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
+    local mapName = seasonMaps[self.mapId].name
+
+    DungeonJournal:ShowDungeonMap(mapName)
+end
+
+local function createInstanceMapButton(parent)
+
+    local instanceMapButton = CreateFrame("Button", "KM_Map", parent, UIPanelButtonTemplate)
+    instanceMapButton:SetSize(24, 24)
+    instanceMapButton:SetNormalAtlas("poi-islands-table")
+    instanceMapButton:SetHighlightAtlas("poi-islands-table")
+    instanceMapButton:SetPushedAtlas("poi-islands-table")
+    instanceMapButton:SetDisabledTexture("Interface/Addons/KeyMaster/Assets/Images/poi-islands-table-disabled")
+    instanceMapButton:SetScript("OnMouseDown", instanceMapButton_OnMouseDown)
+    return instanceMapButton
+end
+
+local function portalButton_mouseover(self, event)
+end
+
+local function portalButton_mouseoout(self, event)
+end
+
+local function createPortalButton(parent)
+    local pButton, portalSpellId, portalSpellName, mapId
+    mapId = DungeonTools:GetFirstSeasonMapId()
+    if not mapId then
+        KeyMaster:_ErrorMsg("createPortalButton", "PlayerFrame", "Invalid map ID: "..tostring(mapId))
+        return
+    end
+
+    pButton = _G["KM_Playerportal_button"]        
+
+    local function createButton(mapId)
+        if not parent or not mapId then return end
+
+        portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(mapId)
+        local portalButton = _G["KM_Playerportal_button"]
+        if portalButton then 
+            portalButton:SetAttribute("spell", portalSpellId)
+            return
+        end
+        
+        if (portalSpellId) then -- if the player has the portal, make the dungeon image clickable to cast it if clicked.
+
+            pButton = CreateFrame("Button","KM_Playerportal_button",parent,"SecureActionButtonTemplate")
+            pButton:SetFrameLevel(10)
+            pButton:SetAttribute("type", "spell")
+            pButton:SetAttribute("spell", portalSpellId)
+            pButton:SetAttribute("portalSpellName", portalSpellName)
+            pButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
+            pButton:SetSize(34, 34)
+            pButton:SetNormalAtlas("WarlockPortalAlliance")
+            pButton:SetHighlightAtlas("WarlockPortal-Yellow-32x32")
+            pButton:SetPushedAtlas("WarlockPortalAlliance")
+            pButton:SetDisabledAtlas("WarlockPortalHorde")
+            pButton:SetScript("OnEnter", portalButton_mouseover)
+            pButton:SetScript("OnLeave", portalButton_mouseoout)
+        
+            return pButton
+        end
+        
+    end
+
+    if not pButton then
+        pButton = createButton(mapId)
+    end
+
+    if pButton then
+        pButton:SetAttribute("spell", portalSpellId)
+        return pButton
+    else
+        return
+    end
+end
+
+local function lfgButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
+    toggleLFGPanel()
+end
+
+local function createLFGButton(parent)
+    
+    local lfgButton = CreateFrame("Button", "KM_LFG", parent, UIPanelButtonTemplate)
+    lfgButton:SetSize(24, 24)
+    lfgButton:SetNormalAtlas("groupfinder-eye-single")
+    lfgButton:SetHighlightAtlas("groupfinder-eye-single")
+    lfgButton:SetPushedAtlas("groupfinder-eye-single")
+    lfgButton:SetDisabledAtlas("groupfinder-eye-single")
+
+    lfgButton:SetScript("OnMouseDown", lfgButton_OnMouseDown)
+    return lfgButton
+end
+
+local function vaultButton_OnMouseDown(self, event)
+    if (not self:IsEnabled()) then return end
+    local vaultFrame = _G["WeeklyRewardsFrame"]
+    if vaultFrame and vaultFrame:IsVisible() == true then
+        vaultFrame:Hide()
+    else
+        vaultFrame:Show()
+    end
+end
+
+local function createVaultButton(parent)
+
+    if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
+        C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+    end
+    local vaultButton = CreateFrame("Button", "KM_Vault", parent, UIPanelButtonTemplate)
+    vaultButton:SetSize(32, 32)
+    vaultButton:SetNormalAtlas("GreatVault-32x32")
+    vaultButton:SetHighlightAtlas("GreatVault-32x32")
+    vaultButton:SetPushedAtlas("GreatVault-32x32")
+    vaultButton:SetDisabledAtlas("GreatVault-32x32")
+
+    vaultButton:SetScript("OnMouseDown", vaultButton_OnMouseDown)
+    return vaultButton
+end
+
+local function createMDTButton(parent)
+
+    local mdtButton = CreateFrame("Button","KM_MDT",parent,"SecureActionButtonTemplate")
+    mdtButton:SetFrameLevel(10)
+    mdtButton:SetAttribute("type", "macro")
+    mdtButton:SetAttribute("macrotext", "/mdt") -- /mdt\n/run MDT:UpdateToDungeon(113) works with MDT lua errors
+    mdtButton:RegisterForClicks("AnyUp", "AnyDown") -- OPie rewrites the CVAR that handles mouse clicks. Added "AnyUp" to conditional.
+    mdtButton:SetSize(20, 28)
+    mdtButton:SetNormalTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetHighlightTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetPushedTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-N")
+    mdtButton:SetDisabledTexture("Interface/Addons/KeyMaster/Assets/Images/MDT-D")
+
+    return mdtButton
+end
 
 function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     local mtb = 4 -- margin top/bottom
     local mr = 4 -- margin right
     local mapFrameHeaderHeight = 25
-    local mapFrameWIdthPercent = 0.4
+    local mapFrameWIdthPercent = 0.5
 
     -- Maps Panel
     local playerInformationFrame = CreateFrame("Frame", "KM_PlayerMapInfo", parentFrame)
@@ -268,10 +488,6 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
     mapHeaderFrame:SetPoint("TOPLEFT", playerInformationFrame, "TOPLEFT", 0,-mtb)
     mapHeaderFrame:SetSize(mapFrameWidth-mr, mapFrameHeaderHeight-mtb)
     mapHeaderFrame:SetFrameLevel(playerInformationFrame:GetFrameLevel()+1)
-    --[[ mapHeaderFrame.divider1 = mapHeaderFrame:CreateTexture()
-    mapHeaderFrame.divider1:SetSize(32, 18)
-    mapHeaderFrame.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    mapHeaderFrame.divider1:SetAlpha(0.3) ]]
 
     mapHeaderFrame.texture = mapHeaderFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     mapHeaderFrame.texture:SetAllPoints(mapHeaderFrame)
@@ -354,7 +570,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
 
         dataFrame.dungeonName = dataFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
         dataFrame.dungeonName:SetPoint("TOPLEFT", dataFrame, "TOPLEFT", 4, -4)
-        dataFrame.dungeonName:SetSize(140, 22)
+        dataFrame.dungeonName:SetSize(200, 22)
         dataFrame.dungeonName:SetJustifyV("TOP")
         dataFrame.dungeonName:SetJustifyH("LEFT")
         local shortenBlizzardsStupidLongInstanceNames = shortenDungeonName(seasonMaps[mapId].name)
@@ -387,7 +603,7 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         --///// TYRANNICAL /////--
         -- Tyrannical Key Level
         dataFrame.tyrannicalLevel = dataFrame:CreateFontString("KM_PlayerFrameTyranLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalLevel:SetPoint("CENTER", dataFrame, "CENTER", -keyLevelOffsetx, keyLevelOffsety)
+        dataFrame.tyrannicalLevel:SetPoint("RIGHT", dataFrame, "RIGHT", -keyLevelOffsetx, keyLevelOffsety)
         local Path, _, Flags = dataFrame.tyrannicalLevel:GetFont()
         dataFrame.tyrannicalLevel:SetFont(Path, 24, Flags)
         dataFrame.tyrannicalLevel:SetJustifyH("RIGHT")
@@ -399,57 +615,16 @@ function PlayerFrame:CreateMapData(parentFrame, contentFrame)
         dataFrame.tyrannicalBonus:SetJustifyH("RIGHT")
         dataFrame.tyrannicalBonus:SetText("")
 
-        -- Tyrannical Score
-        --[[ dataFrame.tyrannicalScore = dataFrame:CreateFontString("KM_PlayerFrameTyranScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalScore:SetPoint("RIGHT", dataFrame.overallScore, "CENTER", -affixScoreOffsetx, affixScoreOffsety)
-        dataFrame.tyrannicalScore:SetJustifyH("RIGHT")
-        dataFrame.tyrannicalScore:SetJustifyV("BOTTOM")
-        dataFrame.tyrannicalScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
-        dataFrame.tyrannicalScore:SetText("") ]]
-
         -- Tyrannical RunTime
         dataFrame.tyrannicalRunTime = dataFrame:CreateFontString("KM_PlayerFrameTyranRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.tyrannicalRunTime:SetPoint("TOP", dataFrame.dungeonName, "BOTTOM", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
+        dataFrame.tyrannicalRunTime:SetPoint("RIGHT", dataFrame, "RIGHT", -afffixRuntimeOffsetx, afffixRuntimeOffsety)
         dataFrame.tyrannicalRunTime:SetJustifyH("CENTER")
         dataFrame.tyrannicalRunTime:SetJustifyV("MIDDLE")
         dataFrame.tyrannicalRunTime:SetText("") 
 
-        --///// FORTIFIED /////--
-        -- Fortified Key Level
-        --[[ dataFrame.fortifiedLevel = dataFrame:CreateFontString("KM_PlayerFrameFortLevel"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedLevel:SetPoint("LEFT", dataFrame.overallScore, "CENTER", keyLevelOffsetx, keyLevelOffsety)
-        local Path, _, Flags = dataFrame.fortifiedLevel:GetFont()
-        dataFrame.fortifiedLevel:SetFont(Path, 24, Flags)
-        dataFrame.fortifiedLevel:SetJustifyH("LEFT")
-        dataFrame.fortifiedLevel:SetText("") ]]
-
-        -- Fortified Bonus Time
-        --[[ dataFrame.fortifiedBonus = dataFrame:CreateFontString("KM_PlayerFrameFortBonus"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedBonus:SetPoint("LEFT", dataFrame.fortifiedLevel, "RIGHT", affixBonusOffsetx, affixBonusOffsety)
-        dataFrame.fortifiedBonus:SetJustifyH("LEFT")
-        dataFrame.fortifiedBonus:SetText("")  ]]
-
-        -- Fortified Score
-        --[[ dataFrame.fortifiedScore = dataFrame:CreateFontString("KM_PlayerFrameFortScore"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedScore:SetPoint("LEFT", dataFrame.overallScore, "CENTER", affixScoreOffsetx, affixScoreOffsety)
-        dataFrame.fortifiedScore:SetJustifyH("LEFT")
-        dataFrame.fortifiedScore:SetTextColor(scoreColor.r, scoreColor.g, scoreColor.b, 1)
-        dataFrame.fortifiedScore:SetText("") ]]
-
-        -- Tyrannical RunTime
-        dataFrame.fortifiedRunTime = dataFrame:CreateFontString("KM_PlayerFrameFortRunTime"..mapId, "OVERLAY", "KeyMasterFontBig")
-        dataFrame.fortifiedRunTime:SetPoint("LEFT",dataFrame.overallScore, "CENTER", afffixRuntimeOffsetx, afffixRuntimeOffsety)
-        dataFrame.fortifiedRunTime:SetJustifyH("LEFT")
-        dataFrame.fortifiedRunTime:SetJustifyV("TOP")
-        dataFrame.fortifiedRunTime:SetText("")
-
         if (doOnce == 0) then
             local point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.overallScore:GetPoint()
-            --[[ mapHeaderFrame.divider1:SetPoint("CENTER", mapHeaderFrame, "CENTER", xOfs, 0) ]]
             point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.tyrannicalLevel:GetPoint()
-            --[[ mapHeaderFrame.tyranText:SetPoint("RIGHT",  mapHeaderFrame.divider1, relativePoint, xOfs, 0)
-            point, relativeTo, relativePoint, xOfs, yOfs = dataFrame.fortifiedLevel:GetPoint()
-            mapHeaderFrame.fortText:SetPoint("LEFT", mapHeaderFrame.divider1, relativePoint, xOfs, 0) ]]
             doOnce = 1
         end
         prevFrame = mapFrame
@@ -485,9 +660,11 @@ end
 
 function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     local detailsFrame = CreateFrame("Frame", "KM_PlayerFrame_MapDetails", parentFrame)
-    detailsFrame:SetPoint("TOPLEFT", contentFrame, "TOPRIGHT", -4, 0)
+    --detailsFrame:SetPoint("TOPLEFT", contentFrame, "TOPRIGHT", -4, 0)
+    detailsFrame:SetPoint("TOPLEFT", _G["KM_PlayerMapInfo"], "TOPRIGHT", -4, 0)
     --detailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, 0)
-    detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4)/2, contentFrame:GetHeight())
+    --detailsFrame:SetSize((parentFrame:GetWidth() - _G["KM_PlayerMapInfo"]:GetWidth()+4), contentFrame:GetHeight())
+    detailsFrame:SetSize(parentFrame:GetWidth()*0.3, contentFrame:GetHeight())
 
     -- Map Details Frame
     local highlightAlpha = 0.5
@@ -562,10 +739,66 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     mapDetails.ThreeChestTimer:SetTextColor(threecr, threecg, threecb, 1)
     mapDetails.ThreeChestTimer:SetJustifyH("LEFT")
 
+    -- Dungeon Tools Box
+    local dungeonToolsFrame = CreateFrame("Frame", "KM_DungeonInfoBox", detailsFrame)
+    dungeonToolsFrame:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
+    dungeonToolsFrame:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.08)-4)
+
+    dungeonToolsFrame.texture = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
+    dungeonToolsFrame.texture:SetAllPoints(dungeonToolsFrame)
+    dungeonToolsFrame.texture:SetSize(dungeonToolsFrame:GetWidth(), dungeonToolsFrame:GetHeight())
+    dungeonToolsFrame.texture:SetColorTexture(0,0,0,1)
+
+    dungeonToolsFrame.textureHighlight = dungeonToolsFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
+    dungeonToolsFrame.textureHighlight:SetSize(dungeonToolsFrame:GetWidth(), 64)
+    dungeonToolsFrame.textureHighlight:SetPoint("BOTTOMLEFT", dungeonToolsFrame, "BOTTOMLEFT", 0, 0)
+    dungeonToolsFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
+    dungeonToolsFrame.textureHighlight:SetAlpha(highlightAlpha)
+    dungeonToolsFrame.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
+
+    local Hline = KeyMaster:CreateHLine(dungeonToolsFrame:GetWidth()+8, dungeonToolsFrame, "TOP", 0, 0)
+    Hline:SetAlpha(0.5)
+
+    -- Dungeon Tools Buton Panel
+    local lastDTButton
+    -- Dungeon Tools box title
+    --[[ dungeonToolsFrame.DetailsTitleDesc = dungeonToolsFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
+    dungeonToolsFrame.DetailsTitleDesc:SetPoint("TOPLEFT", dungeonToolsFrame, "TOPLEFT", 4, -4)
+    dungeonToolsFrame.DetailsTitleDesc:SetText(KeyMasterLocals.PLAYERFRAME.DungeonTools.name)
+    dungeonToolsFrame.DetailsTitleDesc:SetTextColor(boxTitler, boxTitleg, boxTitleb, 1)
+    dungeonToolsFrame.DetailsTitleDesc:SetJustifyH("LEFT") ]]
+
+    local journalButton = createJournalButton(dungeonToolsFrame)
+    journalButton:SetPoint("LEFT", dungeonToolsFrame, "LEFT", 4, 0)
+
+    local instanceMapButton = createInstanceMapButton(dungeonToolsFrame)
+    instanceMapButton:SetPoint("LEFT", journalButton, "RIGHT", 0, 0)
+
+    local lfgButton = createLFGButton(dungeonToolsFrame)
+    lfgButton:SetPoint("LEFT", instanceMapButton, "RIGHT", 4, 0)
+    lastDTButton = lfgButton
+
+    local vaultButton = createVaultButton(dungeonToolsFrame)
+    vaultButton:SetPoint("LEFT", lfgButton, "RIGHT", 0, 0)
+    lastDTButton = vaultButton
+
+    -- External Addon dependant buttons
+    if (C_AddOns.IsAddOnLoaded("MythicDungeonTools")) then
+        local mdtButton = createMDTButton(dungeonToolsFrame)
+        mdtButton:SetPoint("LEFT", lastDTButton, "RIGHT", 0, 0)
+        lastDTButton = mdtButton
+    end
+    -----------------
+
+    local portalButton = createPortalButton(dungeonToolsFrame)
+    if portalButton then
+        portalButton:SetPoint("RIGHT", dungeonToolsFrame, "RIGHT", -4, 0)
+    end
+
     -- Score Calc
     local scoreCalc = CreateFrame("Frame", "KM_ScoreCalc", detailsFrame)
-    scoreCalc:SetPoint("TOP", mapDetails, "BOTTOM", 0, -4)
-    scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
+    scoreCalc:SetPoint("TOP", dungeonToolsFrame, "BOTTOM", 0, -4)
+    scoreCalc:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.23)-4)
     
     scoreCalc.texture = scoreCalc:CreateTexture(nil, "BACKGROUND", nil, 0)
     scoreCalc.texture:SetAllPoints(scoreCalc)
@@ -610,8 +843,8 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
     local scoreCalcScores = CreateFrame("Frame", "KM_ScoreCalcScores", scoreCalc) -- Show/Hide frame for scores
     scoreCalcScores:SetAllPoints(scoreCalc)
-   
-    local scoreCalcBox = CreateFrame("EditBox", nil, scoreCalc, "InputBoxTemplate");
+    
+    local scoreCalcBox = CreateFrame("EditBox", "KM_CalcKeyLevel", scoreCalc, "InputBoxTemplate");
     scoreCalcBox:SetPoint("TOPRIGHT", scoreCalc, "TOPRIGHT", -4, -(scoreCalc.DetailsTitleDesc:GetHeight()+2));
     scoreCalcBox:SetWidth(24);
     scoreCalcBox:SetHeight(28);
@@ -619,18 +852,11 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     scoreCalcBox:SetAutoFocus(false);
     scoreCalcBox:SetMaxLetters(2);
     scoreCalcBox:SetScript("OnEnterPressed", function(self)
-        self:ClearFocus() -- clears focus from editbox, (unlocks key bindings, so pressing W makes your character go forward.
-        
-        local keyLevel = tonumber(self:GetText())
-        if keyLevel ~= nil then
-            local mapId = selectedMapId -- set from row click
-            
-            PlayerFrameMapping:CalculateRatingGain(mapId, keyLevel)
-            
-            scoreCalcDirection:Hide()
-            scoreCalcScores:Show()
-        end
-        self:SetText("") -- Empties the box, duh! ;)
+        updateRatingCalculatorMap(self, selectedMapId)
+        self:ClearFocus()
+    end)
+    scoreCalcBox:SetScript("OnMouseDown", function(self)
+        self:SetText("")
     end)
     
     scoreCalc.keyLevelTitle = scoreCalc:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
@@ -706,7 +932,7 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     -- Vault Details
     local vaultDetails = CreateFrame("Frame", "KM_VaultDetailView", detailsFrame)
     vaultDetails:SetPoint("TOP", divider, "BOTTOM", 0, -4)
-    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.25)-4)
+    vaultDetails:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.34)-4)
 
     vaultDetails.texture = vaultDetails:CreateTexture(nil, "BACKGROUND", nil, 0)
     vaultDetails.texture:SetAllPoints(vaultDetails)
@@ -733,28 +959,8 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
     vaultDetails.divider1 = vaultDetails:CreateTexture()
     vaultDetails.divider1:SetSize(18, vaultDetails:GetHeight()*0.8)
     vaultDetails.divider1:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Bar-Seperator-32", false)
-    vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -60, -10)
+    vaultDetails.divider1:SetPoint("RIGHT", vaultDetails, "RIGHT", -80, -10)
     vaultDetails.divider1:SetAlpha(0.3)
-
-     -- Empty Box
-     local ebox = CreateFrame("Frame", nil, detailsFrame)
-     ebox:SetPoint("TOP", vaultDetails, "BOTTOM", 0, -4)
-     ebox:SetSize(detailsFrame:GetWidth(), (detailsFrame:GetHeight()*0.15)-4)
-     
-     ebox.texture = ebox:CreateTexture(nil, "BACKGROUND", nil, 0)
-     ebox.texture:SetAllPoints(ebox)
-     ebox.texture:SetSize(ebox:GetWidth(), ebox:GetHeight())
-     ebox.texture:SetColorTexture(0,0,0,1)
- 
-     ebox.textureHighlight = ebox:CreateTexture(nil, "BACKGROUND", nil, 1)
-     ebox.textureHighlight:SetSize(ebox:GetWidth(), 64)
-     ebox.textureHighlight:SetPoint("BOTTOMLEFT", ebox, "BOTTOMLEFT", 0, 0)
-     ebox.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-     ebox.textureHighlight:SetAlpha(highlightAlpha)
-     ebox.textureHighlight:SetVertexColor(hlColor.r,hlColor.g,hlColor.b, highlightAlpha)
- 
-     local Hline = KeyMaster:CreateHLine(ebox:GetWidth()+8, ebox, "TOP", 0, 0)
-     Hline:SetAlpha(0.5)
 
     -- setup the initial map details to the first map
     local seasonMaps = DungeonTools:GetCurrentSeasonMaps()
@@ -773,90 +979,27 @@ function PlayerFrame:CreateMapDetailsFrame(parentFrame, contentFrame)
 
 end
 
---------------------------------
--- Weekly Affix
---------------------------------
-function PlayerFrame:CreateAffixFrames(parentFrame)
-    if (parentFrame == nil) then 
-        KeyMaster:_ErrorMsg("createAffixFrames", "HeaderFrame", "Parameter Null - No parent frame passed to this function.")
-        return
-    end
-    local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
-    if (seasonalAffixes == nil) then 
-        KeyMaster:_DebugMsg("createAffixFrames", "HeaderFrame", "No active weekly affix was found.")
-        return 
-    end
-    local affixTextColor = {}
-    affixTextColor.r, affixTextColor.g, affixTextColor.b, _ = Theme:GetThemeColor("color_NONPHOTOBLUE")
-    for i=1, #seasonalAffixes, 1 do -- #seasonalAffixes
-        local affixName = seasonalAffixes[i].name
-        local temp_frame = CreateFrame("Frame", "KeyMaster_AffixFrame"..tostring(i), parentFrame)
-        temp_frame:SetSize(50, 50)
-        if (i == 1) then
-            temp_frame:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", 4, -34)
-        else
-            local a = i - 1
-            temp_frame:SetPoint("TOPLEFT", "KeyMaster_AffixFrame"..tostring(a), "BOTTOMLEFT", 0, -34)
-        end
-        
-        -- Affix Icon
-        local tex = temp_frame:CreateTexture()
-        tex:SetAllPoints(temp_frame)
-        tex:SetTexture(seasonalAffixes[i].filedataid)
-        
-        -- Affix Name
-        local affixNameFrame = CreateFrame("Frame", "AffixFrame"..tostring(1), temp_frame)
-        affixNameFrame:SetWidth(160)
-        affixNameFrame:SetPoint("TOPLEFT", temp_frame, "TOPRIGHT", 4, 0)
-        local myText = affixNameFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontSmall")
-        local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 12, flags)
-        myText:SetWidth(165)
-        myText:SetWordWrap(true)
-        --myText:SetPoint(true) -- -12, -9
-        myText:SetAllPoints(affixNameFrame)
-        myText:SetTextColor(affixTextColor.r,affixTextColor.g,affixTextColor.b)
-        myText:SetJustifyH("LEFT")
-        myText:SetJustifyV("TOP")
-        myText:SetText(affixName)
-        affixNameFrame:SetHeight(myText:GetHeight())
-
-        -- Affix Description
-        local affixDesc = seasonalAffixes[i].desc
-        local affixDescFrame = CreateFrame("Frame", nil, temp_frame)
-        affixDescFrame:SetSize(160, 50)
-        affixDescFrame:SetPoint("TOPLEFT", affixNameFrame, "BOTTOMLEFT", 0, -2)
-        local myText = affixDescFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
-        local path, _, flags = myText:GetFont()
-        myText:SetFont(path, 11, flags)
-        myText:SetSize(150, 50)
-        myText:SetPoint("LEFT", 0, 0) -- -12, -9
-        myText:SetWordWrap(true)
-        myText:SetTextColor(1,1,1)
-        myText:SetJustifyH("LEFT")
-        myText:SetJustifyV("TOP")
-        myText:SetText(affixDesc)
-
-    end
-
-end
-
 function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     local highlightAlpha = 0.5
     local hlColor = {}
     local hlColorString = "color_NONPHOTOBLUE"
     hlColor.r, hlColor.g, hlColor.b, _ = Theme:GetThemeColor(hlColorString)
     local mythicPlusDetailsFrame = CreateFrame("Frame", "KM_MythicPlusDetailsFrame", parentFrame)
-    mythicPlusDetailsFrame:SetPoint("TOPRIGHT", parentFrame, "BOTTOMRIGHT", 0, -4)
-    --mythicPlusDetailsFrame:SetPoint("TOPRIGHT", contentFrame, "TOPLEFT", -4, -4)
-    mythicPlusDetailsFrame:SetSize(parentFrame:GetWidth() - (_G["KM_PlayerMapInfo"]:GetWidth()) - (_G["KM_PlayerFrame_MapDetails"]:GetWidth()), contentFrame:GetHeight() - parentFrame:GetHeight()-12)
+    mythicPlusDetailsFrame:SetPoint("BOTTOMRIGHT", parentFrame, "BOTTOMRIGHT", -4, 4)
+    mythicPlusDetailsFrame:SetSize(parentFrame:GetWidth() - (_G["KM_PlayerMapInfo"]:GetWidth()) - (_G["KM_PlayerFrame_MapDetails"]:GetWidth()) - 8, _G["KM_PlayerMapInfo"]:GetHeight()-4)
 
     mythicPlusDetailsFrame.texture = mythicPlusDetailsFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
     mythicPlusDetailsFrame.texture:SetAllPoints(mythicPlusDetailsFrame)
     mythicPlusDetailsFrame.texture:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
     mythicPlusDetailsFrame.texture:SetColorTexture(0,0,0,1)
 
-    mythicPlusDetailsFrame.textureHighlight = mythicPlusDetailsFrame:CreateTexture(nil, "BACKGROUND", nil, 1)
+    mythicPlusDetailsFrame.texture.overlay = mythicPlusDetailsFrame:CreateTexture(nil, "ARTWORK", nil, 0)
+    mythicPlusDetailsFrame.texture.overlay:SetAllPoints(mythicPlusDetailsFrame)
+    mythicPlusDetailsFrame.texture.overlay:SetSize(mythicPlusDetailsFrame:GetWidth(), mythicPlusDetailsFrame:GetHeight())
+    mythicPlusDetailsFrame.texture.overlay:SetAtlas("groupfinder-background")
+    mythicPlusDetailsFrame.texture.overlay:SetTexCoord(0.55, 0.85, 0, 1)
+
+    mythicPlusDetailsFrame.textureHighlight = mythicPlusDetailsFrame:CreateTexture(nil, "ARTWORK", nil, 1)
     mythicPlusDetailsFrame.textureHighlight:SetSize(mythicPlusDetailsFrame:GetWidth(), 64)
     mythicPlusDetailsFrame.textureHighlight:SetPoint("BOTTOMLEFT", mythicPlusDetailsFrame, "BOTTOMLEFT", 0, 0)
     mythicPlusDetailsFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
@@ -866,31 +1009,8 @@ function PlayerFrame:CreateMythicPlusDetailsFrame(parentFrame, contentFrame)
     local Hline = KeyMaster:CreateHLine(mythicPlusDetailsFrame:GetWidth()+8, mythicPlusDetailsFrame, "TOP", 0, 0)
     Hline:SetAlpha(0.5)
 
-    local mapHeaderFrame = CreateFrame("Frame", "KM_MPlusDetailsHeader", mythicPlusDetailsFrame)
-    mapHeaderFrame:SetPoint("TOPLEFT", mythicPlusDetailsFrame, "TOPLEFT", 0,-4)
-    mapHeaderFrame:SetSize(mythicPlusDetailsFrame:GetWidth(), 20)
-    mapHeaderFrame:SetFrameLevel(mythicPlusDetailsFrame:GetFrameLevel()+1)
+    return mythicPlusDetailsFrame
 
-    mapHeaderFrame.texture = mapHeaderFrame:CreateTexture(nil, "BACKGROUND", nil, 0)
-    mapHeaderFrame.texture:SetAllPoints(mapHeaderFrame)
-    mapHeaderFrame.texture:SetColorTexture(0, 0, 0, 1)
-
-    mapHeaderFrame.MapName = mapHeaderFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    mapHeaderFrame.MapName:SetPoint("TOP", mapHeaderFrame, "TOP", 0, 0)
-    local Path, _, Flags = mapHeaderFrame.MapName:GetFont()
-    mapHeaderFrame.MapName:SetFont(Path, 16, Flags)
-    mapHeaderFrame.MapName:SetText(KeyMasterLocals.THISWEEKSAFFIXES)
-
-    PlayerFrame:CreateAffixFrames(mythicPlusDetailsFrame)
-
-    --[[ mapHeaderFrame.textureHighlight = mapHeaderFrame:CreateTexture(nil, "OVERLAY", nil)
-    mapHeaderFrame.textureHighlight:SetPoint("TOPLEFT", mapHeaderFrame, "TOPLEFT")
-    mapHeaderFrame.textureHighlight:SetSize(mapHeaderFrame:GetWidth(), 64)
-    mapHeaderFrame.textureHighlight:SetTexture("Interface\\Addons\\KeyMaster\\Assets\\Images\\Row-Highlight", true)
-    local headerColor = {}  
-    headerColor.r, headerColor.g, headerColor.b, _ = getColor("color_NONPHOTOBLUE")
-    mapHeaderFrame.textureHighlight:SetVertexColor(headerColor.r, headerColor.g, headerColor.b, 0.6)
-    mapHeaderFrame.textureHighlight:SetRotation(math.pi) ]]
 end
 
 local function createVaultRow(vaultRowNumber, parentFrame)
@@ -914,7 +1034,7 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     
     vaultRowFrame.vaultComplete = vaultRowFrame:CreateTexture(nil, "OVERLAY")
     vaultRowFrame.vaultComplete:SetPoint("RIGHT", vaultRowFrame, "RIGHT", -2, 0)
-    vaultRowFrame.vaultComplete:SetSize(24,24)
+    vaultRowFrame.vaultComplete:SetSize(42,38)
 
     vaultRowFrame:SetSize(parentFrame:GetWidth(), vaultRowHeight)
     vaultRowFrame.vaultTotals = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
@@ -924,13 +1044,28 @@ local function createVaultRow(vaultRowNumber, parentFrame)
     vaultRowFrame:SetAttribute("vaultTotals", vaultRowFrame.vaultRuns)
     
     vaultRowFrame.vaultRuns = vaultRowFrame:CreateFontString(nil, "OVERLAY", "KeyMasterFontBig")
-    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 4, -1)
-    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.62, vaultRowFrame:GetHeight()-4)
+    vaultRowFrame.vaultRuns:SetPoint("LEFT", vaultRowFrame, "LEFT", 8, -1)
+    vaultRowFrame.vaultRuns:SetSize(vaultRowFrame:GetWidth()*0.54, vaultRowFrame:GetHeight()-4)
     local Path, _, Flags = vaultRowFrame.vaultRuns:GetFont()
     vaultRowFrame.vaultRuns:SetFont(Path, 16, Flags)
-    vaultRowFrame.vaultRuns:SetJustifyH("RIGHT")
+    vaultRowFrame.vaultRuns:SetJustifyH("CENTER")
     vaultRowFrame.vaultRuns:SetJustifyV("MIDDLE")
     vaultRowFrame:SetAttribute("vaultRuns", vaultRowFrame.vaultRuns)
+
+    -- WIP
+    vaultRowFrame.bgTexture = vaultRowFrame:CreateTexture(nil, "ARTWORK")
+    vaultRowFrame.bgTexture:SetTexture("interface/weeklyreward/evergreenweeklyrewardui")
+    vaultRowFrame.bgTexture:SetTexCoord(0.42529296875, 0.642578125, 0.6728515625, 0.697265625)
+    vaultRowFrame.bgTexture:SetPoint("CENTER", vaultRowFrame.vaultRuns, "CENTER", 0, -1)
+    vaultRowFrame.bgTexture:SetSize(vaultRowFrame.vaultRuns:GetWidth(), 25) -- 442/47
+    vaultRowFrame.bgTexture:SetVertexColor(1,1,1, 0.3)
+
+    -- todo: for testing - delete after addressing new vault look
+    --[[ vaultRowFrame.vaultRuns.texture = vaultRowFrame:CreateTexture(nil, "BACKGROUND", nil)
+    vaultRowFrame.vaultRuns.texture:SetAllPoints(vaultRowFrame.vaultRuns)
+    vaultRowFrame.vaultRuns.texture:SetSize(vaultRowFrame.vaultRuns:GetWidth(), vaultRowFrame.vaultRuns:GetHeight())
+    vaultRowFrame.vaultRuns.texture:SetColorTexture(1,0,0,0.5) ]]
+    -----------------
 
     parentFrame:SetAttribute("vault"..vaultRowNumber,  vaultRowFrame)
 
@@ -944,8 +1079,7 @@ function PlayerFrame:Initialize(parentFrame)
     local playerFrame = _G["KM_Player_Frame"] or PlayerFrame:CreatePlayerFrame(playerContent)
     local playerMapFrame = _G["KM_PlayerMapInfo"] or PlayerFrame:CreateMapData(playerFrame, playerContent)
     local PlayerFrameMapDetails = _G["KM_PlayerFrame_MapDetails"] or PlayerFrame:CreateMapDetailsFrame(playerFrame, playerMapFrame)
-    local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerFrame, playerContent)
-    --local headerAffixFrame = KeyMaster.HeaderFrame:CreateAffixFrames(mythicPlusDetailsFrame)
+    local mythicPlusDetailsFrame = _G["KM_MythicPlusDetailsFrame"] or PlayerFrame:CreateMythicPlusDetailsFrame(playerContent, playerContent)
 
     -- Mythic Vault Progress
     local vaultDetails = _G["KM_VaultDetailView"]

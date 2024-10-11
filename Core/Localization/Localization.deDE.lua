@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Wertungsrechner", text = "Berechne
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Gib die Schlüsselsteinstufe ein", text = "Gib eine Schlüsselsteinstufe ein, um eine Abschätzung" }
 L.PLAYERFRAME["YourBaseRating"] = { name = "Basiswertungssteigerung", text = "der Basiswertungssteigerung zu sehen." }
 L.PLAYERFRAME["Characters"] = "Charaktere"
+L.PLAYERFRAME["DungeonTools"] = { name = "Instanzwerkzeuge", text = "Verschiedene Werkzeuge für diese Instanz."}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Keinen Schlüsselstein gefunden", text = "Keinen Schlüsselstein gefunden" }

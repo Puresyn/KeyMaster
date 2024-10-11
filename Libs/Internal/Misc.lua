@@ -5,6 +5,7 @@
 local _, KeyMaster = ...
 local DungeonTools = KeyMaster.DungeonTools
 local Theme = KeyMaster.Theme
+local KMFactory = KeyMaster.Factory
 
 --[[ local LibSerialize = LibStub("LibSerialize")
 local LibDeflate = LibStub("LibDeflate") ]]
@@ -354,4 +355,27 @@ function KeyMaster:VersionCompare(version1, version2)
     else
        return -1
     end
+end
+
+-- Create tooltip frame
+function KeyMaster:SetTooltipText(anchor, title, desc)
+    local tooltipFrame = _G["KM_Tooltip"] or KMFactory:Create(_G["KeyMaster_MainFrame"], "Tooltip", {name ="KM_Tooltip"})
+    
+    tooltipFrame.titleText:SetText(title)
+    tooltipFrame.titleText:SetHeight(tooltipFrame.titleText:GetStringHeight())
+    tooltipFrame.titleFrame:SetHeight(tooltipFrame.titleText:GetStringHeight())
+
+    tooltipFrame.descText:SetText(desc)
+    tooltipFrame.descText:SetHeight(tooltipFrame.descText:GetStringHeight())
+    tooltipFrame.descFrame:SetPoint("TOPLEFT", tooltipFrame.titleFrame, "BOTTOMLEFT", 0, -4)
+    tooltipFrame.descFrame:SetHeight(tooltipFrame.descText:GetStringHeight()+8)
+    
+    tooltipFrame:SetHeight(tooltipFrame.titleText:GetHeight() + tooltipFrame.descText:GetHeight()+12)
+    
+    local x, y = GetCursorPosition();
+    local offset = 12
+	local effScale = tooltipFrame:GetEffectiveScale();
+	tooltipFrame:ClearAllPoints();
+	tooltipFrame:SetPoint("BOTTOMLEFT",UIParent,"BOTTOMLEFT",(x / effScale + offset),(y / effScale + offset));
+
 end

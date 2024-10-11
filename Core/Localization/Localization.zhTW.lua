@@ -131,6 +131,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "評分計算", text = "計算潛�
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "輸入鑰石層數", text = "輸入一個鑰石層數來觀看"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "基礎評分收益", text = "你的基礎評分收益預測。"}
 L.PLAYERFRAME["Characters"] = "角色"
+L.PLAYERFRAME["DungeonTools"] = { name = "地下城工具", text = "與此地下城相關的各種工具。"}
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "未找到鑰石", text = "未找到鑰石"}
