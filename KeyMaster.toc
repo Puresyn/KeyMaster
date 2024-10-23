@@ -1,5 +1,5 @@
-## Interface: 110002
-## X-Max-Interface: 110002
+## Interface: 110005
+## X-Max-Interface: 110005
 ## X-Min-Interface: 110002
 
 ## Version: 1.3.6
