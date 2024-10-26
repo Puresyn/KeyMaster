@@ -33,29 +33,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Added a dungeon tools buttons row on the Player frame that simplifies access to WoW features and other addons:</p>
-                <img src="Interface\AddOns\KeyMaster\Assets\Images\dungeontools_buttons" width="275" height="47"/>
-                <p>]]..textGT..[[Open the dungeon journal to the selected dungeon.</p>
-                <p>]]..textGT..[[Open the instance map of the selected dungeon.</p>
-                <p>]]..textGT..[[Open the group finder window.</p>
-                <p>]]..textGT..[[Open Mythic Dungeon Tools (MDT) (if installed).</p>
-                <p>]]..textGT..[[Portal to selected dungeon if unlocked and not on cooldown.</p>
-                <br/>
-                <p>]]..textBullet..[[Moved weekly affixes back into the header frame.</p>
-                <br/>
-                <p>]]..textBullet..[[Added affix tooltip functionality.</p>
-                <br/>
-                <p>]]..textBullet..[[Rearranged the Player frame to be more conducive to the new M+ rating system.</p>
-                <br/>
-                <p>]]..textBullet..[[Changed rating calculator functionality to now keep the key level entered and re-calculate automatically for each map row being selected.</p>
-                <br/>
-                <p>]]..textBullet..[[Updated some vault graphics (more updates to come).</p>
-                <br/>
-                <p>]]..textBullet..[[Disabled rating pending verification system message.</p>
-                <br/>
-                <p>]]..textBullet..[[Temporarily disabled Russian translation due to lack of translator participation. (See us if interested!)</p>                
-                <br/>
-                <p>]]..textBullet..[[Updated a few dungeon name abbreviations to better separate meaning.</p>                
+                <p>]]..textBullet..[[Updated to WoW Interface version 11.0.5</p>          
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
