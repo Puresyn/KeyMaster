@@ -6,7 +6,7 @@ PATCH NOTES:
 Key Master v1.3.7
 --------------------------------------------------
 Updates:
--
+- Disabled traditional Chinese language support (for now) due to lack of translators/testers.
 
 Fixes:
 -
