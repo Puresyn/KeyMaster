@@ -64,9 +64,9 @@ elseif (langPref == "zhTW") then
 elseif (langPref == "koKR") then
     -- Localization.koKR.lua
     KeyMasterLocals = KM_Localization_koKR
---[[ elseif (langPref == "zhCN") then
+elseif (langPref == "zhCN") then
     -- Localization.zhCN.lua
-    KeyMasterLocals = KM_Localization_zhCN ]]
+    KeyMasterLocals = KM_Localization_zhCN
 else -- Default
     -- Localization.enUS.lua
     KeyMasterLocals = KM_Localization_enUS
