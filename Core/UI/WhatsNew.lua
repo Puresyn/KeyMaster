@@ -33,12 +33,12 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Updated to WoW Interface version 11.0.5</p>          
+                <p>]]..textBullet..[[None</p>          
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[Fixed an error with Simplified Chinese that stoped KM from loading.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

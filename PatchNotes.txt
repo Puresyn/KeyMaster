@@ -6,13 +6,13 @@ PATCH NOTES:
 Key Master v1.3.7
 --------------------------------------------------
 Updates:
-- Disabled traditional Chinese language support (for now) due to lack of translators/testers.
+- None
 
 Fixes:
--
+- Fixed an error with Simplified Chinese that stoped KM from loading.
 
 Known Bugs/Issues:
-- 
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
 
 --------------------------------------------------
 Key Master v1.3.6
