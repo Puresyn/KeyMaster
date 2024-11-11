@@ -33,12 +33,13 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Updated to WoW Interface version 11.0.5</p>          
+                <p>]]..textBullet..[[None</p>          
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[Fixed an error with Simplified Chinese that stoped KM from loading.</p>
+                <p>]]..textBullet..[[Fixed miscalculations with IO and chest levels (+1, +2, +3) for dungeon runs due to addition of 90s to level 7 affix.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

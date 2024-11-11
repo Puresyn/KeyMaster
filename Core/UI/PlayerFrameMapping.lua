@@ -153,7 +153,7 @@ function PlayerFrameMapping:RefreshData(fetchNew)
         playerMapDataFrame.tyrannicalLevel:SetText(tyrannicalLevel or defaultString)
 
         -- Dungeon Bonus Time
-        local tyrannicalBonusTime = DungeonTools:CalculateChest(mapId, playerData.DungeonRuns[mapId]["DungeonData"].DurationSec)
+        local tyrannicalBonusTime = DungeonTools:CalculateChest(mapId, playerData.DungeonRuns[mapId]["DungeonData"].Level, playerData.DungeonRuns[mapId]["DungeonData"].DurationSec)
         playerMapDataFrame.tyrannicalBonus:SetText(tyrannicalBonusTime)
      
         -- Dungeon Run Time

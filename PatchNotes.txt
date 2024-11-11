@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.3.7
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- Fixed an error with Simplified Chinese that stoped KM from loading.
+- Fixed miscalculations with IO and chest levels (+1, +2, +3) for dungeon runs due to addition of 90s to level 7 affix.
+
+Known Bugs/Issues:
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
+
+--------------------------------------------------
 Key Master v1.3.6
 --------------------------------------------------
 Updates:

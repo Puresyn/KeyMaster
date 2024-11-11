@@ -411,7 +411,7 @@ end
 ---@param dungeonID integer - the id of the dungeon
 ---@param timeCompleted integer - the runs time in seconds
 ---@return string - string of the performance i.e. + or +++
-function DungeonTools:CalculateChest(dungeonID, timeCompleted)
+function DungeonTools:CalculateChest(dungeonID, keyLevel, timeCompleted)
 
     local seasonVars = getRatingCalcValues()
     if (not seasonVars) then
@@ -424,6 +424,9 @@ function DungeonTools:CalculateChest(dungeonID, timeCompleted)
         currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
     end
     local timeLimit = currentSeasonMaps[dungeonID].timeLimit
+    if keyLevel >= seasonVars.thirdAffixLevel then
+        timeLimit = timeLimit + 90
+    end
     if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
     if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
     if(timeCompleted <= timeLimit) then return "+" end
@@ -525,6 +528,9 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
     end
     local bonusRating = 0
     local dungeonTimeLimit = currentSeasonMaps[dungeonID].timeLimit
+    if keyLevel >= seasonVars.thirdAffixLevel then
+        dungeonTimeLimit = dungeonTimeLimit + 90
+    end
     -- Runs over time by 40% are a 0 score.
     if(runTime > (dungeonTimeLimit + (dungeonTimeLimit * maxModifier))) then
         return 0
