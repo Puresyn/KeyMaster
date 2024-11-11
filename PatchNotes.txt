@@ -3,6 +3,18 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.3.8
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- None
+
+Known Bugs/Issues:
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
+
+--------------------------------------------------
 Key Master v1.3.7
 --------------------------------------------------
 Updates:
