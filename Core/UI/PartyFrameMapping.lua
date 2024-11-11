@@ -208,7 +208,7 @@ function PartyFrameMapping:UpdateUnitFrameData(unitId, playerData)
     local mapTable = DungeonTools:GetCurrentSeasonMaps()
     if KeyMaster:GetTableLength(playerData.DungeonRuns) ~= 0 then        
         for mapid, v in pairs(mapTable) do
-            local chestCount = DungeonTools:CalculateChest(mapid, playerData.DungeonRuns[mapid]["DungeonData"].DurationSec)
+            local chestCount = DungeonTools:CalculateChest(mapid, playerData.ownedKeyLevel, playerData.DungeonRuns[mapid]["DungeonData"].DurationSec)
             local keyLevel = "0"
             if playerData.DungeonRuns[mapid]["DungeonData"].Level ~= nil then
                 keyLevel = chestCount .. playerData.DungeonRuns[mapid]["DungeonData"].Level    
