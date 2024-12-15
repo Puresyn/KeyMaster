@@ -425,11 +425,14 @@ function DungeonTools:CalculateChest(dungeonID, keyLevel, timeCompleted)
     end
     local timeLimit = currentSeasonMaps[dungeonID].timeLimit
     if keyLevel >= seasonVars.thirdAffixLevel then
-        timeLimit = timeLimit + 90
+        if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)+90) then return "+++" end
+        if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)+90) then return "++" end
+        if(timeCompleted <= timeLimit+90) then return "+" end
+    else
+        if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
+        if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
+        if(timeCompleted <= timeLimit) then return "+" end
     end
-    if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
-    if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
-    if(timeCompleted <= timeLimit) then return "+" end
     return ""
 end
 
