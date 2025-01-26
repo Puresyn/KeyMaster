@@ -51,7 +51,7 @@ L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
 --TWW S2
 L.MAPNAMES[500] = { name = "The Rookery", abbr = "RKY" }
 L.MAPNAMES[525] = { name = "Floodgate", abbr = "FG" }
-L.MAPNAMES[247] = { name = "The MOTHERLOAD!!", abbr = "ML" }
+L.MAPNAMES[247] = { name = "The MOTHERLODE!!", abbr = "ML" }
 L.MAPNAMES[370] = { name = "Mechagon - Workshop", abbr = "WORK" }
 L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "DFC" }
 L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "ToP" }

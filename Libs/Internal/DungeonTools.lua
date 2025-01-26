@@ -58,9 +58,9 @@ local portalSpellIds = {
     [376] = 354462,      -- The Necrotic Wake - 348529
     -- TWW S2
     [500] = 445443,      -- The Rookery - 445443
-    [525] = nil,      -- Floodgate -
-    [247] = nil,      -- The MOTHERLOAD!! -
-    [370] = 373274,      -- Mechagon - Workshop -
+    [525] = 1218105,     -- Floodgate - 1218105
+    [247] = 272268,      -- The MOTHERLODE!! - 272268
+    [370] = 373274,      -- Mechagon - Workshop - 373274
     [504] = 445441,      -- Darkflame Cleft - 445441
     [382] = 354467,      -- Theater of Pain - 354467
     [506] = 445440,      -- Cinderbrew Meadery - 445440
