@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "ОБ" }
 L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "ГБ" }
 L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "ТТС" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "СТ" }
+--TWW S2
+L.MAPNAMES[500] = { name = "Гнездовье", abbr = "ГНЗД" }
+L.MAPNAMES[525] = { name = "Операция Затвор", abbr = "ЗТВ" }
+L.MAPNAMES[247] = { name = "ЗОЛОТАЯ ЖИЛА!!!", abbr = "ЗЖ" }
+L.MAPNAMES[370] = { name = "Операция Мехагон: Мастерская", abbr = "МСТ" }
+L.MAPNAMES[504] = { name = "Расселина Темного Пламени", abbr = "РТП" }
+L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
+L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
+L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
