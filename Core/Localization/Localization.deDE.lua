@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Die Belagerung von Boralus", abbr = "SoB" }
 L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Die Nebel von Tirna Scithe", abbr = "MTS" }
 L.MAPNAMES[376] = { name = "Die Nekrotische Schneise", abbr = "NW" }
+--TWW S2
+L.MAPNAMES[500] = { name = "Die Brutstätte", abbr = "Brut" }
+L.MAPNAMES[525] = { name = "Fluttor", abbr = "Flut" }
+L.MAPNAMES[247] = { name = "Das RIESENFLÖZ!!", abbr = "Flöz" }
+L.MAPNAMES[370] = { name = "Mechagon - Werkstatt", abbr = "WERK" }
+L.MAPNAMES[504] = { name = "Dunkelflammenspalt", abbr = "DFS" }
+L.MAPNAMES[382] = { name = "Theater des Schmerzen", abbr = "TdS" }
+L.MAPNAMES[506] = { name = "Metbrauerei Glutbräu", abbr = "MG" }
+L.MAPNAMES[499] = { name = "Priorat der Heiligen Flamme", abbr = "PdHF" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
