@@ -181,7 +181,7 @@ https://discord.gg/bbMaUpfgn8
 
     local textContributors = "Rex, Ithoro, Xanat, Doc, Sunnie, Charlie, Faethor, Tanzen, Omgtotem, Quanfu, Linaori\n\n"
     textContributors = textContributors .. "|cffA3E7FC" .. KeyMasterLocals.ABOUTFRAME["Translators"].text .. "|r\n"
-    textContributors = textContributors .. "Cyph, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, Ragnarork"
+    textContributors = textContributors .. "Cyph, BNS3388, Feedy88, Rumorix, Salty, Kereru, 와우하는아저씨, Ragnarork, Hizgret"
 
     aboutContributors.text = aboutContributors:CreateFontString(nil, "OVERLAY", "KeyMasterFontNormal")
     aboutContributors.text:SetPoint("TOPLEFT", aboutContributors.title, "BOTTOMLEFT", 8, -4)
