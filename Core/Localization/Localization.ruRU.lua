@@ -58,16 +58,6 @@ L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
 L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
 L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
 
---TWW S2
-L.MAPNAMES[500] = { name = "Гнездовье", abbr = "ГНЗД" }
-L.MAPNAMES[525] = { name = "Операция "Затвор"", abbr = "ЗТВ" }
-L.MAPNAMES[247] = { name = "ЗОЛОТАЯ ЖИЛА!!!", abbr = "ЗЖ" }
-L.MAPNAMES[370] = { name = "Операция "Мехагон": Мастерская", abbr = "МСТ" }
-L.MAPNAMES[504] = { name = "Расселина Темного Пламени", abbr = "РТП" }
-L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
-L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
-L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
-
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
 L.XPAC[1] = { enum = "LE_EXPANSION_BURNING_CRUSADE", desc = "The Burning Crusade" }
