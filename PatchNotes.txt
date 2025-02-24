@@ -9,6 +9,12 @@ Updates:
 - Added spell portal ids for new dungeons in TWW S2.
 - Added new TWW S2 dungeon names and abbreviations in for US localization.
 - Added new TWW S2 dungeon names and abbreviations for IT localization.
+- Added new TWW S2 dungeon names and abbreviations for RU localization.
+- Added new TWW S2 dungeon names and abbreviations for FR localization.
+- Added new TWW S2 dungeon names and abbreviations for TWW localization.
+- Added new TWW S2 dungeon names and abbreviations for DE localization.
+- Added new TWW S2 dungeon names and abbreviations for ptBR localization.
+- Added new TWW S2 dungeon names and abbreviations for KR localization.
 
 Fixes:
 - None
