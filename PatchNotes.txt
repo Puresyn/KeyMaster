@@ -6,6 +6,7 @@ PATCH NOTES:
 Key Master v1.4.0
 --------------------------------------------------
 Updates:
+- Updated to interface version 11.1
 - Added spell portal ids for new dungeons in TWW S2.
 - Added new TWW S2 dungeon names and abbreviations in for US localization.
 - Added new TWW S2 dungeon names and abbreviations for IT localization.
