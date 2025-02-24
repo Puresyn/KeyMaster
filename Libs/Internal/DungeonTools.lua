@@ -47,6 +47,7 @@ local portalSpellIds = {
     [404] = 393276,     -- Neltharus
     [405] = 393267,     -- Brackenhide Hollow
     [406] = 393283,      -- Halls of Infusion
+    -- TWW S1
     [503] = 445417,      -- Ara-Kara, City of Echoes - 442929
     [502] = 445416,      -- City of Threads - 442927
     [505] = 445414,      -- The Dawnbreaker - 442931
@@ -54,8 +55,16 @@ local portalSpellIds = {
     [353] = 445418,      -- Siege of Boralus - (A) 445418 - (H) 464256 - 272264
     [507] = 445424,      -- The Grim Batol - 396121
     [375] = 354464,      -- Mists of Tirna Scithe - 348533
-    [376] = 354462       -- The Necrotic Wake - 348529
-
+    [376] = 354462,      -- The Necrotic Wake - 348529
+    -- TWW S2
+    [500] = 445443,      -- The Rookery - 445443
+    [525] = 1218105,     -- Floodgate - 1218105
+    [247] = 272268,      -- The MOTHERLODE!! - 272268
+    [370] = 373274,      -- Mechagon - Workshop - 373274
+    [504] = 445441,      -- Darkflame Cleft - 445441
+    [382] = 354467,      -- Theater of Pain - 354467
+    [506] = 445440,      -- Cinderbrew Meadery - 445440
+    [499] = 445444       -- Priory of the Sacred Flame - 445444
 }
 
 -- add only horde specific portals here.

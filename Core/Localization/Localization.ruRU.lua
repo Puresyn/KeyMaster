@@ -2,7 +2,7 @@ KM_Localization_ruRU = {}
 local L = KM_Localization_ruRU
 
 -- Localization file for "ruRU": Russian (Russia)
--- Translated by: Hollicsh
+-- Translated by: Hollicsh & Hizgret
 
 --[[Notes for Translators: In many locations throughout Key Master, line space is limited. This can cause
     overlapping or strange text display. Where possible, try to keep the overall length of the string comparable or shorter
@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "ОБ" }
 L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "ГБ" }
 L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "ТТС" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "СТ" }
+--TWW S2
+L.MAPNAMES[500] = { name = "Гнездовье", abbr = "ГНЗД" }
+L.MAPNAMES[525] = { name = "Операция Затвор", abbr = "ЗТВ" }
+L.MAPNAMES[247] = { name = "ЗОЛОТАЯ ЖИЛА!!!", abbr = "ЗЖ" }
+L.MAPNAMES[370] = { name = "Операция Мехагон: Мастерская", abbr = "МСТ" }
+L.MAPNAMES[504] = { name = "Расселина Темного Пламени", abbr = "РТП" }
+L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
+L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
+L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
@@ -103,7 +112,7 @@ L.COMMANDLINE["Show"] = { name = "показать", text = " - показать
 L.COMMANDLINE["Help"] = { name = "помощь", text = " - показать меню помощи."}
 L.COMMANDLINE["Errors"] = { name = "ошибки", text = " - включить/отключить сообщения об ошибках."}
 L.COMMANDLINE["Debug"] = { name = "отладка", text = " - включить/отключить сообщения об отладке."}
-L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
+L.COMMANDLINE["Version"] = { name = "версия", text = " - показать текущую версию сборки." }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "Рейтинг М+", text = "Текущий М+ рейтинг персонажа" }
@@ -131,7 +140,7 @@ L.PLAYERFRAME["RatingCalculator"] = { name = "Калькулятор", text = "�
 L.PLAYERFRAME["EnterKeyLevel"] = { name = "Введите уровень ключа", text = "Введите уровень ключа, чтобы увидеть"}
 L.PLAYERFRAME["YourBaseRating"] = { name = "Базовый прирост рейтинга", text = "Ваш базовый прирост рейтинга"}
 L.PLAYERFRAME["Characters"] = "Персонажи"
-L.PLAYERFRAME["DungeonTools"] = { name = "Dungeon Tools", text = "Various tools related to this dungeon."}
+L.PLAYERFRAME["DungeonTools"] = { name = "Инструменты", text = "Различные интсрументы, связанные с этим подземельем."} -- the correct translation is 'Инструменты для подземелья,' but it's very long. A shorter version is just 'Инструменты' because we have a sub text 
 
 L.CHARACTERINFO = {}
 L.CHARACTERINFO["NoKeyFound"] = { name = "Ключ не найден", text = "Ключ не найден"}
@@ -140,8 +149,8 @@ L.CHARACTERINFO["AskMerchant"] = { name = "Спросить торговца к�
 
 L.TABPLAYER = "Игрок"
 L.TABPARTY = "Группа"
-L.TABABOUT = "Информация"
-L.TABCONFIG = "Конфигурация"
+L.TABABOUT = "О нас" -- "Информация" means Information, but for the "about" section in russian, "О нас" is always used
+L.TABCONFIG = "Конфигурация" 
 
 L.CONFIGURATIONFRAME = {}
 L.CONFIGURATIONFRAME["DisplaySettings"] = { name = "Настройки отображения", text = "Настройки отображения"}
@@ -155,7 +164,7 @@ L.CONFIGURATIONFRAME["CharacterSettings"] = { name="Фильтры списка 
 L.CONFIGURATIONFRAME["FilterByServer"] = { name = "Текущий сервер", text = "Показывать только текущий сервер." }
 L.CONFIGURATIONFRAME["FilterByNoRating"] = { name = "Без рейтинга", text = "Показывать только персонажей с рейтингом." }
 L.CONFIGURATIONFRAME["FilterByNoKey"] = { name = "Без ключа", text = "Показывать только персонажей с ключом." }
-L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Max Only", text = "Only show maximum level characters." }
+L.CONFIGURATIONFRAME["FilterByMaxLvl"] = { name = "Только максимальный", text = "Показывать только персонажей максимального уровня." }
 L.CONFIGURATIONFRAME["Purge"] = { present = "Очистить", past = "Очищено" }
 
 L.ABOUTFRAME = {}

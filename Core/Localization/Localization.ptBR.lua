@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Cerco de Boralus", abbr = "SB" }
 L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Brumas de Tirna Scithe", abbr = "MTS" }
 L.MAPNAMES[376] = { name = "Chaga Necrótica", abbr = "NW" }
+--TWW S2
+L.MAPNAMES[500] = { name = "O Viveiro", abbr = "RKY" }
+L.MAPNAMES[525] = { name = "Operação: Comporta", abbr = "FG" }
+L.MAPNAMES[247] = { name = "MEGAMINA!!!", abbr = "ML" }
+L.MAPNAMES[370] = { name = "Operação: Gnomecan - Workshop", abbr = "WORK" }
+L.MAPNAMES[504] = { name = "Fenda Chamanegra", abbr = "DFC" }
+L.MAPNAMES[382] = { name = "Teatro da Dor", abbr = "ToP" }
+L.MAPNAMES[506] = { name = "Hidromelaria Cinzagris", abbr = "CBM" }
+L.MAPNAMES[499] = { name = "Priorado da chama sagrada", abbr = "PoSF" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Clássico" }

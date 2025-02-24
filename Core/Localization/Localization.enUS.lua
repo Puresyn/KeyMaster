@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Siege of Boralus", abbr = "SoB" }
 L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "MTS" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "NW" }
+--TWW S2
+L.MAPNAMES[500] = { name = "The Rookery", abbr = "RKY" }
+L.MAPNAMES[525] = { name = "Floodgate", abbr = "FG" }
+L.MAPNAMES[247] = { name = "The MOTHERLODE!!", abbr = "ML" }
+L.MAPNAMES[370] = { name = "Mechagon - Workshop", abbr = "WORK" }
+L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "DFC" }
+L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "ToP" }
+L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "CBM" }
+L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "PoSF" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "보랄러스 공성전", abbr = "보랄러스" }
 L.MAPNAMES[507] = { name = "그림바톨", abbr = "그림" }
 L.MAPNAMES[375] = { name = "티르너 사이드의 안개", abbr = "티르너" }
 L.MAPNAMES[376] = { name = "죽음의 상흔", abbr = "죽상" }
+--TWW S2
+L.MAPNAMES[500] = { name = "The Rookery", abbr = "부화장" }
+L.MAPNAMES[525] = { name = "Floodgate", abbr = "수문" }
+L.MAPNAMES[247] = { name = "The MOTHERLODE!!", abbr = "광산" }
+L.MAPNAMES[370] = { name = "Mechagon - Workshop", abbr = "작업장" }
+L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "동굴" }
+L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "투기장" }
+L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "양조장" }
+L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "수도원" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "클래식" }

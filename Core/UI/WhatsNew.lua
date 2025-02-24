@@ -33,8 +33,11 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Adjusted run threshold calculations (+1,2,3 etc).</p>          
+                <p>]]..textBullet..[[Updated to interface version 11.1</p>
                 <br/>
+                <p>]]..textBullet..[[Will be loosing CN translation next release due to lack of translator participation.</p>          
+                <br/>
+                <p>]]..textBullet..[[Updates for TWW S2.</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>

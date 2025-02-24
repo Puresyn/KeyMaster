@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Assedio di Boralus", abbr = "AdB" }
 L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Nebbie di Tirna Falcis", abbr = "NdTF" }
 L.MAPNAMES[376] = { name = "Scia Necrotica", abbr = "SN" }
+--TWW S2
+L.MAPNAMES[500] = { name = "Corveria", abbr = "Corv" }
+L.MAPNAMES[525] = { name = "Paratoria", abbr = "Para" }
+L.MAPNAMES[247] = { name = "Vena Madre", abbr = "VM" }
+L.MAPNAMES[370] = { name = "Meccagon - Officina", abbr = "Off" }
+L.MAPNAMES[504] = { name = "Faglia di Fiammoscura", abbr = "FdF" }
+L.MAPNAMES[382] = { name = "Teatro del Dolore", abbr = "TdD" }
+L.MAPNAMES[506] = { name = "Idromelificio Cinereo", abbr = "IC" }
+L.MAPNAMES[499] = { name = "Prioria della Fiamma Sacra", abbr = "PdFS" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

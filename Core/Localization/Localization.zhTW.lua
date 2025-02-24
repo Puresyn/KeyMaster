@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "波拉勒斯圍城戰", abbr = "圍城" }
 L.MAPNAMES[507] = { name = "格瑞姆巴托", abbr = "格瑞" }
 L.MAPNAMES[375] = { name = "特拉希迷霧", abbr = "迷霧" }
 L.MAPNAMES[376] = { name = "死靈戰地", abbr = "死靈" }
+--TWW S2 zhTW
+L.MAPNAMES[500] = { name = "培育所", abbr = "培育" }
+L.MAPNAMES[525] = { name = "水閘行動", abbr = "水閘" }
+L.MAPNAMES[247] = { name = "晶喜鎮！", abbr = "晶喜" }
+L.MAPNAMES[370] = { name = "機械岡 - 工坊", abbr = "工坊" }
+L.MAPNAMES[504] = { name = "暗焰裂縫", abbr = "裂縫" }
+L.MAPNAMES[382] = { name = "苦痛劇場", abbr = "苦痛" }
+L.MAPNAMES[506] = { name = "燼釀酒莊", abbr = "酒莊" }
+L.MAPNAMES[499] = { name = "聖焰隱修院", abbr = "聖焰" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }

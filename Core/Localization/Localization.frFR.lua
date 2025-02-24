@@ -48,6 +48,15 @@ L.MAPNAMES[353] = { name = "Siège de Boralus", abbr = "SB" }
 L.MAPNAMES[507] = { name = "Grim Batol", abbr = "GB" }
 L.MAPNAMES[375] = { name = "Brumes de Tirna Scithe", abbr = "MTS" }
 L.MAPNAMES[376] = { name = "Sillage Nécrotique", abbr = "NW" }
+--TWW S2
+L.MAPNAMES[500] = { name = "La Colonie", abbr = "RKY" }
+L.MAPNAMES[525] = { name = "Opération : Déluge", abbr = "FG" }
+L.MAPNAMES[247] = { name = "Le MOTHERLODE !!", abbr = "ML" }
+L.MAPNAMES[370] = { name = "Opération Mécagone – L’atelier", abbr = "WORK" }
+L.MAPNAMES[504] = { name = "Faille de Flamme-Noire", abbr = "DFC" }
+L.MAPNAMES[382] = { name = "Théâtre de la Souffrance", abbr = "ToP" }
+L.MAPNAMES[506] = { name = "Hydromellerie de Brassecendre", abbr = "CBM" }
+L.MAPNAMES[499] = { name = "Prieuré de la Flamme sacrée", abbr = "PoSF" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
