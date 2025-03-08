@@ -388,6 +388,26 @@ local function getRatingCalcValues()
             twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
             threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
             bonusTimerRating = 15 -- Bonus/Penalty for timers
+        },
+        [14] = { -- TWW S2 --- TO BE VERIFIED ------
+            baseRating = 125, -- Base score for dungeon completion
+            firstAffixLevel = 4, -- lowest M+ Key possible
+            fistAffixValue = 15, -- Value of the first affix
+            secondAffixLevel = 7, -- Key level the second affix is added
+            secondAffixValue = 15, -- Value of the second affix
+            thirdAffixLevel = 10, -- Key level the third affix is added
+            thirdAffixValue = 15, -- Value of the thrid affix
+            fourthAffixLevel = 12, -- Key level the third affix is added
+            fourthAffixValue = 15, -- Value of the thrid affix
+            fifthAffixLevel = 12, -- Key level the third affix is added
+            fifthAffixValue = 0, -- Value of the thrid affix
+            thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
+            preThresholdValue = 15, -- Value of the pre-threshold levels
+            postThresholdValue = 15, -- Value of the post threshold levels
+            untimedBaseLevel = 10, -- The level after which untimed keys have no additional value
+            twoChestSpeed = 0.8, -- timer % at which a dungeon is 2 chested.
+            threeChestSpeed = 0.6, -- timer % at which a dungeon is 3 chested
+            bonusTimerRating = 15 -- Bonus/Penalty for timers
         }
     }
 
@@ -531,18 +551,17 @@ function DungeonTools:CalculateRating(dungeonID, keyLevel, runTime)
         return 0
     end
     
-    if (keyLevel < seasonVars.firstAffixLevel) then
+    -- In Season 2 of TWW they moved based affix to level 4. So this is removed.
+    --[[ if (keyLevel < seasonVars.firstAffixLevel) then
         return 0
-    end
+    end ]]
 
     if currentSeasonMaps == nil then
         currentSeasonMaps = DungeonTools:GetCurrentSeasonMaps()
     end
     local bonusRating = 0
     local dungeonTimeLimit = currentSeasonMaps[dungeonID].timeLimit
-    if keyLevel >= seasonVars.thirdAffixLevel then
-        dungeonTimeLimit = dungeonTimeLimit + 90
-    end
+    
     -- Runs over time by 40% are a 0 score.
     if(runTime > (dungeonTimeLimit + (dungeonTimeLimit * maxModifier))) then
         return 0
