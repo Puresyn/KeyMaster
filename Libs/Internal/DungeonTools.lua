@@ -57,14 +57,14 @@ local portalSpellIds = {
     [375] = 354464,      -- Mists of Tirna Scithe - 348533
     [376] = 354462,      -- The Necrotic Wake - 348529
     -- TWW S2
-    [500] = 445443,      -- The Rookery - 445443
-    [525] = 1218105,     -- Floodgate - 1218105
-    [247] = 272268,      -- The MOTHERLODE!! - 272268
-    [370] = 373274,      -- Mechagon - Workshop - 373274
-    [504] = 445441,      -- Darkflame Cleft - 445441
-    [382] = 354467,      -- Theater of Pain - 354467
-    [506] = 445440,      -- Cinderbrew Meadery - 445440
-    [499] = 445444       -- Priory of the Sacred Flame - 445444
+    [500] = 445443,      -- The Rookery
+    [525] = 1216786,     -- Floodgate
+    [247] = 467553,      -- The MOTHERLODE!!
+    [370] = 373274,      -- Mechagon - Workshop
+    [504] = 445441,      -- Darkflame Cleft
+    [382] = 354467,      -- Theater of Pain
+    [506] = 445440,      -- Cinderbrew Meadery
+    [499] = 445444       -- Priory of the Sacred Flame
 }
 
 -- add only horde specific portals here.
@@ -454,9 +454,9 @@ function DungeonTools:CalculateChest(dungeonID, keyLevel, timeCompleted)
     end
     local timeLimit = currentSeasonMaps[dungeonID].timeLimit
     if keyLevel >= seasonVars.thirdAffixLevel then
-        if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)+90) then return "+++" end
-        if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)+90) then return "++" end
-        if(timeCompleted <= timeLimit+90) then return "+" end
+        if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
+        if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
+        if(timeCompleted <= timeLimit) then return "+" end
     else
         if(timeCompleted <= (timeLimit * seasonVars.threeChestSpeed)) then return "+++" end
         if(timeCompleted <= (timeLimit * seasonVars.twoChestSpeed)) then return "++" end
