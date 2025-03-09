@@ -49,14 +49,14 @@ L.MAPNAMES[507] = { name = "The Grim Batol", abbr = "格瑞" }
 L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "仙林" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "通灵" }
 --TWW S2
-L.MAPNAMES[500] = { name = "The Rookery", abbr = "RKY" }
-L.MAPNAMES[525] = { name = "Floodgate", abbr = "FG" }
-L.MAPNAMES[247] = { name = "The MOTHERLODE!!", abbr = "ML" }
-L.MAPNAMES[370] = { name = "Mechagon - Workshop", abbr = "WORK" }
-L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "DFC" }
-L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "ToP" }
-L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "CBM" }
-L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "PoSF" }
+L.MAPNAMES[500] = { name = "The Rookery", abbr = "驭雷" }
+L.MAPNAMES[525] = { name = "Floodgate", abbr = "水闸" }
+L.MAPNAMES[247] = { name = "The MOTHERLODE!!", abbr = "暴富" }
+L.MAPNAMES[370] = { name = "Mechagon - Workshop", abbr = "麦卡贡" }
+L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "暗焰" }
+L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "剧场" }
+L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "酒庄" }
+L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "圣焰" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "经典旧世" }

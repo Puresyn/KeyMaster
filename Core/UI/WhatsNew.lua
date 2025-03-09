@@ -33,15 +33,15 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Updated to interface version 11.1</p>
-                <br/>
-                <p>]]..textBullet..[[Will be loosing CN translation next release due to lack of translator participation.</p>          
-                <br/>
-                <p>]]..textBullet..[[Updates for TWW S2.</p>
+                <p>]]..textBullet..[[Added simplified Chinese translations for S2 dungeons.  (Thanks vj234013 on github)</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None.</p>
+                <p>]]..textBullet..[[Fixed score calulations for TWW S2 (special thanks to OMGTotem).</p>
+                <br/>
+                <p>]]..textBullet..[[Fixed chest ++ calculation for dungeons since the 90s addition to dungeon timers is gone.</p>
+                <br/>
+                <p>]]..textBullet..[[Fixed portal spell ids for Motherlode and Operation: Floodgate dungeons.  (Thanks snaysix on github)</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

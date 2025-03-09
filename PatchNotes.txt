@@ -3,6 +3,33 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.4.2
+--------------------------------------------------
+Updates:
+- Added simplified Chinese translations for S2 dungeons.  (Thanks vj234013 on github)
+- Updated DE localization
+
+Fixes:
+- Fixed score calulations for TWW S2 (special thanks to OMGTotem)
+- Fixed chest ++ calculation for dungeons since the 90s addition to dungeon timers is gone.
+- Fixed portal spell ids for Motherlode and Operation: Floodgate dungeons.  (Thanks snaysix on github)
+
+Known Bugs/Issues:
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
+
+--------------------------------------------------
+Key Master v1.4.1
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- None
+
+Known Bugs/Issues:
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
+
+--------------------------------------------------
 Key Master v1.4.0
 --------------------------------------------------
 Updates:
@@ -22,7 +49,7 @@ Fixes:
 
 Known Bugs/Issues:
 - A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
-PATCH NOTES:
+
 --------------------------------------------------
 Key Master v1.3.9
 --------------------------------------------------
