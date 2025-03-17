@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.4.3
+--------------------------------------------------
+Updates:
+- 
+
+Fixes:
+- Fixed Motherlode portal for horde characters (thanks to snaysix on github for catching this).
+
+Known Bugs/Issues:
+- A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.4.2
 --------------------------------------------------
 Updates:
