@@ -32,16 +32,12 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
+                <p>]]..textBullet..[[None.</p>
                 <br/>
-                <p>]]..textBullet..[[Added simplified Chinese translations for S2 dungeons.  (Thanks vj234013 on github)</p>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Fixed score calulations for TWW S2 (special thanks to OMGTotem).</p>
-                <br/>
-                <p>]]..textBullet..[[Fixed chest ++ calculation for dungeons since the 90s addition to dungeon timers is gone.</p>
-                <br/>
-                <p>]]..textBullet..[[Fixed portal spell ids for Motherlode and Operation: Floodgate dungeons.  (Thanks snaysix on github)</p>
+                <p>]]..textBullet..[[Fixed Motherlode portal for horde characters (thanks to snaysix on github for catching this).</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

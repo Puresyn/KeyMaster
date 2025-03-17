@@ -52,14 +52,14 @@ local portalSpellIds = {
     [502] = 445416,      -- City of Threads - 442927
     [505] = 445414,      -- The Dawnbreaker - 442931
     [501] = 445269,      -- The Stonevault - 442926
-    [353] = 445418,      -- Siege of Boralus - (A) 445418 - (H) 464256 - 272264
+    [353] = 445418,      -- Siege of Boralus (alliance ONLY)
     [507] = 445424,      -- The Grim Batol - 396121
     [375] = 354464,      -- Mists of Tirna Scithe - 348533
     [376] = 354462,      -- The Necrotic Wake - 348529
     -- TWW S2
     [500] = 445443,      -- The Rookery
     [525] = 1216786,     -- Floodgate
-    [247] = 467553,      -- The MOTHERLODE!!
+    [247] = 467553,      -- The MOTHERLODE!! (alliance ONLY)
     [370] = 373274,      -- Mechagon - Workshop
     [504] = 445441,      -- Darkflame Cleft
     [382] = 354467,      -- Theater of Pain
@@ -69,7 +69,8 @@ local portalSpellIds = {
 
 -- add only horde specific portals here.
 local portalSpellIdsHorde = {
-    [353] = 464256      -- Siege of Boralus - (A) 445418 - (H) 464256 - 272264
+    [353] = 464256,      -- Siege of Boralus 
+    [247] = 467555      -- The MOTHERLODE!! 
 }
 
 -- Affix IDs
