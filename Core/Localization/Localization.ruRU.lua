@@ -76,6 +76,7 @@ L.MPLUSSEASON[11] = { name = "3 сезон" }
 L.MPLUSSEASON[12] = { name = "4 сезон" }
 L.MPLUSSEASON[13] = { name = "1 сезон" } -- ожидая, что 13 сезон будет TWW S1
 L.MPLUSSEASON[14] = { name = "2 сезон" } -- ожидая, что 14 сезон будет TWW S2
+L.MPLUSSEASON[15] = { name = "3 сезон" } -- ожидая, что 15 сезон будет TWW S2
 
 L.DISPLAYVERSION = "вер. " -- перевёл, потому что на русском языке так будет лучше
 L.WELCOMEMESSAGE = "Добро пожаловать"
