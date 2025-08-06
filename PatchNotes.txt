@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.4.4
+--------------------------------------------------
+Updates:
+- Updated Added season 3, s3 dungeons, dungeon abbrevations and dungeon portal spells for season 3 dungeons in War Within.
+
+Fixes:
+-
+
+Known Bugs/Issues:
+-
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.4.3
 --------------------------------------------------
 Updates:

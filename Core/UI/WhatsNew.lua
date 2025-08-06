@@ -32,17 +32,17 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>]]..textBullet..[[None.</p>
+                <p>]]..textBullet..[[Added season 3, s3 dungeons, dungeon abbrevations and dungeon portal spells for season 3 dungeons in War Within.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Fixed Motherlode portal for horde characters (thanks to snaysix on github for catching this).</p>
+                <p>]]..textBullet..[[None.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[A player's vault display may not update immediately. Changing tabs should correct the display if inaccurate.</p>
+                <p>]]..textBullet..[[None.</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
