@@ -20,6 +20,8 @@ L.TOCNOTES["ADDONDESC"] = "Outils d'Information et de Collaboration Mythique Plu
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
+
+-- USE /fsstack to mouseover the icons in the player frame to find their mapIds if you need to add new dungeons.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Inconnu", abbr = "???" }
 L.MAPNAMES[463] = { name = "Aube de l'Infini: Repos de Galakrond", abbr = "FALL"}
@@ -57,6 +59,11 @@ L.MAPNAMES[504] = { name = "Faille de Flamme-Noire", abbr = "DFC" }
 L.MAPNAMES[382] = { name = "Théâtre de la Souffrance", abbr = "ToP" }
 L.MAPNAMES[506] = { name = "Hydromellerie de Brassecendre", abbr = "CBM" }
 L.MAPNAMES[499] = { name = "Prieuré de la Flamme sacrée", abbr = "PoSF" }
+--TWW S3
+L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
+L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
+L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
+L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
