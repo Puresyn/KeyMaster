@@ -64,7 +64,12 @@ local portalSpellIds = {
     [504] = 445441,      -- Darkflame Cleft
     [382] = 354467,      -- Theater of Pain
     [506] = 445440,      -- Cinderbrew Meadery
-    [499] = 445444       -- Priory of the Sacred Flame
+    [499] = 445444,       -- Priory of the Sacred Flame
+    -- TWW S3
+    [391] = 367416,      -- So'leah's Gambit
+    [392] = 367416,      -- Streets of Wonder
+    [378] = 354465,      -- Halls of Attonement
+    [542] = 1237215,       -- Eco-Dome Al'dani
 }
 
 -- add only horde specific portals here.
