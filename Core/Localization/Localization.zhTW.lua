@@ -60,10 +60,10 @@ L.MAPNAMES[382] = { name = "苦痛劇場", abbr = "苦痛" }
 L.MAPNAMES[506] = { name = "燼釀酒莊", abbr = "酒莊" }
 L.MAPNAMES[499] = { name = "聖焰隱修院", abbr = "聖焰" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
-L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
-L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
+L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "險招" }
+L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "街道" }
+L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "贖罪" }
+L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "秘境" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }
@@ -120,7 +120,7 @@ L.COMMANDLINE["Show"] = { name = "show", text = " - 顯示/隱藏主視窗。"}
 L.COMMANDLINE["Help"] = { name = "help", text = " - 顯示幫助選單。"}
 L.COMMANDLINE["Errors"] = { name = "errors", text = " - 切換錯誤訊息。"}
 L.COMMANDLINE["Debug"] = { name = "debug", text = " - 切換偵錯訊息。"}
-L.COMMANDLINE["Version"] = { name = "version", text = " - shows the current build version." }
+L.COMMANDLINE["Version"] = { name = "version", text = " - 顯示當前構建版本。" }
 
 L.TOOLTIPS = {}
 L.TOOLTIPS["MythicRating"] = { name = "傳奇評分", text = "此為角色當前的傳奇+評分。" }
