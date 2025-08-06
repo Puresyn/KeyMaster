@@ -20,6 +20,8 @@ L.TOCNOTES["ADDONDESC"] = "Informazioni sulle Chiavi Mythic Plus e Strumento di 
 L.TOCNOTES["ADDONNAME"] = "Key Master"
 
 L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
+
+-- USE /fsstack to mouseover the icons in the player frame to find their mapIds if you need to add new dungeons.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Sconosciuto", abbr = "???" }
 L.MAPNAMES[463] = { name = "Alba degli Infiniti: Cauduta di Galakrond", abbr = "AICG"}
@@ -57,6 +59,11 @@ L.MAPNAMES[504] = { name = "Faglia di Fiammoscura", abbr = "FdF" }
 L.MAPNAMES[382] = { name = "Teatro del Dolore", abbr = "TdD" }
 L.MAPNAMES[506] = { name = "Idromelificio Cinereo", abbr = "IC" }
 L.MAPNAMES[499] = { name = "Prioria della Fiamma Sacra", abbr = "PdFS" }
+--TWW S3
+L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
+L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
+L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
+L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

@@ -20,6 +20,8 @@ L.TOCNOTES["ADDONDESC"] = "大秘境钥石信息与合作工具"
 L.TOCNOTES["ADDONNAME"] = "钥石大师"
 
 L.MAPNAMES = {} -- Note: Map abbrevations should be a max of 4 characters and be commonly known. Map names come directly from Blizzard already translated.
+
+-- USE /fsstack to mouseover the icons in the player frame to find their mapIds if you need to add new dungeons.
 -- DF S3
 L.MAPNAMES[9001] = { name = "Unknown", abbr = "???" }
 L.MAPNAMES[463] = { name = "Dawn of the Infinite: Galakrond\'s Fall", abbr = "陨落"}
@@ -57,6 +59,11 @@ L.MAPNAMES[504] = { name = "Darkflame Cleft", abbr = "暗焰" }
 L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "剧场" }
 L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "酒庄" }
 L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "圣焰" }
+--TWW S3
+L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
+L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
+L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
+L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "经典旧世" }
