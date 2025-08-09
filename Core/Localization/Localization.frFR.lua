@@ -60,10 +60,10 @@ L.MAPNAMES[382] = { name = "Théâtre de la Souffrance", abbr = "ToP" }
 L.MAPNAMES[506] = { name = "Hydromellerie de Brassecendre", abbr = "CBM" }
 L.MAPNAMES[499] = { name = "Prieuré de la Flamme sacrée", abbr = "PoSF" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
-L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
-L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
+L.MAPNAMES[391] = { name = "Stratagème de So'leah", abbr = "GMBT" }
+L.MAPNAMES[392] = { name = "Les Rues des Merveilles", abbr = "STRT" }
+L.MAPNAMES[378] = { name = "Salles de l'Expiation", abbr = "HOA" }
+L.MAPNAMES[542] = { name = "Écodôme Al'dani", abbr = "EDA" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

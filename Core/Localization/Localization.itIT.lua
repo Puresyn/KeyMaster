@@ -60,10 +60,10 @@ L.MAPNAMES[382] = { name = "Teatro del Dolore", abbr = "TdD" }
 L.MAPNAMES[506] = { name = "Idromelificio Cinereo", abbr = "IC" }
 L.MAPNAMES[499] = { name = "Prioria della Fiamma Sacra", abbr = "PdFS" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
-L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
-L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
+L.MAPNAMES[391] = { name = "Azzardo di So'leah", abbr = "AdS" }
+L.MAPNAMES[392] = { name = "Strade delle Meraviglie", abbr = "SdM" }
+L.MAPNAMES[378] = { name = "Sale della Redenzione", abbr = "SdR" }
+L.MAPNAMES[542] = { name = "Ecosfera Al'dani", abbr = "EA" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

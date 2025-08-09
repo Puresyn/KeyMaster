@@ -60,10 +60,10 @@ L.MAPNAMES[382] = { name = "Theater des Schmerzen", abbr = "TdS" }
 L.MAPNAMES[506] = { name = "Metbrauerei Glutbräu", abbr = "MG" }
 L.MAPNAMES[499] = { name = "Priorat der Heiligen Flamme", abbr = "PdHF" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
-L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
-L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
+L.MAPNAMES[391] = { name = "So'leah's Schachzug", abbr = "SCH" }
+L.MAPNAMES[392] = { name = "Straßen der Wunder", abbr = "STR" }
+L.MAPNAMES[378] = { name = "Die Hallen der Sühne", abbr = "HdS" }
+L.MAPNAMES[542] = { name = "Biokuppel Al'dani ", abbr = "Bio" } 
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

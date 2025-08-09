@@ -52,7 +52,7 @@ L.MAPNAMES[375] = { name = "Mists of Tirna Scithe", abbr = "ТТС" }
 L.MAPNAMES[376] = { name = "The Necrotic Wake", abbr = "СТ" }
 --TWW S2
 L.MAPNAMES[500] = { name = "Гнездовье", abbr = "ГНЗД" }
-L.MAPNAMES[525] = { name = "Операция Затвор", abbr = "ЗТВ" }
+L.MAPNAMES[525] = { name = "Операция - шлюз", abbr = "ШЛЗ" }
 L.MAPNAMES[247] = { name = "ЗОЛОТАЯ ЖИЛА!!!", abbr = "ЗЖ" }
 L.MAPNAMES[370] = { name = "Операция Мехагон: Мастерская", abbr = "МСТ" }
 L.MAPNAMES[504] = { name = "Расселина Темного Пламени", abbr = "РТП" }
@@ -60,10 +60,10 @@ L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
 L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
 L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
 --TWW S3
-L.MAPNAMES[391] = { name = "So\'leah's Gambit", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "STRT" }
-L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "HOA" }
-L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "DOME" }
+L.MAPNAMES[391] = { name = "Гамбит Со'леи", abbr = "ГС" }
+L.MAPNAMES[392] = { name = "Улица Чудес", abbr = "УЧ" }
+L.MAPNAMES[378] = { name = "Чертоги Покаяния", abbr = "ЧП" }
+L.MAPNAMES[542] = { name = "Заповедник Аль'дани", abbr = "ЗА" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
