@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "Театр Боли", abbr = "ТБ" }
 L.MAPNAMES[506] = { name = "Искроварня", abbr = "ИСК" }
 L.MAPNAMES[499] = { name = "Приорат Священного Пламени", abbr = "ПСВ" } 
 --TWW S3
-L.MAPNAMES[391] = { name = "Гамбит Со'леи", abbr = "ГС" }
-L.MAPNAMES[392] = { name = "Улица Чудес", abbr = "УЧ" }
+L.MAPNAMES[392] = { name = "Гамбит Со'леи", abbr = "ГС" }
+L.MAPNAMES[391] = { name = "Улица Чудес", abbr = "УЧ" }
 L.MAPNAMES[378] = { name = "Чертоги Покаяния", abbr = "ЧП" }
 L.MAPNAMES[542] = { name = "Заповедник Аль'дани", abbr = "ЗА" }
 

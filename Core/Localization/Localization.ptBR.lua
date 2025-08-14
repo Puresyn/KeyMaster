@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "Teatro da Dor", abbr = "ToP" }
 L.MAPNAMES[506] = { name = "Hidromelaria Cinzagris", abbr = "CBM" }
 L.MAPNAMES[499] = { name = "Priorado da chama sagrada", abbr = "PoSF" }
 --TWW S3
-L.MAPNAMES[391] = { name = "Gambito de So'leah", abbr = "GMBT" }
-L.MAPNAMES[392] = { name = "Rua das Maravilhas", abbr = "STRT" }
+L.MAPNAMES[392] = { name = "Gambito de So'leah", abbr = "GMBT" }
+L.MAPNAMES[391] = { name = "Rua das Maravilhas", abbr = "STRT" }
 L.MAPNAMES[378] = { name = "Salões da Espiação", abbr = "HOA" }
 L.MAPNAMES[542] = { name = "Eco-Domo Al'dani", abbr = "DOME" }
 

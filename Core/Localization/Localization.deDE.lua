@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "Theater des Schmerzen", abbr = "TdS" }
 L.MAPNAMES[506] = { name = "Metbrauerei Glutbräu", abbr = "MG" }
 L.MAPNAMES[499] = { name = "Priorat der Heiligen Flamme", abbr = "PdHF" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So'leah's Schachzug", abbr = "SCH" }
-L.MAPNAMES[392] = { name = "Straßen der Wunder", abbr = "STR" }
+L.MAPNAMES[392] = { name = "So'leah's Schachzug", abbr = "SCH" }
+L.MAPNAMES[391] = { name = "Straßen der Wunder", abbr = "STR" }
 L.MAPNAMES[378] = { name = "Die Hallen der Sühne", abbr = "HdS" }
 L.MAPNAMES[542] = { name = "Biokuppel Al'dani ", abbr = "Bio" } 
 

@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "Theater of Pain", abbr = "투기장" }
 L.MAPNAMES[506] = { name = "Cinderbrew Meadery", abbr = "양조장" }
 L.MAPNAMES[499] = { name = "Priory of the Sacred Flame", abbr = "수도원" }
 --TWW S3
-L.MAPNAMES[391] = { name = "So'leah's Gambit", abbr = "승부수" }
-L.MAPNAMES[392] = { name = "Streets of Wonder", abbr = "거리" }
+L.MAPNAMES[392] = { name = "So'leah's Gambit", abbr = "승부수" }
+L.MAPNAMES[391] = { name = "Streets of Wonder", abbr = "거리" }
 L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "속죄" }
 L.MAPNAMES[542] = { name = "Eco-Dome Al'dani", abbr = "알다니" }
 

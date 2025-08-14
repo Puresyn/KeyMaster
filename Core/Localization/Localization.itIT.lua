@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "Teatro del Dolore", abbr = "TdD" }
 L.MAPNAMES[506] = { name = "Idromelificio Cinereo", abbr = "IC" }
 L.MAPNAMES[499] = { name = "Prioria della Fiamma Sacra", abbr = "PdFS" }
 --TWW S3
-L.MAPNAMES[391] = { name = "Azzardo di So'leah", abbr = "AdS" }
-L.MAPNAMES[392] = { name = "Strade delle Meraviglie", abbr = "SdM" }
+L.MAPNAMES[392] = { name = "Azzardo di So'leah", abbr = "AdS" }
+L.MAPNAMES[391] = { name = "Strade delle Meraviglie", abbr = "SdM" }
 L.MAPNAMES[378] = { name = "Sale della Redenzione", abbr = "SdR" }
 L.MAPNAMES[542] = { name = "Ecosfera Al'dani", abbr = "EA" }
 

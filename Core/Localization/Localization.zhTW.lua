@@ -60,8 +60,8 @@ L.MAPNAMES[382] = { name = "苦痛劇場", abbr = "苦痛" }
 L.MAPNAMES[506] = { name = "燼釀酒莊", abbr = "酒莊" }
 L.MAPNAMES[499] = { name = "聖焰隱修院", abbr = "聖焰" }
 --TWW S3
-L.MAPNAMES[391] = { name = "索利亞的險招", abbr = "險招" }
-L.MAPNAMES[392] = { name = "奇觀街道", abbr = "街道" }
+L.MAPNAMES[392] = { name = "索利亞的險招", abbr = "險招" }
+L.MAPNAMES[391] = { name = "奇觀街道", abbr = "街道" }
 L.MAPNAMES[378] = { name = "贖罪之殿", abbr = "贖罪" }
 L.MAPNAMES[542] = { name = "埃達尼秘境", abbr = "秘境" }
 
