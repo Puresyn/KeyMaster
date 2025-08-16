@@ -6,13 +6,13 @@ PATCH NOTES:
 Key Master v1.4.5
 --------------------------------------------------
 Updates:
-- updated dungeons translations for non-us languages.
+- Updated dungeons translations for non-us languages.
 
 Fixes:
 - Gambit and Streets were accidently swapped while reading a players key.
 
 Known Bugs/Issues:
-- Still missing zhCN language support for s3.
+- None
 
 PATCH NOTES:
 --------------------------------------------------
