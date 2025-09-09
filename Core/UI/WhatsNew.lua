@@ -32,12 +32,12 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>]]..textBullet..[[updated dungeons translations for non-us languages.</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Incorrect dungeon ids for streets and gambit.  They were swapped on accident.</p>
+                <p>]]..textBullet..[[Corrected individual dungeon rating calculation error for level 12+. (Thanks S4mmis on Github)</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
