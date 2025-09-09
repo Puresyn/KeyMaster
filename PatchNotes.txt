@@ -6,10 +6,10 @@ PATCH NOTES:
 Key Master v1.4.6
 --------------------------------------------------
 Updates:
-- 
+- None
 
 Fixes:
-- 
+- Corrected individual dungeon rating calculation error for level 12+.
 
 Known Bugs/Issues:
 - None
