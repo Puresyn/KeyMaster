@@ -37,7 +37,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[Reverted previous patch for individual dungeon rating calculation error for level 12+. This is/was a game bug that is being addressed.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
