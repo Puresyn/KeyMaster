@@ -404,7 +404,7 @@ local function getRatingCalcValues()
             thirdAffixLevel = 10, -- Key level the third affix is added
             thirdAffixValue = 15, -- Value of the thrid affix
             fourthAffixLevel = 12, -- Key level the third affix is added
-            fourthAffixValue = 10,-- Value of the thrid affix
+            fourthAffixValue = 15,-- Value of the thrid affix
             fifthAffixLevel = 12, -- Key level the third affix is added
             fifthAffixValue = 0, -- Value of the thrid affix
             thresholdLevel = 1, -- Threshold after which the value of the key changes due to level
