@@ -27,17 +27,17 @@ local function setWhatsNewContent(parent)
                 <h1>|cff]]..h1Color..[[News / Updates / Patch Notes|r</h1>
                 <p>]]..KeyMasterLocals.DISPLAYVERSION..KM_AUTOVERSION.." "..KM_VERSION_STATUS..[[</p>
                 <br/>
-                <h3>|cff]]..h3Color..[[Key Master could use some more active translators!|r</h3>
+                <h3>|cff]]..h3Color..[[Join the conversation!|r</h3>
                 <p>[Key Master Discord]|cff]]..aColor..[[ https://discord.gg/QngbCPBP|r</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[Updated to WoW build 110205</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Reverted previous patch for individual dungeon rating calculation error for level 12+. This is/was a game bug that is being addressed.</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
