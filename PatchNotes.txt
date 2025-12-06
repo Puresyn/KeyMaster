@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.0
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- None
+
+Known Bugs/Issues:
+- None
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.4.9
 --------------------------------------------------
 Updates:
