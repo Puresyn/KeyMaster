@@ -77,6 +77,7 @@ L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "격전의 아제
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "어둠땅" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "용군단" }
 L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "내부 전쟁" }
+L.XPAC[11] = { enum = "LE_EXPANSION_MIDNIGHT", desc = "Midnight" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "시즌 3" }
@@ -84,6 +85,7 @@ L.MPLUSSEASON[12] = { name = "시즌 4" }
 L.MPLUSSEASON[13] = { name = "시즌 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "시즌 2" } -- expecting season 14 to be TWW S2
 L.MPLUSSEASON[15] = { name = "시즌 3" } -- expecting season 15 to be TWW S2
+L.MPLUSSEASON[16] = { name = "시즌 1" } -- expecting season 16 to be Midnight S1
 
 L.DISPLAYVERSION = "버전"
 L.WELCOMEMESSAGE = "돌아오신걸 환영합니다."

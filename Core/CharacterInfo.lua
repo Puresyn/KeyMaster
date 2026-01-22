@@ -39,7 +39,7 @@ function CharacterInfo:GetOwnedKey()
         keystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel(mapid)        
     else
         -- No key but has Vault Ready
-        if (C_MythicPlus.IsWeeklyRewardAvailable()) then
+        if (C_WeeklyRewards.HasAvailableRewards()) then
             mapid = 0
             mapName = KeyMasterLocals.CHARACTERINFO["KeyInVault"].text
             keystoneLevel = 0

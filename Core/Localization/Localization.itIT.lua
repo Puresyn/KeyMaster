@@ -76,7 +76,8 @@ L.XPAC[6] = { enum = "LE_EXPANSION_LEGION", desc = "Legion" }
 L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "Battle for Azeroth" }
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "Shadowlands" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
-L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "The War Within" } 
+L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "The War Within" }
+L.XPAC[11] = { enum = "LE_EXPANSION_MIDNIGHT", desc = "Midnight" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "Stagione 3" }
@@ -84,6 +85,7 @@ L.MPLUSSEASON[12] = { name = "Stagione 4" }
 L.MPLUSSEASON[13] = { name = "Stagione 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "Stagione 2" } -- expecting season 14 to be TWW S2
 L.MPLUSSEASON[15] = { name = "Stagione 3" } -- expecting season 15 to be TWW S2
+L.MPLUSSEASON[16] = { name = "Stagione 1" } -- expecting season 16 to be Midnight S1
 
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Bentornato"

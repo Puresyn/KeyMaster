@@ -78,14 +78,17 @@ L.XPAC[7] = { enum = "LE_EXPANSION_BATTLE_FOR_AZEROTH", desc = "Battle for Azero
 L.XPAC[8] = { enum = "LE_EXPANSION_SHADOWLANDS", desc = "Shadowlands" }
 L.XPAC[9] = { enum = "LE_EXPANSION_DRAGONFLIGHT", desc = "Dragonflight" }
 L.XPAC[10] = { enum = "LE_EXPANSION_WAR_WITHIN", desc = "The War Within" }
+L.XPAC[11] = { enum = "LE_EXPANSION_MIDNIGHT", desc = "Midnight" }
 
 L.MPLUSSEASON = {}
 L.MPLUSSEASON[11] = { name = "Season 3" }
 L.MPLUSSEASON[12] = { name = "Season 4" }
 L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
-L.MPLUSSEASON[14] = { name = "Season 2" } -- expecting season 14 to be TWW S2
-L.MPLUSSEASON[15] = { name = "Season 3" } -- expecting season 15 to be TWW S3
-L.MPLUSSEASON[16] = { name = "Season 4" } -- expecting season 16 to be TWW S4
+L.MPLUSSEASON[14] = { name = "Season 2" } 
+L.MPLUSSEASON[15] = { name = "Season 3" }
+L.MPLUSSEASON[16] = { name = "Season 1" } -- expecting season 16 to be Midnight S1
+L.MPLUSSEASON[17] = { name = "Season 2" } -- expecting season 16 to be Midnight S2
+L.MPLUSSEASON[18] = { name = "Season 3" } -- expecting season 16 to be Midnight S3
 
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Welcome back"
