@@ -23,7 +23,7 @@
 	<Include file='Libs\External\Taintless\Taintless.xml'/>
 	<Include file='Libs\External\UTF8\UTF8.xml'/>
 
-	<Script file='Libs\External\LibRangeCheck-3.0\LibRangeCheck-3.0.lua'/>
+	<!-- <Script file='Libs\External\LibRangeCheck-3.0\LibRangeCheck-3.0.lua'/> -->
 	<Script file='Libs\External\LibAceConfigHelper\LibAceConfigHelper.lua'/>
 	<Script file='Libs\External\LibCustomGlow-1.0\LibCustomGlow-1.0.lua'/>
 	<Script file='Libs\External\LibActionButton-1.0\LibActionButton-1.0.lua'/>

@@ -3,6 +3,20 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.0
+--------------------------------------------------
+Updates:
+- Updated to Interface build 120000
+
+Fixes:
+- Fixed deprecated blizzard function related to weekly vault rewards.
+- Removed deprecated library LibRangeCheck depency.
+
+Known Bugs/Issues:
+- Please be aware Blizzard updated the max level before the Midnight expansion release.  If you cannot see your alternate characters goto KM configuration tab and uncheck "Only show maximum level characters."
+
+PATCH NOTES:
+--------------------------------------------------
 Key Master v1.4.9
 --------------------------------------------------
 Updates:

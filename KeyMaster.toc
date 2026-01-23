@@ -1,8 +1,8 @@
-## Interface: 110205
-## X-Max-Interface: 110207
-## X-Min-Interface: 110200
+## Interface: 120000
+## X-Max-Interface: 120000
+## X-Min-Interface: 120000
 
-## Version: 1.4.9
+## Version: 1.5.0
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
