@@ -3,6 +3,18 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.1
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- Fixed deprecated blizzard function related to completing a mythic plus dungeon.
+
+Known Bugs/Issues:
+- Please be aware Blizzard updated the max level before the Midnight expansion release.  If you cannot see your alternate characters goto KM configuration tab and uncheck "Only show maximum level characters."
+
+--------------------------------------------------
 Key Master v1.5.0
 --------------------------------------------------
 Updates:

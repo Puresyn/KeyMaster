@@ -623,14 +623,15 @@ function DungeonTools:ChallengeModeCompletionInfo()
     ---@param members table - [#]{(string) memberGUID, (string) name}
     local members
 
-    mapChallengeModeID, level, time, onTime, keystoneUpgradeLevels, practiceRun, oldOverallDungeonScore, newOverallDungeonScore, IsMapRecord, IsAffixRecord, PrimaryAffix, isEligibleForScore, members = C_ChallengeMode.GetCompletionInfo()
+    local info = C_ChallengeMode.GetChallengeCompletionInfo()
+
     --if KeyMaster:GetTableLength(completionData) > 0 then
         C_Timer.After(3, function()
-            local mapName = DungeonTools:GetMapName(mapChallengeModeID)
+            local mapName = DungeonTools:GetMapName(info.mapChallengeModeID)
             local timeStatus
-            if onTime then timeStatus = "a timed" else timeStatus = "an untimed" end
-            local plusText = "+"..tostring(keystoneUpgradeLevels)
-            if not mapName then KeyMaster:_ErrorMsg("ChallengeModeCompletionInfo","DungeonTools", "Could not find mapID "..tostring(mapChallengeModeID)) 
+            if info.onTime then timeStatus = "a timed" else timeStatus = "an untimed" end
+            local plusText = "+"..tostring(info.keystoneUpgradeLevels)
+            if not mapName then KeyMaster:_ErrorMsg("GetChallengeCompletionInfo","DungeonTools", "Could not find mapID "..tostring(info.mapChallengeModeID)) 
                 return
             end
             --KeyMaster:Print("You've completed "..timeStatus.." "..mapName.. " ("..level..") at "..plusText.." in "..(KeyMaster:FormatDurationSec(time))) -- todo: Point to function for party announcements.
