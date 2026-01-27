@@ -39,6 +39,8 @@ local function setWhatsNewContent(parent)
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
                 <p>]]..textBullet..[[Fixed deprecated blizzard function related to completing a mythic plus dungeon.</p>
+                <p>]]..textBullet..[[Fixed new secret values regarding chat loot functions.</p>
+                <p>]]..textBullet..[[Fixed new spell cooldown check for portals.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

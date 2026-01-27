@@ -110,22 +110,22 @@ local function mapdData_OnRowClick(self, event)
     local portalButton = _G["KM_Playerportal_button"]
     local portalSpellId, portalSpellName = DungeonTools:GetPortalSpell(selectedMapId)
     if portalButton then 
+        -- Check if the spell is currently on cooldown without touching Secret Values
+        local isOnCooldown = false
+        if portalSpellId then
+            -- New 12.0 logic: C_Spell.IsSpellOnCooldown returns a boolean
+            isOnCooldown = C_Spell.IsSpellOnCooldown(portalSpellId)
+        end
 
-        local cooldown 
-        if portalSpellName then cooldown = C_Spell.GetSpellCooldown(portalSpellName) end
-        if (portalSpellId ~= nil and cooldown ~= nil and cooldown["startTime"] == 0) then
+        if (portalSpellId ~= nil and not isOnCooldown) then
             portalButton:SetAttribute("spell", portalSpellId)
             portalButton:Enable()
             portalButton:Show()
-
         else
-
             portalButton:Disable()
             portalButton:Hide()
-
         end
     end
-
 
     local mapDetailsFrame = _G["KM_MapDetailView"]
     local dungeonName = shortenDungeonName(seasonMaps[selectedMapId].name)
