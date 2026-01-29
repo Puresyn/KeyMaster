@@ -113,8 +113,10 @@ local function mapdData_OnRowClick(self, event)
         -- Check if the spell is currently on cooldown without touching Secret Values
         local isOnCooldown = false
         if portalSpellId then
-            -- New 12.0 logic: C_Spell.IsSpellOnCooldown returns a boolean
-            isOnCooldown = C_Spell.IsSpellOnCooldown(portalSpellId)
+            local spellInfo = C_Spell.GetSpellCooldown(portalSpellName)
+            if (spellInfo.timeUntilEndOfStartRecovery ~= nil and spellInfo.timeUntilEndOfStartRecovery > 0) then
+                isOnCooldown = true
+            end
         end
 
         if (portalSpellId ~= nil and not isOnCooldown) then
