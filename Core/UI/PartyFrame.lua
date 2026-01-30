@@ -26,12 +26,12 @@ end
 
 local function portalButton_mouseover(self, event)
     local spellNameToCheckCooldown = self:GetParent():GetAttribute("portalSpellName")
-    local cooldown = C_Spell.GetSpellCooldown(spellNameToCheckCooldown);
+    local cooldown = C_Spell.GetSpellCooldown(spellNameToCheckCooldown)
     if cooldown == nil then
         KeyMaster:_ErrorMsg("portalButton_mouseover", "PartyFrame", "Invalid spell name for portal button.")
         return
     end
-    if (cooldown["startTime"] == 0) then
+    if (cooldown.timeUntilEndOfStartRecovery == nil) then
         local animFrame = self:GetParent():GetAttribute("portalFrame")
         animFrame.textureportal:SetTexture("Interface\\AddOns\\KeyMaster\\Assets\\Images\\portal-texture1", false)
         animFrame.animg:Play()

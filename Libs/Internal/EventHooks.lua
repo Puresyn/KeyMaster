@@ -102,10 +102,10 @@ function EventHooks:NotifyEvent(event)
     end
     if event == "CHALLENGE_MODE_COMPLETED" then
         KeyMaster:_DebugMsg("EventHooks:NotifyEvent", "EventHooks", "Event: CHALLENGE_MODE_COMPLETED")
-        KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
+        --KeyMaster.DungeonTools:ChallengeModeCompletionInfo()
 
         -- get finished key information
-        --local _, level, _, onTime, _, _, _, _, _, _, _, _, members = C_ChallengeMode.GetCompletionInfo()
+        --local _, level, _, onTime, _, _, _, _, _, _, _, _, members = C_ChallengeMode.GetChallengeCompletionInfo()
 
         -- get current player information
         --local playerData = KeyMaster.CharacterInfo:GetMyCharacterInfo()
@@ -209,8 +209,13 @@ local function KeyWatch()
             EventHooks:NotifyEvent("PORTALS_UPDATE")
         end
         if event == "CHAT_MSG_LOOT" then
-            local itemTextRecieved, _, _, _, _, _, _, _, _, _, _, guid, _ = ...
-            if guid == UnitGUID("player") then
+            -- arg1: itemTextRecieved (String)
+            -- arg2: playerName (String) - USE THIS INSTEAD OF GUID
+            local itemTextRecieved, playerName = ...
+        
+            -- Check if the name in the loot event matches the local player's name
+            if playerName == UnitName("player") then
+                -- Safely parse the item string for your Mythic+ Key ID
                 if (string.match(itemTextRecieved, tostring(MYTHIC_PLUS_KEY_ID))) then
                     KeyMaster:_DebugMsg("KeyWatch", "EventHooks", "CHAT_MSG_LOOT: "..tostring(itemTextRecieved))
                     EventHooks:NotifyEvent("KEY_CHANGED")

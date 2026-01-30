@@ -33,13 +33,14 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Updated to Interface build 120000</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Fixed deprecated blizzard function related to weekly vault rewards.</p>
-                <p>]]..textBullet..[[Removed deprecated library LibRangeCheck depency.</p>
+                <p>]]..textBullet..[[Fixed deprecated blizzard function related to completing a mythic plus dungeon.</p>
+                <p>]]..textBullet..[[Fixed new secret values regarding chat loot functions.</p>
+                <p>]]..textBullet..[[Fixed new spell cooldown check for portals.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
