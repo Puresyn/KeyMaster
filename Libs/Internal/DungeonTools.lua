@@ -31,21 +31,21 @@ end ]]
 -- [ChallengeMode Dungeon ID]  Portal Spell ID
 --------------------------------
 local portalSpellIds = {
-    [463] = 424197,     -- Dawn of the Infinite: Galakrond's Fall
-    [248] = 424167,     -- Waycrest Manor
-    [244] = 424187,     -- Atal'Dazar
-    [198] = 424163,     -- Darkheart Thicket
-    [199] = 424153,     -- Black Rook Hold
-    [464] = 424197,     -- Dawn of the Infinite: Murozond's Rise
-    [456] = 424142,     -- Throne of Tides
-    [168] = 159901,     -- The Everbloom
-    [399] = 393256,     -- Ruby Life Pools
-    [400] = 393262,     -- The Nokhud Offensive
-    [401] = 393279,     -- The Azure Vault
-    [402] = 393273,     -- Algeth'ar Academy
+    [463] = 424197,      -- Dawn of the Infinite: Galakrond's Fall
+    [248] = 424167,      -- Waycrest Manor
+    [244] = 424187,      -- Atal'Dazar
+    [198] = 424163,      -- Darkheart Thicket
+    [199] = 424153,      -- Black Rook Hold
+    [464] = 424197,      -- Dawn of the Infinite: Murozond's Rise
+    [456] = 424142,      -- Throne of Tides
+    [168] = 159901,      -- The Everbloom
+    [399] = 393256,      -- Ruby Life Pools
+    [400] = 393262,      -- The Nokhud Offensive
+    [401] = 393279,      -- The Azure Vault
+    [402] = 393273,      -- Algeth'ar Academy
     [403] = 393222,      -- Legacy of Tyr
-    [404] = 393276,     -- Neltharus
-    [405] = 393267,     -- Brackenhide Hollow
+    [404] = 393276,      -- Neltharus
+    [405] = 393267,      -- Brackenhide Hollow
     [406] = 393283,      -- Halls of Infusion
     -- TWW S1
     [503] = 445417,      -- Ara-Kara, City of Echoes - 442929
@@ -64,12 +64,19 @@ local portalSpellIds = {
     [504] = 445441,      -- Darkflame Cleft
     [382] = 354467,      -- Theater of Pain
     [506] = 445440,      -- Cinderbrew Meadery
-    [499] = 445444,       -- Priory of the Sacred Flame
+    [499] = 445444,      -- Priory of the Sacred Flame
     -- TWW S3
     [391] = 367416,      -- So'leah's Gambit
     [392] = 367416,      -- Streets of Wonder
     [378] = 354465,      -- Halls of Attonement
-    [542] = 1237215,       -- Eco-Dome Al'dani
+    [542] = 1237215,     -- Eco-Dome Al'dani
+    -- MN (Midnight) S1
+    [556] = 1254555,     -- Pit of Saron
+    [557] = 1254400,     -- Windrunner Spire
+    [558] = 1254572,     -- Magisters' Terrace
+    [559] = 1254563,     -- Nexus-Point Xenas
+    [560] = 1254559,     -- Maisara Caverns
+    [161] = 159898,      -- Skyreach
 }
 
 -- add only horde specific portals here.
