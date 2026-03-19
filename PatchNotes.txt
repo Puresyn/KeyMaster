@@ -7,6 +7,7 @@ Key Master v1.5.2
 --------------------------------------------------
 Updates:
 - Added new Midnight season one dungeon data to addon.
+- Added localization for itIT
 
 Fixes:
 - None
