@@ -64,6 +64,14 @@ L.MAPNAMES[392] = { name = "So'leah's Schachzug", abbr = "SCH" }
 L.MAPNAMES[391] = { name = "Straßen der Wunder", abbr = "STR" }
 L.MAPNAMES[378] = { name = "Die Hallen der Sühne", abbr = "HdS" }
 L.MAPNAMES[542] = { name = "Biokuppel Al'dani ", abbr = "Bio" } 
+--MN (Midnight) S1
+L.MAPNAMES[556] = { name = "Die Grube von Saron", abbr = "GdS" }
+L.MAPNAMES[161] = { name = "Himmelsnadel", abbr = "HN" }
+L.MAPNAMES[239] = { name = "Der Sitz des Triumvirats", abbr = "SdT" }
+L.MAPNAMES[557] = { name = "Windläuferturm", abbr = "WT" }
+L.MAPNAMES[558] = { name = "Terrasse der Magister", abbr = "TDM" }
+L.MAPNAMES[560] = { name = "Maisarakavernen", abbr = "MK" }
+L.MAPNAMES[559] = { name = "Nexuspunkt Xenas", abbr = "NPX" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
