@@ -34,7 +34,7 @@ local function setWhatsNewContent(parent)
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
                 <p>]]..textBullet..[[Added new Midnight season one dungeon data to addon.</p>
-                <p>]]..textBullet..[[Added localization for itIT</p>
+                <p>]]..textBullet..[[Added localization for Italian, German and Russian.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
