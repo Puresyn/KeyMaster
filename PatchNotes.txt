@@ -7,13 +7,12 @@ Key Master v1.5.2
 --------------------------------------------------
 Updates:
 - Added new Midnight season one dungeon data to addon.
-- Added localization for Italian, German and Russian.
 
 Fixes:
 - None
 
 Known Bugs/Issues:
-- None
+- Some users may still expreince the secret string value error.  Fix coming soon.
 
 --------------------------------------------------
 Key Master v1.5.1
