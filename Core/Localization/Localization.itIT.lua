@@ -64,6 +64,14 @@ L.MAPNAMES[392] = { name = "Azzardo di So'leah", abbr = "AdS" }
 L.MAPNAMES[391] = { name = "Strade delle Meraviglie", abbr = "SdM" }
 L.MAPNAMES[378] = { name = "Sale della Redenzione", abbr = "SdR" }
 L.MAPNAMES[542] = { name = "Ecosfera Al'dani", abbr = "EA" }
+--MN (Midnight) S1
+L.MAPNAMES[556] = { name = "Fossa di Saron", abbr = "FdS" }
+L.MAPNAMES[161] = { name = "Vetta dei Cieli", abbr = "VdC" }
+L.MAPNAMES[239] = { name = "Seggio del Triumvirato", abbr = "SdT" }
+L.MAPNAMES[557] = { name = "Pinnacolo dei Ventolesto", abbr = "PdV" }
+L.MAPNAMES[558] = { name = "Terrazza dei Magistri", abbr = "TdM" }
+L.MAPNAMES[560] = { name = "Caverne di Maisara", abbr = "CdM" }
+L.MAPNAMES[559] = { name = "Punta del Nexus Xenas", abbr = "PdNX" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

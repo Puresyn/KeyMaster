@@ -3,6 +3,18 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.2
+--------------------------------------------------
+Updates:
+- Added new Midnight season one dungeon data to addon.
+
+Fixes:
+- None
+
+Known Bugs/Issues:
+- Some users may still experience the secret string value error.  Fix coming soon.
+
+--------------------------------------------------
 Key Master v1.5.1
 --------------------------------------------------
 Updates:
