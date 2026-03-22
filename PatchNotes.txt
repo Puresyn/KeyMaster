@@ -12,7 +12,7 @@ Fixes:
 - None
 
 Known Bugs/Issues:
-- Some users may still expreince the secret string value error.  Fix coming soon.
+- Some users may still experience the secret string value error.  Fix coming soon.
 
 --------------------------------------------------
 Key Master v1.5.1

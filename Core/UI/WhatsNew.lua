@@ -43,7 +43,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Some users may still expreince the secret string value error.  Fix coming soon.</p>
+                <p>]]..textBullet..[[Some users may still experience the secret string value error.  Fix coming soon.</p>
                 <br/>
                 <br/>
                 <p>If you experience any other issues, please report them with as much detail as possible in the Key Master Issues GitHub.</p>
