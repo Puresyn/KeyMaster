@@ -9,7 +9,7 @@ Updates:
 - None
 
 Fixes:
-- Fixed localiztion bug that caused non enUS languages to break the Keymaster UI.
+- Fixed localization bug that caused non enUS languages to break the Keymaster UI.
 
 Known Bugs/Issues:
 - Please be aware Blizzard updated the max level before the Midnight expansion release.  If you cannot see your alternate characters goto KM configuration tab and uncheck "Only show maximum level characters."
