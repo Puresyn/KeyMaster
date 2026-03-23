@@ -85,7 +85,9 @@ L.MPLUSSEASON[12] = { name = "시즌 4" }
 L.MPLUSSEASON[13] = { name = "시즌 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "시즌 2" } -- expecting season 14 to be TWW S2
 L.MPLUSSEASON[15] = { name = "시즌 3" } -- expecting season 15 to be TWW S2
-L.MPLUSSEASON[16] = { name = "시즌 1" } -- expecting season 16 to be Midnight S1
+L.MPLUSSEASON[16] = { name = "시즌 4" } -- expecting season 16 to be Midnight S1
+L.MPLUSSEASON[17] = { name = "시즌 1" } -- Midnight S1
+L.MPLUSSEASON[18] = { name = "시즌 2" } -- Midnight S2
 
 L.DISPLAYVERSION = "버전"
 L.WELCOMEMESSAGE = "돌아오신걸 환영합니다."

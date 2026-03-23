@@ -93,9 +93,9 @@ L.MPLUSSEASON[12] = { name = "Season 4" }
 L.MPLUSSEASON[13] = { name = "Season 1" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "Season 2" } 
 L.MPLUSSEASON[15] = { name = "Season 3" }
-L.MPLUSSEASON[16] = { name = "Season 1" } -- expecting season 16 to be Midnight S1
-L.MPLUSSEASON[17] = { name = "Season 2" } -- expecting season 16 to be Midnight S2
-L.MPLUSSEASON[18] = { name = "Season 3" } -- expecting season 16 to be Midnight S3
+L.MPLUSSEASON[16] = { name = "Season 4" } 
+L.MPLUSSEASON[17] = { name = "Season 1" } -- Midnight S1
+L.MPLUSSEASON[18] = { name = "Season 2" } -- Midnight S2
 
 L.DISPLAYVERSION = "v"
 L.WELCOMEMESSAGE = "Welcome back"

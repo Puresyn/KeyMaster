@@ -85,7 +85,9 @@ L.MPLUSSEASON[12] = { name = "第四赛季" }
 L.MPLUSSEASON[13] = { name = "第一赛季" } -- expecting season 13 to be TWW S1
 L.MPLUSSEASON[14] = { name = "第二赛季" } -- expecting season 14 to be TWW S2
 L.MPLUSSEASON[15] = { name = "第三赛季" } -- expecting season 15 to be TWW S2
-L.MPLUSSEASON[16] = { name = "第一赛季" } -- expecting season 16 to be Midnight S1
+L.MPLUSSEASON[16] = { name = "第四赛季" } 
+L.MPLUSSEASON[17] = { name = "第一赛季" } -- Midnight S1
+L.MPLUSSEASON[18] = { name = "第二赛季" } -- Midnight S2
 
 L.DISPLAYVERSION = "版本"
 L.WELCOMEMESSAGE = "欢迎回来"
