@@ -77,6 +77,7 @@ local portalSpellIds = {
     [559] = 1254563,     -- Nexus-Point Xenas
     [560] = 1254559,     -- Maisara Caverns
     [161] = 159898,      -- Skyreach
+    [239] = 1254551,     -- Seat of the Triumvirate
 }
 
 -- add only horde specific portals here.

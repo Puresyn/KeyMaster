@@ -9,7 +9,7 @@ Updates:
 - None
 
 Fixes:
-- None
+- Fixed portal spell id of Seat of the Triumvirate
 
 Known Bugs/Issues:
 - None
