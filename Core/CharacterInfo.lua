@@ -22,6 +22,7 @@ end
 function CharacterInfo:GetDungeonOverallScore(mapid)
     local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
     if (not bestOverallScore) then bestOverallScore = 0 end
+    bestOverallScore = tonumber(bestOverallScore) or 0
 
     return bestOverallScore
 end
@@ -36,7 +37,7 @@ function CharacterInfo:GetOwnedKey()
         -- name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(i)
         -- todo: search local table (KMPlayerInfo:GetCurrentSeasonMaps()) instead of querying for new data
         mapName, _, _, _, _ = C_ChallengeMode.GetMapUIInfo(mapid)
-        keystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel(mapid)        
+        keystoneLevel = tonumber(C_MythicPlus.GetOwnedKeystoneLevel(mapid)) or 0
     else
         -- No key but has Vault Ready
         if (C_WeeklyRewards.HasAvailableRewards()) then
@@ -57,7 +58,7 @@ function CharacterInfo:GetOwnedKey()
 end
 
 function CharacterInfo:GetCurrentRating()
-    local r = C_ChallengeMode.GetOverallDungeonScore()
+    local r = tonumber(C_ChallengeMode.GetOverallDungeonScore()) or 0
     return r
 end
 -- This retry logic is done because the C_MythicPlus API is not always available right away and this frame depends on it.
@@ -137,6 +138,7 @@ function CharacterInfo:GetMyCharacterInfo()
         }
 
         local mapScore, bestOverallScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapid)
+        bestOverallScore = tonumber(bestOverallScore) or 0
         if (mapScore == nil or mapScore[1] == nil) then
             keyRun["bestOverall"] = 0
             keyRun["DungeonData"] = emptyData            
@@ -145,9 +147,9 @@ function CharacterInfo:GetMyCharacterInfo()
                 -- Only gets the highest score data, instead of each data set for level 4 affix.
                 if (v.score == bestOverallScore) then
                     local dungeonDetails = {
-                        ["Rating"] = DungeonTools:CalculateRating(mapid, v.level, v.durationSec),
-                        ["Level"] = v.level,
-                        ["DurationSec"] = v.durationSec,
+                        ["Rating"] = DungeonTools:CalculateRating(mapid, tonumber(v.level) or 0, tonumber(v.durationSec) or 0),
+                        ["Level"] = tonumber(v.level) or 0,
+                        ["DurationSec"] = tonumber(v.durationSec) or 0,
                         ["overTime"] = v.overTime
                     }
                     keyRun["DungeonData"] = dungeonDetails
