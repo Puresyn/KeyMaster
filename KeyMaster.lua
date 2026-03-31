@@ -18,7 +18,7 @@ local PartyFrame = KeyMaster.PartyFrame
 KM_ADDON_NAME = KeyMasterLocals.ADDONNAME
 KM_AUTOVERSION = C_AddOns.GetAddOnMetadata("KeyMaster", "Version")
 
-KM_VERSION_STATUS = KeyMasterLocals.BUILDBETA -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
+KM_VERSION_STATUS = KeyMasterLocals.BUILDRELEASE -- BUILDALPHA BUILDBETA BUILDRELEASE - for display and update notification purposes
 
 --------------------------------
 -- Slash Commands and command menu
