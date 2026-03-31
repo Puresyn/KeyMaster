@@ -3,6 +3,19 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.4
+--------------------------------------------------
+Updates:
+- None
+
+Fixes:
+- Fixed portal spell id of Seat of the Triumvirate.
+- Fixed private secret string tainted issues.
+
+Known Bugs/Issues:
+- None
+
+--------------------------------------------------
 Key Master v1.5.3
 --------------------------------------------------
 Updates:

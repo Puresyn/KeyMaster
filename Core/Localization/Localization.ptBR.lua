@@ -64,6 +64,14 @@ L.MAPNAMES[392] = { name = "Gambito de So'leah", abbr = "GMBT" }
 L.MAPNAMES[391] = { name = "Rua das Maravilhas", abbr = "STRT" }
 L.MAPNAMES[378] = { name = "Salões da Espiação", abbr = "HOA" }
 L.MAPNAMES[542] = { name = "Eco-Domo Al'dani", abbr = "DOME" }
+--MN (Midnight) S1
+L.MAPNAMES[556] = { name = "Pit of Saron", abbr = "POS" }
+L.MAPNAMES[161] = { name = "Skyreach", abbr = "SR" }
+L.MAPNAMES[239] = { name = "Seat of the Triumvirate", abbr = "SEAT" }
+L.MAPNAMES[557] = { name = "Windrunner Spire", abbr = "WS" }
+L.MAPNAMES[558] = { name = "Magisters' Terrace", abbr = "MT" }
+L.MAPNAMES[560] = { name = "Maisara Caverns", abbr = "MC" }
+L.MAPNAMES[559] = { name = "Nexus-Point Xenas", abbr = "NPX" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Clássico" }

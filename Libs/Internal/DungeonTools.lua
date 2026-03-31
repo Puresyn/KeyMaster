@@ -77,6 +77,7 @@ local portalSpellIds = {
     [559] = 1254563,     -- Nexus-Point Xenas
     [560] = 1254559,     -- Maisara Caverns
     [161] = 159898,      -- Skyreach
+    [239] = 1254551,     -- Seat of the Triumvirate
 }
 
 -- add only horde specific portals here.
@@ -215,7 +216,7 @@ function DungeonTools:GetCurrentSeason(retryCount)
     if retryCount == nil then retryCount = 0 end
     local maxRetryCount = 5    
     
-    local seasonNumber = C_MythicPlus.GetCurrentSeason()
+    local seasonNumber = tonumber(C_MythicPlus.GetCurrentSeason())
     if seasonNumber ~= nil and seasonNumber ~= -1 then
         currentSeason = seasonNumber -- stores locally to prevent multiple api calls
         return currentSeason
@@ -245,7 +246,7 @@ function DungeonTools:GetCurrentSeasonMaps()
        mapTable[id] = {
             ["id"] = id,
             ["name"] = name,
-            ["timeLimit"] = timeLimit,
+            ["timeLimit"] = tonumber(timeLimit) or 0,
             ["texture"] = texture,
             ["backgroundTexture"] = backgroundTexture
        }
@@ -634,10 +635,10 @@ function DungeonTools:ChallengeModeCompletionInfo()
 
     --if KeyMaster:GetTableLength(completionData) > 0 then
         C_Timer.After(3, function()
-            local mapName = DungeonTools:GetMapName(info.mapChallengeModeID)
+            local mapName = DungeonTools:GetMapName(tonumber(info.mapChallengeModeID))
             local timeStatus
             if info.onTime then timeStatus = "a timed" else timeStatus = "an untimed" end
-            local plusText = "+"..tostring(info.keystoneUpgradeLevels)
+            local plusText = "+"..tostring(tonumber(info.keystoneUpgradeLevels) or 0)
             if not mapName then KeyMaster:_ErrorMsg("GetChallengeCompletionInfo","DungeonTools", "Could not find mapID "..tostring(info.mapChallengeModeID)) 
                 return
             end

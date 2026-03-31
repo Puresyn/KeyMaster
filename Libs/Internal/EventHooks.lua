@@ -212,6 +212,7 @@ local function KeyWatch()
             -- arg1: itemTextRecieved (String)
             -- arg2: playerName (String) - USE THIS INSTEAD OF GUID
             local itemTextRecieved, playerName = ...
+            playerName = tostring(playerName or "")
         
             -- Check if the name in the loot event matches the local player's name
             if playerName == UnitName("player") then
