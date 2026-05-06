@@ -65,13 +65,13 @@ L.MAPNAMES[391] = { name = "Streets of Wonder", abbr = "天街" }
 L.MAPNAMES[378] = { name = "Halls of Attonement", abbr = "赎罪" }
 L.MAPNAMES[542] = { name = "Eco-Dome Al\'dani", abbr = "圆顶" }
 --MN (Midnight) S1
-L.MAPNAMES[556] = { name = "Pit of Saron", abbr = "POS" }
-L.MAPNAMES[161] = { name = "Skyreach", abbr = "SR" }
-L.MAPNAMES[239] = { name = "Seat of the Triumvirate", abbr = "SEAT" }
-L.MAPNAMES[557] = { name = "Windrunner Spire", abbr = "WS" }
-L.MAPNAMES[558] = { name = "Magisters' Terrace", abbr = "MT" }
-L.MAPNAMES[560] = { name = "Maisara Caverns", abbr = "MC" }
-L.MAPNAMES[559] = { name = "Nexus-Point Xenas", abbr = "NPX" }
+L.MAPNAMES[556] = { name = "Pit of Saron", abbr = "矿坑" }
+L.MAPNAMES[161] = { name = "Skyreach", abbr = "通天峰" }
+L.MAPNAMES[239] = { name = "Seat of the Triumvirate", abbr = "执政团" }
+L.MAPNAMES[557] = { name = "Windrunner Spire", abbr = "风塔" }
+L.MAPNAMES[558] = { name = "Magisters' Terrace", abbr = "平台" }
+L.MAPNAMES[560] = { name = "Maisara Caverns", abbr = "洞窟" }
+L.MAPNAMES[559] = { name = "Nexus-Point Xenas", abbr = "节点" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "经典旧世" }

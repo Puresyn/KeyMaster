@@ -65,13 +65,13 @@ L.MAPNAMES[391] = { name = "奇觀街道", abbr = "街道" }
 L.MAPNAMES[378] = { name = "贖罪之殿", abbr = "贖罪" }
 L.MAPNAMES[542] = { name = "埃達尼秘境", abbr = "秘境" }
 --MN (Midnight) S1
-L.MAPNAMES[556] = { name = "Pit of Saron", abbr = "POS" }
-L.MAPNAMES[161] = { name = "Skyreach", abbr = "SR" }
-L.MAPNAMES[239] = { name = "Seat of the Triumvirate", abbr = "SEAT" }
-L.MAPNAMES[557] = { name = "Windrunner Spire", abbr = "WS" }
-L.MAPNAMES[558] = { name = "Magisters' Terrace", abbr = "MT" }
-L.MAPNAMES[560] = { name = "Maisara Caverns", abbr = "MC" }
-L.MAPNAMES[559] = { name = "Nexus-Point Xenas", abbr = "NPX" }
+L.MAPNAMES[556] = { name = "薩倫之淵", abbr = "薩倫" }
+L.MAPNAMES[161] = { name = "擎天峰", abbr = "擎天" }
+L.MAPNAMES[239] = { name = "三傑議會之座", abbr = "三傑" }
+L.MAPNAMES[557] = { name = "風行者塔", abbr = "風行" }
+L.MAPNAMES[558] = { name = "博學者殿堂", abbr = "博學" }
+L.MAPNAMES[560] = { name = "梅薩拉洞穴", abbr = "洞穴" }
+L.MAPNAMES[559] = { name = "奧核點瑟納斯", abbr = "奧核" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }
