@@ -33,7 +33,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[None</p>
+                <p>]]..textBullet..[[Added LibKeystone library support.  Replaces LibOpenRaid for getting key information and rating from players who don't use the Key Master addon.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>

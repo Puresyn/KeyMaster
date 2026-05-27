@@ -15,6 +15,7 @@ local PartyFrameMapping = KeyMaster.PartyFrameMapping
 local HeaderFrameMapping = KeyMaster.HeaderFrameMapping
 local CharacterInfo = KeyMaster.CharacterInfo
 
+
 -- Dependencies: LibSerialize
 -- todo: Verify what ACE libraries are actually needed.
 -- -this doesn't currently break but I don't think it has everything
@@ -24,13 +25,11 @@ local LibSerialize = LibStub("LibSerialize")
 local LibDeflate = LibStub("LibDeflate")
 local comPrefix = "KM2"
 local comPrefix2 = "KM3"
-local comPrefixOpenRaid = "LRS"
 
 -- Notify Successful Registration (DEBUG)
 function MyAddon:OnEnable()
     self:RegisterComm(comPrefix)
     self:RegisterComm(comPrefix2)
-    self:RegisterComm(comPrefixOpenRaid)
 end
 
 -- Serialize communication data:
@@ -43,9 +42,6 @@ function MyAddon:Transmit(data)
     
     KeyMaster:_DebugMsg("Transmit", "Coms", "transmitting data ...")
     self:SendCommMessage(comPrefix, encoded, "PARTY", nil)
-
-    -- Send request for open data to party members
-    KeyMaster.openRaidStub:RequestKeystoneDataFromParty()
 end
 
 -- sends request to party members to transmit their data
@@ -61,8 +57,6 @@ function MyAddon:TransmitRequest(requestData)
     
     self:SendCommMessage(comPrefix2, encoded, "PARTY", nil)
 end
-
-
 
 local function checkVersion(data)
     -- VersionCompare returns:
@@ -93,88 +87,80 @@ local function checkVersion(data)
     end
 end
 
--- LRS Data
-local function processOpenRaidData(payload, sender)
-    local LibDeflate = LibStub:GetLibrary("LibDeflate")
-    local dataCompressed = LibDeflate:DecodeForWoWAddonChannel(payload)
-    local openRaidData = LibDeflate:DecompressDeflate(dataCompressed)
-    local dataTypePrefix = openRaidData:match("^.")
-    if dataTypePrefix == "K" then
-        --convert to table
-        local dataAsTable = {strsplit(",", openRaidData)}
+local function processLibKeystoneData(keyLevel, keyMapID, playerRating, playerName, channel)
+    if channel ~= "PARTY" then return end
 
-        --remove the first index (prefix)
-        tremove(dataAsTable, 1)
-        -- dataAsTable DATA LOOKS LIKE THIS:
-        -- [1] Key Level
-        -- [2] MapID
-        -- [3] ChallengeMapID
-        -- [4] ClassID
-        -- [5] Rating
-        -- [6] MythicPlusMapID
-        -- FROM: https://github.com/Tercioo/Open-Raid-Library/blob/2f1eb2a0acf415cae93a36c081fddd30cd0872ec/LibOpenRaid.lua#L2674
+    -- added for cross-realm support
+    local senderName
+    local senderRealm
+    local _, strLocation = string.find(playerName, "-")
+    if strLocation ~= nil then
+        senderName = string.sub(playerName, 1, strLocation - 1)
+        senderRealm = string.sub(playerName, strLocation+1, string.len(playerName))
+    else
+        senderName = playerName
+        senderRealm = GetRealmName()
+    end
 
-        -- added for cross-realm support
-        local senderName
-        local senderRealm
-        local _, strLocation = string.find(sender, "-")
-        if strLocation ~= nil then
-            senderName = string.sub(sender, 1, strLocation - 1)
-            senderRealm = string.sub(sender, strLocation+1, string.len(sender))
-        else
-            senderName = sender
-            senderRealm = GetRealmName()
-        end
-        
-        local isDirty = false -- has the data changed?
-        local senderData = UnitData:GetUnitDataByName(senderName, senderRealm)
-        if senderData == nil then
-            local partyMembers = {"party1", "party2", "party3", "party4"}
-            for _,unitId in pairs(partyMembers) do
-                local currentUnitName, currentUnitRealm = UnitName(unitId)
-                if (currentUnitRealm == nil) then
-                    currentUnitRealm = GetRealmName()
-                end
-                
-                -- compares party member (in unitId) information with sender information
-                if currentUnitName == senderName and currentUnitRealm == senderRealm then
-                    senderData = CharacterInfo:GetUnitInfo(unitId)
-                    senderData.realm = currentUnitRealm 
-                    senderData.ownedKeyId = tonumber(dataAsTable[3])
-                    senderData.ownedKeyLevel = tonumber(dataAsTable[1])
-                    senderData.mythicPlusRating = tonumber(dataAsTable[5])
-                    isDirty = true
-
-                    if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
-                        KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received initial data from OpenRaid for "..sender)
-                        UnitData:SetUnitData(senderData)
-                    end
-                end
+    local isDirty = false -- has the data changed?
+    local senderData = UnitData:GetUnitDataByName(senderName, senderRealm)
+    if senderData == nil then
+        local partyMembers = {"party1", "party2", "party3", "party4"}
+        for _,unitId in pairs(partyMembers) do
+            local currentUnitName, currentUnitRealm = UnitName(unitId)
+            if (currentUnitRealm == nil) then
+                currentUnitRealm = GetRealmName()
             end
-        else
-            -- Only process openRaid data if they also don't have KeyMaster
-            if senderData.hasAddon == false then
-                senderData.ownedKeyId = tonumber(dataAsTable[3])
-                senderData.ownedKeyLevel = tonumber(dataAsTable[1])
-                senderData.mythicPlusRating = tonumber(dataAsTable[5])
+            
+            -- compares party member (in unitId) information with sender information
+            if currentUnitName == senderName and currentUnitRealm == senderRealm then
+                senderData = CharacterInfo:GetUnitInfo(unitId)
+                senderData.realm = currentUnitRealm 
+                senderData.ownedKeyId = keyMapID
+                senderData.ownedKeyLevel = keyLevel
+                senderData.mythicPlusRating = playerRating
                 isDirty = true
 
                 if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
-                    KeyMaster:_DebugMsg("processOpenRaidData", "Coms", "Received updated data from OpenRaid for "..sender)
+                    KeyMaster:_DebugMsg("processLibKeystoneData", "Coms", "Received initial data from LibKeystone for "..playerName)
                     UnitData:SetUnitData(senderData)
                 end
             end
         end
-        
-        -- Only update UI if party tab is open
-        local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
-        if isDirty == true and partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
-            PartyFrameMapping:UpdateSingleUnitData(senderData.GUID)
-            PartyFrameMapping:UpdateKeystoneHighlights()
-            PartyFrameMapping:CalculateTotalRatingGainPotential() 
-        end        
+    else
+        -- Only process libKeystone data if they also don't have KeyMaster
+        if senderData.hasAddon == false then
+            senderData.ownedKeyId = keyMapID
+            senderData.ownedKeyLevel = keyLevel
+            senderData.mythicPlusRating = playerRating
+            isDirty = true
+
+            if UnitData:GetUnitDataByGUID(senderData.GUID) == nil then
+                KeyMaster:_DebugMsg("processLibKeystoneData", "Coms", "Received updated data from LibKeystone for "..playerName)
+                UnitData:SetUnitData(senderData)
+            end
+        end
     end
-    return
+    
+    -- Only update UI if party tab is open
+    local partyTabContentFrame = _G["KeyMaster_PartyScreen"]
+    if isDirty == true and partyTabContentFrame ~= nil and partyTabContentFrame:IsVisible() then
+        PartyFrameMapping:UpdateSingleUnitData(senderData.GUID)
+        PartyFrameMapping:UpdateKeystoneHighlights()
+        PartyFrameMapping:CalculateTotalRatingGainPotential() 
+    end
+end
+
+local lkbCallbackTable = {}
+local LibKeystone = LibStub and LibStub("LibKeystone", true)
+if LibKeystone then
+    LibKeystone.Register(lkbCallbackTable, function(keyLevel, keyMapID, playerRating, playerName, channel)
+        if not playerName then return end
+        -- update the party keystone information for this player
+        KeyMaster:_DebugMsg("LibKeystoneCallback", "Coms", "Player: "..playerName..", Key Level: "..keyLevel..", Key Map ID: "..keyMapID..", Player Rating: "..playerRating..", Channel: "..channel)
+        
+        processLibKeystoneData(keyLevel, keyMapID, playerRating, playerName, channel)
+    end)
 end
 
 -- KM3 Data
@@ -255,11 +241,6 @@ end
 -- Returns nil if something went wrong.
 function MyAddon:OnCommReceived(prefix, payload, distribution, sender)
     if (sender == UnitName("player")) then return end
-    
-    -- intercept open raid lib keys for client QOL.
-    if (prefix == "LRS" and (distribution == "PARTY" or distribution == "INSTANCE_CHAT")) then
-        processOpenRaidData(payload, sender)
-    end
 
     if (prefix == "KM2") then
         processKM2Data(payload, sender)

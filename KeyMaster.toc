@@ -30,6 +30,10 @@
 ## X-GitHub: github.com/Puresyn/KeyMaster
 
 Embeds.xml
+
+## Bigwigs Keystone Library
+Libs\External\LibKeystone\LibKeystone.lua
+
 Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua
