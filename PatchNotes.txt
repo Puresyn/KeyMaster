@@ -9,7 +9,7 @@ Updates:
 - Added LibKeystone library support.  Replaces LibOpenRaid for getting key information and rating from players who don't use the Key Master addon.
 
 Fixes:
-- None
+- Addressed further "secret string" bugs.
 
 Known Bugs/Issues:
 - None
