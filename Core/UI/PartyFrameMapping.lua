@@ -349,6 +349,10 @@ function PartyFrameMapping:UpdateSingleUnitData(unitGUID)
 end
 
 function PartyFrameMapping:UpdatePartyFrameData()
+    local LibKeystone = LibStub and LibStub("LibKeystone", true)
+    if LibKeystone then
+        LibKeystone.Request("PARTY")
+    end
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
         PartyFrameMapping:HideAllPartyFrame()  
         PartyFrameMapping:UpdateSingleUnitData(UnitGUID("player"))

@@ -2,7 +2,7 @@
 ## X-Max-Interface: 120005
 ## X-Min-Interface: 120001
 
-## Version: 1.5.5
+## Version: 1.5.6
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
@@ -30,6 +30,10 @@
 ## X-GitHub: github.com/Puresyn/KeyMaster
 
 Embeds.xml
+
+## Bigwigs Keystone Library
+Libs\External\LibKeystone\LibKeystone.lua
+
 Core\Localization\Localization.lua
 Core\CharacterInfo.lua
 Core\UI\MainInterface.lua

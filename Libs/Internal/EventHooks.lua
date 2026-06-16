@@ -208,12 +208,13 @@ local function KeyWatch()
             EventHooks:NotifyEvent("VAULT_UPDATE")
             EventHooks:NotifyEvent("PORTALS_UPDATE")
         end
-        if event == "CHAT_MSG_LOOT" then
+            if event == "CHAT_MSG_LOOT" then
             -- arg1: itemTextRecieved (String)
             -- arg2: playerName (String) - USE THIS INSTEAD OF GUID
             local itemTextRecieved, playerName = ...
-            playerName = tostring(playerName or "")
-        
+            if issecretvalue(playerName) or not playerName then
+                return
+            end
             -- Check if the name in the loot event matches the local player's name
             if playerName == UnitName("player") then
                 -- Safely parse the item string for your Mythic+ Key ID
