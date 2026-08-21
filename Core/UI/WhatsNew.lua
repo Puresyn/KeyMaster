@@ -33,12 +33,12 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Added LibKeystone library support.  Replaces LibOpenRaid for getting key information and rating from players who don't use the Key Master addon.</p>
+                <p>]]..textBullet..[[Added new season 2 dungeons and portals.</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Addressed further "secret string" bugs.</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Known Bugs/Issues:|r</h2>

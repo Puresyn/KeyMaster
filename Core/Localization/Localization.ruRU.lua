@@ -72,6 +72,14 @@ L.MAPNAMES[557] = { name = "Шпили Ветрокрылых", abbr = "ШВ" }
 L.MAPNAMES[558] = { name = "Терраса Магистров", abbr = "ТМ" }
 L.MAPNAMES[560] = { name = "Пещеры Маисара", abbr = "ПМ" }
 L.MAPNAMES[559] = { name = "Узел Нексуса Зенас", abbr = "УНЗ" }
+--MN (Midnight) S2
+L.MAPNAMES[588] = { name = "Алтарь Клыков", abbr = "АК" }
+L.MAPNAMES[586] = { name = "Берлога Налоракка", abbr = "БН" }
+L.MAPNAMES[587] = { name = "Закоулок душегубов", abbr = "ЗД" }
+L.MAPNAMES[250] = { name = "Храм Сетралисс", abbr = "ХС" }
+L.MAPNAMES[584] = { name = "Слепящая долина", abbr = "СД" }
+L.MAPNAMES[585] = { name = "Арена Шрама Бездны", abbr = "АШБ" }
+L.MAPNAMES[249] = { name = "Гробница королей", abbr = "ГК" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }

@@ -27,8 +27,6 @@ end ]]
 --------------------------------
 -- Dungeon Portal spell IDs
 -- Must be manually maintained.
--- https://wago.tools/db2/MapChallengeMode
--- [ChallengeMode Dungeon ID]  Portal Spell ID
 --------------------------------
 local portalSpellIds = {
     [463] = 424197,      -- Dawn of the Infinite: Galakrond's Fall
@@ -78,6 +76,14 @@ local portalSpellIds = {
     [560] = 1254559,     -- Maisara Caverns
     [161] = 159898,      -- Skyreach
     [239] = 1254551,     -- Seat of the Triumvirate
+    -- MN (Midnight) S2
+    [588] = 1286812, -- Alter of Fangs
+    [249] = 1286831, -- Kings Rest
+    [585] = 1286804, -- Voidscar Arena
+    [586] = 1286807, -- Den of Nalorakk
+    [587] = 1286809, -- Murder Row
+    [250] = 1286828, -- Temple of Sethraliss
+    [584] = 1286801, -- The Blinding Vale
 }
 
 -- add only horde specific portals here.

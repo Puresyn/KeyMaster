@@ -3,6 +3,18 @@ Key Master AddOn for World of Warcraft
 
 PATCH NOTES:
 --------------------------------------------------
+Key Master v1.5.7
+--------------------------------------------------
+Updates:
+- Added new season 2 dungeons and portals.
+
+Fixes:
+- None
+
+Known Bugs/Issues:
+- None
+
+--------------------------------------------------
 Key Master v1.5.6
 --------------------------------------------------
 Updates:

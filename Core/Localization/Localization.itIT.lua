@@ -72,6 +72,14 @@ L.MAPNAMES[557] = { name = "Pinnacolo dei Ventolesto", abbr = "PdV" }
 L.MAPNAMES[558] = { name = "Terrazza dei Magistri", abbr = "TdM" }
 L.MAPNAMES[560] = { name = "Caverne di Maisara", abbr = "CdM" }
 L.MAPNAMES[559] = { name = "Punta del Nexus Xenas", abbr = "PdNX" }
+--MN (Midnight) S2
+L.MAPNAMES[588] = { name = "Alter of Fangs", abbr = "AOF" }
+L.MAPNAMES[586] = { name = "Den of Nalorakk", abbr = "DON" }
+L.MAPNAMES[587] = { name = "Murder Row", abbr = "MR" }
+L.MAPNAMES[250] = { name = "Temple of Sethraliss", abbr = "TOS" }
+L.MAPNAMES[584] = { name = "The Blinding Vale", abbr = "TBV" }
+L.MAPNAMES[585] = { name = "Voidscar Arena", abbr = "VSA" }
+L.MAPNAMES[249] = { name = "Kings' Rest", abbr = "KR" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
