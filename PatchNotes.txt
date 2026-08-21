@@ -6,7 +6,7 @@ PATCH NOTES:
 Key Master v1.5.7
 --------------------------------------------------
 Updates:
-- None
+- Added new season 2 dungeons and portals.
 
 Fixes:
 - None

@@ -72,6 +72,14 @@ L.MAPNAMES[557] = { name = "風行者塔", abbr = "風行" }
 L.MAPNAMES[558] = { name = "博學者殿堂", abbr = "博學" }
 L.MAPNAMES[560] = { name = "梅薩拉洞穴", abbr = "洞穴" }
 L.MAPNAMES[559] = { name = "奧核點瑟納斯", abbr = "奧核" }
+--MN (Midnight) S2
+L.MAPNAMES[588] = { name = "毒牙祭壇", abbr = "毒牙" }
+L.MAPNAMES[586] = { name = "納羅拉克之穴", abbr = "納穴" }
+L.MAPNAMES[587] = { name = "兇殺路", abbr = "兇殺" }
+L.MAPNAMES[250] = { name = "瑟沙利斯神廟", abbr = "神廟" }
+L.MAPNAMES[584] = { name = "盲目谷地", abbr = "盲目" }
+L.MAPNAMES[585] = { name = "虛無之痕競技場", abbr = "虛無" }
+L.MAPNAMES[249] = { name = "諸王之眠", abbr = "諸王" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "經典版" }

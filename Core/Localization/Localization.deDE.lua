@@ -72,6 +72,14 @@ L.MAPNAMES[557] = { name = "Windläuferturm", abbr = "WT" }
 L.MAPNAMES[558] = { name = "Terrasse der Magister", abbr = "TDM" }
 L.MAPNAMES[560] = { name = "Maisarakavernen", abbr = "MK" }
 L.MAPNAMES[559] = { name = "Nexuspunkt Xenas", abbr = "NPX" }
+--MN (Midnight) S2
+L.MAPNAMES[588] = { name = "Altar der Fänge", abbr = "ADF" }
+L.MAPNAMES[586] = { name = "Nalorakks Bau", abbr = "NB" }
+L.MAPNAMES[587] = { name = "Mördergasse", abbr = "MG" }
+L.MAPNAMES[250] = { name = "Der Tempel von Sethraliss", abbr = "TvS" }
+L.MAPNAMES[584] = { name = "Das blendende Tal", abbr = "DBT" }
+L.MAPNAMES[585] = { name = "Arena der Leerennarbe", abbr = "ADL" }
+L.MAPNAMES[249] = { name = "Die Königsruh", abbr = "KR" }
 
 L.XPAC = {}
 L.XPAC[0] = { enum = "LE_EXPANSION_CLASSIC", desc = "Classic" }
