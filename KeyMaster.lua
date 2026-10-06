@@ -110,8 +110,10 @@ local function intializePlayerDataWithRetries(retryCount)
     if retryCount == nil then retryCount = 0 end
     local seasonalMaps = KeyMaster.DungeonTools:GetCurrentSeasonMaps()
     local seasonalAffixes = KeyMaster.DungeonTools:GetAffixes()
+    local keystone_mapid, _, keystone_keyLevel = KeyMaster.CharacterInfo:GetOwnedKey()
+    
     -- removed and seasonalAffixes ~= nil from if check below...  because affix aren't available in on expansion launch todo: is needed in TWW S1?
-    if KeyMaster:GetTableLength(seasonalMaps) > 0 then
+    if KeyMaster:GetTableLength(seasonalMaps) > 0 and (keystone_mapid ~= nil and keystone_mapid ~= 0) and (keystone_keyLevel ~= nil and keystone_keyLevel ~= 0) then
         -- fetch player data from bliz and save it to local memory
         -- the next two lines doesn't work if you remove it from here due to data not being available from bliz
         local playerData = CharacterInfo:GetMyCharacterInfo()
@@ -217,7 +219,7 @@ local function onEvent_PlayerEnterWorld(self, event, isLogin, isReload)
         C_MythicPlus.RequestCurrentAffixes()
         C_MythicPlus.RequestMapInfo()
         C_MythicPlus.RequestRewards()
-        KeyMaster:_DebugMsg("onEvent_PlayerEnteringWorld", "KeyMaster", "C_MythicPlus requests sent.")        
+        KeyMaster:_DebugMsg("onEvent_PlayerEnterWorld", "KeyMaster", "C_MythicPlus requests sent.")        
     end
     if isLogin or isReload then
         if isLogin then
