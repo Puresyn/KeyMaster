@@ -33,7 +33,7 @@ local function setWhatsNewContent(parent)
                 <br/>
                 <h2>|cff]]..h2Color..[[Updates:|r</h2>
                 <br/>
-                <p>]]..textBullet..[[Updated to interface 120105</p>
+                <p>]]..textBullet..[[None</p>
                 <br/>
                 <br/>
                 <h2>|cff]]..h2Color..[[Fixes:|r</h2>

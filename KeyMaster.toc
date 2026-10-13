@@ -1,5 +1,5 @@
 ## Interface: 120105
-## Version: 1.5.9
+## Version: 1.6.0
 ## Title: |cffb09c60Key Master|r
 ## Title-ptBR: |cffb09c60Key Master|r
 ## Title-ruRU: |cffb09c60Key Master|r [|cffe6b080Мастер ключей|r]
